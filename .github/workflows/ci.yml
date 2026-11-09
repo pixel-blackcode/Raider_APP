@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main, 'ccr-**']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  flutter:
+    name: Flutter — format, analyse, tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+
+      - name: Dépendances
+        run: flutter pub get
+
+      - name: Localisations (doivent être à jour)
+        run: |
+          flutter gen-l10n
+          git diff --exit-code lib/l10n/generated
+
+      - name: Formatage
+        run: dart format --output=none --set-exit-if-changed lib test
+
+      - name: Analyse statique
+        run: flutter analyze
+
+      - name: Tests
+        run: flutter test --coverage
+
+  database:
+    name: Supabase — migrations et contrôles RLS
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: rider
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Appliquer les migrations et vérifier
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/rider
+        run: scripts/check_migrations.sh
