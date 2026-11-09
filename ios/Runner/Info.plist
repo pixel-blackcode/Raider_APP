@@ -4,6 +4,25 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.ridergroup.auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.ridergroup.ridergroup</string>
+			</array>
+		</dict>
+	</array>
+	<key>FlutterDeepLinkingEnabled</key>
+	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Rider Group accède à vos photos uniquement pour choisir votre photo de profil ou le logo et la couverture d'un club.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Rider Group utilise l'appareil photo uniquement si vous choisissez de prendre une photo de profil ou de club.</string>
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>fr</string>

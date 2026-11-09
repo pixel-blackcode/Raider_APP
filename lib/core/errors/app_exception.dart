@@ -49,6 +49,11 @@ class AppException implements Exception {
   static const userAlreadyExists = 'user_already_exists';
   static const weakPassword = 'weak_password';
   static const rateLimited = 'rate_limited';
+  static const samePassword = 'same_password';
+
+  // Codes des médias.
+  static const unsupportedImage = 'unsupported_image';
+  static const imageTooLarge = 'image_too_large';
 
   /// Codes métier levés par les fonctions serveur (migrations SQL).
   static const _serverCodes = {
@@ -69,6 +74,8 @@ class AppException implements Exception {
     'already_verified',
     'verification_pending',
     'rate_limited',
+    'invitations_disabled',
+    'owns_clubs_with_members',
   };
 
   static String _authCode(AuthException error) {
@@ -82,6 +89,8 @@ class AppException implements Exception {
         return userAlreadyExists;
       case 'weak_password':
         return weakPassword;
+      case 'same_password':
+        return samePassword;
       case 'over_request_rate_limit':
       case 'over_email_send_rate_limit':
         return rateLimited;

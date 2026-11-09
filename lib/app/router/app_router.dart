@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/backend/backend_providers.dart';
 import '../../features/auth/data/auth_providers.dart';
+import '../../features/auth/presentation/forgot_password_screen.dart';
+import '../../features/auth/presentation/new_password_screen.dart';
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/clubs/presentation/club_detail_screen.dart';
@@ -13,7 +15,9 @@ import '../../features/garage/presentation/garage_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/marketplace/presentation/marketplace_screen.dart';
 import '../../features/messages/presentation/messages_screen.dart';
+import '../../features/profile/presentation/delete_account_screen.dart';
 import '../../features/profile/presentation/edit_profile_screen.dart';
+import '../../features/profile/presentation/privacy_settings_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/rides/presentation/rides_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
@@ -31,16 +35,18 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final routerProvider = Provider<GoRouter>((ref) {
   final backendReady = ref.watch(backendStatusProvider).isReady;
   final session = ref.watch(authSessionProvider);
+  final recovery = ref.watch(passwordRecoveryProvider);
 
   final router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: AppRoutes.home,
-    refreshListenable: session,
+    refreshListenable: Listenable.merge([session, recovery]),
     errorBuilder: (context, state) => const NotFoundScreen(),
     redirect: (context, state) => resolveAuthRedirect(
       location: state.uri,
       backendReady: backendReady,
       signedIn: session.value != null,
+      passwordRecovery: recovery.value,
     ),
     routes: [
       GoRoute(path: '/', redirect: (_, _) => AppRoutes.home),
@@ -53,6 +59,17 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.signUp,
         builder: (context, state) => const SignUpScreen(),
       ),
+      GoRoute(
+        path: AppRoutes.forgotPassword,
+        builder: (context, state) => const ForgotPasswordScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.newPassword,
+        builder: (context, state) => const NewPasswordScreen(),
+      ),
+      // Filet de sécurité si un lien d'authentification atteint le routeur :
+      // supabase_flutter l'a déjà traité.
+      GoRoute(path: AppRoutes.authCallback, redirect: (_, _) => AppRoutes.home),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             AppShell(navigationShell: navigationShell),
@@ -123,6 +140,16 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: 'modifier',
                     parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => const EditProfileScreen(),
+                  ),
+                  GoRoute(
+                    path: 'confidentialite',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => const PrivacySettingsScreen(),
+                  ),
+                  GoRoute(
+                    path: 'supprimer-mon-compte',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => const DeleteAccountScreen(),
                   ),
                 ],
               ),

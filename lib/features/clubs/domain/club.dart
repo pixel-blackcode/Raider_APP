@@ -70,6 +70,8 @@ class Club {
     this.verifiedAt,
     this.suspendedAt,
     this.createdAt,
+    this.logoPath,
+    this.coverPath,
   });
 
   factory Club.fromJson(Map<String, dynamic> json) => Club(
@@ -87,6 +89,8 @@ class Club {
     verifiedAt: _date(json['verified_at']),
     suspendedAt: _date(json['suspended_at']),
     createdAt: _date(json['created_at']),
+    logoPath: json['logo_path'] as String?,
+    coverPath: json['cover_path'] as String?,
   );
 
   final String id;
@@ -104,9 +108,24 @@ class Club {
   final DateTime? suspendedAt;
   final DateTime? createdAt;
 
+  /// Chemins dans le bucket privé `club-media` (`<id>/<fichier>`).
+  final String? logoPath;
+  final String? coverPath;
+
   bool get isVerified => verifiedAt != null;
   bool get isSuspended => suspendedAt != null;
   bool get isPrivate => visibility == ClubVisibility.private;
+}
+
+/// Image d'un club.
+enum ClubImageKind {
+  logo('logo', 'logo_path'),
+  cover('cover', 'cover_path');
+
+  const ClubImageKind(this.fileBaseName, this.column);
+
+  final String fileBaseName;
+  final String column;
 }
 
 class ClubMember {
@@ -115,6 +134,7 @@ class ClubMember {
     required this.role,
     required this.username,
     required this.displayName,
+    this.avatarPath,
     this.joinedAt,
   });
 
@@ -125,6 +145,7 @@ class ClubMember {
       role: ClubRole.parse(json['role'] as String),
       username: (profile['username'] as String?) ?? '',
       displayName: (profile['display_name'] as String?) ?? '',
+      avatarPath: profile['avatar_path'] as String?,
       joinedAt: _date(json['joined_at']),
     );
   }
@@ -132,7 +153,10 @@ class ClubMember {
   final String userId;
   final ClubRole role;
   final String username;
+
+  /// Vide si le profil n'est pas visible (préférences de confidentialité).
   final String displayName;
+  final String? avatarPath;
   final DateTime? joinedAt;
 }
 

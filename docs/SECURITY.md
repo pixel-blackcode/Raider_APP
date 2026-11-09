@@ -21,9 +21,31 @@
 - **Un utilisateur, un compte, un profil.** Le profil est créé par un trigger lors de l'inscription. Les pseudonymes invalides ou déjà pris reçoivent une valeur de repli, afin que l'inscription n'échoue jamais.
 - **L'e-mail n'est pas copié dans `profiles`.** Les autres motards voient le pseudonyme, le nom affiché, la ville et la présentation.
 - **Modification réservée au propriétaire du profil**, et limitée aux colonnes autorisées. `id` et les dates ne sont pas modifiables.
-- **Session :** elle est gérée par `supabase_flutter` (jeton d'accès + jeton de rafraîchissement). Par défaut, elle est stockée dans `SharedPreferences`, qui n'est **pas** un stockage chiffré.
-  - Sur Android, la sauvegarde automatique est désactivée (`allowBackup="false"`).
-  - Le passage à un stockage sécurisé (Keychain / Keystore) est prévu en Mission 02.
+- **Session :** jeton d'accès et jeton de rafraîchissement sont stockés **chiffrés** via `flutter_secure_storage` (Keychain sur iOS, Keystore sur Android), tout comme le vérificateur PKCE.
+  - Le Keychain iOS survit à la désinstallation. Au premier lancement d'une installation, les secrets résiduels sont donc effacés.
+  - La sauvegarde automatique Android est désactivée (`allowBackup="false"`).
+- **Liens reçus par e-mail** (confirmation, réinitialisation) : flux PKCE. Un lien ne fonctionne que sur l'appareil qui a fait la demande. Ils arrivent par le schéma `com.ridergroup.ridergroup://auth-callback`, que seul `supabase_flutter` traite (le routeur ne reçoit pas les liens profonds).
+- **Mot de passe oublié :** la réponse est la même que l'adresse corresponde ou non à un compte, ce qui empêche de deviner les comptes existants. Après ouverture du lien, la saisie d'un nouveau mot de passe est imposée avant tout accès.
+- **Confidentialité :**
+  - avec un profil non découvrable, seuls les membres d'un club commun voient le profil. Il en va de même pour les administrateurs d'un club auquel une demande est adressée, et pour la personne qui a envoyé une invitation. Le pseudonyme n'est plus trouvable par recherche ;
+  - l'utilisateur peut refuser toute invitation de club, et c'est vérifié par le serveur ;
+  - les préférences ne sont lisibles et modifiables que par leur propriétaire.
+- **Suppression de compte** (`delete_my_account`) :
+  - elle est refusée tant que l'utilisateur possède un club comptant d'autres membres ;
+  - sinon, elle supprime les clubs sans autre membre, puis le compte. Profil, préférences, adhésions, demandes et invitations reçues partent en cascade ;
+  - l'application supprime d'abord la photo de profil (Supabase interdit la suppression directe de fichiers en SQL) ;
+  - le journal d'audit conserve l'identifiant de l'action, sans donnée de profil.
+
+## Médias (Supabase Storage)
+
+- **Deux buckets privés,** limités aux formats JPEG, PNG et WebP :
+  - `avatars`, 2 Mo par fichier ;
+  - `club-media`, 5 Mo par fichier.
+- **Rien n'est accessible par une URL publique.** Les images sont chargées avec le jeton de session, et les politiques RLS de `storage.objects` décident :
+  - **photo de profil :** lisible si le profil est visible ; écriture uniquement dans son propre dossier `<user_id>/` ;
+  - **logo et couverture :** lisibles si le club est visible ; écriture par le propriétaire ou un administrateur du club, dans le dossier `<club_id>/`.
+- **Les chemins enregistrés en base doivent pointer vers le bon dossier,** ce que vérifient des contraintes `CHECK` : un club ne peut pas afficher les images d'un autre.
+- **Limite connue :** les fichiers d'un club supprimé (ou d'un club supprimé avec le compte de son propriétaire) restent dans Storage, sans être lisibles, car plus aucun club ne les rend visibles. Un nettoyage périodique est prévu en Mission 11.
 
 ## Clubs — matrice des permissions
 
@@ -41,6 +63,7 @@
 | Demander le badge Vérifié | ❌ | ❌ | ❌ | ❌ | ✅ | — |
 | Accorder le badge Vérifié | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
 | Écrire `verified_at`, `member_count`, `owner_id`, `suspended_at` | ❌ | ❌ | ❌ | ❌ | ❌ | via fonction serveur uniquement |
+| Modifier logo / couverture | ❌ | ❌ | ❌ | ✅ | ✅ | ❌ |
 
 Règles complémentaires :
 

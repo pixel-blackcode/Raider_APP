@@ -74,9 +74,11 @@ class _EditProfileFormState extends ConsumerState<_EditProfileForm> {
       if (mounted) context.pop();
     } catch (error) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(describeError(context, error))));
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text(describeError(context, error))),
+          );
       }
     } finally {
       if (mounted) setState(() => _busy = false);

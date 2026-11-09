@@ -7,6 +7,7 @@ class Profile {
     this.city,
     this.countryCode = 'CD',
     this.bio,
+    this.avatarPath,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
@@ -16,6 +17,7 @@ class Profile {
     city: json['city'] as String?,
     countryCode: (json['country_code'] as String?) ?? 'CD',
     bio: json['bio'] as String?,
+    avatarPath: json['avatar_path'] as String?,
   );
 
   final String id;
@@ -25,11 +27,16 @@ class Profile {
   final String countryCode;
   final String? bio;
 
+  /// Chemin dans le bucket privé `avatars` (`<id>/<fichier>`).
+  final String? avatarPath;
+
   Profile copyWith({
     String? username,
     String? displayName,
     String? city,
     String? bio,
+    String? avatarPath,
+    bool clearAvatar = false,
   }) => Profile(
     id: id,
     username: username ?? this.username,
@@ -37,6 +44,7 @@ class Profile {
     city: city ?? this.city,
     countryCode: countryCode,
     bio: bio ?? this.bio,
+    avatarPath: clearAvatar ? null : avatarPath ?? this.avatarPath,
   );
 }
 
@@ -65,4 +73,31 @@ class ProfileUpdate {
     final trimmed = value?.trim();
     return trimmed == null || trimmed.isEmpty ? null : trimmed;
   }
+}
+
+/// Préférences de confidentialité (table `profile_settings`).
+class PrivacySettings {
+  const PrivacySettings({
+    this.discoverable = true,
+    this.allowClubInvitations = true,
+  });
+
+  factory PrivacySettings.fromJson(Map<String, dynamic> json) =>
+      PrivacySettings(
+        discoverable: (json['discoverable'] as bool?) ?? true,
+        allowClubInvitations: (json['allow_club_invitations'] as bool?) ?? true,
+      );
+
+  /// Profil visible par tous les motards connectés (sinon : seulement par
+  /// les membres de ses clubs).
+  final bool discoverable;
+
+  /// Les administrateurs de club peuvent l'inviter.
+  final bool allowClubInvitations;
+
+  PrivacySettings copyWith({bool? discoverable, bool? allowClubInvitations}) =>
+      PrivacySettings(
+        discoverable: discoverable ?? this.discoverable,
+        allowClubInvitations: allowClubInvitations ?? this.allowClubInvitations,
+      );
 }

@@ -130,9 +130,11 @@ class _InvitationCard extends ConsumerWidget {
       ref.refreshClubs(invitation.clubId);
     } catch (error) {
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(describeError(context, error))));
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text(describeError(context, error))),
+          );
       }
     }
   }

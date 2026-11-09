@@ -25,6 +25,9 @@ abstract interface class ClubsRepository {
 
   Future<void> deleteClub(String clubId);
 
+  /// Enregistre (ou retire avec `null`) le logo ou la couverture.
+  Future<void> setClubImage(String clubId, ClubImageKind kind, String? path);
+
   Future<JoinOutcome> joinClub(String clubId, {String? message});
 
   Future<void> leaveClub(String clubId);

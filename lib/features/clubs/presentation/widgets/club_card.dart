@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/media/media_repository.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/remote_avatar.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../domain/club.dart';
 import 'club_labels.dart';
@@ -81,27 +84,24 @@ class ClubCard extends StatelessWidget {
   }
 }
 
-/// Initiale du club en attendant les logos (téléversement à venir).
-class ClubAvatar extends StatelessWidget {
+/// Logo du club, ou son initiale à défaut.
+class ClubAvatar extends ConsumerWidget {
   const ClubAvatar({super.key, required this.club, this.radius = 24});
 
   final Club club;
   final double radius;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final scheme = Theme.of(context).colorScheme;
-    return CircleAvatar(
+    return RemoteAvatar(
+      label: club.name,
       radius: radius,
+      image: ref
+          .watch(mediaRepositoryProvider)
+          ?.imageProvider(MediaBucket.clubMedia, club.logoPath),
       backgroundColor: scheme.secondaryContainer,
-      child: Text(
-        club.name.characters.first.toUpperCase(),
-        style: TextStyle(
-          color: scheme.onSecondaryContainer,
-          fontWeight: FontWeight.w700,
-          fontSize: radius * 0.8,
-        ),
-      ),
+      foregroundColor: scheme.onSecondaryContainer,
     );
   }
 }

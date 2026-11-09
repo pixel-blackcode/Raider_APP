@@ -380,4 +380,46 @@ void main() {
     expect(find.text('Kin Riders'), findsOneWidget);
     expect(find.text('Aucun club à afficher pour le moment.'), findsNothing);
   });
+
+  testWidgets('le propriétaire ajoute un logo et une couverture', (
+    tester,
+  ) async {
+    final clubs = FakeClubsRepository(
+      currentUserId: alice.id,
+      profiles: testProfiles,
+    );
+    final kin = clubs.addClub(name: 'Kin Riders', ownerId: alice.id);
+    final media = FakeMediaRepository();
+    final container = await pumpOnlineApp(
+      tester,
+      auth: signedInAs(alice),
+      clubs: clubs,
+      media: media,
+      picker: FakePhotoPicker(FakePhotoPicker.jpeg()),
+    );
+    unawaited(container.read(routerProvider).push(AppRoutes.editClub(kin.id)));
+    await tester.pumpAndSettle();
+
+    await tester.tap(
+      find.descendant(
+        of: find.byKey(const Key('club-image-logo')),
+        matching: find.text('Choisir'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byKey(const Key('club-image-cover')),
+        matching: find.text('Choisir'),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(media.uploads, [
+      'club-media/${kin.id}/logo-1.jpg',
+      'club-media/${kin.id}/cover-2.jpg',
+    ]);
+    expect(clubs.images[kin.id]![ClubImageKind.logo], '${kin.id}/logo-1.jpg');
+    expect(clubs.images[kin.id]![ClubImageKind.cover], '${kin.id}/cover-2.jpg');
+  });
 }

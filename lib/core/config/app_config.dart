@@ -66,6 +66,12 @@ class AppConfig {
     );
   }
 
+  /// Adresse de retour des liens envoyés par e-mail (confirmation,
+  /// réinitialisation du mot de passe). À déclarer dans Supabase :
+  /// Authentication → URL Configuration → Redirect URLs.
+  static const authRedirectScheme = 'com.ridergroup.ridergroup';
+  static const authRedirectUri = '$authRedirectScheme://auth-callback';
+
   final AppEnvironment environment;
   final String supabaseUrl;
   final String supabasePublishableKey;

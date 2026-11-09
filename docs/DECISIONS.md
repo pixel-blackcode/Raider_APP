@@ -22,6 +22,11 @@
 | D-16 | Limite de 3 créations de club par 24 h et par utilisateur. | Limitation des abus ; valeur ajustable. |
 | D-17 | Administrateurs plateforme dans `private.platform_admins`, désignés par SQL. | En attendant le tableau de bord (Mission 10). |
 | D-18 | Socle de la Mission 02 réalisé avec la Mission 03. | Les clubs ne peuvent pas fonctionner sans comptes. |
+| D-19 | Session et vérificateur PKCE dans `flutter_secure_storage` ; effacement au premier lancement. | Jetons chiffrés au repos ; pas de session fantôme après réinstallation iOS. |
+| D-20 | Liens e-mail : schéma `com.ridergroup.ridergroup://auth-callback`, flux PKCE. | Lié à l'identifiant d'application ; à changer avec lui (O-01). Les App Links / Universal Links (domaine vérifié) pourront le remplacer. |
+| D-21 | Buckets Storage privés, images chargées avec le jeton de session. | Les médias d'un club privé ou d'un profil non découvrable ne fuient pas par URL publique. Coût : pas de CDN public. |
+| D-22 | Confidentialité : « profil découvrable » et « accepter les invitations », activés par défaut. | Préférences effectivement appliquées par le serveur ; d'autres (GPS, messagerie) viendront avec leurs modules. |
+| D-23 | Suppression de compte bloquée tant qu'on possède un club avec d'autres membres. | Évite de laisser des clubs sans propriétaire (résout O-08). |
 
 ## Décisions ouvertes (validation du propriétaire requise)
 
@@ -33,5 +38,5 @@
 | O-04 | Région d'hébergement Supabase. | 02 | À choisir selon la latence mesurée depuis Kinshasa/Lubumbashi et les contraintes juridiques. |
 | O-05 | Fournisseur SMTP pour les e-mails d'authentification. | 02 | Requis pour la production (limites du service intégré). |
 | O-07 | Une vitrine de club privé référencé affiche nom, ville, description et règlement. | 03 | Alternative : masquer le règlement aux non-membres (nécessite une table séparée). |
-| O-08 | Un propriétaire ne peut pas supprimer son compte tant qu'il possède un club (`on delete restrict`). | 02 | Transfert ou suppression du club à prévoir dans le parcours de suppression de compte. |
+| O-09 | Suppression de compte par fonction SQL (`delete from auth.users`). | 02 | Testée sur PostgreSQL. **À vérifier sur le projet Supabase réel.** Si les droits du rôle `postgres` sur `auth.users` le refusent, il faudra passer par une Edge Function utilisant l'API d'administration. |
 | O-06 | Cadre juridique (protection des données en RDC et pays futurs). | 11 | Analyse juridique à mener ; aucune conformité n'est affirmée à ce stade. |

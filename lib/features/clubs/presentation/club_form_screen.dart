@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
 import '../../../core/errors/error_messages.dart';
+import '../../../core/media/media_repository.dart';
+import '../../../core/media/photo_picker.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/empty_state.dart';
@@ -45,9 +47,15 @@ class ClubFormScreen extends ConsumerWidget {
               message: l10n.clubEditNotAllowed,
             );
           }
-          return _ClubForm(
-            club: detail.club,
-            canChangeSettings: permissions.canChangeSettings,
+          return ListView(
+            children: [
+              _ClubImagesSection(club: detail.club),
+              _ClubForm(
+                club: detail.club,
+                canChangeSettings: permissions.canChangeSettings,
+                embedded: true,
+              ),
+            ],
           );
         },
       ),
@@ -56,10 +64,17 @@ class ClubFormScreen extends ConsumerWidget {
 }
 
 class _ClubForm extends ConsumerStatefulWidget {
-  const _ClubForm({this.club, this.canChangeSettings = true});
+  const _ClubForm({
+    this.club,
+    this.canChangeSettings = true,
+    this.embedded = false,
+  });
 
   final Club? club;
   final bool canChangeSettings;
+
+  /// Intégré dans une liste parente (pas de défilement propre).
+  final bool embedded;
 
   @override
   ConsumerState<_ClubForm> createState() => _ClubFormState();
@@ -133,9 +148,11 @@ class _ClubFormState extends ConsumerState<_ClubForm> {
       }
     } catch (error) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(describeError(context, error))));
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text(describeError(context, error))),
+          );
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -150,6 +167,8 @@ class _ClubFormState extends ConsumerState<_ClubForm> {
     return Form(
       key: _formKey,
       child: ListView(
+        shrinkWrap: widget.embedded,
+        physics: widget.embedded ? const NeverScrollableScrollPhysics() : null,
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
           TextFormField(
@@ -266,6 +285,96 @@ class _ClubFormState extends ConsumerState<_ClubForm> {
             onPressed: _busy ? null : _submit,
             child: Text(_isEditing ? l10n.actionSave : l10n.clubCreate),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Logo et couverture (modification uniquement : le dossier de stockage est
+/// l'identifiant du club). Réservé aux owner / admin, comme côté serveur.
+class _ClubImagesSection extends ConsumerStatefulWidget {
+  const _ClubImagesSection({required this.club});
+
+  final Club club;
+
+  @override
+  ConsumerState<_ClubImagesSection> createState() => _ClubImagesSectionState();
+}
+
+class _ClubImagesSectionState extends ConsumerState<_ClubImagesSection> {
+  ClubImageKind? _uploading;
+
+  Future<void> _change(ClubImageKind kind) async {
+    final media = ref.read(mediaRepositoryProvider);
+    final clubs = ref.read(clubsRepositoryProvider);
+    if (media == null || clubs == null) return;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final image = await ref
+          .read(photoPickerProvider)
+          .pick(maxDimension: kind == ClubImageKind.logo ? 512 : 1600);
+      if (image == null) return;
+      image.validateFor(MediaBucket.clubMedia);
+      setState(() => _uploading = kind);
+      final previous = kind == ClubImageKind.logo
+          ? widget.club.logoPath
+          : widget.club.coverPath;
+      final path = await media.upload(
+        MediaBucket.clubMedia,
+        folder: widget.club.id,
+        baseName: kind.fileBaseName,
+        image: image,
+      );
+      await clubs.setClubImage(widget.club.id, kind, path);
+      if (previous != null) {
+        await media
+            .remove(MediaBucket.clubMedia, [previous])
+            .catchError((_) {});
+      }
+      ref.refreshClubs(widget.club.id);
+    } catch (error) {
+      if (mounted) {
+        messenger
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text(describeError(context, error))),
+          );
+      }
+    } finally {
+      if (mounted) setState(() => _uploading = null);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    Widget tile(ClubImageKind kind, String label, String? path) => ListTile(
+      key: Key('club-image-${kind.fileBaseName}'),
+      leading: Icon(
+        kind == ClubImageKind.logo ? Icons.badge_outlined : Icons.panorama,
+      ),
+      title: Text(label),
+      subtitle: Text(path == null ? l10n.clubImageNone : l10n.clubImageSet),
+      trailing: _uploading == kind
+          ? const SizedBox.square(
+              dimension: 24,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            )
+          : TextButton(
+              onPressed: _uploading == null ? () => _change(kind) : null,
+              child: Text(l10n.clubImageChange),
+            ),
+    );
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.md, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SectionHeader(title: l10n.clubImagesTitle),
+          tile(ClubImageKind.logo, l10n.clubLogo, widget.club.logoPath),
+          tile(ClubImageKind.cover, l10n.clubCover, widget.club.coverPath),
         ],
       ),
     );

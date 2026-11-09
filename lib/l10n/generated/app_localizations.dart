@@ -1203,6 +1203,252 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tout voir'**
   String get homeSeeAll;
+
+  /// No description provided for @signInForgotPassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe oublié ?'**
+  String get signInForgotPassword;
+
+  /// No description provided for @forgotPasswordTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe oublié'**
+  String get forgotPasswordTitle;
+
+  /// No description provided for @forgotPasswordSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indiquez votre adresse e-mail : vous recevrez un lien pour choisir un nouveau mot de passe.'**
+  String get forgotPasswordSubtitle;
+
+  /// No description provided for @forgotPasswordAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer le lien'**
+  String get forgotPasswordAction;
+
+  /// No description provided for @forgotPasswordSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si un compte correspond à cette adresse, un e-mail vient d\'être envoyé. Ouvrez le lien depuis ce téléphone.'**
+  String get forgotPasswordSent;
+
+  /// No description provided for @backToSignIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour à la connexion'**
+  String get backToSignIn;
+
+  /// No description provided for @newPasswordTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau mot de passe'**
+  String get newPasswordTitle;
+
+  /// No description provided for @newPasswordSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisissez un mot de passe que vous n\'utilisez nulle part ailleurs.'**
+  String get newPasswordSubtitle;
+
+  /// No description provided for @fieldNewPassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau mot de passe'**
+  String get fieldNewPassword;
+
+  /// No description provided for @newPasswordSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot de passe mis à jour.'**
+  String get newPasswordSaved;
+
+  /// No description provided for @profileHidden.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil masqué'**
+  String get profileHidden;
+
+  /// No description provided for @profilePhotoChange.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer la photo'**
+  String get profilePhotoChange;
+
+  /// No description provided for @profilePhotoRemove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la photo'**
+  String get profilePhotoRemove;
+
+  /// No description provided for @profileAccountSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte'**
+  String get profileAccountSection;
+
+  /// No description provided for @profileChangePassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer de mot de passe'**
+  String get profileChangePassword;
+
+  /// No description provided for @privacyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confidentialité'**
+  String get privacyTitle;
+
+  /// No description provided for @privacyDiscoverable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil visible par tous les motards'**
+  String get privacyDiscoverable;
+
+  /// No description provided for @privacyDiscoverableHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si désactivé, seuls les membres de vos clubs voient votre profil, et personne ne peut vous trouver par pseudonyme.'**
+  String get privacyDiscoverableHelp;
+
+  /// No description provided for @privacyInvitations.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accepter les invitations de clubs'**
+  String get privacyInvitations;
+
+  /// No description provided for @privacyInvitationsHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si désactivé, aucun club ne peut vous inviter. Vous pouvez toujours demander à rejoindre un club.'**
+  String get privacyInvitationsHelp;
+
+  /// No description provided for @privacyEmailNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre adresse e-mail n\'est jamais visible par les autres utilisateurs.'**
+  String get privacyEmailNotice;
+
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer mon compte'**
+  String get deleteAccountTitle;
+
+  /// No description provided for @deleteAccountIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'La suppression de votre compte est définitive.'**
+  String get deleteAccountIntro;
+
+  /// No description provided for @deleteAccountConsequences.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre profil, votre photo, vos adhésions, vos demandes et vos invitations seront supprimés. Cette action est irréversible.'**
+  String get deleteAccountConsequences;
+
+  /// No description provided for @deleteAccountSoloClubs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ces clubs, dont vous êtes le seul membre, seront supprimés : {clubs}'**
+  String deleteAccountSoloClubs(String clubs);
+
+  /// No description provided for @deleteAccountBlockedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Transférez d\'abord vos clubs'**
+  String get deleteAccountBlockedTitle;
+
+  /// No description provided for @deleteAccountBlockedBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes propriétaire de clubs qui comptent d\'autres membres : {clubs}. Transférez-en la propriété depuis la fiche du club avant de supprimer votre compte.'**
+  String deleteAccountBlockedBody(String clubs);
+
+  /// No description provided for @deleteAccountTypeToConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tapez {word} pour confirmer'**
+  String deleteAccountTypeToConfirm(String word);
+
+  /// No description provided for @deleteAccountAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer définitivement'**
+  String get deleteAccountAction;
+
+  /// No description provided for @deleteAccountDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre compte a été supprimé.'**
+  String get deleteAccountDone;
+
+  /// No description provided for @clubImagesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Logo et couverture'**
+  String get clubImagesTitle;
+
+  /// No description provided for @clubLogo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Logo'**
+  String get clubLogo;
+
+  /// No description provided for @clubCover.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image de couverture'**
+  String get clubCover;
+
+  /// No description provided for @clubImageNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune image'**
+  String get clubImageNone;
+
+  /// No description provided for @clubImageSet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image enregistrée'**
+  String get clubImageSet;
+
+  /// No description provided for @clubImageChange.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir'**
+  String get clubImageChange;
+
+  /// No description provided for @errorInvitationsDisabled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce motard n\'accepte pas les invitations de clubs.'**
+  String get errorInvitationsDisabled;
+
+  /// No description provided for @errorOwnsClubsWithMembers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Transférez d\'abord la propriété de vos clubs qui comptent d\'autres membres.'**
+  String get errorOwnsClubsWithMembers;
+
+  /// No description provided for @errorSamePassword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nouveau mot de passe doit être différent de l\'ancien.'**
+  String get errorSamePassword;
+
+  /// No description provided for @errorUnsupportedImage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Format d\'image non pris en charge (JPEG, PNG ou WebP).'**
+  String get errorUnsupportedImage;
+
+  /// No description provided for @errorImageTooLarge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Image trop volumineuse.'**
+  String get errorImageTooLarge;
 }
 
 class _AppLocalizationsDelegate

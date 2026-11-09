@@ -126,6 +126,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         ),
         const SizedBox(height: AppSpacing.sm),
         TextButton(
+          key: const Key('sign-in-forgot'),
+          onPressed: () => context.go(AppRoutes.forgotPassword),
+          child: Text(l10n.signInForgotPassword),
+        ),
+        TextButton(
           onPressed: () => context.go(AppRoutes.signUp),
           child: Text(l10n.signInNoAccount),
         ),

@@ -28,6 +28,16 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Liens d'authentification envoyés par e-mail (confirmation,
+                 réinitialisation du mot de passe), traités par supabase_flutter. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.ridergroup.ridergroup" android:host="auth-callback" />
+            </intent-filter>
+            <!-- Les liens sont gérés par supabase_flutter, pas par le routeur. -->
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="false" />
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

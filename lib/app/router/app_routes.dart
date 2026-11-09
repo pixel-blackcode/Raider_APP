@@ -12,11 +12,16 @@ abstract final class AppRoutes {
   static const marketplace = '/marketplace';
   static const settings = '/parametres';
   static const editProfile = '/profil/modifier';
+  static const privacySettings = '/profil/confidentialite';
+  static const deleteAccount = '/profil/supprimer-mon-compte';
+  static const newPassword = '/mot-de-passe/nouveau';
+  static const authCallback = '/auth-callback';
 
   // Authentification.
   static const signIn = '/connexion';
   static const signUp = '/inscription';
-  static const authPages = {signIn, signUp};
+  static const forgotPassword = '/mot-de-passe-oublie';
+  static const authPages = {signIn, signUp, forgotPassword};
 
   // Clubs.
   static const newClub = '/clubs/nouveau';

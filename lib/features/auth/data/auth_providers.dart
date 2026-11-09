@@ -8,7 +8,7 @@ import 'auth_repository.dart';
 /// Dépôt d'authentification ; `null` si le backend n'est pas initialisé.
 final authRepositoryProvider = Provider<AuthRepository?>((ref) {
   final client = ref.watch(supabaseClientProvider);
-  return client == null ? null : SupabaseAuthRepository(client.auth);
+  return client == null ? null : SupabaseAuthRepository(client);
 });
 
 /// Session courante, observable (utilisée par le routeur via
@@ -42,3 +42,18 @@ class CurrentUserId extends Notifier<String?> {
     return listenable.value?.userId;
   }
 }
+
+/// Vrai entre l'ouverture d'un lien de réinitialisation et la saisie du
+/// nouveau mot de passe ; le routeur impose alors l'écran dédié.
+final passwordRecoveryProvider = Provider<ValueNotifier<bool>>((ref) {
+  final repository = ref.watch(authRepositoryProvider);
+  final notifier = ValueNotifier<bool>(false);
+  if (repository != null) {
+    final subscription = repository.passwordRecoveryEvents().listen(
+      (_) => notifier.value = true,
+    );
+    ref.onDispose(subscription.cancel);
+  }
+  ref.onDispose(notifier.dispose);
+  return notifier;
+});

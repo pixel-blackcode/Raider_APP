@@ -51,4 +51,21 @@ void main() {
       );
     }
   });
+
+  test('lien de réinitialisation : saisie du mot de passe imposée', () {
+    String? recovery(String location) => resolveAuthRedirect(
+      location: Uri.parse(location),
+      backendReady: true,
+      signedIn: true,
+      passwordRecovery: true,
+    );
+    expect(recovery('/accueil'), AppRoutes.newPassword);
+    expect(recovery('/clubs/abc'), AppRoutes.newPassword);
+    expect(recovery(AppRoutes.newPassword), isNull);
+  });
+
+  test('mot de passe oublié accessible sans être connecté', () {
+    expect(redirect(AppRoutes.forgotPassword), isNull);
+    expect(redirect(AppRoutes.newPassword), startsWith(AppRoutes.signIn));
+  });
 }

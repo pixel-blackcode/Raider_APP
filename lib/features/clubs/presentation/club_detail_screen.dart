@@ -5,10 +5,12 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_routes.dart';
 import '../../../core/errors/app_exception.dart';
 import '../../../core/errors/error_messages.dart';
+import '../../../core/media/media_repository.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/info_card.dart';
+import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
@@ -113,14 +115,16 @@ Future<bool> runClubAction(
     await action(repository);
     ref.refreshClubs(clubId);
     if (successMessage != null) {
-      messenger.showSnackBar(SnackBar(content: Text(successMessage)));
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(successMessage)));
     }
     return true;
   } catch (error) {
     if (context.mounted) {
-      messenger.showSnackBar(
-        SnackBar(content: Text(describeError(context, error))),
-      );
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(describeError(context, error))));
     }
     return false;
   }
@@ -246,9 +250,30 @@ class _ClubDetailBody extends ConsumerWidget {
     final club = detail.club;
     final permissions = ClubPermissions(detail.myRole);
 
+    final cover = ref
+        .watch(mediaRepositoryProvider)
+        ?.imageProvider(MediaBucket.clubMedia, club.coverPath);
+
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
+        if (cover != null) ...[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: AspectRatio(
+              aspectRatio: 16 / 7,
+              child: Image(
+                key: const Key('club-cover'),
+                image: cover,
+                fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => ColoredBox(
+                  color: theme.colorScheme.surfaceContainerHighest,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+        ],
         Row(
           children: [
             ClubAvatar(club: club, radius: 32),
@@ -462,7 +487,9 @@ class _AdminSection extends ConsumerWidget {
     try {
       final profile = await profiles?.findByUsername(username);
       if (profile == null) {
-        messenger.showSnackBar(SnackBar(content: Text(l10n.errorUserNotFound)));
+        messenger
+          ..hideCurrentSnackBar()
+          ..showSnackBar(SnackBar(content: Text(l10n.errorUserNotFound)));
         return;
       }
       if (!context.mounted) return;
@@ -475,9 +502,11 @@ class _AdminSection extends ConsumerWidget {
       );
     } catch (error) {
       if (context.mounted) {
-        messenger.showSnackBar(
-          SnackBar(content: Text(describeError(context, error))),
-        );
+        messenger
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text(describeError(context, error))),
+          );
       }
     }
   }
@@ -639,18 +668,22 @@ class _MemberTile extends ConsumerWidget {
     final canTransfer = !isMe && permissions.role == ClubRole.owner;
     final hasActions = roles.isNotEmpty || canRemove || canTransfer;
 
+    final hidden = member.displayName.isEmpty;
     return ListTile(
       key: Key('club-member-${member.userId}'),
       contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
-        child: Text(
-          member.displayName.isEmpty
-              ? '?'
-              : member.displayName.characters.first.toUpperCase(),
-        ),
+      leading: RemoteAvatar(
+        label: member.displayName,
+        image: ref
+            .watch(mediaRepositoryProvider)
+            ?.imageProvider(MediaBucket.avatars, member.avatarPath),
       ),
-      title: Text(member.displayName),
-      subtitle: Text('@${member.username} · ${member.role.label(l10n)}'),
+      title: Text(hidden ? l10n.profileHidden : member.displayName),
+      subtitle: Text(
+        hidden
+            ? member.role.label(l10n)
+            : '@${member.username} · ${member.role.label(l10n)}',
+      ),
       trailing: !hasActions
           ? null
           : PopupMenuButton<String>(

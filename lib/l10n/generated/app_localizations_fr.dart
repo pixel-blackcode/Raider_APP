@@ -634,4 +634,145 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get homeSeeAll => 'Tout voir';
+
+  @override
+  String get signInForgotPassword => 'Mot de passe oublié ?';
+
+  @override
+  String get forgotPasswordTitle => 'Mot de passe oublié';
+
+  @override
+  String get forgotPasswordSubtitle =>
+      'Indiquez votre adresse e-mail : vous recevrez un lien pour choisir un nouveau mot de passe.';
+
+  @override
+  String get forgotPasswordAction => 'Envoyer le lien';
+
+  @override
+  String get forgotPasswordSent =>
+      'Si un compte correspond à cette adresse, un e-mail vient d\'être envoyé. Ouvrez le lien depuis ce téléphone.';
+
+  @override
+  String get backToSignIn => 'Retour à la connexion';
+
+  @override
+  String get newPasswordTitle => 'Nouveau mot de passe';
+
+  @override
+  String get newPasswordSubtitle =>
+      'Choisissez un mot de passe que vous n\'utilisez nulle part ailleurs.';
+
+  @override
+  String get fieldNewPassword => 'Nouveau mot de passe';
+
+  @override
+  String get newPasswordSaved => 'Mot de passe mis à jour.';
+
+  @override
+  String get profileHidden => 'Profil masqué';
+
+  @override
+  String get profilePhotoChange => 'Changer la photo';
+
+  @override
+  String get profilePhotoRemove => 'Retirer la photo';
+
+  @override
+  String get profileAccountSection => 'Compte';
+
+  @override
+  String get profileChangePassword => 'Changer de mot de passe';
+
+  @override
+  String get privacyTitle => 'Confidentialité';
+
+  @override
+  String get privacyDiscoverable => 'Profil visible par tous les motards';
+
+  @override
+  String get privacyDiscoverableHelp =>
+      'Si désactivé, seuls les membres de vos clubs voient votre profil, et personne ne peut vous trouver par pseudonyme.';
+
+  @override
+  String get privacyInvitations => 'Accepter les invitations de clubs';
+
+  @override
+  String get privacyInvitationsHelp =>
+      'Si désactivé, aucun club ne peut vous inviter. Vous pouvez toujours demander à rejoindre un club.';
+
+  @override
+  String get privacyEmailNotice =>
+      'Votre adresse e-mail n\'est jamais visible par les autres utilisateurs.';
+
+  @override
+  String get deleteAccountTitle => 'Supprimer mon compte';
+
+  @override
+  String get deleteAccountIntro =>
+      'La suppression de votre compte est définitive.';
+
+  @override
+  String get deleteAccountConsequences =>
+      'Votre profil, votre photo, vos adhésions, vos demandes et vos invitations seront supprimés. Cette action est irréversible.';
+
+  @override
+  String deleteAccountSoloClubs(String clubs) {
+    return 'Ces clubs, dont vous êtes le seul membre, seront supprimés : $clubs';
+  }
+
+  @override
+  String get deleteAccountBlockedTitle => 'Transférez d\'abord vos clubs';
+
+  @override
+  String deleteAccountBlockedBody(String clubs) {
+    return 'Vous êtes propriétaire de clubs qui comptent d\'autres membres : $clubs. Transférez-en la propriété depuis la fiche du club avant de supprimer votre compte.';
+  }
+
+  @override
+  String deleteAccountTypeToConfirm(String word) {
+    return 'Tapez $word pour confirmer';
+  }
+
+  @override
+  String get deleteAccountAction => 'Supprimer définitivement';
+
+  @override
+  String get deleteAccountDone => 'Votre compte a été supprimé.';
+
+  @override
+  String get clubImagesTitle => 'Logo et couverture';
+
+  @override
+  String get clubLogo => 'Logo';
+
+  @override
+  String get clubCover => 'Image de couverture';
+
+  @override
+  String get clubImageNone => 'Aucune image';
+
+  @override
+  String get clubImageSet => 'Image enregistrée';
+
+  @override
+  String get clubImageChange => 'Choisir';
+
+  @override
+  String get errorInvitationsDisabled =>
+      'Ce motard n\'accepte pas les invitations de clubs.';
+
+  @override
+  String get errorOwnsClubsWithMembers =>
+      'Transférez d\'abord la propriété de vos clubs qui comptent d\'autres membres.';
+
+  @override
+  String get errorSamePassword =>
+      'Le nouveau mot de passe doit être différent de l\'ancien.';
+
+  @override
+  String get errorUnsupportedImage =>
+      'Format d\'image non pris en charge (JPEG, PNG ou WebP).';
+
+  @override
+  String get errorImageTooLarge => 'Image trop volumineuse.';
 }

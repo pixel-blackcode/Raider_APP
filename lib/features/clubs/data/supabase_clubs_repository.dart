@@ -13,7 +13,7 @@ class SupabaseClubsRepository implements ClubsRepository {
   static const _clubColumns =
       'id, name, description, rules, city, country_code, visibility, '
       'is_listed, join_policy, owner_id, member_count, verified_at, '
-      'suspended_at, created_at';
+      'suspended_at, created_at, logo_path, cover_path';
 
   Future<T> _guard<T>(Future<T> Function() body) async {
     try {
@@ -87,7 +87,10 @@ class SupabaseClubsRepository implements ClubsRepository {
   Future<List<ClubMember>> members(String clubId) => _guard(() async {
     final rows = await _client
         .from('club_members')
-        .select('user_id, role, joined_at, profiles(username, display_name)')
+        .select(
+          'user_id, role, joined_at, '
+          'profiles(username, display_name, avatar_path)',
+        )
         .eq('club_id', clubId)
         .order('joined_at');
     final members = rows.map(ClubMember.fromJson).toList()
@@ -123,6 +126,17 @@ class SupabaseClubsRepository implements ClubsRepository {
     // RLS : 0 ligne modifiée = pas l'autorisation.
     if (rows.isEmpty) throw const AppException(AppException.notAllowed);
   });
+
+  @override
+  Future<void> setClubImage(String clubId, ClubImageKind kind, String? path) =>
+      _guard(() async {
+        final rows = await _client
+            .from('clubs')
+            .update({kind.column: path})
+            .eq('id', clubId)
+            .select('id');
+        if (rows.isEmpty) throw const AppException(AppException.notAllowed);
+      });
 
   @override
   Future<void> deleteClub(String clubId) => _guard(

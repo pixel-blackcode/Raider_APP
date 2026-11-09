@@ -7,10 +7,13 @@ import 'app_routes.dart';
 /// - Backend prêt, utilisateur déconnecté : seules les pages de connexion et
 ///   d'inscription sont accessibles.
 /// - Utilisateur connecté : les pages de connexion renvoient à l'accueil.
+/// - Lien de réinitialisation ouvert ([passwordRecovery]) : la saisie du
+///   nouveau mot de passe est imposée.
 String? resolveAuthRedirect({
   required Uri location,
   required bool backendReady,
   required bool signedIn,
+  bool passwordRecovery = false,
 }) {
   final path = location.path;
   final onAuthPage = AppRoutes.authPages.contains(path);
@@ -26,6 +29,10 @@ String? resolveAuthRedirect({
           ? null
           : {'from': from},
     ).toString();
+  }
+
+  if (passwordRecovery && path != AppRoutes.newPassword) {
+    return AppRoutes.newPassword;
   }
 
   if (onAuthPage) {

@@ -1,6 +1,11 @@
 import 'dart:async';
+import 'dart:typed_data';
+
+import 'package:flutter/painting.dart';
 
 import 'package:rider_group/core/errors/app_exception.dart';
+import 'package:rider_group/core/media/media_repository.dart';
+import 'package:rider_group/core/media/photo_picker.dart';
 import 'package:rider_group/features/auth/data/auth_repository.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_repository.dart';
@@ -21,6 +26,13 @@ class FakeAuthRepository implements AuthRepository {
   final bool requireConfirmation;
   final Map<String, String> accounts;
   final _controller = StreamController<AuthSession?>.broadcast();
+  final _recovery = StreamController<void>.broadcast();
+  final resetRequests = <String>[];
+  final calls = <String>[];
+  Object? deleteError;
+
+  /// Simule l'ouverture d'un lien de réinitialisation.
+  void openRecoveryLink() => _recovery.add(null);
   AuthSession? _session;
 
   void _emit(AuthSession? session) {
@@ -46,6 +58,27 @@ class FakeAuthRepository implements AuthRepository {
   Future<void> signOut() async => _emit(null);
 
   @override
+  Future<void> sendPasswordReset(String email) async =>
+      resetRequests.add(email);
+
+  @override
+  Future<void> updatePassword(String newPassword) async {
+    calls.add('updatePassword');
+    final email = _session?.email;
+    if (email != null) accounts[email] = newPassword;
+  }
+
+  @override
+  Stream<void> passwordRecoveryEvents() => _recovery.stream;
+
+  @override
+  Future<void> deleteAccount() async {
+    calls.add('deleteAccount');
+    if (deleteError != null) throw deleteError!;
+    _emit(null);
+  }
+
+  @override
   Future<SignUpOutcome> signUp({
     required String email,
     required String password,
@@ -67,6 +100,25 @@ class FakeProfileRepository implements ProfileRepository {
     : profiles = {for (final p in profiles) p.id: p};
 
   final Map<String, Profile> profiles;
+  final settings = <String, PrivacySettings>{};
+
+  @override
+  Future<void> setAvatarPath(String userId, String? path) async {
+    profiles[userId] = profiles[userId]!.copyWith(
+      avatarPath: path,
+      clearAvatar: path == null,
+    );
+  }
+
+  @override
+  Future<PrivacySettings> fetchPrivacySettings(String userId) async =>
+      settings[userId] ?? const PrivacySettings();
+
+  @override
+  Future<void> savePrivacySettings(
+    String userId,
+    PrivacySettings value,
+  ) async => settings[userId] = value;
 
   @override
   Future<Profile?> fetchProfile(String userId) async => profiles[userId];
@@ -233,6 +285,18 @@ class FakeClubsRepository implements ClubsRepository {
     calls.add('updateClub');
   }
 
+  final images = <String, Map<ClubImageKind, String?>>{};
+
+  @override
+  Future<void> setClubImage(
+    String clubId,
+    ClubImageKind kind,
+    String? path,
+  ) async {
+    calls.add('setImage:${kind.fileBaseName}');
+    (images[clubId] ??= {})[kind] = path;
+  }
+
   @override
   Future<void> deleteClub(String clubId) async {
     calls.add('deleteClub');
@@ -369,4 +433,50 @@ class FakeClubsRepository implements ClubsRepository {
       status: VerificationStatus.pending,
     );
   }
+}
+
+/// Médias en mémoire : enregistre les envois et suppressions.
+class FakeMediaRepository implements MediaRepository {
+  final uploads = <String>[];
+  final removed = <String>[];
+  final removedFolders = <String>[];
+  var _seq = 0;
+
+  @override
+  Future<String> upload(
+    MediaBucket bucket, {
+    required String folder,
+    required String baseName,
+    required PickedImage image,
+  }) async {
+    image.validateFor(bucket);
+    final path = '$folder/$baseName-${++_seq}.${image.extension}';
+    uploads.add('${bucket.id}/$path');
+    return path;
+  }
+
+  @override
+  Future<void> remove(MediaBucket bucket, List<String> paths) async =>
+      removed.addAll(paths.map((p) => '${bucket.id}/$p'));
+
+  @override
+  Future<void> removeFolder(MediaBucket bucket, String folder) async =>
+      removedFolders.add('${bucket.id}/$folder');
+
+  /// Pas d'image réseau dans les tests : l'initiale est affichée.
+  @override
+  ImageProvider? imageProvider(MediaBucket bucket, String? path) => null;
+}
+
+/// Sélecteur de photo renvoyant une image prédéfinie.
+class FakePhotoPicker implements PhotoPicker {
+  FakePhotoPicker([this.next]);
+
+  PickedImage? next;
+
+  static PickedImage jpeg({int size = 1024}) =>
+      PickedImage(bytes: Uint8List(size), extension: 'jpg');
+
+  @override
+  Future<PickedImage?> pick({required double maxDimension}) async => next;
 }

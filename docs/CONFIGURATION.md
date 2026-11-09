@@ -46,7 +46,9 @@ Recommandation : **un projet Supabase par environnement** (au minimum `dev` et `
    ```
 4. *Authentication → Providers → Email* : laisser **Confirm email** activé. L'application gère le cas « confirmation requise » : elle affiche un message, puis l'utilisateur se connecte après avoir cliqué le lien.
 5. *Authentication → SMTP* : configurer un fournisseur d'e-mails. L'envoi intégré de Supabase est très limité et réservé aux tests.
-6. *Authentication → URL Configuration* : renseigner le *Site URL*, vers lequel mène le lien de confirmation. Les liens profonds vers l'application arriveront avec la fin de la Mission 02.
+6. *Authentication → URL Configuration* : ajouter **`com.ridergroup.ridergroup://auth-callback`** dans *Redirect URLs*. Sans cela, les liens de confirmation et de réinitialisation ne rouvriront pas l'application.
+   - *Site URL* sert uniquement de page de repli, par exemple pour un lien ouvert sur un ordinateur.
+   - Le schéma suit l'identifiant de l'application : s'il change (O-01), mettre à jour `AppConfig.authRedirectScheme`, `AndroidManifest.xml` et `Info.plist`.
 7. Désigner un administrateur Rider Group, qui pourra examiner les demandes de badge « Vérifié ». Dans *SQL Editor*, avec l'identifiant visible dans *Authentication → Users* :
    ```sql
    insert into private.platform_admins (user_id, note)
@@ -60,6 +62,8 @@ Recommandation : **un projet Supabase par environnement** (au minimum `dev` et `
     where r.status = 'pending';
    ```
    L'approbation passe par la fonction `public.review_club_verification(request_id, true, 'note')`. Elle doit être appelée par un utilisateur listé dans `platform_admins`, depuis l'application d'administration à venir, ou en SQL après `set request.jwt.claims`. Elle met à jour le badge et journalise la décision.
+8. Les buckets Storage `avatars` et `club-media` sont créés par la migration 0004, avec leurs limites et politiques. Rien à configurer à la main.
+9. Après `supabase db push`, tester une suppression de compte sur un compte de test (voir O-09 dans `DECISIONS.md`).
 
 ### Instance locale (optionnel)
 

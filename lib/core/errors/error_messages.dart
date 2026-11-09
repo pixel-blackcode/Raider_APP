@@ -32,6 +32,11 @@ String describeError(BuildContext context, Object error) {
     'user_not_found' => l10n.errorUserNotFound,
     'already_verified' => l10n.errorAlreadyVerified,
     'verification_pending' => l10n.errorVerificationPending,
+    'invitations_disabled' => l10n.errorInvitationsDisabled,
+    'owns_clubs_with_members' => l10n.errorOwnsClubsWithMembers,
+    'same_password' => l10n.errorSamePassword,
+    'unsupported_image' => l10n.errorUnsupportedImage,
+    'image_too_large' => l10n.errorImageTooLarge,
     _ => l10n.errorUnknown,
   };
 }

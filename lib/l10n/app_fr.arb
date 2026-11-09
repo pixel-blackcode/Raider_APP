@@ -254,5 +254,67 @@
       }
     }
   },
-  "homeSeeAll": "Tout voir"
+  "homeSeeAll": "Tout voir",
+  "signInForgotPassword": "Mot de passe oublié ?",
+  "forgotPasswordTitle": "Mot de passe oublié",
+  "forgotPasswordSubtitle": "Indiquez votre adresse e-mail : vous recevrez un lien pour choisir un nouveau mot de passe.",
+  "forgotPasswordAction": "Envoyer le lien",
+  "forgotPasswordSent": "Si un compte correspond à cette adresse, un e-mail vient d'être envoyé. Ouvrez le lien depuis ce téléphone.",
+  "backToSignIn": "Retour à la connexion",
+  "newPasswordTitle": "Nouveau mot de passe",
+  "newPasswordSubtitle": "Choisissez un mot de passe que vous n'utilisez nulle part ailleurs.",
+  "fieldNewPassword": "Nouveau mot de passe",
+  "newPasswordSaved": "Mot de passe mis à jour.",
+  "profileHidden": "Profil masqué",
+  "profilePhotoChange": "Changer la photo",
+  "profilePhotoRemove": "Retirer la photo",
+  "profileAccountSection": "Compte",
+  "profileChangePassword": "Changer de mot de passe",
+  "privacyTitle": "Confidentialité",
+  "privacyDiscoverable": "Profil visible par tous les motards",
+  "privacyDiscoverableHelp": "Si désactivé, seuls les membres de vos clubs voient votre profil, et personne ne peut vous trouver par pseudonyme.",
+  "privacyInvitations": "Accepter les invitations de clubs",
+  "privacyInvitationsHelp": "Si désactivé, aucun club ne peut vous inviter. Vous pouvez toujours demander à rejoindre un club.",
+  "privacyEmailNotice": "Votre adresse e-mail n'est jamais visible par les autres utilisateurs.",
+  "deleteAccountTitle": "Supprimer mon compte",
+  "deleteAccountIntro": "La suppression de votre compte est définitive.",
+  "deleteAccountConsequences": "Votre profil, votre photo, vos adhésions, vos demandes et vos invitations seront supprimés. Cette action est irréversible.",
+  "deleteAccountSoloClubs": "Ces clubs, dont vous êtes le seul membre, seront supprimés : {clubs}",
+  "@deleteAccountSoloClubs": {
+    "placeholders": {
+      "clubs": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteAccountBlockedTitle": "Transférez d'abord vos clubs",
+  "deleteAccountBlockedBody": "Vous êtes propriétaire de clubs qui comptent d'autres membres : {clubs}. Transférez-en la propriété depuis la fiche du club avant de supprimer votre compte.",
+  "@deleteAccountBlockedBody": {
+    "placeholders": {
+      "clubs": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteAccountTypeToConfirm": "Tapez {word} pour confirmer",
+  "@deleteAccountTypeToConfirm": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteAccountAction": "Supprimer définitivement",
+  "deleteAccountDone": "Votre compte a été supprimé.",
+  "clubImagesTitle": "Logo et couverture",
+  "clubLogo": "Logo",
+  "clubCover": "Image de couverture",
+  "clubImageNone": "Aucune image",
+  "clubImageSet": "Image enregistrée",
+  "clubImageChange": "Choisir",
+  "errorInvitationsDisabled": "Ce motard n'accepte pas les invitations de clubs.",
+  "errorOwnsClubsWithMembers": "Transférez d'abord la propriété de vos clubs qui comptent d'autres membres.",
+  "errorSamePassword": "Le nouveau mot de passe doit être différent de l'ancien.",
+  "errorUnsupportedImage": "Format d'image non pris en charge (JPEG, PNG ou WebP).",
+  "errorImageTooLarge": "Image trop volumineuse."
 }
