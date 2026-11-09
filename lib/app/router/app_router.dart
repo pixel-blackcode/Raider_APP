@@ -2,30 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/backend/backend_providers.dart';
+import '../../features/auth/data/auth_providers.dart';
+import '../../features/auth/presentation/sign_in_screen.dart';
+import '../../features/auth/presentation/sign_up_screen.dart';
+import '../../features/clubs/presentation/club_detail_screen.dart';
+import '../../features/clubs/presentation/club_form_screen.dart';
 import '../../features/clubs/presentation/clubs_screen.dart';
 import '../../features/garage/presentation/garage_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/marketplace/presentation/marketplace_screen.dart';
 import '../../features/messages/presentation/messages_screen.dart';
+import '../../features/profile/presentation/edit_profile_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/rides/presentation/rides_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import 'app_routes.dart';
 import 'app_shell.dart';
+import 'auth_guard.dart';
 import 'not_found_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 /// Routeur de l'application.
 ///
-/// Les gardes d'authentification (redirect) seront ajoutées en Mission 02.
+/// La garde d'authentification ([resolveAuthRedirect]) est réévaluée à chaque
+/// changement de session.
 final routerProvider = Provider<GoRouter>((ref) {
+  final backendReady = ref.watch(backendStatusProvider).isReady;
+  final session = ref.watch(authSessionProvider);
+
   final router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: AppRoutes.home,
+    refreshListenable: session,
     errorBuilder: (context, state) => const NotFoundScreen(),
+    redirect: (context, state) => resolveAuthRedirect(
+      location: state.uri,
+      backendReady: backendReady,
+      signedIn: session.value != null,
+    ),
     routes: [
       GoRoute(path: '/', redirect: (_, _) => AppRoutes.home),
+      GoRoute(
+        path: AppRoutes.signIn,
+        builder: (context, state) =>
+            SignInScreen(notice: state.uri.queryParameters['notice']),
+      ),
+      GoRoute(
+        path: AppRoutes.signUp,
+        builder: (context, state) => const SignUpScreen(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             AppShell(navigationShell: navigationShell),
@@ -51,6 +78,30 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.clubs,
                 builder: (context, state) => const ClubsScreen(),
+                routes: [
+                  // « nouveau » doit précéder le paramètre « :clubId ».
+                  GoRoute(
+                    path: 'nouveau',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => const ClubFormScreen(),
+                  ),
+                  GoRoute(
+                    path: ':clubId',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => ClubDetailScreen(
+                      clubId: state.pathParameters['clubId']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'modifier',
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => ClubFormScreen(
+                          clubId: state.pathParameters['clubId'],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
@@ -67,6 +118,13 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.profile,
                 builder: (context, state) => const ProfileScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'modifier',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => const EditProfileScreen(),
+                  ),
+                ],
               ),
             ],
           ),

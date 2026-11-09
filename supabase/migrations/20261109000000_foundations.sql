@@ -20,9 +20,13 @@ create schema if not exists private;
 revoke all on schema private from public;
 revoke all on schema private from anon, authenticated;
 
--- Les nouvelles fonctions de `public` ne sont pas exécutables par défaut :
--- chaque RPC exposée devra être explicitement autorisée (GRANT EXECUTE).
-alter default privileges in schema public revoke execute on functions from public;
+-- Les nouvelles fonctions ne sont pas exécutables par défaut : chaque RPC
+-- exposée devra être explicitement autorisée (GRANT EXECUTE).
+--  * PostgreSQL accorde EXECUTE à PUBLIC sur toute nouvelle fonction ; ce
+--    privilège global ne peut être retiré que par un ALTER DEFAULT PRIVILEGES
+--    sans clause IN SCHEMA (une règle par schéma ne peut qu'ajouter).
+--  * Supabase accorde en plus EXECUTE à anon / authenticated dans public.
+alter default privileges revoke execute on functions from public;
 alter default privileges in schema public revoke execute on functions from anon, authenticated;
 
 -- Horodatage automatique des mises à jour (trigger générique).

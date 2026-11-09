@@ -44,7 +44,22 @@ Recommandation : **un projet Supabase par environnement** (au minimum `dev` et `
    supabase link --project-ref <project-ref>
    supabase db push
    ```
-4. *Authentication* (préparation de la Mission 02) : activer la confirmation d'e-mail, configurer un fournisseur SMTP (l'envoi intégré de Supabase est limité et réservé aux tests) et les URL de redirection pour les liens profonds.
+4. *Authentication → Providers → Email* : laisser **Confirm email** activé. L'application gère le cas « confirmation requise » : elle affiche un message, puis l'utilisateur se connecte après avoir cliqué le lien.
+5. *Authentication → SMTP* : configurer un fournisseur d'e-mails. L'envoi intégré de Supabase est très limité et réservé aux tests.
+6. *Authentication → URL Configuration* : renseigner le *Site URL*, vers lequel mène le lien de confirmation. Les liens profonds vers l'application arriveront avec la fin de la Mission 02.
+7. Désigner un administrateur Rider Group, qui pourra examiner les demandes de badge « Vérifié ». Dans *SQL Editor*, avec l'identifiant visible dans *Authentication → Users* :
+   ```sql
+   insert into private.platform_admins (user_id, note)
+   values ('<uuid-de-l-utilisateur>', 'Administrateur Rider Group');
+   ```
+   En attendant le tableau de bord (Mission 10), une demande s'examine ainsi :
+   ```sql
+   -- Lister les demandes en attente
+   select r.id, c.name, r.message, r.created_at
+     from public.club_verification_requests r join public.clubs c on c.id = r.club_id
+    where r.status = 'pending';
+   ```
+   L'approbation passe par la fonction `public.review_club_verification(request_id, true, 'note')`. Elle doit être appelée par un utilisateur listé dans `platform_admins`, depuis l'application d'administration à venir, ou en SQL après `set request.jwt.claims`. Elle met à jour le badge et journalise la décision.
 
 ### Instance locale (optionnel)
 
@@ -54,12 +69,19 @@ supabase status                      # affiche l'URL et la clé publishable loca
 ```
 Sur émulateur Android, utiliser `http://10.0.2.2:54321` comme `SUPABASE_URL`.
 
-## 4. Vérifier les migrations sans Supabase
+## 4. Vérifier les migrations et les règles d'accès sans Supabase
 
-Le script applique les migrations sur une base PostgreSQL + PostGIS vierge (en recréant les rôles `anon`, `authenticated`, `service_role`), les ré-applique pour vérifier l'idempotence, puis exécute `supabase/tests/*.sql`.
+Le script commence par recréer, sur une base PostgreSQL + PostGIS **vierge**, ce que fournit Supabase :
+- les rôles `anon`, `authenticated` et `service_role` ;
+- `auth.users` et `auth.uid()` ;
+- les privilèges par défaut.
+
+Il applique ensuite les migrations, puis exécute `supabase/sql_tests/*.sql`. Ces tests jouent des scénarios multi-utilisateurs, chacun agissant « en tant que » un compte, comme PostgREST avec un JWT. Le script s'arrête au premier échec.
 
 ```sh
-docker run -d --name rider-pg -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=rider -p 5432:5432 postgis/postgis:16-3.4
+docker run -d --name rider-pg -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgis/postgis:16-3.4
+# L'image installe PostGIS dans « public » de la base par défaut : utiliser une base vierge.
+psql postgresql://postgres:postgres@localhost:5432/postgres -c 'create database rider template template1'
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/rider scripts/check_migrations.sh
 ```
 

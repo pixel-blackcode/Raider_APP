@@ -9,6 +9,7 @@ import '../../../core/widgets/info_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/shortcut_tile.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import 'home_clubs_section.dart';
 
 /// Accueil : prochaines balades, clubs et publications communautaires.
 ///
@@ -84,8 +85,14 @@ class HomeScreen extends StatelessWidget {
           ),
           SectionHeader(title: l10n.homeUpcomingRides),
           InfoCard(icon: Icons.route_outlined, message: l10n.homeNoRides),
-          SectionHeader(title: l10n.homeClubs),
-          InfoCard(icon: Icons.groups_outlined, message: l10n.homeNoClubs),
+          SectionHeader(
+            title: l10n.homeClubs,
+            trailing: TextButton(
+              onPressed: () => context.go(AppRoutes.clubs),
+              child: Text(l10n.homeSeeAll),
+            ),
+          ),
+          const HomeClubsSection(),
           SectionHeader(title: l10n.homeCommunity),
           InfoCard(icon: Icons.forum_outlined, message: l10n.homeNoPosts),
           const SizedBox(height: AppSpacing.lg),

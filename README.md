@@ -4,8 +4,11 @@ Application mobile communautaire pour motards — République démocratique du C
 
 Rider Group réunit motards indépendants et clubs : profils, garage virtuel, clubs publics et privés, balades organisées, mode Convoi avec GPS en temps réel, SOS, réseau social, marketplace sans paiement et suivi d'entretien.
 
-> **État actuel : Mission 01 — Fondations techniques.**
-> L'application démarre, navigue entre ses écrans structurels et affiche honnêtement l'état du serveur. Aucune fonctionnalité métier (comptes, clubs, balades…) n'est encore livrée. Voir [docs/ROADMAP.md](docs/ROADMAP.md).
+> **État actuel : Missions 01 et 03 livrées, socle de la Mission 02.**
+> - Comptes : inscription, connexion, session, profil.
+> - Clubs : création libre, publics et privés, adhésion libre, sur approbation ou sur invitation, rôles, demande de badge vérifié.
+>
+> Toutes les règles d'accès sont appliquées côté serveur et testées. Les balades, le GPS, le SOS, etc. viendront avec les missions suivantes. Voir [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Stack
 
@@ -42,7 +45,7 @@ dart format --output=none --set-exit-if-changed lib test
 flutter analyze
 flutter test
 
-# Migrations SQL sur un PostgreSQL + PostGIS vierge
+# Migrations + tests SQL d'autorisation (PostgreSQL + PostGIS vierge)
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/rider scripts/check_migrations.sh
 ```
 
@@ -56,14 +59,14 @@ lib/
   features/<module>/           Un dossier par fonctionnalité (data / domain / presentation)
   l10n/                        Traductions ARB (+ code généré)
 supabase/migrations/           Migrations SQL versionnées
-supabase/tests/                Contrôles structurels (RLS obligatoire, etc.)
+supabase/sql_tests/            Contrôles structurels et scénarios d'autorisation multi-utilisateurs
 docs/                          Architecture, configuration, décisions, feuille de route
 ```
 
-Détails : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · Décisions : [docs/DECISIONS.md](docs/DECISIONS.md)
+Détails : [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · Décisions : [docs/DECISIONS.md](docs/DECISIONS.md) · Sécurité : [docs/SECURITY.md](docs/SECURITY.md)
 
 ## Sécurité
 
 - Aucun secret dans le dépôt. Seule la clé Supabase *publishable* est fournie au client ; l'application **refuse** une clé `service_role` / `sb_secret_`.
 - Toute table exposée doit activer Row Level Security (contrôlé en CI).
-- Les autorisations (clubs, balades, positions GPS) seront vérifiées côté serveur.
+- Les autorisations sont vérifiées côté serveur : RLS en lecture, fonctions SQL pour les écritures sensibles, journal d'audit. Voir [docs/SECURITY.md](docs/SECURITY.md).

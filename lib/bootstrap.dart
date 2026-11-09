@@ -18,6 +18,9 @@ Future<void> bootstrap() async {
 
   runApp(
     ProviderScope(
+      // Pas de nouvelle tentative automatique : les écrans proposent
+      // « Réessayer » et affichent l'erreur réelle.
+      retry: (_, _) => null,
       overrides: [
         appConfigProvider.overrideWithValue(config),
         backendStatusProvider.overrideWithValue(backendStatus),

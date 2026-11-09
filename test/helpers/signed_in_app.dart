@@ -1,0 +1,52 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:rider_group/core/backend/backend_status.dart';
+import 'package:rider_group/core/config/app_config.dart';
+import 'package:rider_group/features/auth/data/auth_providers.dart';
+import 'package:rider_group/features/auth/domain/auth_session.dart';
+import 'package:rider_group/features/clubs/data/clubs_providers.dart';
+import 'package:rider_group/features/profile/data/profile_repository.dart';
+import 'package:rider_group/features/profile/domain/profile.dart';
+
+import 'fakes.dart';
+import 'pump_app.dart';
+
+const alice = Profile(id: 'alice', username: 'alice', displayName: 'Alice');
+const bob = Profile(id: 'bob', username: 'bob', displayName: 'Bob');
+const carol = Profile(id: 'carol', username: 'carol', displayName: 'Carol');
+
+final testProfiles = {
+  for (final p in [alice, bob, carol]) p.id: p,
+};
+
+/// Lance l'application avec un backend « prêt » simulé par des doublures.
+Future<ProviderContainer> pumpOnlineApp(
+  WidgetTester tester, {
+  required FakeAuthRepository auth,
+  FakeClubsRepository? clubs,
+  FakeProfileRepository? profiles,
+}) {
+  return pumpRiderGroupApp(
+    tester,
+    backendStatus: const BackendReady(AppEnvironment.development),
+    overrides: [
+      authRepositoryProvider.overrideWithValue(auth),
+      clubsRepositoryProvider.overrideWithValue(
+        clubs ??
+            FakeClubsRepository(
+              currentUserId: auth.currentSession?.userId ?? '',
+            ),
+      ),
+      profileRepositoryProvider.overrideWithValue(
+        profiles ?? FakeProfileRepository(testProfiles.values),
+      ),
+    ],
+  );
+}
+
+FakeAuthRepository signedInAs(Profile profile) => FakeAuthRepository(
+  initial: AuthSession(
+    userId: profile.id,
+    email: '${profile.username}@test.cd',
+  ),
+);

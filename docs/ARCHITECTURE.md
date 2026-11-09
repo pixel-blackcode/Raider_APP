@@ -41,7 +41,10 @@ features/rides/
   presentation/  écrans, widgets, controllers Riverpod
 ```
 
-En Mission 01, seuls les dossiers `presentation/` existent (écrans structurels). Les couches `data/` et `domain/` seront créées avec chaque module, sans dossier vide anticipé.
+Les modules `auth`, `profile` et `clubs` suivent cette structure complète. Les autres modules n'ont encore que des écrans structurels.
+
+- **Dépôts :** chaque module expose une interface (`ClubsRepository`…) et une implémentation Supabase. Les tests d'interface utilisent des doublures en mémoire (`test/helpers/fakes.dart`). Les règles de sécurité réelles sont testées en SQL (`supabase/sql_tests/`).
+- **Erreurs :** toute erreur du backend est convertie en `AppException(code)`. Le code reprend les codes levés par les fonctions SQL (`not_allowed`, `invitation_required`…). `describeError` les traduit en français, et un message serveur inconnu n'est jamais affiché tel quel.
 
 Règles de dépendance : `presentation → domain ← data`. Un module ne dépend pas des détails internes d'un autre module ; les éléments partagés montent dans `core/`.
 
@@ -50,7 +53,10 @@ Règles de dépendance : `presentation → domain ← data`. Un module ne dépen
 - `StatefulShellRoute.indexedStack` : cinq onglets conservant leur pile et leur état — **Accueil** (`/accueil`), **Balades** (`/balades`), **Clubs** (`/clubs`), **Messages** (`/messages`), **Profil** (`/profil`).
 - Écrans plein écran au-dessus de la barre : `/garage`, `/marketplace`, `/parametres`.
 - `/` redirige vers `/accueil` ; toute route inconnue affiche une page « introuvable ».
-- Mission 02 ajoutera la garde d'authentification (`redirect`) et les écrans de connexion.
+- **Garde d'authentification :** `resolveAuthRedirect` est une fonction pure, testée. Elle est réévaluée à chaque changement de session.
+  - Backend prêt et utilisateur déconnecté : seules `/connexion` et `/inscription` sont accessibles. La page demandée est mémorisée, avec un filtrage qui empêche les redirections vers un site externe.
+  - Backend non configuré : l'application reste consultable en mode dégradé.
+- **Clubs :** `/clubs/nouveau`, `/clubs/:id` et `/clubs/:id/modifier`. **Profil :** `/profil/modifier`.
 - Le mode Convoi (Mission 05) aura une route plein écran dédiée, à interface simplifiée (zones tactiles ≥ 64 dp, `AppSpacing.convoyTouchTarget`).
 
 ## Gestion d'état

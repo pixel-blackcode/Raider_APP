@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:rider_group/app/router/app_router.dart';
 import 'package:rider_group/app/router/app_routes.dart';
 import 'package:rider_group/core/backend/backend_status.dart';
-import 'package:rider_group/core/config/app_config.dart';
 
 import '../helpers/pump_app.dart';
+import '../helpers/signed_in_app.dart';
 
 void main() {
   testWidgets('démarre sur l\'accueil avec les cinq onglets', (tester) async {
@@ -38,10 +38,7 @@ void main() {
   testWidgets('backend initialisé : pas de bandeau sur l\'accueil', (
     tester,
   ) async {
-    await pumpRiderGroupApp(
-      tester,
-      backendStatus: const BackendReady(AppEnvironment.development),
-    );
+    await pumpOnlineApp(tester, auth: signedInAs(alice));
 
     expect(
       find.byKey(const Key('backend-status-not-configured')),

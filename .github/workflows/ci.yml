@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: subosito/flutter-action@v2
         with:
@@ -50,9 +50,11 @@ jobs:
     services:
       postgres:
         image: postgis/postgis:16-3.4
+        # L'image installe PostGIS dans le schéma public de POSTGRES_DB :
+        # on travaille donc dans une base créée à partir de template1, vierge
+        # comme un projet Supabase (où PostGIS vit dans le schéma extensions).
         env:
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: rider
         ports: ['5432:5432']
         options: >-
           --health-cmd "pg_isready -U postgres"
@@ -60,9 +62,59 @@ jobs:
           --health-timeout 5s
           --health-retries 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - name: Appliquer les migrations et vérifier
+      - name: Créer une base vierge
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/rider
+          PGPASSWORD: postgres
+        run: psql -h localhost -U postgres -c 'create database rider_ci template template1'
+
+      - name: Appliquer les migrations et exécuter les tests SQL
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/rider_ci
         run: scripts/check_migrations.sh
+
+  build-android:
+    name: Build Android (APK debug)
+    needs: flutter
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+
+      - name: Build APK (sans backend configuré)
+        run: flutter build apk --debug
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: rider-group-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
+
+  build-ios:
+    name: Build iOS (sans signature)
+    needs: flutter
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+
+      - name: Build iOS (no codesign)
+        run: flutter build ios --debug --no-codesign

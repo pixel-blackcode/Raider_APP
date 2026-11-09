@@ -35,7 +35,7 @@
   "messagesEmptyBody": "La messagerie privée, les groupes et les discussions de balade arrivent bientôt.",
   "profileTitle": "Profil",
   "profileSignedOutTitle": "Vous n'êtes pas connecté",
-  "profileSignedOutBody": "La création de compte et la connexion seront disponibles prochainement.",
+  "profileSignedOutBody": "Connectez-vous pour accéder à votre profil.",
   "settingsTitle": "Paramètres",
   "settingsAppearance": "Apparence",
   "settingsThemeSystem": "Système",
@@ -61,5 +61,198 @@
   "safetyNotice": "Ne manipulez jamais votre téléphone en roulant. Arrêtez-vous en lieu sûr avant d'utiliser l'application.",
   "notFoundTitle": "Page introuvable",
   "notFoundBody": "La page demandée n'existe pas.",
-  "backToHome": "Retour à l'accueil"
+  "backToHome": "Retour à l'accueil",
+  "actionAccept": "Accepter",
+  "actionCancel": "Annuler",
+  "actionDecline": "Refuser",
+  "actionDelete": "Supprimer",
+  "actionSave": "Enregistrer",
+  "actionRetry": "Réessayer",
+  "errorTitle": "Une erreur est survenue",
+  "signInTitle": "Connexion",
+  "signInSubtitle": "Retrouvez votre communauté de motards.",
+  "signInAction": "Se connecter",
+  "signInNoAccount": "Pas encore de compte ? Créer un compte",
+  "signUpTitle": "Créer un compte",
+  "signUpSubtitle": "Un seul compte, même si vous rejoignez plusieurs clubs.",
+  "signUpAction": "Créer mon compte",
+  "signUpHaveAccount": "Déjà inscrit ? Se connecter",
+  "signUpCheckEmail": "Compte créé. Confirmez votre adresse e-mail grâce au lien reçu, puis connectez-vous.",
+  "signOutAction": "Se déconnecter",
+  "fieldEmail": "Adresse e-mail",
+  "fieldPassword": "Mot de passe",
+  "fieldPasswordHelp": "8 caractères minimum, dont une lettre et un chiffre",
+  "fieldPasswordConfirm": "Confirmer le mot de passe",
+  "fieldDisplayName": "Nom affiché",
+  "fieldUsername": "Pseudonyme",
+  "fieldUsernameHelp": "3 à 30 caractères : minuscules, chiffres, _",
+  "fieldCity": "Ville",
+  "fieldBio": "Présentation",
+  "validationRequired": "Champ obligatoire",
+  "validationEmail": "Adresse e-mail invalide",
+  "validationPassword": "8 caractères minimum, dont une lettre et un chiffre",
+  "validationPasswordMismatch": "Les mots de passe ne correspondent pas",
+  "validationDisplayName": "Entre 1 et 60 caractères",
+  "validationUsername": "3 à 30 caractères : lettres minuscules, chiffres ou _",
+  "validationClubName": "Entre 3 et 80 caractères",
+  "validationCity": "Entre 2 et 80 caractères",
+  "profileEdit": "Modifier le profil",
+  "profileMissingTitle": "Profil introuvable",
+  "profileMissingBody": "Votre profil n'a pas pu être chargé. Réessayez dans un instant.",
+  "clubsOfflineBody": "Les clubs nécessitent une connexion au serveur Rider Group.",
+  "clubsTabMine": "Mes clubs",
+  "clubsTabDiscover": "Découvrir",
+  "clubsMineEmptyTitle": "Vous n'avez rejoint aucun club",
+  "clubsMineEmptyBody": "Découvrez les clubs de votre ville ou créez le vôtre.",
+  "clubsSearchHint": "Rechercher un club ou une ville",
+  "clubsDiscoverEmptyTitle": "Aucun club trouvé",
+  "clubsDiscoverEmptyBody": "Essayez un autre nom ou une autre ville, ou créez le premier club.",
+  "clubCreate": "Créer un club",
+  "clubEdit": "Modifier le club",
+  "clubEditNotAllowed": "Seuls le propriétaire et les administrateurs peuvent modifier ce club.",
+  "clubDelete": "Supprimer le club",
+  "clubDeleteConfirm": "Supprimer définitivement « {name} » ? Les membres, demandes et invitations seront supprimés.",
+  "@clubDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "clubNotFoundBody": "Ce club n'existe pas ou n'est pas accessible.",
+  "clubFieldName": "Nom du club",
+  "clubFieldDescription": "Description",
+  "clubFieldRules": "Règlement",
+  "clubSectionAccess": "Visibilité et adhésion",
+  "clubSettingsOwnerOnly": "Seul le propriétaire peut modifier ces réglages.",
+  "clubVisibilityPublic": "Public",
+  "clubVisibilityPrivate": "Privé",
+  "clubVisibilityPublicHelp": "Le club et sa liste de membres sont visibles par tous les motards connectés.",
+  "clubVisibilityPrivateHelp": "La liste des membres est réservée aux membres. Vous choisissez si le club apparaît dans la recherche.",
+  "clubFieldListed": "Apparaître dans la recherche",
+  "clubFieldListedHelp": "Si désactivé, seuls les membres et les personnes invitées voient le club.",
+  "clubFieldJoinPolicy": "Conditions d'adhésion",
+  "clubJoinOpen": "Adhésion libre",
+  "clubJoinApproval": "Sur approbation",
+  "clubJoinInviteOnly": "Sur invitation uniquement",
+  "clubRoleOwner": "Propriétaire",
+  "clubRoleAdmin": "Administrateur",
+  "clubRoleModerator": "Modérateur",
+  "clubRoleMember": "Membre",
+  "clubVerified": "Vérifié",
+  "clubMembersTitle": "Membres",
+  "clubMembersPrivate": "La liste des membres est réservée aux membres du club.",
+  "clubMembersEmpty": "Aucun membre à afficher.",
+  "clubJoin": "Rejoindre le club",
+  "clubJoined": "Bienvenue dans le club !",
+  "clubRequestJoin": "Demander à rejoindre",
+  "clubRequestMessage": "Message (facultatif)",
+  "clubRequestSend": "Envoyer",
+  "clubRequestSent": "Demande envoyée",
+  "clubRequestPending": "Votre demande d'adhésion est en attente de validation.",
+  "clubRequestCancel": "Annuler ma demande",
+  "clubInviteOnlyNotice": "Ce club accepte uniquement les membres invités.",
+  "clubLeave": "Quitter le club",
+  "clubLeaveConfirm": "Quitter « {name} » ?",
+  "@clubLeaveConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "clubAdminTitle": "Administration du club",
+  "clubInvite": "Inviter un motard",
+  "clubInviteSend": "Inviter",
+  "clubInviteSent": "Invitation envoyée à {name}",
+  "@clubInviteSent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "clubRequestsNone": "Aucune demande d'adhésion en attente.",
+  "clubInvitationTitle": "Invitation à rejoindre « {club} »",
+  "@clubInvitationTitle": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "clubInvitationFrom": "De la part de {name}",
+  "@clubInvitationFrom": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "clubSetRole": "Nommer {role}",
+  "@clubSetRole": {
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "clubRemoveMember": "Retirer du club",
+  "clubRemoveConfirm": "Retirer {name} du club ?",
+  "@clubRemoveConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "clubTransferOwnership": "Transférer la propriété",
+  "clubTransferConfirm": "Faire de {name} le propriétaire du club ? Vous deviendrez administrateur.",
+  "@clubTransferConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "clubVerificationRequest": "Demander le badge Vérifié",
+  "clubVerificationMessage": "Présentez votre club (ancienneté, références…)",
+  "clubVerificationSent": "Demande de vérification envoyée",
+  "clubVerificationPending": "Demande de vérification en cours d'examen par l'équipe Rider Group.",
+  "clubVerificationRejected": "La précédente demande de vérification a été refusée.",
+  "clubVerificationHelp": "Le badge est facultatif et accordé après examen par l'équipe Rider Group. Il ne donne accès à aucune donnée privée.",
+  "errorNetwork": "Connexion impossible. Vérifiez votre accès Internet et réessayez.",
+  "errorBackendUnavailable": "Le serveur n'est pas configuré sur cette version de l'application.",
+  "errorNotAuthenticated": "Votre session a expiré. Reconnectez-vous.",
+  "errorNotAllowed": "Action non autorisée",
+  "errorInvalidInput": "Données invalides",
+  "errorAlreadyExists": "Cette valeur est déjà utilisée.",
+  "errorInvalidCredentials": "Adresse e-mail ou mot de passe incorrect.",
+  "errorEmailNotConfirmed": "Confirmez votre adresse e-mail avant de vous connecter.",
+  "errorUserAlreadyExists": "Un compte existe déjà avec cette adresse e-mail.",
+  "errorWeakPassword": "Mot de passe trop faible.",
+  "errorRateLimited": "Trop de tentatives. Réessayez plus tard.",
+  "errorClubNotFound": "Club introuvable",
+  "errorClubNameTaken": "Ce nom de club est déjà pris.",
+  "errorClubSuspended": "Ce club est suspendu.",
+  "errorAlreadyMember": "Vous êtes déjà membre de ce club.",
+  "errorNotMember": "Cette personne n'est pas membre du club.",
+  "errorInvitationRequired": "Ce club n'accepte que les membres invités.",
+  "errorRequestNotFound": "Cette demande n'existe plus.",
+  "errorInvitationNotFound": "Cette invitation n'est plus valide.",
+  "errorOwnerCannotLeave": "Le propriétaire doit transférer la propriété avant de quitter le club.",
+  "errorUseTransferOwnership": "Utilisez le transfert de propriété.",
+  "errorUserNotFound": "Aucun motard trouvé avec ce pseudonyme.",
+  "errorAlreadyVerified": "Ce club est déjà vérifié.",
+  "errorVerificationPending": "Une demande de vérification est déjà en cours.",
+  "errorUnknown": "Une erreur inattendue est survenue.",
+  "clubMemberCount": "{count, plural, =0{Aucun membre} =1{1 membre} other{{count} membres}}",
+  "@clubMemberCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeSeeAll": "Tout voir"
 }

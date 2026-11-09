@@ -14,6 +14,14 @@
 | D-08 | Contrôle automatique « RLS obligatoire » en CI. | Empêche qu'une nouvelle table soit exposée sans politique. |
 | D-09 | Aucune donnée fictive dans l'interface : états vides explicites. | Exigence du cahier des charges ; évite de confondre maquette et fonctionnalité. |
 | D-10 | Identifiant provisoire `com.ridergroup.rider_group`. | Nécessaire à l'initialisation ; **à confirmer** avant publication. |
+| D-11 | Écritures sensibles via fonctions SQL (`create_club`, `join_club`…), tables en lecture seule côté client. | Vérification atomique des permissions, journalisation, aucune logique d'autorisation côté client. |
+| D-12 | Rôles de club hiérarchiques (owner 4 > admin 3 > modérateur 2 > membre 1) ; on n'agit que sur un rang strictement inférieur. | Règle simple, sans escalade de privilèges. |
+| D-13 | Seul le propriétaire modifie visibilité / référencement / mode d'adhésion ; les administrateurs modifient le contenu. | Les conditions d'adhésion sont une décision du propriétaire (cahier des charges §5.2). |
+| D-14 | Club public = toujours référencé (libre ou approbation) ; privé = approbation ou invitation, référencé ou masqué. | Interprétation de §5.2–5.3 ; à confirmer par le propriétaire. |
+| D-15 | Noms de club uniques (insensibles à la casse). | Limite l'usurpation ; le badge vérifié reste la garantie d'authenticité. |
+| D-16 | Limite de 3 créations de club par 24 h et par utilisateur. | Limitation des abus ; valeur ajustable. |
+| D-17 | Administrateurs plateforme dans `private.platform_admins`, désignés par SQL. | En attendant le tableau de bord (Mission 10). |
+| D-18 | Socle de la Mission 02 réalisé avec la Mission 03. | Les clubs ne peuvent pas fonctionner sans comptes. |
 
 ## Décisions ouvertes (validation du propriétaire requise)
 
@@ -24,4 +32,6 @@
 | O-03 | Durée de conservation des positions GPS. | 05 | Proposition à valider : positions brutes supprimées 24 à 72 h après la fin de la balade ; seule la dernière position est conservée pendant la balade active. |
 | O-04 | Région d'hébergement Supabase. | 02 | À choisir selon la latence mesurée depuis Kinshasa/Lubumbashi et les contraintes juridiques. |
 | O-05 | Fournisseur SMTP pour les e-mails d'authentification. | 02 | Requis pour la production (limites du service intégré). |
+| O-07 | Une vitrine de club privé référencé affiche nom, ville, description et règlement. | 03 | Alternative : masquer le règlement aux non-membres (nécessite une table séparée). |
+| O-08 | Un propriétaire ne peut pas supprimer son compte tant qu'il possède un club (`on delete restrict`). | 02 | Transfert ou suppression du club à prévoir dans le parcours de suppression de compte. |
 | O-06 | Cadre juridique (protection des données en RDC et pays futurs). | 11 | Analyse juridique à mener ; aucune conformité n'est affirmée à ce stade. |

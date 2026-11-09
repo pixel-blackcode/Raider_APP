@@ -1,4 +1,7 @@
+import 'dart:ui' show Size;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rider_group/app/app.dart';
 import 'package:rider_group/core/backend/backend_providers.dart';
@@ -18,13 +21,21 @@ Future<ProviderContainer> pumpRiderGroupApp(
   BackendStatus? backendStatus,
   AppConfig? config,
   Map<String, Object> preferences = const {},
+  List<Override> overrides = const [],
 }) async {
+  // Écran haut : les formulaires tiennent sans défilement dans les tests.
+  tester.view.physicalSize = const Size(800, 2000);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+
   SharedPreferences.setMockInitialValues(preferences);
   final prefs = await SharedPreferences.getInstance();
   final effectiveConfig = config ?? unconfiguredConfig;
 
   final container = ProviderContainer(
+    retry: (_, _) => null,
     overrides: [
+      ...overrides,
       appConfigProvider.overrideWithValue(effectiveConfig),
       backendStatusProvider.overrideWithValue(
         backendStatus ?? BackendNotConfigured(effectiveConfig.issues),
