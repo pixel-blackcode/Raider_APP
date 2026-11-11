@@ -2,6 +2,8 @@
 
 > Document de décision pour la Mission 05 (GPS et mode Convoi). Rédigé le 11 novembre 2026.
 >
+> ✅ **Décision du propriétaire (11/11/2026) : MapLibre + OpenStreetMap** : une solution basique et gratuite au départ, l'application n'étant pas encore monétisée (DECISIONS.md, D-34).
+>
 > ⚠️ **Fiabilité des chiffres.** Les pages officielles de Mapbox et de Google n'étaient pas accessibles depuis l'environnement de travail : leur domaine était bloqué par le réseau. Les tarifs ci-dessous viennent de recherches web recoupant plusieurs sources, listées en bas de page. Il faut les **revérifier sur les pages officielles avant tout engagement payant**.
 
 ## Besoins de Rider Group

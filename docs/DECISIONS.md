@@ -36,6 +36,8 @@
 | D-30 | Une balade de club ne peut être créée que par un propriétaire ou administrateur du club, qui peut ensuite la gérer. | Cohérent avec les rôles de club (D-12). |
 | D-32 | Projet de développement `rider-group-dev` (organisation RIDER GROUP, Paris, offre gratuite), séparé de l'organisation « open sphere » qui héberge une autre application en ligne. | Décision du propriétaire ; isolement des données et des quotas. |
 | D-33 | APK de test construit par la CI à partir de variables GitHub (`DEV_SUPABASE_URL`, `DEV_SUPABASE_PUBLISHABLE_KEY`), signé avec la clé de debug. | Essais sur téléphone sans attendre la fin ; aucun identifiant dans le dépôt. |
+| D-34 | **Cartographie : MapLibre (`maplibre_gl`) + tuiles OpenStreetMap**, sans service payant au départ ; source de tuiles interchangeable. | Décision du propriétaire (11/11/2026) : solution basique et gratuite tant que l'application n'est pas monétisée. Comparaison : [MAP_PROVIDERS.md](MAP_PROVIDERS.md). |
+| D-35 | **Positions GPS conservées 72 heures après la fin de la balade**, puis supprimées. | Décision du propriétaire (11/11/2026). Mise en œuvre et purge automatique : Mission 05. |
 | D-31 | Suppression de compte : fichiers de club conservés sans propriétaire ; refus tant qu'on organise une balade active avec des inscrits ; historique des balades terminées conservé. | Documentation Supabase (« You cannot delete a user if they are the owner of any objects in Supabase Storage ») ; évite d'effacer l'historique ou d'abandonner une balade en cours. |
 
 ## Décisions ouvertes (validation du propriétaire requise)
@@ -43,8 +45,6 @@
 | # | Sujet | Mission | Options / remarques |
 | --- | --- | --- | --- |
 | O-01 | Identifiant d'application et nom de domaine définitifs. | avant 11 | Irréversible après publication sur les stores. |
-| O-02 | Fournisseur de cartographie. | 05 | Comparaison faite : voir [MAP_PROVIDERS.md](MAP_PROVIDERS.md). **Recommandation : MapLibre + tuiles OpenStreetMap (PMTiles) hébergées par Rider Group** (hors ligne libre, coût indépendant du nombre d'utilisateurs). Alternative : Mapbox. **En attente de ta validation.** |
-| O-03 | Durée de conservation des positions GPS. | 05 | Proposition à valider : positions brutes supprimées 24 à 72 h après la fin de la balade ; seule la dernière position est conservée pendant la balade active. |
 | O-04 | Région d'hébergement Supabase. | 02 | ✅ Développement : eu-west-3 (Paris). À confirmer pour la production par des mesures de latence depuis la RDC. |
 | O-05 | Fournisseur SMTP pour les e-mails d'authentification. | 02 | Requis pour la production (limites du service intégré). |
 | O-07 | Une vitrine de club privé référencé affiche nom, ville, description et règlement. | 03 | Alternative : masquer le règlement aux non-membres (nécessite une table séparée). |
