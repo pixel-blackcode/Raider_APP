@@ -43,7 +43,7 @@
 | # | Sujet | Mission | Options / remarques |
 | --- | --- | --- | --- |
 | O-01 | Identifiant d'application et nom de domaine définitifs. | avant 11 | Irréversible après publication sur les stores. |
-| O-02 | Fournisseur de cartographie. | 05 | Mapbox, Google Maps Platform, MapLibre + tuiles OSM hébergées (ex. MapTiler, Stadia). Critères : coût par utilisateur actif, mode hors ligne, licence, qualité des données en RDC, consommation de données mobiles. Une comparaison chiffrée sera produite avant implémentation. |
+| O-02 | Fournisseur de cartographie. | 05 | Comparaison faite : voir [MAP_PROVIDERS.md](MAP_PROVIDERS.md). **Recommandation : MapLibre + tuiles OpenStreetMap (PMTiles) hébergées par Rider Group** (hors ligne libre, coût indépendant du nombre d'utilisateurs). Alternative : Mapbox. **En attente de ta validation.** |
 | O-03 | Durée de conservation des positions GPS. | 05 | Proposition à valider : positions brutes supprimées 24 à 72 h après la fin de la balade ; seule la dernière position est conservée pendant la balade active. |
 | O-04 | Région d'hébergement Supabase. | 02 | ✅ Développement : eu-west-3 (Paris). À confirmer pour la production par des mesures de latence depuis la RDC. |
 | O-05 | Fournisseur SMTP pour les e-mails d'authentification. | 02 | Requis pour la production (limites du service intégré). |
