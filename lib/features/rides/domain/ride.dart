@@ -107,7 +107,6 @@ class Ride {
   const Ride({
     required this.id,
     required this.title,
-    required this.organizerId,
     required this.startsAt,
     required this.city,
     required this.startLabel,
@@ -115,6 +114,7 @@ class Ride {
     required this.visibility,
     required this.joinPolicy,
     required this.status,
+    this.organizerId,
     this.description = '',
     this.clubId,
     this.clubName,
@@ -143,7 +143,7 @@ class Ride {
       id: json['id'] as String,
       title: json['title'] as String,
       description: (json['description'] as String?) ?? '',
-      organizerId: json['organizer_id'] as String,
+      organizerId: json['organizer_id'] as String?,
       organizerName: organizer?['display_name'] as String?,
       clubId: json['club_id'] as String?,
       clubName: club?['name'] as String?,
@@ -182,7 +182,10 @@ class Ride {
   final String id;
   final String title;
   final String description;
-  final String organizerId;
+
+  /// `null` si le compte de l'organisateur a été supprimé (balade conservée
+  /// pour l'historique des participants).
+  final String? organizerId;
   final String? organizerName;
   final String? clubId;
   final String? clubName;

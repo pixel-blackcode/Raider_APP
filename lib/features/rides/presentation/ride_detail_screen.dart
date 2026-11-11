@@ -210,7 +210,11 @@ class _RideDetailBody extends ConsumerWidget {
           infoRow(Icons.groups_outlined, l10n.rideClubLabel(ride.clubName!)),
         infoRow(
           Icons.person_outline,
-          l10n.rideOrganizerLabel(ride.organizerName ?? l10n.profileHidden),
+          l10n.rideOrganizerLabel(
+            ride.organizerId == null
+                ? l10n.rideOrganizerDeleted
+                : ride.organizerName ?? l10n.profileHidden,
+          ),
         ),
         infoRow(Icons.terrain, ride.difficulty.label(l10n)),
         infoRow(

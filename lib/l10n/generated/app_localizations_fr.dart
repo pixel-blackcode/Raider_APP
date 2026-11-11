@@ -713,7 +713,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteAccountConsequences =>
-      'Votre profil, votre photo, vos adhésions, vos demandes et vos invitations seront supprimés. Cette action est irréversible.';
+      'Votre profil, votre photo, vos adhésions, vos participations, vos demandes et vos invitations seront supprimés. Les balades terminées que vous avez organisées restent dans l\'historique des participants, sans votre nom. Cette action est irréversible.';
 
   @override
   String deleteAccountSoloClubs(String clubs) {
@@ -1200,4 +1200,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get validationBikeTypes => 'Choisissez au moins un type de moto.';
+
+  @override
+  String get rideOrganizerDeleted => 'compte supprimé';
+
+  @override
+  String get errorOrganizesActiveRides =>
+      'Annulez d\'abord les balades que vous organisez et qui comptent d\'autres inscrits.';
+
+  @override
+  String get deleteAccountBlockedRidesTitle =>
+      'Annulez d\'abord vos balades actives';
+
+  @override
+  String deleteAccountBlockedRidesBody(String rides) {
+    return 'Vous organisez des balades qui comptent d\'autres inscrits : $rides. Annulez-les depuis leur fiche avant de supprimer votre compte.';
+  }
 }

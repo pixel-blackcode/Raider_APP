@@ -1345,7 +1345,7 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAccountConsequences.
   ///
   /// In fr, this message translates to:
-  /// **'Votre profil, votre photo, vos adhésions, vos demandes et vos invitations seront supprimés. Cette action est irréversible.'**
+  /// **'Votre profil, votre photo, vos adhésions, vos participations, vos demandes et vos invitations seront supprimés. Les balades terminées que vous avez organisées restent dans l\'historique des participants, sans votre nom. Cette action est irréversible.'**
   String get deleteAccountConsequences;
 
   /// No description provided for @deleteAccountSoloClubs.
@@ -2205,6 +2205,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Choisissez au moins un type de moto.'**
   String get validationBikeTypes;
+
+  /// No description provided for @rideOrganizerDeleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'compte supprimé'**
+  String get rideOrganizerDeleted;
+
+  /// No description provided for @errorOrganizesActiveRides.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulez d\'abord les balades que vous organisez et qui comptent d\'autres inscrits.'**
+  String get errorOrganizesActiveRides;
+
+  /// No description provided for @deleteAccountBlockedRidesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulez d\'abord vos balades actives'**
+  String get deleteAccountBlockedRidesTitle;
+
+  /// No description provided for @deleteAccountBlockedRidesBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous organisez des balades qui comptent d\'autres inscrits : {rides}. Annulez-les depuis leur fiche avant de supprimer votre compte.'**
+  String deleteAccountBlockedRidesBody(String rides);
 }
 
 class _AppLocalizationsDelegate

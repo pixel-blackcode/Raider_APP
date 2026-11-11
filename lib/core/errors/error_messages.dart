@@ -49,6 +49,7 @@ String describeError(BuildContext context, Object error) {
     'club_members_only' => l10n.errorClubMembersOnly,
     'start_in_past' => l10n.errorStartInPast,
     'capacity_below_participants' => l10n.errorCapacityBelowParticipants,
+    'organizes_active_rides' => l10n.errorOrganizesActiveRides,
     _ => l10n.errorUnknown,
   };
 }

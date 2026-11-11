@@ -12,6 +12,8 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
 import '../../clubs/data/clubs_providers.dart';
 import '../../clubs/domain/club.dart';
+import '../../rides/data/rides_providers.dart';
+import '../../rides/domain/ride.dart';
 
 /// Suppression définitive du compte.
 ///
@@ -93,6 +95,19 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
             for (final m in memberships)
               if (m.role == ClubRole.owner && m.club.memberCount > 1) m.club,
           ];
+          final userId = ref.watch(currentUserIdProvider);
+          final blockingRides = [
+            for (final r
+                in ref.watch(myRidesProvider).value ?? const <MyRide>[])
+              if (r.ride.organizerId == userId &&
+                  const {
+                    RideStatus.published,
+                    RideStatus.locked,
+                    RideStatus.inProgress,
+                  }.contains(r.ride.status) &&
+                  r.ride.participantCount > 1)
+                r.ride,
+          ];
           final soloClubs = [
             for (final m in memberships)
               if (m.role == ClubRole.owner && m.club.memberCount <= 1) m.club,
@@ -117,16 +132,28 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
                 ),
               ],
               const SizedBox(height: AppSpacing.lg),
-              if (blocking.isNotEmpty)
-                InfoCard(
-                  key: const Key('delete-account-blocked'),
-                  icon: Icons.block,
-                  title: l10n.deleteAccountBlockedTitle,
-                  message: l10n.deleteAccountBlockedBody(
-                    blocking.map((c) => c.name).join(', '),
+              if (blocking.isNotEmpty || blockingRides.isNotEmpty) ...[
+                if (blocking.isNotEmpty)
+                  InfoCard(
+                    key: const Key('delete-account-blocked'),
+                    icon: Icons.block,
+                    title: l10n.deleteAccountBlockedTitle,
+                    message: l10n.deleteAccountBlockedBody(
+                      blocking.map((c) => c.name).join(', '),
+                    ),
                   ),
-                )
-              else ...[
+                if (blockingRides.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  InfoCard(
+                    key: const Key('delete-account-blocked-rides'),
+                    icon: Icons.route,
+                    title: l10n.deleteAccountBlockedRidesTitle,
+                    message: l10n.deleteAccountBlockedRidesBody(
+                      blockingRides.map((r) => r.title).join(', '),
+                    ),
+                  ),
+                ],
+              ] else ...[
                 TextField(
                   key: const Key('delete-account-confirm'),
                   controller: _confirmation,

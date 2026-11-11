@@ -34,6 +34,7 @@
 | D-28 | Fuseau IANA par balade (Kinshasa UTC+1, Lubumbashi UTC+2). Instants stockés en UTC, affichage dans le fuseau de la balade. Jeu complet de la base de fuseaux dans l'application (environ 440 Ko). | La RDC a deux fuseaux ; les jeux réduits omettent ces alias. |
 | D-29 | Coordonnées en latitude / longitude simples, point PostGIS `geography` calculé par le serveur (colonne générée). | Lecture simple pour le client ; recherches spatiales indexées côté serveur. |
 | D-30 | Une balade de club ne peut être créée que par un propriétaire ou administrateur du club, qui peut ensuite la gérer. | Cohérent avec les rôles de club (D-12). |
+| D-31 | Suppression de compte : fichiers de club conservés sans propriétaire ; refus tant qu'on organise une balade active avec des inscrits ; historique des balades terminées conservé. | Documentation Supabase (« You cannot delete a user if they are the owner of any objects in Supabase Storage ») ; évite d'effacer l'historique ou d'abandonner une balade en cours. |
 
 ## Décisions ouvertes (validation du propriétaire requise)
 
@@ -45,6 +46,6 @@
 | O-04 | Région d'hébergement Supabase. | 02 | À choisir selon la latence mesurée depuis Kinshasa/Lubumbashi et les contraintes juridiques. |
 | O-05 | Fournisseur SMTP pour les e-mails d'authentification. | 02 | Requis pour la production (limites du service intégré). |
 | O-07 | Une vitrine de club privé référencé affiche nom, ville, description et règlement. | 03 | Alternative : masquer le règlement aux non-membres (nécessite une table séparée). |
-| O-09 | Suppression de compte par fonction SQL (`delete from auth.users`). | 02 | Testée sur PostgreSQL. **À vérifier sur le projet Supabase réel.** Si les droits du rôle `postgres` sur `auth.users` le refusent, il faudra passer par une Edge Function utilisant l'API d'administration. |
+| O-09 | Suppression de compte par fonction SQL (`delete from auth.users`). | 02 | Testée sur PostgreSQL, y compris la contrainte Storage décrite par la documentation Supabase (corrigée en migration 0006). **À vérifier sur le projet Supabase réel.** Si les droits du rôle `postgres` sur `auth.users` le refusent, il faudra passer par une Edge Function utilisant l'API d'administration. |
 | O-10 | Projet Supabase dédié à Rider Group. | maintenant | Le seul projet accessible (`memorial-event-dev`) appartient à une autre application et n'est pas utilisé. Proposition : créer `rider-group-dev` (offre gratuite, région Paris). |
 | O-06 | Cadre juridique (protection des données en RDC et pays futurs). | 11 | Analyse juridique à mener ; aucune conformité n'est affirmée à ce stade. |

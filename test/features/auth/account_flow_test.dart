@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rider_group/core/media/media_repository.dart';
 import 'package:rider_group/features/clubs/domain/club.dart';
+import 'package:rider_group/features/rides/domain/ride.dart';
 
 import '../../helpers/fakes.dart';
 import '../../helpers/signed_in_app.dart';
@@ -227,5 +228,27 @@ void main() {
 
     expect(find.text('Une erreur inattendue est survenue.'), findsOneWidget);
     expect(auth.currentSession, isNotNull);
+  });
+
+  testWidgets('suppression de compte bloquée par une balade active avec '
+      'inscrits', (tester) async {
+    final rides =
+        FakeRidesRepository(currentUserId: alice.id, profiles: testProfiles)
+          ..addRide(
+            title: 'Tour du fleuve',
+            organizerId: alice.id,
+            others: {bob.id: ParticipantStatus.confirmed},
+          );
+    await pumpOnlineApp(tester, auth: signedInAs(alice), rides: rides);
+    await openProfile(tester);
+    await tester.tap(find.byKey(const Key('profile-delete-account')));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const Key('delete-account-blocked-rides')),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Tour du fleuve'), findsOneWidget);
+    expect(find.byKey(const Key('delete-account-submit')), findsNothing);
   });
 }

@@ -88,6 +88,7 @@ class AppException implements Exception {
     'club_members_only',
     'start_in_past',
     'capacity_below_participants',
+    'organizes_active_rides',
   };
 
   static String _authCode(AuthException error) {

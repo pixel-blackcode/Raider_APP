@@ -278,7 +278,7 @@
   "privacyEmailNotice": "Votre adresse e-mail n'est jamais visible par les autres utilisateurs.",
   "deleteAccountTitle": "Supprimer mon compte",
   "deleteAccountIntro": "La suppression de votre compte est définitive.",
-  "deleteAccountConsequences": "Votre profil, votre photo, vos adhésions, vos demandes et vos invitations seront supprimés. Cette action est irréversible.",
+  "deleteAccountConsequences": "Votre profil, votre photo, vos adhésions, vos participations, vos demandes et vos invitations seront supprimés. Les balades terminées que vous avez organisées restent dans l'historique des participants, sans votre nom. Cette action est irréversible.",
   "deleteAccountSoloClubs": "Ces clubs, dont vous êtes le seul membre, seront supprimés : {clubs}",
   "@deleteAccountSoloClubs": {
     "placeholders": {
@@ -494,5 +494,16 @@
   "validationRideTitle": "Entre 3 et 100 caractères",
   "validationRidePlace": "Entre 2 et 120 caractères",
   "validationMaxParticipants": "Entre 2 et 500, ou laisser vide",
-  "validationBikeTypes": "Choisissez au moins un type de moto."
+  "validationBikeTypes": "Choisissez au moins un type de moto.",
+  "rideOrganizerDeleted": "compte supprimé",
+  "errorOrganizesActiveRides": "Annulez d'abord les balades que vous organisez et qui comptent d'autres inscrits.",
+  "deleteAccountBlockedRidesTitle": "Annulez d'abord vos balades actives",
+  "deleteAccountBlockedRidesBody": "Vous organisez des balades qui comptent d'autres inscrits : {rides}. Annulez-les depuis leur fiche avant de supprimer votre compte.",
+  "@deleteAccountBlockedRidesBody": {
+    "placeholders": {
+      "rides": {
+        "type": "String"
+      }
+    }
+  }
 }

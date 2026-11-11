@@ -31,7 +31,9 @@
   - l'utilisateur peut refuser toute invitation de club, et c'est vérifié par le serveur ;
   - les préférences ne sont lisibles et modifiables que par leur propriétaire.
 - **Suppression de compte** (`delete_my_account`) :
-  - elle est refusée tant que l'utilisateur possède un club comptant d'autres membres ;
+  - elle est refusée tant que l'utilisateur possède un club comptant d'autres membres, ou organise une balade active (publiée, verrouillée, en cours) comptant d'autres inscrits ;
+  - les fichiers qu'il a déposés pour un club (logo, couverture) restent en place, sans propriétaire. Supabase refuse sinon la suppression d'un utilisateur qui possède des fichiers Storage ;
+  - ses brouillons et balades actives sans autre inscrit sont supprimés. Ses balades terminées ou annulées restent dans l'historique des participants, avec un organisateur « compte supprimé » ;
   - sinon, elle supprime les clubs sans autre membre, puis le compte. Profil, préférences, adhésions, demandes et invitations reçues partent en cascade ;
   - l'application supprime d'abord la photo de profil (Supabase interdit la suppression directe de fichiers en SQL) ;
   - le journal d'audit conserve l'identifiant de l'action, sans donnée de profil.
