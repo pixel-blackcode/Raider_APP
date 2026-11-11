@@ -75,7 +75,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R04-9 | Heure saisie et affichée dans le fuseau de la balade (Kinshasa UTC+1, Lubumbashi UTC+2). | Tests unitaires + widget |
 | R04-10 | Recherche de proximité PostGIS, qui respecte la visibilité. | SQL (`rides_near`) |
 | R04-11 | Visiteur anonyme : aucun accès ; opérations journalisées. | SQL |
-| R04-12 | Essai sur un vrai projet Supabase et un vrai téléphone. | **À faire** : projet Supabase dédié en attente de ton accord |
+| R04-12 | Essai sur un vrai projet Supabase et un vrai téléphone. | ✅ Supabase réel (`rider-group-dev`) : scénario de bout en bout réussi. 📱 Téléphone : **à faire par le propriétaire** avec l'APK de test (CONFIGURATION.md §3 bis) |
 
 **Préparé mais pas encore exposé dans l'application :**
 - **Coordonnées GPS du départ et de la destination :** les colonnes existent, le point PostGIS est calculé par le serveur et la fonction `rides_near` est testée. Leur saisie sur une carte arrivera avec la Mission 05, une fois le fournisseur de cartographie choisi (O-02).

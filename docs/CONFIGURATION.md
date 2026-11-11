@@ -31,6 +31,42 @@ Sans ces valeurs, l'application démarre en mode **« Serveur non configuré »*
 
 > ⚠️ Ne fournissez **jamais** la clé `service_role` / `sb_secret_…` à l'application : elle contourne toutes les règles RLS. L'application la détecte et refuse de s'initialiser avec. Toute valeur compilée dans une application mobile doit être considérée comme publique.
 
+## 3 bis. Projet de développement existant : `rider-group-dev`
+
+| Élément | Valeur |
+| --- | --- |
+| Organisation Supabase | RIDER GROUP (offre gratuite) |
+| Projet | `rider-group-dev`, référence `zhauuxxtkgkzlkvxtkox`, région eu-west-3 (Paris) |
+| URL | `https://zhauuxxtkgkzlkvxtkox.supabase.co` |
+| Clé publishable | Supabase → *Project Settings → API Keys* (publique par conception, gardée hors du dépôt) |
+| Migrations appliquées | 0001 à 0007, avec des numéros de version alignés sur `supabase/migrations/` |
+
+**Vérifications faites sur ce projet réel :**
+- **Security Advisor :** aucune table sans RLS, aucune fonction exposée aux anonymes. Seul reste l'avertissement 0029 « Signed-In Users Can Execute SECURITY DEFINER Function », pour les 26 fonctions de l'API : c'est voulu, car chacune vérifie l'identité et les droits.
+- **Performance Advisor :** les index manquants sont corrigés (migration 0007). Les « index inutilisés » s'expliquent par la base encore vide.
+- **Scénario de bout en bout** exécuté dans une transaction annulée :
+  - création des profils, d'un club et des rôles ;
+  - écriture refusée sur `verified_at` ;
+  - dépôt de fichier soumis aux politiques RLS ;
+  - balade sur approbation, avec le verrouillage respecté ;
+  - recherche PostGIS ;
+  - suppression d'un compte possédant un fichier Storage (O-09) ;
+  - accès anonyme refusé.
+
+  Aucune donnée n'est restée en base.
+
+### APK de test connecté à ce projet
+
+1. Sur GitHub : *Settings → Secrets and variables → Actions → onglet Variables → New repository variable*, créer :
+   - `DEV_SUPABASE_URL` = `https://zhauuxxtkgkzlkvxtkox.supabase.co`
+   - `DEV_SUPABASE_PUBLISHABLE_KEY` = la clé `sb_publishable_…` du projet
+2. À chaque push, ou via *Actions → CI → Run workflow*, le job « APK de test connecté (dev) » produit l'artefact **rider-group-dev-apk**, conservé 14 jours.
+3. Installer `rider-group-dev.apk` sur le téléphone. L'APK est signé avec la clé de test : il est installable, mais pas publiable sur le Play Store.
+
+Réglages Supabase à faire dans le tableau de bord (aucun outil ne permet de les modifier à distance) :
+- *Authentication → URL Configuration → Redirect URLs* : ajouter `com.ridergroup.ridergroup://auth-callback`.
+- *Authentication → Providers → Email* : le service d'e-mails intégré envoie très peu de messages par heure. Pour des essais à plusieurs, configurer un SMTP (*Authentication → SMTP*), ou désactiver temporairement « Confirm email » **sur ce projet de développement uniquement**.
+
 ## 3. Projet Supabase (action humaine requise)
 
 Recommandation : **un projet Supabase par environnement** (au minimum `dev` et `prod`) afin de séparer les données.
