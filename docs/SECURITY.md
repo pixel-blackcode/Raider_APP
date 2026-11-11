@@ -73,6 +73,30 @@ Règles complémentaires :
 - **Limitation des abus :** 3 créations de club par utilisateur et par 24 h.
 - **Noms de club uniques**, sans distinction de casse ni d'espaces, pour limiter l'usurpation.
 
+## Balades — règles d'accès
+
+| Action | Visiteur connecté | Invité | Demandeur | Participant | Retiré | Gestionnaire* |
+| --- | --- | --- | --- | --- | --- | --- |
+| Voir un brouillon | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+| Voir une balade publique / de club ouverte | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Voir une balade de club réservée | membres du club | membres du club | ✅ | ✅ | si membre du club | ✅ |
+| Voir une balade privée | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| Voir la liste des participants | si balade ouverte | si balade ouverte | si balade ouverte | ✅ | si balade ouverte | ✅ |
+| Données réservées aux participants (positions, discussion : Missions 05 et 07) | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ |
+| Rejoindre / demander | selon le mode | ✅ (accepter) | — | — | ❌ | — |
+| Modifier (avant le départ), changer le statut, inviter, approuver, retirer | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ |
+
+\* Gestionnaire : l'organisateur, ou un administrateur du club pour une balade de club.
+
+**Règles complémentaires :**
+- **Nouvelles inscriptions :** possibles uniquement si la balade est publiée, ou en cours sans verrouillage, et non complète. Cette règle s'applique aux adhésions directes, aux approbations **et** aux acceptations d'invitation.
+- **Invitations :** une invitation ne contourne ni le verrouillage, ni la capacité, ni la restriction aux membres d'un club. Elle respecte aussi la préférence « Accepter les invitations aux balades ».
+- **Ce qui n'est jamais modifiable directement :** statut, organisateur, club, compteur de participants, verrouillage. Ces champs ne changent que par les fonctions serveur.
+- **Modifications des détails :** impossibles une fois la balade démarrée. La date de départ ne peut pas passer dans le passé, et la capacité ne peut pas descendre sous le nombre d'inscrits.
+- **Fin ou annulation :** les demandes et invitations en attente sont closes automatiquement.
+- **Confidentialité des profils :** un profil non découvrable reste visible des autres participants confirmés de la même balade, et de l'organisateur auquel une demande est adressée.
+- **Limitation des abus :** 10 balades créées par utilisateur et par 24 h.
+
 ## Journal d'audit
 
 `private.audit_logs` enregistre l'auteur, l'action, l'entité et les détails de chaque opération sensible :

@@ -4,11 +4,12 @@ Application mobile communautaire pour motards — République démocratique du C
 
 Rider Group réunit motards indépendants et clubs : profils, garage virtuel, clubs publics et privés, balades organisées, mode Convoi avec GPS en temps réel, SOS, réseau social, marketplace sans paiement et suivi d'entretien.
 
-> **État actuel : Missions 01, 02 et 03 livrées (en attente de validation).**
+> **État actuel : Missions 01 à 04 livrées (en attente de validation).**
 > - Comptes : inscription, connexion, mot de passe oublié, liens e-mail ouverts dans l'application, session chiffrée, profil et photo, confidentialité, suppression de compte.
 > - Clubs : création libre, publics et privés, logo et couverture, adhésion libre, sur approbation ou sur invitation, rôles, demande de badge vérifié.
+> - Balades : publiques, privées ou de club ; trois modes d'adhésion ; brouillon, publication, verrouillage, départ, fin, annulation ; capacité, invitations, retraits ; fuseaux de Kinshasa et de Lubumbashi ; recherche (y compris de proximité côté serveur).
 >
-> Toutes les règles d'accès sont appliquées côté serveur et testées. Les balades, le GPS, le SOS, etc. viendront avec les missions suivantes. Voir [docs/ROADMAP.md](docs/ROADMAP.md).
+> Toutes les règles d'accès sont appliquées côté serveur et testées. Le GPS, le mode Convoi, le SOS, etc. viendront avec les missions suivantes. Voir [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Stack
 

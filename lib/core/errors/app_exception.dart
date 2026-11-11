@@ -76,6 +76,18 @@ class AppException implements Exception {
     'rate_limited',
     'invitations_disabled',
     'owns_clubs_with_members',
+    'ride_not_found',
+    'ride_not_editable',
+    'ride_not_joinable',
+    'ride_full',
+    'invalid_transition',
+    'already_participant',
+    'not_participant',
+    'removed_from_ride',
+    'organizer_cannot_leave',
+    'club_members_only',
+    'start_in_past',
+    'capacity_below_participants',
   };
 
   static String _authCode(AuthException error) {

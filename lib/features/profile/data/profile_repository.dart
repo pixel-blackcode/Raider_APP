@@ -89,7 +89,9 @@ class SupabaseProfileRepository implements ProfileRepository {
     try {
       final row = await _client
           .from('profile_settings')
-          .select('discoverable, allow_club_invitations')
+          .select(
+            'discoverable, allow_club_invitations, allow_ride_invitations',
+          )
           .eq('user_id', userId)
           .maybeSingle();
       return row == null
@@ -110,6 +112,7 @@ class SupabaseProfileRepository implements ProfileRepository {
         'user_id': userId,
         'discoverable': settings.discoverable,
         'allow_club_invitations': settings.allowClubInvitations,
+        'allow_ride_invitations': settings.allowRideInvitations,
       });
     } catch (error) {
       throw AppException.from(error);

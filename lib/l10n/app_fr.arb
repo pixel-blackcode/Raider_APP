@@ -316,5 +316,183 @@
   "errorOwnsClubsWithMembers": "Transférez d'abord la propriété de vos clubs qui comptent d'autres membres.",
   "errorSamePassword": "Le nouveau mot de passe doit être différent de l'ancien.",
   "errorUnsupportedImage": "Format d'image non pris en charge (JPEG, PNG ou WebP).",
-  "errorImageTooLarge": "Image trop volumineuse."
+  "errorImageTooLarge": "Image trop volumineuse.",
+  "bikeAny": "Toutes motos",
+  "bikeScooter": "Scooter",
+  "bikeRoadster": "Roadster",
+  "bikeSport": "Sportive",
+  "bikeTrail": "Trail",
+  "bikeEnduro": "Enduro / tout-terrain",
+  "bikeCustom": "Custom",
+  "bikeTouring": "Routière",
+  "bikeQuad": "Quad",
+  "clubRidesTitle": "Balades du club",
+  "clubRidesEmpty": "Aucune balade du club à venir.",
+  "clubOrganizeRide": "Organiser une balade du club",
+  "errorRideNotFound": "Balade introuvable",
+  "errorRideNotEditable": "Cette balade ne peut plus être modifiée.",
+  "errorRideNotJoinable": "Les inscriptions à cette balade sont fermées.",
+  "errorRideFull": "Cette balade est complète.",
+  "errorInvalidTransition": "Ce changement de statut n'est pas possible.",
+  "errorAlreadyParticipant": "Vous participez déjà à cette balade.",
+  "errorNotParticipant": "Cette personne ne participe pas à la balade.",
+  "errorRemovedFromRide": "Vous avez été retiré de cette balade par l'organisateur.",
+  "errorOrganizerCannotLeave": "L'organisateur ne peut pas quitter sa balade : annulez-la si nécessaire.",
+  "errorClubMembersOnly": "Balade réservée aux membres du club.",
+  "errorStartInPast": "La date de départ doit être dans le futur.",
+  "errorCapacityBelowParticipants": "Le nombre maximal ne peut pas être inférieur au nombre de participants inscrits.",
+  "privacyRideInvitations": "Accepter les invitations aux balades",
+  "privacyRideInvitationsHelp": "Si désactivé, aucun organisateur ne peut vous inviter à une balade.",
+  "ridesOfflineBody": "Les balades nécessitent une connexion au serveur Rider Group.",
+  "ridesTabUpcoming": "À venir",
+  "ridesTabMine": "Mes balades",
+  "ridesSearchHint": "Rechercher : titre, ville, lieu",
+  "ridesUpcomingEmptyTitle": "Aucune balade à venir",
+  "ridesUpcomingEmptyBody": "Organisez la première balade de votre ville !",
+  "ridesMineEmptyTitle": "Aucune balade pour vous",
+  "ridesMineEmptyBody": "Rejoignez une balade ou organisez la vôtre.",
+  "ridesSectionUpcoming": "À venir et en cours",
+  "ridesSectionDrafts": "Brouillons",
+  "ridesSectionPast": "Terminées ou annulées",
+  "rideCreate": "Organiser une balade",
+  "rideEdit": "Modifier la balade",
+  "rideEditNotAllowed": "Seul l'organisateur (ou un administrateur du club) peut modifier cette balade avant son départ.",
+  "rideNotFoundBody": "Cette balade n'existe pas ou ne vous est pas accessible.",
+  "rideDeleteDraft": "Supprimer le brouillon",
+  "rideDeleteDraftConfirm": "Supprimer définitivement ce brouillon ?",
+  "rideFieldTitle": "Titre de la balade",
+  "rideSectionWhen": "Date et heure",
+  "rideFieldTimezone": "Fuseau horaire",
+  "timezoneKinshasa": "Heure de Kinshasa (UTC+1)",
+  "timezoneLubumbashi": "Heure de Lubumbashi (UTC+2)",
+  "rideSectionWhere": "Itinéraire",
+  "rideFieldStart": "Point de départ",
+  "rideFieldDestination": "Destination",
+  "rideFieldItinerary": "Étapes et pauses",
+  "rideFieldItineraryHelp": "Ex. : départ 8 h, pause carburant à Maluku, déjeuner à Kinkole.",
+  "rideSectionRiders": "Participants",
+  "rideFieldDifficulty": "Niveau de difficulté",
+  "rideDifficultyEasy": "Facile",
+  "rideDifficultyModerate": "Intermédiaire",
+  "rideDifficultyHard": "Difficile",
+  "rideDifficultyExpert": "Expert",
+  "rideFieldBikeTypes": "Motos recommandées",
+  "rideFieldMaxParticipants": "Nombre maximal de participants",
+  "rideFieldMaxParticipantsHelp": "Facultatif, organisateur compris (2 à 500).",
+  "rideFieldConditions": "Conditions de participation",
+  "rideFieldConditionsHelp": "Ex. : casque et gants obligatoires, permis valide, réservoir plein au départ.",
+  "rideFieldOrganizedBy": "Organisée par",
+  "rideOrganizedByMe": "Moi (balade personnelle)",
+  "rideFieldOpenToNonMembers": "Ouverte aux motards hors du club",
+  "rideFieldOpenToNonMembersHelp": "Si désactivé, seuls les membres du club voient la balade et peuvent la rejoindre.",
+  "rideFieldJoinPolicy": "Mode d'adhésion",
+  "rideJoinOpen": "Participation libre",
+  "rideJoinApproval": "Sur approbation de l'organisateur",
+  "rideJoinInviteOnly": "Sur invitation uniquement",
+  "rideSaveDraft": "Enregistrer en brouillon",
+  "rideVisibilityPublic": "Publique",
+  "rideVisibilityPrivate": "Privée",
+  "rideVisibilityClub": "Balade de club",
+  "rideOpenToAll": "ouverte à tous",
+  "rideStatusDraft": "Brouillon",
+  "rideStatusPublished": "Inscriptions ouvertes",
+  "rideStatusLocked": "Verrouillée",
+  "rideStatusInProgress": "En cours",
+  "rideStatusFinished": "Terminée",
+  "rideStatusCancelled": "Annulée",
+  "rideJoinsClosed": "inscriptions fermées",
+  "rideActionPublish": "Publier",
+  "rideActionLock": "Verrouiller",
+  "rideActionUnlock": "Déverrouiller",
+  "rideActionStart": "Démarrer",
+  "rideActionFinish": "Terminer",
+  "rideActionCancel": "Annuler la balade",
+  "rideCancelReason": "Motif (facultatif, visible des participants)",
+  "rideCancelledNoReason": "Aucun motif indiqué.",
+  "rideStartConfirm": "Démarrer la balade maintenant ? Les participants verront qu'elle est en cours.",
+  "rideFinishConfirm": "Marquer la balade comme terminée ? Cette action est définitive.",
+  "rideClubLabel": "Club : {club}",
+  "@rideClubLabel": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "rideOrganizerLabel": "Organisateur : {name}",
+  "@rideOrganizerLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rideOrganizerRole": "Organisateur",
+  "rideParticipantCount": "{count, plural, =1{1 participant} other{{count} participants}}",
+  "@rideParticipantCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rideParticipantCapacity": "{count} / {max} participants",
+  "@rideParticipantCapacity": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "rideDraftNotice": "Brouillon : visible uniquement par vous. Publiez-le pour ouvrir les inscriptions.",
+  "rideYouOrganize": "Vous organisez cette balade.",
+  "rideYouParticipate": "Vous participez à cette balade.",
+  "rideRemovedNotice": "L'organisateur vous a retiré de cette balade.",
+  "rideRequestPending": "Votre demande de participation attend la décision de l'organisateur.",
+  "rideRequestPendingShort": "Demande envoyée",
+  "rideJoinsClosedNotice": "Les inscriptions sont fermées (balade verrouillée par l'organisateur).",
+  "rideJoin": "Participer",
+  "rideJoined": "Vous participez à la balade !",
+  "rideRequestJoin": "Demander à participer",
+  "rideInviteOnlyNotice": "Cette balade accepte uniquement les motards invités par l'organisateur.",
+  "rideLeave": "Quitter la balade",
+  "rideLeaveConfirm": "Ne plus participer à « {title} » ?",
+  "@rideLeaveConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "rideManageTitle": "Gestion de la balade",
+  "rideNoMoreActions": "La balade est close : plus aucune action n'est possible.",
+  "rideLockedHelp": "Verrouillée : aucune nouvelle inscription (y compris par invitation ou approbation). Les participants inscrits restent.",
+  "rideInvite": "Inviter un motard",
+  "rideRequestsTitle": "Demandes de participation",
+  "rideParticipantsTitle": "Participants",
+  "rideParticipantsHidden": "La liste des participants est réservée aux participants de cette balade.",
+  "rideRemoveParticipant": "Retirer de la balade",
+  "rideRemoveConfirm": "Retirer {name} de la balade ? Cette personne ne pourra pas revenir d'elle-même.",
+  "@rideRemoveConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "rideInvitationTitle": "Invitation à la balade « {title} »",
+  "@rideInvitationTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "validationRideTitle": "Entre 3 et 100 caractères",
+  "validationRidePlace": "Entre 2 et 120 caractères",
+  "validationMaxParticipants": "Entre 2 et 500, ou laisser vide",
+  "validationBikeTypes": "Choisissez au moins un type de moto."
 }

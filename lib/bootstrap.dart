@@ -9,10 +9,12 @@ import 'core/backend/backend_providers.dart';
 import 'core/backend/secure_session_storage.dart';
 import 'core/config/app_config.dart';
 import 'core/preferences/preferences_providers.dart';
+import 'features/rides/domain/ride_time.dart';
 
 /// Prépare les dépendances puis lance l'application.
 Future<void> bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
+  RideTime.ensureInitialized();
 
   final config = AppConfig.fromEnvironment();
   final preferences = await SharedPreferences.getInstance();

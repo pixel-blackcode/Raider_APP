@@ -27,6 +27,13 @@
 | D-21 | Buckets Storage privés, images chargées avec le jeton de session. | Les médias d'un club privé ou d'un profil non découvrable ne fuient pas par URL publique. Coût : pas de CDN public. |
 | D-22 | Confidentialité : « profil découvrable » et « accepter les invitations », activés par défaut. | Préférences effectivement appliquées par le serveur ; d'autres (GPS, messagerie) viendront avec leurs modules. |
 | D-23 | Suppression de compte bloquée tant qu'on possède un club avec d'autres membres. | Évite de laisser des clubs sans propriétaire (résout O-08). |
+| D-24 | Statut de balade + indicateur `joins_locked`. « Verrouillée » est un statut avant le départ ; pendant la balade, le verrouillage est un indicateur sur « En cours ». | Répond à l'exigence d'une balade « en cours dont les adhésions sont verrouillées », sans dupliquer les états. |
+| D-25 | Le verrouillage bloque toutes les nouvelles inscriptions, y compris les approbations de demandes et les invitations. Pour accueillir quelqu'un, l'organisateur déverrouille. | Lecture stricte de « les invitations ne doivent pas contourner le verrouillage ». |
+| D-26 | Un participant retiré ne peut pas revenir de lui-même ; seul un gestionnaire peut l'inviter à nouveau. | Exclusion effective. |
+| D-27 | Les brouillons se suppriment ; les balades publiées s'annulent, avec un motif facultatif. | Traçabilité pour les participants. |
+| D-28 | Fuseau IANA par balade (Kinshasa UTC+1, Lubumbashi UTC+2). Instants stockés en UTC, affichage dans le fuseau de la balade. Jeu complet de la base de fuseaux dans l'application (environ 440 Ko). | La RDC a deux fuseaux ; les jeux réduits omettent ces alias. |
+| D-29 | Coordonnées en latitude / longitude simples, point PostGIS `geography` calculé par le serveur (colonne générée). | Lecture simple pour le client ; recherches spatiales indexées côté serveur. |
+| D-30 | Une balade de club ne peut être créée que par un propriétaire ou administrateur du club, qui peut ensuite la gérer. | Cohérent avec les rôles de club (D-12). |
 
 ## Décisions ouvertes (validation du propriétaire requise)
 
@@ -39,4 +46,5 @@
 | O-05 | Fournisseur SMTP pour les e-mails d'authentification. | 02 | Requis pour la production (limites du service intégré). |
 | O-07 | Une vitrine de club privé référencé affiche nom, ville, description et règlement. | 03 | Alternative : masquer le règlement aux non-membres (nécessite une table séparée). |
 | O-09 | Suppression de compte par fonction SQL (`delete from auth.users`). | 02 | Testée sur PostgreSQL. **À vérifier sur le projet Supabase réel.** Si les droits du rôle `postgres` sur `auth.users` le refusent, il faudra passer par une Edge Function utilisant l'API d'administration. |
+| O-10 | Projet Supabase dédié à Rider Group. | maintenant | Le seul projet accessible (`memorial-event-dev`) appartient à une autre application et n'est pas utilisé. Proposition : créer `rider-group-dev` (offre gratuite, région Paris). |
 | O-06 | Cadre juridique (protection des données en RDC et pays futurs). | 11 | Analyse juridique à mener ; aucune conformité n'est affirmée à ce stade. |

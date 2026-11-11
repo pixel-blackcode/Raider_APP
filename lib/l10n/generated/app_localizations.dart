@@ -1449,6 +1449,762 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Image trop volumineuse.'**
   String get errorImageTooLarge;
+
+  /// No description provided for @bikeAny.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes motos'**
+  String get bikeAny;
+
+  /// No description provided for @bikeScooter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scooter'**
+  String get bikeScooter;
+
+  /// No description provided for @bikeRoadster.
+  ///
+  /// In fr, this message translates to:
+  /// **'Roadster'**
+  String get bikeRoadster;
+
+  /// No description provided for @bikeSport.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sportive'**
+  String get bikeSport;
+
+  /// No description provided for @bikeTrail.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trail'**
+  String get bikeTrail;
+
+  /// No description provided for @bikeEnduro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enduro / tout-terrain'**
+  String get bikeEnduro;
+
+  /// No description provided for @bikeCustom.
+  ///
+  /// In fr, this message translates to:
+  /// **'Custom'**
+  String get bikeCustom;
+
+  /// No description provided for @bikeTouring.
+  ///
+  /// In fr, this message translates to:
+  /// **'Routière'**
+  String get bikeTouring;
+
+  /// No description provided for @bikeQuad.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quad'**
+  String get bikeQuad;
+
+  /// No description provided for @clubRidesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Balades du club'**
+  String get clubRidesTitle;
+
+  /// No description provided for @clubRidesEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune balade du club à venir.'**
+  String get clubRidesEmpty;
+
+  /// No description provided for @clubOrganizeRide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organiser une balade du club'**
+  String get clubOrganizeRide;
+
+  /// No description provided for @errorRideNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Balade introuvable'**
+  String get errorRideNotFound;
+
+  /// No description provided for @errorRideNotEditable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette balade ne peut plus être modifiée.'**
+  String get errorRideNotEditable;
+
+  /// No description provided for @errorRideNotJoinable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les inscriptions à cette balade sont fermées.'**
+  String get errorRideNotJoinable;
+
+  /// No description provided for @errorRideFull.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette balade est complète.'**
+  String get errorRideFull;
+
+  /// No description provided for @errorInvalidTransition.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce changement de statut n\'est pas possible.'**
+  String get errorInvalidTransition;
+
+  /// No description provided for @errorAlreadyParticipant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous participez déjà à cette balade.'**
+  String get errorAlreadyParticipant;
+
+  /// No description provided for @errorNotParticipant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette personne ne participe pas à la balade.'**
+  String get errorNotParticipant;
+
+  /// No description provided for @errorRemovedFromRide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez été retiré de cette balade par l\'organisateur.'**
+  String get errorRemovedFromRide;
+
+  /// No description provided for @errorOrganizerCannotLeave.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'organisateur ne peut pas quitter sa balade : annulez-la si nécessaire.'**
+  String get errorOrganizerCannotLeave;
+
+  /// No description provided for @errorClubMembersOnly.
+  ///
+  /// In fr, this message translates to:
+  /// **'Balade réservée aux membres du club.'**
+  String get errorClubMembersOnly;
+
+  /// No description provided for @errorStartInPast.
+  ///
+  /// In fr, this message translates to:
+  /// **'La date de départ doit être dans le futur.'**
+  String get errorStartInPast;
+
+  /// No description provided for @errorCapacityBelowParticipants.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le nombre maximal ne peut pas être inférieur au nombre de participants inscrits.'**
+  String get errorCapacityBelowParticipants;
+
+  /// No description provided for @privacyRideInvitations.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accepter les invitations aux balades'**
+  String get privacyRideInvitations;
+
+  /// No description provided for @privacyRideInvitationsHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si désactivé, aucun organisateur ne peut vous inviter à une balade.'**
+  String get privacyRideInvitationsHelp;
+
+  /// No description provided for @ridesOfflineBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les balades nécessitent une connexion au serveur Rider Group.'**
+  String get ridesOfflineBody;
+
+  /// No description provided for @ridesTabUpcoming.
+  ///
+  /// In fr, this message translates to:
+  /// **'À venir'**
+  String get ridesTabUpcoming;
+
+  /// No description provided for @ridesTabMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes balades'**
+  String get ridesTabMine;
+
+  /// No description provided for @ridesSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher : titre, ville, lieu'**
+  String get ridesSearchHint;
+
+  /// No description provided for @ridesUpcomingEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune balade à venir'**
+  String get ridesUpcomingEmptyTitle;
+
+  /// No description provided for @ridesUpcomingEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organisez la première balade de votre ville !'**
+  String get ridesUpcomingEmptyBody;
+
+  /// No description provided for @ridesMineEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune balade pour vous'**
+  String get ridesMineEmptyTitle;
+
+  /// No description provided for @ridesMineEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejoignez une balade ou organisez la vôtre.'**
+  String get ridesMineEmptyBody;
+
+  /// No description provided for @ridesSectionUpcoming.
+  ///
+  /// In fr, this message translates to:
+  /// **'À venir et en cours'**
+  String get ridesSectionUpcoming;
+
+  /// No description provided for @ridesSectionDrafts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillons'**
+  String get ridesSectionDrafts;
+
+  /// No description provided for @ridesSectionPast.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminées ou annulées'**
+  String get ridesSectionPast;
+
+  /// No description provided for @rideCreate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organiser une balade'**
+  String get rideCreate;
+
+  /// No description provided for @rideEdit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la balade'**
+  String get rideEdit;
+
+  /// No description provided for @rideEditNotAllowed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seul l\'organisateur (ou un administrateur du club) peut modifier cette balade avant son départ.'**
+  String get rideEditNotAllowed;
+
+  /// No description provided for @rideNotFoundBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette balade n\'existe pas ou ne vous est pas accessible.'**
+  String get rideNotFoundBody;
+
+  /// No description provided for @rideDeleteDraft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le brouillon'**
+  String get rideDeleteDraft;
+
+  /// No description provided for @rideDeleteDraftConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer définitivement ce brouillon ?'**
+  String get rideDeleteDraftConfirm;
+
+  /// No description provided for @rideFieldTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre de la balade'**
+  String get rideFieldTitle;
+
+  /// No description provided for @rideSectionWhen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date et heure'**
+  String get rideSectionWhen;
+
+  /// No description provided for @rideFieldTimezone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fuseau horaire'**
+  String get rideFieldTimezone;
+
+  /// No description provided for @timezoneKinshasa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Heure de Kinshasa (UTC+1)'**
+  String get timezoneKinshasa;
+
+  /// No description provided for @timezoneLubumbashi.
+  ///
+  /// In fr, this message translates to:
+  /// **'Heure de Lubumbashi (UTC+2)'**
+  String get timezoneLubumbashi;
+
+  /// No description provided for @rideSectionWhere.
+  ///
+  /// In fr, this message translates to:
+  /// **'Itinéraire'**
+  String get rideSectionWhere;
+
+  /// No description provided for @rideFieldStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Point de départ'**
+  String get rideFieldStart;
+
+  /// No description provided for @rideFieldDestination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Destination'**
+  String get rideFieldDestination;
+
+  /// No description provided for @rideFieldItinerary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Étapes et pauses'**
+  String get rideFieldItinerary;
+
+  /// No description provided for @rideFieldItineraryHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : départ 8 h, pause carburant à Maluku, déjeuner à Kinkole.'**
+  String get rideFieldItineraryHelp;
+
+  /// No description provided for @rideSectionRiders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Participants'**
+  String get rideSectionRiders;
+
+  /// No description provided for @rideFieldDifficulty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Niveau de difficulté'**
+  String get rideFieldDifficulty;
+
+  /// No description provided for @rideDifficultyEasy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facile'**
+  String get rideDifficultyEasy;
+
+  /// No description provided for @rideDifficultyModerate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Intermédiaire'**
+  String get rideDifficultyModerate;
+
+  /// No description provided for @rideDifficultyHard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Difficile'**
+  String get rideDifficultyHard;
+
+  /// No description provided for @rideDifficultyExpert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Expert'**
+  String get rideDifficultyExpert;
+
+  /// No description provided for @rideFieldBikeTypes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motos recommandées'**
+  String get rideFieldBikeTypes;
+
+  /// No description provided for @rideFieldMaxParticipants.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nombre maximal de participants'**
+  String get rideFieldMaxParticipants;
+
+  /// No description provided for @rideFieldMaxParticipantsHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facultatif, organisateur compris (2 à 500).'**
+  String get rideFieldMaxParticipantsHelp;
+
+  /// No description provided for @rideFieldConditions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conditions de participation'**
+  String get rideFieldConditions;
+
+  /// No description provided for @rideFieldConditionsHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex. : casque et gants obligatoires, permis valide, réservoir plein au départ.'**
+  String get rideFieldConditionsHelp;
+
+  /// No description provided for @rideFieldOrganizedBy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organisée par'**
+  String get rideFieldOrganizedBy;
+
+  /// No description provided for @rideOrganizedByMe.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moi (balade personnelle)'**
+  String get rideOrganizedByMe;
+
+  /// No description provided for @rideFieldOpenToNonMembers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouverte aux motards hors du club'**
+  String get rideFieldOpenToNonMembers;
+
+  /// No description provided for @rideFieldOpenToNonMembersHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Si désactivé, seuls les membres du club voient la balade et peuvent la rejoindre.'**
+  String get rideFieldOpenToNonMembersHelp;
+
+  /// No description provided for @rideFieldJoinPolicy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode d\'adhésion'**
+  String get rideFieldJoinPolicy;
+
+  /// No description provided for @rideJoinOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Participation libre'**
+  String get rideJoinOpen;
+
+  /// No description provided for @rideJoinApproval.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sur approbation de l\'organisateur'**
+  String get rideJoinApproval;
+
+  /// No description provided for @rideJoinInviteOnly.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sur invitation uniquement'**
+  String get rideJoinInviteOnly;
+
+  /// No description provided for @rideSaveDraft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer en brouillon'**
+  String get rideSaveDraft;
+
+  /// No description provided for @rideVisibilityPublic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publique'**
+  String get rideVisibilityPublic;
+
+  /// No description provided for @rideVisibilityPrivate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Privée'**
+  String get rideVisibilityPrivate;
+
+  /// No description provided for @rideVisibilityClub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Balade de club'**
+  String get rideVisibilityClub;
+
+  /// No description provided for @rideOpenToAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'ouverte à tous'**
+  String get rideOpenToAll;
+
+  /// No description provided for @rideStatusDraft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillon'**
+  String get rideStatusDraft;
+
+  /// No description provided for @rideStatusPublished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscriptions ouvertes'**
+  String get rideStatusPublished;
+
+  /// No description provided for @rideStatusLocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Verrouillée'**
+  String get rideStatusLocked;
+
+  /// No description provided for @rideStatusInProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get rideStatusInProgress;
+
+  /// No description provided for @rideStatusFinished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminée'**
+  String get rideStatusFinished;
+
+  /// No description provided for @rideStatusCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annulée'**
+  String get rideStatusCancelled;
+
+  /// No description provided for @rideJoinsClosed.
+  ///
+  /// In fr, this message translates to:
+  /// **'inscriptions fermées'**
+  String get rideJoinsClosed;
+
+  /// No description provided for @rideActionPublish.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get rideActionPublish;
+
+  /// No description provided for @rideActionLock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Verrouiller'**
+  String get rideActionLock;
+
+  /// No description provided for @rideActionUnlock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déverrouiller'**
+  String get rideActionUnlock;
+
+  /// No description provided for @rideActionStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Démarrer'**
+  String get rideActionStart;
+
+  /// No description provided for @rideActionFinish.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminer'**
+  String get rideActionFinish;
+
+  /// No description provided for @rideActionCancel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler la balade'**
+  String get rideActionCancel;
+
+  /// No description provided for @rideCancelReason.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif (facultatif, visible des participants)'**
+  String get rideCancelReason;
+
+  /// No description provided for @rideCancelledNoReason.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun motif indiqué.'**
+  String get rideCancelledNoReason;
+
+  /// No description provided for @rideStartConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Démarrer la balade maintenant ? Les participants verront qu\'elle est en cours.'**
+  String get rideStartConfirm;
+
+  /// No description provided for @rideFinishConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer la balade comme terminée ? Cette action est définitive.'**
+  String get rideFinishConfirm;
+
+  /// No description provided for @rideClubLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Club : {club}'**
+  String rideClubLabel(String club);
+
+  /// No description provided for @rideOrganizerLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organisateur : {name}'**
+  String rideOrganizerLabel(String name);
+
+  /// No description provided for @rideOrganizerRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organisateur'**
+  String get rideOrganizerRole;
+
+  /// No description provided for @rideParticipantCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 participant} other{{count} participants}}'**
+  String rideParticipantCount(int count);
+
+  /// No description provided for @rideParticipantCapacity.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} / {max} participants'**
+  String rideParticipantCapacity(int count, int max);
+
+  /// No description provided for @rideDraftNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Brouillon : visible uniquement par vous. Publiez-le pour ouvrir les inscriptions.'**
+  String get rideDraftNotice;
+
+  /// No description provided for @rideYouOrganize.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous organisez cette balade.'**
+  String get rideYouOrganize;
+
+  /// No description provided for @rideYouParticipate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous participez à cette balade.'**
+  String get rideYouParticipate;
+
+  /// No description provided for @rideRemovedNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'organisateur vous a retiré de cette balade.'**
+  String get rideRemovedNotice;
+
+  /// No description provided for @rideRequestPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre demande de participation attend la décision de l\'organisateur.'**
+  String get rideRequestPending;
+
+  /// No description provided for @rideRequestPendingShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande envoyée'**
+  String get rideRequestPendingShort;
+
+  /// No description provided for @rideJoinsClosedNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les inscriptions sont fermées (balade verrouillée par l\'organisateur).'**
+  String get rideJoinsClosedNotice;
+
+  /// No description provided for @rideJoin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Participer'**
+  String get rideJoin;
+
+  /// No description provided for @rideJoined.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous participez à la balade !'**
+  String get rideJoined;
+
+  /// No description provided for @rideRequestJoin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demander à participer'**
+  String get rideRequestJoin;
+
+  /// No description provided for @rideInviteOnlyNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette balade accepte uniquement les motards invités par l\'organisateur.'**
+  String get rideInviteOnlyNotice;
+
+  /// No description provided for @rideLeave.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter la balade'**
+  String get rideLeave;
+
+  /// No description provided for @rideLeaveConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ne plus participer à « {title} » ?'**
+  String rideLeaveConfirm(String title);
+
+  /// No description provided for @rideManageTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gestion de la balade'**
+  String get rideManageTitle;
+
+  /// No description provided for @rideNoMoreActions.
+  ///
+  /// In fr, this message translates to:
+  /// **'La balade est close : plus aucune action n\'est possible.'**
+  String get rideNoMoreActions;
+
+  /// No description provided for @rideLockedHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Verrouillée : aucune nouvelle inscription (y compris par invitation ou approbation). Les participants inscrits restent.'**
+  String get rideLockedHelp;
+
+  /// No description provided for @rideInvite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inviter un motard'**
+  String get rideInvite;
+
+  /// No description provided for @rideRequestsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demandes de participation'**
+  String get rideRequestsTitle;
+
+  /// No description provided for @rideParticipantsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Participants'**
+  String get rideParticipantsTitle;
+
+  /// No description provided for @rideParticipantsHidden.
+  ///
+  /// In fr, this message translates to:
+  /// **'La liste des participants est réservée aux participants de cette balade.'**
+  String get rideParticipantsHidden;
+
+  /// No description provided for @rideRemoveParticipant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer de la balade'**
+  String get rideRemoveParticipant;
+
+  /// No description provided for @rideRemoveConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer {name} de la balade ? Cette personne ne pourra pas revenir d\'elle-même.'**
+  String rideRemoveConfirm(String name);
+
+  /// No description provided for @rideInvitationTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invitation à la balade « {title} »'**
+  String rideInvitationTitle(String title);
+
+  /// No description provided for @validationRideTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entre 3 et 100 caractères'**
+  String get validationRideTitle;
+
+  /// No description provided for @validationRidePlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entre 2 et 120 caractères'**
+  String get validationRidePlace;
+
+  /// No description provided for @validationMaxParticipants.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entre 2 et 500, ou laisser vide'**
+  String get validationMaxParticipants;
+
+  /// No description provided for @validationBikeTypes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisissez au moins un type de moto.'**
+  String get validationBikeTypes;
 }
 
 class _AppLocalizationsDelegate

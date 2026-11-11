@@ -23,6 +23,14 @@ abstract final class AppRoutes {
   static const forgotPassword = '/mot-de-passe-oublie';
   static const authPages = {signIn, signUp, forgotPassword};
 
+  // Balades.
+  static String newRide({String? clubId}) => Uri(
+    path: '/balades/nouvelle',
+    queryParameters: clubId == null ? null : {'club': clubId},
+  ).toString();
+  static String ride(String id) => '/balades/$id';
+  static String editRide(String id) => '/balades/$id/modifier';
+
   // Clubs.
   static const newClub = '/clubs/nouveau';
   static String club(String id) => '/clubs/$id';

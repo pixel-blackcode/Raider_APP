@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/painting.dart';
-
 import 'package:rider_group/core/errors/app_exception.dart';
 import 'package:rider_group/core/media/media_repository.dart';
 import 'package:rider_group/core/media/photo_picker.dart';
@@ -13,6 +12,10 @@ import 'package:rider_group/features/clubs/domain/club.dart';
 import 'package:rider_group/features/clubs/domain/club_draft.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
+import 'package:rider_group/features/rides/data/rides_repository.dart';
+import 'package:rider_group/features/rides/domain/ride.dart';
+import 'package:rider_group/features/rides/domain/ride_draft.dart';
+import 'package:rider_group/features/rides/domain/ride_state_machine.dart';
 
 /// Authentification en mémoire. Les mots de passe sont ceux de [accounts].
 class FakeAuthRepository implements AuthRepository {
@@ -479,4 +482,281 @@ class FakePhotoPicker implements PhotoPicker {
 
   @override
   Future<PickedImage?> pick({required double maxDimension}) async => next;
+}
+
+/// Balades en mémoire, du point de vue de [currentUserId]. Reproduit la
+/// machine à états et les refus visibles du serveur pour tester l'interface ;
+/// les règles de sécurité réelles sont testées en SQL (05_rides_test.sql).
+class FakeRidesRepository implements RidesRepository {
+  FakeRidesRepository({required this.currentUserId, this.profiles = const {}});
+
+  String currentUserId;
+  final Map<String, Profile> profiles;
+  final rides = <String, Ride>{};
+  final members = <String, Map<String, ParticipantStatus>>{};
+  final messages = <String, String?>{};
+  final invitations = <RideInvitation>[];
+  final invitationTargets = <String, String>{};
+  final calls = <String>[];
+  var _seq = 0;
+
+  Ride addRide({
+    required String title,
+    required String organizerId,
+    RideStatus status = RideStatus.published,
+    bool joinsLocked = false,
+    RideJoinPolicy joinPolicy = RideJoinPolicy.open,
+    RideVisibility visibility = RideVisibility.public,
+    int? maxParticipants,
+    String? clubId,
+    String? clubName,
+    DateTime? startsAt,
+    String timezone = 'Africa/Kinshasa',
+    Map<String, ParticipantStatus> others = const {},
+  }) {
+    final id = 'ride-${++_seq}';
+    members[id] = {organizerId: ParticipantStatus.confirmed, ...others};
+    rides[id] = Ride(
+      id: id,
+      title: title,
+      organizerId: organizerId,
+      organizerName: profiles[organizerId]?.displayName,
+      startsAt: startsAt ?? DateTime.now().toUtc().add(const Duration(days: 1)),
+      timezone: timezone,
+      city: 'Kinshasa',
+      startLabel: 'Rond-point Victoire',
+      destinationLabel: 'Kinkole',
+      visibility: visibility,
+      joinPolicy: joinPolicy,
+      status: status,
+      joinsLocked: joinsLocked || status == RideStatus.locked,
+      maxParticipants: maxParticipants,
+      clubId: clubId,
+      clubName: clubName,
+    );
+    _sync(id);
+    return rides[id]!;
+  }
+
+  void _sync(String id, {RideStatus? status, bool? joinsLocked}) {
+    final r = rides[id]!;
+    final count = members[id]!.values
+        .where((s) => s == ParticipantStatus.confirmed)
+        .length;
+    rides[id] = Ride(
+      id: r.id,
+      title: r.title,
+      organizerId: r.organizerId,
+      organizerName: r.organizerName,
+      startsAt: r.startsAt,
+      timezone: r.timezone,
+      city: r.city,
+      startLabel: r.startLabel,
+      destinationLabel: r.destinationLabel,
+      visibility: r.visibility,
+      joinPolicy: r.joinPolicy,
+      status: status ?? r.status,
+      joinsLocked: joinsLocked ?? r.joinsLocked,
+      maxParticipants: r.maxParticipants,
+      clubId: r.clubId,
+      clubName: r.clubName,
+      participantCount: count,
+    );
+  }
+
+  RideParticipant _participant(String rideId, String userId) => RideParticipant(
+    userId: userId,
+    status: members[rideId]![userId]!,
+    displayName: profiles[userId]?.displayName ?? userId,
+    username: profiles[userId]?.username ?? userId,
+    message: messages['$rideId/$userId'],
+  );
+
+  @override
+  Future<List<Ride>> discoverRides({
+    String query = '',
+    RideDifficulty? difficulty,
+  }) async {
+    final q = query.toLowerCase();
+    return rides.values
+        .where(
+          (r) =>
+              r.visibility == RideVisibility.public &&
+              !r.status.isTerminal &&
+              r.status != RideStatus.draft,
+        )
+        .where((r) => difficulty == null || r.difficulty == difficulty)
+        .where(
+          (r) =>
+              q.isEmpty ||
+              r.title.toLowerCase().contains(q) ||
+              r.city.toLowerCase().contains(q),
+        )
+        .toList();
+  }
+
+  @override
+  Future<List<MyRide>> myRides(String userId) async => [
+    for (final entry in members.entries)
+      if (entry.value[userId] == ParticipantStatus.confirmed ||
+          entry.value[userId] == ParticipantStatus.pending)
+        MyRide(ride: rides[entry.key]!, status: entry.value[userId]!),
+  ];
+
+  @override
+  Future<List<Ride>> clubRides(String clubId) async =>
+      rides.values.where((r) => r.clubId == clubId).toList();
+
+  @override
+  Future<Ride?> getRide(String rideId) async => rides[rideId];
+
+  @override
+  Future<ParticipantStatus?> myStatus(String rideId, String userId) async =>
+      members[rideId]?[userId];
+
+  @override
+  Future<List<RideParticipant>> participants(String rideId) async => [
+    for (final e in members[rideId]!.entries)
+      if (e.value == ParticipantStatus.confirmed) _participant(rideId, e.key),
+  ];
+
+  @override
+  Future<List<RideParticipant>> pendingRequests(String rideId) async => [
+    for (final e in members[rideId]!.entries)
+      if (e.value == ParticipantStatus.pending) _participant(rideId, e.key),
+  ];
+
+  RideDraft? lastDraft;
+  bool? lastPublish;
+
+  @override
+  Future<Ride> createRide(RideDraft draft, {required bool publish}) async {
+    calls.add(publish ? 'createRide:publish' : 'createRide:draft');
+    lastDraft = draft;
+    lastPublish = publish;
+    return addRide(
+      title: draft.title.trim(),
+      organizerId: currentUserId,
+      status: publish ? RideStatus.published : RideStatus.draft,
+      joinPolicy: draft.joinPolicy,
+      visibility: draft.visibility,
+      maxParticipants: draft.maxParticipants,
+      clubId: draft.clubId,
+      startsAt: draft.startsAt,
+      timezone: draft.timezone,
+    );
+  }
+
+  @override
+  Future<void> updateRide(String rideId, RideDraft draft) async {
+    calls.add('updateRide');
+    lastDraft = draft;
+  }
+
+  @override
+  Future<void> setStatus(
+    String rideId,
+    RideAction action, {
+    String? reason,
+  }) async {
+    calls.add('status:${action.name}${reason == null ? '' : ':$reason'}');
+    final next = RideStateMachine.next(rides[rideId]!.state, action);
+    if (next == null) throw const AppException('invalid_transition');
+    _sync(rideId, status: next.status, joinsLocked: next.joinsLocked);
+  }
+
+  @override
+  Future<void> deleteDraft(String rideId) async {
+    calls.add('deleteDraft');
+    rides.remove(rideId);
+    members.remove(rideId);
+  }
+
+  @override
+  Future<RideJoinOutcome> join(String rideId, {String? message}) async {
+    calls.add('join');
+    final ride = rides[rideId]!;
+    if (!ride.acceptsParticipants) {
+      throw const AppException('ride_not_joinable');
+    }
+    if (ride.isFull) throw const AppException('ride_full');
+    switch (ride.joinPolicy) {
+      case RideJoinPolicy.open:
+        members[rideId]![currentUserId] = ParticipantStatus.confirmed;
+        _sync(rideId);
+        return RideJoinOutcome.joined;
+      case RideJoinPolicy.approval:
+        members[rideId]![currentUserId] = ParticipantStatus.pending;
+        messages['$rideId/$currentUserId'] = message;
+        return RideJoinOutcome.requested;
+      case RideJoinPolicy.inviteOnly:
+        throw const AppException('invitation_required');
+    }
+  }
+
+  @override
+  Future<void> cancelRequest(String rideId) async =>
+      members[rideId]![currentUserId] = ParticipantStatus.cancelled;
+
+  @override
+  Future<void> leave(String rideId) async {
+    calls.add('leave');
+    members[rideId]![currentUserId] = ParticipantStatus.left;
+    _sync(rideId);
+  }
+
+  @override
+  Future<void> decideRequest(
+    String rideId,
+    String userId, {
+    required bool approve,
+  }) async {
+    calls.add('decide:$userId:$approve');
+    if (approve && !rides[rideId]!.acceptsParticipants) {
+      throw const AppException('ride_not_joinable');
+    }
+    members[rideId]![userId] = approve
+        ? ParticipantStatus.confirmed
+        : ParticipantStatus.rejected;
+    _sync(rideId);
+  }
+
+  @override
+  Future<void> removeParticipant(String rideId, String userId) async {
+    calls.add('remove:$userId');
+    members[rideId]![userId] = ParticipantStatus.removed;
+    _sync(rideId);
+  }
+
+  @override
+  Future<void> invite(String rideId, String inviteeId) async {
+    calls.add('invite:$inviteeId');
+    final id = 'rinv-${++_seq}';
+    invitations.add(
+      RideInvitation(id: id, rideId: rideId, rideTitle: rides[rideId]!.title),
+    );
+    invitationTargets[id] = inviteeId;
+  }
+
+  @override
+  Future<List<RideInvitation>> myInvitations(String userId) async => [
+    for (final i in invitations)
+      if (invitationTargets[i.id] == userId) i,
+  ];
+
+  @override
+  Future<void> respondToInvitation(
+    String invitationId, {
+    required bool accept,
+  }) async {
+    final invitation = invitations.firstWhere((i) => i.id == invitationId);
+    if (accept && !rides[invitation.rideId]!.acceptsParticipants) {
+      throw const AppException('ride_not_joinable');
+    }
+    invitations.remove(invitation);
+    if (accept) {
+      members[invitation.rideId]![currentUserId] = ParticipantStatus.confirmed;
+      _sync(invitation.rideId);
+    }
+  }
 }

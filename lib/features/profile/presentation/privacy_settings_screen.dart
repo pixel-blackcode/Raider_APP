@@ -67,6 +67,18 @@ class PrivacySettingsScreen extends ConsumerWidget {
                 settings.copyWith(allowClubInvitations: value),
               ),
             ),
+            SwitchListTile(
+              key: const Key('privacy-ride-invitations'),
+              contentPadding: EdgeInsets.zero,
+              value: settings.allowRideInvitations,
+              title: Text(l10n.privacyRideInvitations),
+              subtitle: Text(l10n.privacyRideInvitationsHelp),
+              onChanged: (value) => _save(
+                context,
+                ref,
+                settings.copyWith(allowRideInvitations: value),
+              ),
+            ),
             const SizedBox(height: AppSpacing.md),
             InfoCard(
               icon: Icons.lock_outline,

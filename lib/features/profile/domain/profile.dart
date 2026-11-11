@@ -80,12 +80,14 @@ class PrivacySettings {
   const PrivacySettings({
     this.discoverable = true,
     this.allowClubInvitations = true,
+    this.allowRideInvitations = true,
   });
 
   factory PrivacySettings.fromJson(Map<String, dynamic> json) =>
       PrivacySettings(
         discoverable: (json['discoverable'] as bool?) ?? true,
         allowClubInvitations: (json['allow_club_invitations'] as bool?) ?? true,
+        allowRideInvitations: (json['allow_ride_invitations'] as bool?) ?? true,
       );
 
   /// Profil visible par tous les motards connectés (sinon : seulement par
@@ -95,9 +97,16 @@ class PrivacySettings {
   /// Les administrateurs de club peuvent l'inviter.
   final bool allowClubInvitations;
 
-  PrivacySettings copyWith({bool? discoverable, bool? allowClubInvitations}) =>
-      PrivacySettings(
-        discoverable: discoverable ?? this.discoverable,
-        allowClubInvitations: allowClubInvitations ?? this.allowClubInvitations,
-      );
+  /// Les organisateurs de balade peuvent l'inviter.
+  final bool allowRideInvitations;
+
+  PrivacySettings copyWith({
+    bool? discoverable,
+    bool? allowClubInvitations,
+    bool? allowRideInvitations,
+  }) => PrivacySettings(
+    discoverable: discoverable ?? this.discoverable,
+    allowClubInvitations: allowClubInvitations ?? this.allowClubInvitations,
+    allowRideInvitations: allowRideInvitations ?? this.allowRideInvitations,
+  );
 }

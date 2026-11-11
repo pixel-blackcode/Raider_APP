@@ -142,3 +142,39 @@ as $$
    order by r.created_at desc limit 1;
 $$;
 grant execute on function tests.join_request_id(text, text) to anon, authenticated;
+
+create or replace function tests.ride_id(p_title text)
+returns uuid
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select id from public.rides where title = p_title;
+$$;
+grant execute on function tests.ride_id(text) to anon, authenticated;
+
+-- État d'une balade, lu sans RLS (vérifications).
+create or replace function tests.ride_state(p_title text)
+returns text
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select status::text || case when joins_locked then '+locked' else '' end
+    from public.rides where title = p_title;
+$$;
+grant execute on function tests.ride_state(text) to anon, authenticated;
+
+create or replace function tests.participant_status(p_title text, p_user text)
+returns text
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select p.status::text from public.ride_participants p
+   where p.ride_id = tests.ride_id(p_title) and p.user_id = tests.uid(p_user);
+$$;
+grant execute on function tests.participant_status(text, text) to anon, authenticated;

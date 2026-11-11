@@ -19,6 +19,8 @@ import '../../features/profile/presentation/delete_account_screen.dart';
 import '../../features/profile/presentation/edit_profile_screen.dart';
 import '../../features/profile/presentation/privacy_settings_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/rides/presentation/ride_detail_screen.dart';
+import '../../features/rides/presentation/ride_form_screen.dart';
 import '../../features/rides/presentation/rides_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import 'app_routes.dart';
@@ -87,6 +89,32 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.rides,
                 builder: (context, state) => const RidesScreen(),
+                routes: [
+                  // « nouvelle » doit précéder le paramètre « :rideId ».
+                  GoRoute(
+                    path: 'nouvelle',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => RideFormScreen(
+                      clubId: state.uri.queryParameters['club'],
+                    ),
+                  ),
+                  GoRoute(
+                    path: ':rideId',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => RideDetailScreen(
+                      rideId: state.pathParameters['rideId']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'modifier',
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => RideFormScreen(
+                          rideId: state.pathParameters['rideId'],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

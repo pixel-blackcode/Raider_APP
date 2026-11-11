@@ -37,6 +37,18 @@ String describeError(BuildContext context, Object error) {
     'same_password' => l10n.errorSamePassword,
     'unsupported_image' => l10n.errorUnsupportedImage,
     'image_too_large' => l10n.errorImageTooLarge,
+    'ride_not_found' => l10n.errorRideNotFound,
+    'ride_not_editable' => l10n.errorRideNotEditable,
+    'ride_not_joinable' => l10n.errorRideNotJoinable,
+    'ride_full' => l10n.errorRideFull,
+    'invalid_transition' => l10n.errorInvalidTransition,
+    'already_participant' => l10n.errorAlreadyParticipant,
+    'not_participant' => l10n.errorNotParticipant,
+    'removed_from_ride' => l10n.errorRemovedFromRide,
+    'organizer_cannot_leave' => l10n.errorOrganizerCannotLeave,
+    'club_members_only' => l10n.errorClubMembersOnly,
+    'start_in_past' => l10n.errorStartInPast,
+    'capacity_below_participants' => l10n.errorCapacityBelowParticipants,
     _ => l10n.errorUnknown,
   };
 }

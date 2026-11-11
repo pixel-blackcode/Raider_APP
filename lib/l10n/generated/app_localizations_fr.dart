@@ -775,4 +775,429 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get errorImageTooLarge => 'Image trop volumineuse.';
+
+  @override
+  String get bikeAny => 'Toutes motos';
+
+  @override
+  String get bikeScooter => 'Scooter';
+
+  @override
+  String get bikeRoadster => 'Roadster';
+
+  @override
+  String get bikeSport => 'Sportive';
+
+  @override
+  String get bikeTrail => 'Trail';
+
+  @override
+  String get bikeEnduro => 'Enduro / tout-terrain';
+
+  @override
+  String get bikeCustom => 'Custom';
+
+  @override
+  String get bikeTouring => 'Routière';
+
+  @override
+  String get bikeQuad => 'Quad';
+
+  @override
+  String get clubRidesTitle => 'Balades du club';
+
+  @override
+  String get clubRidesEmpty => 'Aucune balade du club à venir.';
+
+  @override
+  String get clubOrganizeRide => 'Organiser une balade du club';
+
+  @override
+  String get errorRideNotFound => 'Balade introuvable';
+
+  @override
+  String get errorRideNotEditable => 'Cette balade ne peut plus être modifiée.';
+
+  @override
+  String get errorRideNotJoinable =>
+      'Les inscriptions à cette balade sont fermées.';
+
+  @override
+  String get errorRideFull => 'Cette balade est complète.';
+
+  @override
+  String get errorInvalidTransition =>
+      'Ce changement de statut n\'est pas possible.';
+
+  @override
+  String get errorAlreadyParticipant => 'Vous participez déjà à cette balade.';
+
+  @override
+  String get errorNotParticipant =>
+      'Cette personne ne participe pas à la balade.';
+
+  @override
+  String get errorRemovedFromRide =>
+      'Vous avez été retiré de cette balade par l\'organisateur.';
+
+  @override
+  String get errorOrganizerCannotLeave =>
+      'L\'organisateur ne peut pas quitter sa balade : annulez-la si nécessaire.';
+
+  @override
+  String get errorClubMembersOnly => 'Balade réservée aux membres du club.';
+
+  @override
+  String get errorStartInPast => 'La date de départ doit être dans le futur.';
+
+  @override
+  String get errorCapacityBelowParticipants =>
+      'Le nombre maximal ne peut pas être inférieur au nombre de participants inscrits.';
+
+  @override
+  String get privacyRideInvitations => 'Accepter les invitations aux balades';
+
+  @override
+  String get privacyRideInvitationsHelp =>
+      'Si désactivé, aucun organisateur ne peut vous inviter à une balade.';
+
+  @override
+  String get ridesOfflineBody =>
+      'Les balades nécessitent une connexion au serveur Rider Group.';
+
+  @override
+  String get ridesTabUpcoming => 'À venir';
+
+  @override
+  String get ridesTabMine => 'Mes balades';
+
+  @override
+  String get ridesSearchHint => 'Rechercher : titre, ville, lieu';
+
+  @override
+  String get ridesUpcomingEmptyTitle => 'Aucune balade à venir';
+
+  @override
+  String get ridesUpcomingEmptyBody =>
+      'Organisez la première balade de votre ville !';
+
+  @override
+  String get ridesMineEmptyTitle => 'Aucune balade pour vous';
+
+  @override
+  String get ridesMineEmptyBody =>
+      'Rejoignez une balade ou organisez la vôtre.';
+
+  @override
+  String get ridesSectionUpcoming => 'À venir et en cours';
+
+  @override
+  String get ridesSectionDrafts => 'Brouillons';
+
+  @override
+  String get ridesSectionPast => 'Terminées ou annulées';
+
+  @override
+  String get rideCreate => 'Organiser une balade';
+
+  @override
+  String get rideEdit => 'Modifier la balade';
+
+  @override
+  String get rideEditNotAllowed =>
+      'Seul l\'organisateur (ou un administrateur du club) peut modifier cette balade avant son départ.';
+
+  @override
+  String get rideNotFoundBody =>
+      'Cette balade n\'existe pas ou ne vous est pas accessible.';
+
+  @override
+  String get rideDeleteDraft => 'Supprimer le brouillon';
+
+  @override
+  String get rideDeleteDraftConfirm =>
+      'Supprimer définitivement ce brouillon ?';
+
+  @override
+  String get rideFieldTitle => 'Titre de la balade';
+
+  @override
+  String get rideSectionWhen => 'Date et heure';
+
+  @override
+  String get rideFieldTimezone => 'Fuseau horaire';
+
+  @override
+  String get timezoneKinshasa => 'Heure de Kinshasa (UTC+1)';
+
+  @override
+  String get timezoneLubumbashi => 'Heure de Lubumbashi (UTC+2)';
+
+  @override
+  String get rideSectionWhere => 'Itinéraire';
+
+  @override
+  String get rideFieldStart => 'Point de départ';
+
+  @override
+  String get rideFieldDestination => 'Destination';
+
+  @override
+  String get rideFieldItinerary => 'Étapes et pauses';
+
+  @override
+  String get rideFieldItineraryHelp =>
+      'Ex. : départ 8 h, pause carburant à Maluku, déjeuner à Kinkole.';
+
+  @override
+  String get rideSectionRiders => 'Participants';
+
+  @override
+  String get rideFieldDifficulty => 'Niveau de difficulté';
+
+  @override
+  String get rideDifficultyEasy => 'Facile';
+
+  @override
+  String get rideDifficultyModerate => 'Intermédiaire';
+
+  @override
+  String get rideDifficultyHard => 'Difficile';
+
+  @override
+  String get rideDifficultyExpert => 'Expert';
+
+  @override
+  String get rideFieldBikeTypes => 'Motos recommandées';
+
+  @override
+  String get rideFieldMaxParticipants => 'Nombre maximal de participants';
+
+  @override
+  String get rideFieldMaxParticipantsHelp =>
+      'Facultatif, organisateur compris (2 à 500).';
+
+  @override
+  String get rideFieldConditions => 'Conditions de participation';
+
+  @override
+  String get rideFieldConditionsHelp =>
+      'Ex. : casque et gants obligatoires, permis valide, réservoir plein au départ.';
+
+  @override
+  String get rideFieldOrganizedBy => 'Organisée par';
+
+  @override
+  String get rideOrganizedByMe => 'Moi (balade personnelle)';
+
+  @override
+  String get rideFieldOpenToNonMembers => 'Ouverte aux motards hors du club';
+
+  @override
+  String get rideFieldOpenToNonMembersHelp =>
+      'Si désactivé, seuls les membres du club voient la balade et peuvent la rejoindre.';
+
+  @override
+  String get rideFieldJoinPolicy => 'Mode d\'adhésion';
+
+  @override
+  String get rideJoinOpen => 'Participation libre';
+
+  @override
+  String get rideJoinApproval => 'Sur approbation de l\'organisateur';
+
+  @override
+  String get rideJoinInviteOnly => 'Sur invitation uniquement';
+
+  @override
+  String get rideSaveDraft => 'Enregistrer en brouillon';
+
+  @override
+  String get rideVisibilityPublic => 'Publique';
+
+  @override
+  String get rideVisibilityPrivate => 'Privée';
+
+  @override
+  String get rideVisibilityClub => 'Balade de club';
+
+  @override
+  String get rideOpenToAll => 'ouverte à tous';
+
+  @override
+  String get rideStatusDraft => 'Brouillon';
+
+  @override
+  String get rideStatusPublished => 'Inscriptions ouvertes';
+
+  @override
+  String get rideStatusLocked => 'Verrouillée';
+
+  @override
+  String get rideStatusInProgress => 'En cours';
+
+  @override
+  String get rideStatusFinished => 'Terminée';
+
+  @override
+  String get rideStatusCancelled => 'Annulée';
+
+  @override
+  String get rideJoinsClosed => 'inscriptions fermées';
+
+  @override
+  String get rideActionPublish => 'Publier';
+
+  @override
+  String get rideActionLock => 'Verrouiller';
+
+  @override
+  String get rideActionUnlock => 'Déverrouiller';
+
+  @override
+  String get rideActionStart => 'Démarrer';
+
+  @override
+  String get rideActionFinish => 'Terminer';
+
+  @override
+  String get rideActionCancel => 'Annuler la balade';
+
+  @override
+  String get rideCancelReason => 'Motif (facultatif, visible des participants)';
+
+  @override
+  String get rideCancelledNoReason => 'Aucun motif indiqué.';
+
+  @override
+  String get rideStartConfirm =>
+      'Démarrer la balade maintenant ? Les participants verront qu\'elle est en cours.';
+
+  @override
+  String get rideFinishConfirm =>
+      'Marquer la balade comme terminée ? Cette action est définitive.';
+
+  @override
+  String rideClubLabel(String club) {
+    return 'Club : $club';
+  }
+
+  @override
+  String rideOrganizerLabel(String name) {
+    return 'Organisateur : $name';
+  }
+
+  @override
+  String get rideOrganizerRole => 'Organisateur';
+
+  @override
+  String rideParticipantCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count participants',
+      one: '1 participant',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rideParticipantCapacity(int count, int max) {
+    return '$count / $max participants';
+  }
+
+  @override
+  String get rideDraftNotice =>
+      'Brouillon : visible uniquement par vous. Publiez-le pour ouvrir les inscriptions.';
+
+  @override
+  String get rideYouOrganize => 'Vous organisez cette balade.';
+
+  @override
+  String get rideYouParticipate => 'Vous participez à cette balade.';
+
+  @override
+  String get rideRemovedNotice =>
+      'L\'organisateur vous a retiré de cette balade.';
+
+  @override
+  String get rideRequestPending =>
+      'Votre demande de participation attend la décision de l\'organisateur.';
+
+  @override
+  String get rideRequestPendingShort => 'Demande envoyée';
+
+  @override
+  String get rideJoinsClosedNotice =>
+      'Les inscriptions sont fermées (balade verrouillée par l\'organisateur).';
+
+  @override
+  String get rideJoin => 'Participer';
+
+  @override
+  String get rideJoined => 'Vous participez à la balade !';
+
+  @override
+  String get rideRequestJoin => 'Demander à participer';
+
+  @override
+  String get rideInviteOnlyNotice =>
+      'Cette balade accepte uniquement les motards invités par l\'organisateur.';
+
+  @override
+  String get rideLeave => 'Quitter la balade';
+
+  @override
+  String rideLeaveConfirm(String title) {
+    return 'Ne plus participer à « $title » ?';
+  }
+
+  @override
+  String get rideManageTitle => 'Gestion de la balade';
+
+  @override
+  String get rideNoMoreActions =>
+      'La balade est close : plus aucune action n\'est possible.';
+
+  @override
+  String get rideLockedHelp =>
+      'Verrouillée : aucune nouvelle inscription (y compris par invitation ou approbation). Les participants inscrits restent.';
+
+  @override
+  String get rideInvite => 'Inviter un motard';
+
+  @override
+  String get rideRequestsTitle => 'Demandes de participation';
+
+  @override
+  String get rideParticipantsTitle => 'Participants';
+
+  @override
+  String get rideParticipantsHidden =>
+      'La liste des participants est réservée aux participants de cette balade.';
+
+  @override
+  String get rideRemoveParticipant => 'Retirer de la balade';
+
+  @override
+  String rideRemoveConfirm(String name) {
+    return 'Retirer $name de la balade ? Cette personne ne pourra pas revenir d\'elle-même.';
+  }
+
+  @override
+  String rideInvitationTitle(String title) {
+    return 'Invitation à la balade « $title »';
+  }
+
+  @override
+  String get validationRideTitle => 'Entre 3 et 100 caractères';
+
+  @override
+  String get validationRidePlace => 'Entre 2 et 120 caractères';
+
+  @override
+  String get validationMaxParticipants => 'Entre 2 et 500, ou laisser vide';
+
+  @override
+  String get validationBikeTypes => 'Choisissez au moins un type de moto.';
 }

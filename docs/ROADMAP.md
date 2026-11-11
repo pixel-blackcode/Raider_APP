@@ -7,7 +7,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | 01 — Fondations | Projet Flutter, architecture modulaire, configuration d'environnement, navigation, thèmes, composants UI, fondations Supabase, CI, documentation, tests de base. | ✅ Livrée (compléments : CI corrigée, builds Android/iOS en CI) |
 | 02 — Comptes et profils | Inscription, connexion, vérification e-mail, mot de passe oublié, sessions, profil, photo, confidentialité, suppression de compte. | ✅ Livrée — en attente de validation |
 | 03 — Clubs | Création libre, public/privé, adhésion, rôles, vérification facultative. | ✅ Livrée — en attente de validation |
-| 04 — Balades | Création, recherche, 3 modes d'adhésion, participants, machine à états, verrouillage. | À venir |
+| 04 — Balades | Création, recherche, 3 modes d'adhésion, participants, machine à états, verrouillage. | ✅ Livrée — en attente de validation |
 | 05 — GPS et mode Convoi | Carte, partage volontaire, temps réel, chef de convoi / serre-file, retardataires, confidentialité, rétention. | À venir |
 | 06 — SOS | Alertes, notifications, accusés de réception, gestion des échecs de transmission. | À venir |
 | 07 — Communauté | Publications, photos, commentaires, messagerie, modération. | À venir |
@@ -59,3 +59,25 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R03-9 | Essai réel sur un projet Supabase + appareil. | **À faire par le propriétaire** (aucun projet Supabase ni appareil disponible dans l'environnement cloud) |
 
 | R03-10 | Logo et couverture : ajout par owner/admin uniquement ; images d'un club masqué invisibles aux non-membres. | SQL `04_media_privacy_account_test.sql` + widget |
+
+## Mission 04 — scénarios de recette
+
+| # | Scénario (critère du cahier des charges) | Vérification |
+| --- | --- | --- |
+| R04-1 | L'organisateur choisit libre, approbation ou invitation (6). | SQL `05_rides_test.sql` + widget `rides_flow_test.dart` |
+| R04-2 | Une balade verrouillée bloque les nouvelles adhésions (7). Les demandes, les approbations et les invitations sont aussi refusées ; les participants déjà inscrits restent. | SQL + widget |
+| R04-3 | Machine à états brouillon → publiée ⇄ verrouillée → en cours (verrouillable) → terminée / annulée. Les transitions interdites sont refusées. | SQL + 46 tests unitaires (table complète, miroir de la fonction SQL) |
+| R04-4 | Balade en cours avec adhésions verrouillées, puis déverrouillées. | SQL + widget |
+| R04-5 | Un participant retiré perd immédiatement l'accès (participants, balade privée) et ne peut pas revenir de lui-même. | SQL + widget |
+| R04-6 | Brouillons invisibles ; balades privées invisibles sans invitation. | SQL |
+| R04-7 | Balade de club réservée aux membres ou ouverte ; une invitation ne contourne pas la restriction aux membres. | SQL + widget |
+| R04-8 | Capacité maximale respectée, quelle que soit la voie d'adhésion. | SQL + widget |
+| R04-9 | Heure saisie et affichée dans le fuseau de la balade (Kinshasa UTC+1, Lubumbashi UTC+2). | Tests unitaires + widget |
+| R04-10 | Recherche de proximité PostGIS, qui respecte la visibilité. | SQL (`rides_near`) |
+| R04-11 | Visiteur anonyme : aucun accès ; opérations journalisées. | SQL |
+| R04-12 | Essai sur un vrai projet Supabase et un vrai téléphone. | **À faire** : projet Supabase dédié en attente de ton accord |
+
+**Préparé mais pas encore exposé dans l'application :**
+- **Coordonnées GPS du départ et de la destination :** les colonnes existent, le point PostGIS est calculé par le serveur et la fonction `rides_near` est testée. Leur saisie sur une carte arrivera avec la Mission 05, une fois le fournisseur de cartographie choisi (O-02).
+- **Rôles de convoi** (chef de convoi, serre-file) et discussion de balade : Missions 05 et 07.
+

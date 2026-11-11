@@ -8,6 +8,7 @@ import '../../../core/errors/error_messages.dart';
 import '../../../core/media/media_repository.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_value_view.dart';
+import '../../../core/widgets/dialogs.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/info_card.dart';
 import '../../../core/widgets/remote_avatar.dart';
@@ -15,6 +16,8 @@ import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
 import '../../profile/data/profile_repository.dart';
+import '../../rides/data/rides_providers.dart';
+import '../../rides/presentation/widgets/ride_card.dart';
 import '../data/clubs_providers.dart';
 import '../data/clubs_repository.dart';
 import '../domain/club.dart';
@@ -78,7 +81,7 @@ class ClubDetailScreen extends ConsumerWidget {
     Club club,
   ) async {
     final l10n = AppLocalizations.of(context);
-    final confirmed = await _confirm(
+    final confirmed = await showConfirmDialog(
       context,
       title: l10n.clubDelete,
       message: l10n.clubDeleteConfirm(club.name),
@@ -127,114 +130,6 @@ Future<bool> runClubAction(
         ..showSnackBar(SnackBar(content: Text(describeError(context, error))));
     }
     return false;
-  }
-}
-
-Future<bool> _confirm(
-  BuildContext context, {
-  required String title,
-  required String message,
-  required String confirmLabel,
-}) async {
-  final l10n = AppLocalizations.of(context);
-  final result = await showDialog<bool>(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: Text(title),
-      content: Text(message),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context, false),
-          child: Text(l10n.actionCancel),
-        ),
-        FilledButton(
-          key: const Key('confirm-dialog-ok'),
-          onPressed: () => Navigator.pop(context, true),
-          child: Text(confirmLabel),
-        ),
-      ],
-    ),
-  );
-  return result ?? false;
-}
-
-Future<String?> _askText(
-  BuildContext context, {
-  required String title,
-  required String label,
-  required String confirmLabel,
-  int maxLength = 500,
-  String? prefix,
-}) {
-  return showDialog<String>(
-    context: context,
-    builder: (context) => _TextPromptDialog(
-      title: title,
-      label: label,
-      confirmLabel: confirmLabel,
-      maxLength: maxLength,
-      prefix: prefix,
-    ),
-  );
-}
-
-/// Boîte de saisie d'un texte court. Elle possède son contrôleur, libéré
-/// seulement après l'animation de fermeture.
-class _TextPromptDialog extends StatefulWidget {
-  const _TextPromptDialog({
-    required this.title,
-    required this.label,
-    required this.confirmLabel,
-    required this.maxLength,
-    this.prefix,
-  });
-
-  final String title;
-  final String label;
-  final String confirmLabel;
-  final int maxLength;
-  final String? prefix;
-
-  @override
-  State<_TextPromptDialog> createState() => _TextPromptDialogState();
-}
-
-class _TextPromptDialogState extends State<_TextPromptDialog> {
-  final _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    return AlertDialog(
-      title: Text(widget.title),
-      content: TextField(
-        key: const Key('text-dialog-field'),
-        controller: _controller,
-        autofocus: true,
-        maxLength: widget.maxLength,
-        decoration: InputDecoration(
-          labelText: widget.label,
-          prefixText: widget.prefix,
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text(l10n.actionCancel),
-        ),
-        FilledButton(
-          key: const Key('text-dialog-ok'),
-          onPressed: () => Navigator.pop(context, _controller.text.trim()),
-          child: Text(widget.confirmLabel),
-        ),
-      ],
-    );
   }
 }
 
@@ -336,6 +231,7 @@ class _ClubDetailBody extends ConsumerWidget {
           SectionHeader(title: l10n.clubFieldRules),
           Text(club.rules),
         ],
+        _ClubRidesSection(detail: detail),
         if (permissions.canReviewRequests) _AdminSection(detail: detail),
         SectionHeader(title: l10n.clubMembersTitle),
         if (detail.members.isEmpty)
@@ -374,7 +270,7 @@ class _MembershipActions extends ConsumerWidget {
       return OutlinedButton.icon(
         key: const Key('club-leave'),
         onPressed: () async {
-          final confirmed = await _confirm(
+          final confirmed = await showConfirmDialog(
             context,
             title: l10n.clubLeave,
             message: l10n.clubLeaveConfirm(club.name),
@@ -435,7 +331,7 @@ class _MembershipActions extends ConsumerWidget {
         return FilledButton.icon(
           key: const Key('club-request'),
           onPressed: () async {
-            final message = await _askText(
+            final message = await showTextPrompt(
               context,
               title: l10n.clubRequestJoin,
               label: l10n.clubRequestMessage,
@@ -474,7 +370,7 @@ class _AdminSection extends ConsumerWidget {
   Future<void> _invite(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
-    final username = await _askText(
+    final username = await showTextPrompt(
       context,
       title: l10n.clubInvite,
       label: l10n.fieldUsername,
@@ -614,7 +510,7 @@ class _VerificationTile extends ConsumerWidget {
         OutlinedButton.icon(
           key: const Key('club-request-verification'),
           onPressed: () async {
-            final message = await _askText(
+            final message = await showTextPrompt(
               context,
               title: l10n.clubVerificationRequest,
               label: l10n.clubVerificationMessage,
@@ -727,7 +623,7 @@ class _MemberTile extends ConsumerWidget {
         clubId: club.id,
       );
     } else if (action == 'remove') {
-      final confirmed = await _confirm(
+      final confirmed = await showConfirmDialog(
         context,
         title: l10n.clubRemoveMember,
         message: l10n.clubRemoveConfirm(member.displayName),
@@ -742,7 +638,7 @@ class _MemberTile extends ConsumerWidget {
         );
       }
     } else if (action == 'transfer') {
-      final confirmed = await _confirm(
+      final confirmed = await showConfirmDialog(
         context,
         title: l10n.clubTransferOwnership,
         message: l10n.clubTransferConfirm(member.displayName),
@@ -757,5 +653,48 @@ class _MemberTile extends ConsumerWidget {
         );
       }
     }
+  }
+}
+
+/// Balades à venir du club, et création réservée aux owner / admin.
+class _ClubRidesSection extends ConsumerWidget {
+  const _ClubRidesSection({required this.detail});
+
+  final ClubDetail detail;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final permissions = ClubPermissions(detail.myRole);
+    final rides =
+        ref.watch(clubRidesProvider(detail.club.id)).value ?? const [];
+    if (rides.isEmpty && !permissions.canEditDetails) {
+      return const SizedBox.shrink();
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionHeader(title: l10n.clubRidesTitle),
+        if (rides.isEmpty)
+          InfoCard(icon: Icons.route_outlined, message: l10n.clubRidesEmpty)
+        else
+          for (final ride in rides)
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              child: RideCard(
+                ride: ride,
+                onTap: () => context.push(AppRoutes.ride(ride.id)),
+              ),
+            ),
+        if (permissions.canEditDetails)
+          OutlinedButton.icon(
+            key: const Key('club-organize-ride'),
+            onPressed: () =>
+                context.push(AppRoutes.newRide(clubId: detail.club.id)),
+            icon: const Icon(Icons.add_road),
+            label: Text(l10n.clubOrganizeRide),
+          ),
+      ],
+    );
   }
 }

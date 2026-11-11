@@ -9,6 +9,7 @@ import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_providers.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
+import 'package:rider_group/features/rides/data/rides_providers.dart';
 
 import 'fakes.dart';
 import 'pump_app.dart';
@@ -29,6 +30,7 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeProfileRepository? profiles,
   FakeMediaRepository? media,
   FakePhotoPicker? picker,
+  FakeRidesRepository? rides,
 }) {
   return pumpRiderGroupApp(
     tester,
@@ -45,6 +47,13 @@ Future<ProviderContainer> pumpOnlineApp(
         profiles ?? FakeProfileRepository(testProfiles.values),
       ),
       mediaRepositoryProvider.overrideWithValue(media ?? FakeMediaRepository()),
+      ridesRepositoryProvider.overrideWithValue(
+        rides ??
+            FakeRidesRepository(
+              currentUserId: auth.currentSession?.userId ?? '',
+              profiles: testProfiles,
+            ),
+      ),
       photoPickerProvider.overrideWithValue(picker ?? FakePhotoPicker()),
     ],
   );
