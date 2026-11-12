@@ -63,3 +63,30 @@ app.*.map.json
 # Supabase CLI (état local).
 /supabase/.branches/
 /supabase/.temp/
+
+# --- Kin Guide ---
+# Node (back-office web, outils).
+node_modules/
+dist/
+.next/
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+# Variables d'environnement, où qu'elles se trouvent (les modèles restent suivis).
+**/.env
+**/.env.*
+!**/.env.example
+# Supabase CLI, où que soit le dossier supabase/.
+**/supabase/.branches/
+**/supabase/.temp/
+**/supabase/.env
+# Clés et certificats.
+*.pem
+*.key
+*.p12
+*.p8
+*.mobileprovision
+service-account*.json
+# Signature Android, où que soit le dossier android/.
+**/key.properties
+**/local.properties
