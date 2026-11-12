@@ -62,6 +62,22 @@ L'idéal est d'avoir **deux téléphones Android** ou plus, et donc deux comptes
 | 4.3 | A (propriétaire d'un club avec des membres) : Supprimer mon compte | Refusé avec explication : il faut d'abord transférer le club |
 | 4.4 | Compte de test sans club actif : Supprimer mon compte, en tapant SUPPRIMER | Compte supprimé ; retour à l'écran de connexion |
 
+## 5. Mode Convoi (deux téléphones, à l'extérieur)
+
+Préparer : A organise une balade, B la rejoint (confirmé), A la **démarre**.
+
+| # | Action | Résultat attendu |
+| --- | --- | --- |
+| 5.1 | B : fiche de la balade → « Ouvrir le mode Convoi » | Carte et liste des participants ; « Votre position n'est pas partagée » |
+| 5.2 | B : « Partager ma position » | Le téléphone demande l'autorisation ; ensuite « Dernier envoi à HH:MM » |
+| 5.3 | A : ouvrir le mode Convoi | B apparaît sur la carte et dans la liste (« en direct ») |
+| 5.4 | A : fiche → menu à côté de B → « Nommer chef de convoi » | B affiché « chef de convoi » chez A et B |
+| 5.5 | B : « Arrêter le partage » | B disparaît de la carte de A |
+| 5.6 | A : couper le partage de son côté puis s'éloigner de plus de 2 km de B (chef) avec partage actif | Alerte « peut-être séparé » sur A |
+| 5.7 | B : passer en mode avion 4 min | Chez A : « Position ancienne » pour B |
+| 5.8 | A : terminer la balade | L'envoi de B s'arrête ; plus de carte pour personne |
+| 5.9 | Compte C non inscrit : ouvrir le lien de la balade | Pas de bouton Convoi, aucune position visible |
+
 ## Signaler un problème
 
 Pour chaque anomalie, note :

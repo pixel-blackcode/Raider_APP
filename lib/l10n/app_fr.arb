@@ -506,5 +506,56 @@
       }
     }
   },
-  "errorSignupDisabled": "Les inscriptions par e-mail sont désactivées sur le serveur. Contactez l'administrateur de Rider Group."
+  "errorSignupDisabled": "Les inscriptions par e-mail sont désactivées sur le serveur. Contactez l'administrateur de Rider Group.",
+  "convoyTitle": "Mode Convoi",
+  "convoyOpen": "Ouvrir le mode Convoi",
+  "convoySafety": "Ne manipulez pas le téléphone en roulant : arrêtez-vous en lieu sûr.",
+  "convoyStartSharing": "Partager ma position",
+  "convoyStopSharing": "Arrêter le partage",
+  "convoySharingOff": "Votre position n'est pas partagée.",
+  "convoySharingStarting": "Activation du partage…",
+  "convoyWaitingFix": "Partage actif — recherche du signal GPS…",
+  "convoyLastSent": "Partage actif — dernière position envoyée à {time}. Il s'arrête si vous quittez cet écran.",
+  "@convoyLastSent": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "convoyNotSent": "Position NON transmise (réseau ?). Nouvel essai automatique.",
+  "convoyLocationOff": "La localisation du téléphone est désactivée. Activez-la dans les réglages.",
+  "convoyLocationDenied": "Rider Group n'a pas l'autorisation d'utiliser votre position.",
+  "convoyLocationDeniedForever": "Autorisation refusée définitivement : modifiez-la dans les réglages du téléphone.",
+  "convoyNotRunningTitle": "La balade n'est pas en cours",
+  "convoyNotRunningBody": "Le mode Convoi est disponible uniquement pendant la balade.",
+  "convoyParticipantsOnly": "Le mode Convoi est réservé aux participants confirmés.",
+  "convoyYou": "Vous",
+  "convoyRoleLeader": "chef de convoi",
+  "convoyRoleSweeper": "serre-file",
+  "convoyNotSharing": "Ne partage pas sa position",
+  "convoyLive": "Position à jour",
+  "convoyAging": "Position de plus d'une minute",
+  "convoyStale": "Position ancienne ({minutes} min) : réseau absent ou arrêt — à vérifier",
+  "@convoyStale": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "convoySeparated": "À {km} km du chef de convoi — peut-être séparé",
+  "@convoySeparated": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "convoyAssignRole": "Rôle de convoi",
+  "convoyMakeLeader": "Nommer chef de convoi",
+  "convoyMakeSweeper": "Nommer serre-file",
+  "convoyClearRole": "Retirer le rôle de convoi",
+  "errorRideNotInProgress": "La balade n'est pas en cours : le partage de position est arrêté.",
+  "errorSharingDisabled": "Le partage de position est désactivé."
 }

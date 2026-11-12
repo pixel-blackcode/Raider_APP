@@ -99,6 +99,16 @@ Règles complémentaires :
 - **Confidentialité des profils :** un profil non découvrable reste visible des autres participants confirmés de la même balade, et de l'organisateur auquel une demande est adressée.
 - **Limitation des abus :** 10 balades créées par utilisateur et par 24 h.
 
+## Positions GPS et mode Convoi (Mission 05)
+
+- **Consentement explicite** par balade (`ride_location_shares`) ; désactivé par défaut. L'arrêt du partage supprime immédiatement la position.
+- **Lecture** (`ride_positions`, RLS) : participants confirmés et gestionnaires, **uniquement pendant la balade** (`in_progress`). Les visiteurs anonymes n'ont aucun accès. Realtime applique la même RLS.
+- **Écriture** uniquement via `publish_position` (SECURITY DEFINER) : balade en cours, participant confirmé, partage actif, coordonnées et horodatage plausibles (−10 min / +1 min), au plus un envoi toutes les 3 s.
+- **Retrait / départ** d'un participant : rôle, position et partage supprimés par déclencheur.
+- **Minimisation** : une seule ligne par motard et par balade (dernière position), aucun historique de trajet.
+- **Rétention (D-35)** : purge 72 h après la fin ou l'annulation (`private.purge_ride_positions`, pg_cron toutes les heures).
+- Les rôles de convoi sont attribués par les gestionnaires de la balade et journalisés (`ride.convoy_role`).
+
 ## Journal d'audit
 
 `private.audit_logs` enregistre l'auteur, l'action, l'entité et les détails de chaque opération sensible :

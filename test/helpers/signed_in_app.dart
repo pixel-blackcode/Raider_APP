@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rider_group/core/backend/backend_status.dart';
@@ -7,6 +8,9 @@ import 'package:rider_group/core/media/photo_picker.dart';
 import 'package:rider_group/features/auth/data/auth_providers.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_providers.dart';
+import 'package:rider_group/features/convoy/data/convoy_repository.dart';
+import 'package:rider_group/features/convoy/data/location_service.dart';
+import 'package:rider_group/features/convoy/presentation/convoy_map.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_providers.dart';
@@ -31,6 +35,8 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeMediaRepository? media,
   FakePhotoPicker? picker,
   FakeRidesRepository? rides,
+  FakeConvoyRepository? convoy,
+  FakeLocationService? location,
 }) {
   return pumpRiderGroupApp(
     tester,
@@ -55,6 +61,19 @@ Future<ProviderContainer> pumpOnlineApp(
             ),
       ),
       photoPickerProvider.overrideWithValue(picker ?? FakePhotoPicker()),
+      convoyRepositoryProvider.overrideWithValue(
+        convoy ?? FakeConvoyRepository(),
+      ),
+      locationServiceProvider.overrideWithValue(
+        location ?? FakeLocationService(),
+      ),
+      // La carte native (MapLibre) n'existe pas en test : simple liste.
+      convoyMapBuilderProvider.overrideWithValue(
+        (members, meId) => Text(
+          'map:${members.where((m) => m.position != null).length}',
+          key: const Key('convoy-map-fake'),
+        ),
+      ),
     ],
   );
 }

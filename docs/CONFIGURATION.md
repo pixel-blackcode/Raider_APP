@@ -27,6 +27,10 @@ cp env/example.json env/dev.json      # puis compléter
 flutter run --dart-define-from-file=env/dev.json
 ```
 
+Variable facultative : `MAP_STYLE_URL` (style MapLibre). Par défaut `https://tiles.openfreemap.org/styles/liberty` (gratuit, sans clé). Pour un autre fournisseur : `--dart-define=MAP_STYLE_URL=https://…/style.json`. Ne mettez jamais de clé secrète dans cette URL : elle est publique.
+
+La purge des positions GPS (72 h) est planifiée par **pg_cron** (`rider-purge-ride-positions`, toutes les heures) quand l'extension est disponible ; la migration l'active automatiquement sur Supabase.
+
 Sans ces valeurs, l'application démarre en mode **« Serveur non configuré »** et l'affiche clairement (accueil et Paramètres). Elle ne simule aucune connexion.
 
 > ⚠️ Ne fournissez **jamais** la clé `service_role` / `sb_secret_…` à l'application : elle contourne toutes les règles RLS. L'application la détecte et refuse de s'initialiser avec. Toute valeur compilée dans une application mobile doit être considérée comme publique.

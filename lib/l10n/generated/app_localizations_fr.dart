@@ -1220,4 +1220,108 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get errorSignupDisabled =>
       'Les inscriptions par e-mail sont désactivées sur le serveur. Contactez l\'administrateur de Rider Group.';
+
+  @override
+  String get convoyTitle => 'Mode Convoi';
+
+  @override
+  String get convoyOpen => 'Ouvrir le mode Convoi';
+
+  @override
+  String get convoySafety =>
+      'Ne manipulez pas le téléphone en roulant : arrêtez-vous en lieu sûr.';
+
+  @override
+  String get convoyStartSharing => 'Partager ma position';
+
+  @override
+  String get convoyStopSharing => 'Arrêter le partage';
+
+  @override
+  String get convoySharingOff => 'Votre position n\'est pas partagée.';
+
+  @override
+  String get convoySharingStarting => 'Activation du partage…';
+
+  @override
+  String get convoyWaitingFix => 'Partage actif — recherche du signal GPS…';
+
+  @override
+  String convoyLastSent(String time) {
+    return 'Partage actif — dernière position envoyée à $time. Il s\'arrête si vous quittez cet écran.';
+  }
+
+  @override
+  String get convoyNotSent =>
+      'Position NON transmise (réseau ?). Nouvel essai automatique.';
+
+  @override
+  String get convoyLocationOff =>
+      'La localisation du téléphone est désactivée. Activez-la dans les réglages.';
+
+  @override
+  String get convoyLocationDenied =>
+      'Rider Group n\'a pas l\'autorisation d\'utiliser votre position.';
+
+  @override
+  String get convoyLocationDeniedForever =>
+      'Autorisation refusée définitivement : modifiez-la dans les réglages du téléphone.';
+
+  @override
+  String get convoyNotRunningTitle => 'La balade n\'est pas en cours';
+
+  @override
+  String get convoyNotRunningBody =>
+      'Le mode Convoi est disponible uniquement pendant la balade.';
+
+  @override
+  String get convoyParticipantsOnly =>
+      'Le mode Convoi est réservé aux participants confirmés.';
+
+  @override
+  String get convoyYou => 'Vous';
+
+  @override
+  String get convoyRoleLeader => 'chef de convoi';
+
+  @override
+  String get convoyRoleSweeper => 'serre-file';
+
+  @override
+  String get convoyNotSharing => 'Ne partage pas sa position';
+
+  @override
+  String get convoyLive => 'Position à jour';
+
+  @override
+  String get convoyAging => 'Position de plus d\'une minute';
+
+  @override
+  String convoyStale(int minutes) {
+    return 'Position ancienne ($minutes min) : réseau absent ou arrêt — à vérifier';
+  }
+
+  @override
+  String convoySeparated(String km) {
+    return 'À $km km du chef de convoi — peut-être séparé';
+  }
+
+  @override
+  String get convoyAssignRole => 'Rôle de convoi';
+
+  @override
+  String get convoyMakeLeader => 'Nommer chef de convoi';
+
+  @override
+  String get convoyMakeSweeper => 'Nommer serre-file';
+
+  @override
+  String get convoyClearRole => 'Retirer le rôle de convoi';
+
+  @override
+  String get errorRideNotInProgress =>
+      'La balade n\'est pas en cours : le partage de position est arrêté.';
+
+  @override
+  String get errorSharingDisabled => 'Le partage de position est désactivé.';
 }

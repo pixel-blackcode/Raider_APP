@@ -8,7 +8,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | 02 — Comptes et profils | Inscription, connexion, vérification e-mail, mot de passe oublié, sessions, profil, photo, confidentialité, suppression de compte. | ✅ Livrée — en attente de validation |
 | 03 — Clubs | Création libre, public/privé, adhésion, rôles, vérification facultative. | ✅ Livrée — en attente de validation |
 | 04 — Balades | Création, recherche, 3 modes d'adhésion, participants, machine à états, verrouillage. | ✅ Livrée — en attente de validation |
-| 05 — GPS et mode Convoi | Carte, partage volontaire, temps réel, chef de convoi / serre-file, retardataires, confidentialité, rétention. | À venir |
+| 05 — GPS et mode Convoi | Carte, partage volontaire, temps réel, chef de convoi / serre-file, retardataires, confidentialité, rétention. | ✅ Livrée — en attente de validation (+ refonte visuelle : typographie Barlow Condensed, cartes de balade contrastées) |
 | 06 — SOS | Alertes, notifications, accusés de réception, gestion des échecs de transmission. | À venir |
 | 07 — Communauté | Publications, photos, commentaires, messagerie, modération. | À venir |
 | 08 — Marketplace | Annonces sans paiement, recherche, favoris, contact vendeur. | À venir |
@@ -60,6 +60,26 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 
 | R03-10 | Logo et couverture : ajout par owner/admin uniquement ; images d'un club masqué invisibles aux non-membres. | SQL `04_media_privacy_account_test.sql` + widget |
 
+## Mission 05 — scénarios de recette
+
+| # | Scénario (numéro du critère d'acceptation) | Preuve |
+| --- | --- | --- |
+| R05-1 | Partage **volontaire** : rien n'est envoyé sans action explicite ; l'autorisation de localisation est demandée au premier partage. | widget `convoy_flow_test.dart` + SQL `07_convoy_test.sql` (`sharing_disabled`) |
+| R05-2 | Un non-participant ne voit aucune position et ne peut pas en publier (8). | SQL + widget |
+| R05-3 | Un participant retiré perd l'accès, son rôle et sa position immédiatement (9). | SQL (déclencheur `cleanup_convoy_on_leave`) |
+| R05-4 | Arrêt du partage : la dernière position disparaît (10). | SQL + widget |
+| R05-5 | Fin ou annulation de la balade : publication refusée, positions masquées, l'application arrête l'envoi. | SQL + widget |
+| R05-6 | Purge des positions 72 h après la fin (D-35). | SQL (`purge_ride_positions`) ; planifiée toutes les heures par pg_cron |
+| R05-7 | Chef de convoi / serre-file désignés par les gestionnaires, parmi les confirmés. | SQL + widget |
+| R05-8 | Alertes : « peut-être séparé » (> 2 km du chef), « position ancienne » (> 3 min). Pas de fausse alerte si le chef lui-même est sans signal. | Tests unitaires `convoy_domain_test.dart` + widget |
+| R05-9 | Économie batterie/données : envoi toutes les 30 s à l'arrêt, 15 s en ville, 8 s sur route ; filtre 15 m ; le serveur refuse plus d'un envoi par 3 s. | Tests unitaires + SQL (`too_frequent`) |
+| R05-10 | Essai réel à deux téléphones (TEST_GUIDE §5). | 📱 **À faire par le propriétaire** |
+
+**Limites connues (assumées) :**
+- Suivi **application ouverte uniquement** : écran éteint ou application en arrière-plan, Android/iOS peuvent suspendre l'envoi. L'écran Convoi l'indique. Le suivi en arrière-plan demanderait un service de premier plan Android et une justification App Store (D-37).
+- Aucun historique de trajet : seule la dernière position de chaque motard est conservée.
+- Fond de carte OpenFreeMap (gratuit, sans clé, D-36) : pas d'engagement de disponibilité ; remplaçable par `MAP_STYLE_URL`.
+
 ## Mission 04 — scénarios de recette
 
 | # | Scénario (critère du cahier des charges) | Vérification |
@@ -79,5 +99,5 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 
 **Préparé mais pas encore exposé dans l'application :**
 - **Coordonnées GPS du départ et de la destination :** les colonnes existent, le point PostGIS est calculé par le serveur et la fonction `rides_near` est testée. Leur saisie sur une carte arrivera avec la Mission 05, une fois le fournisseur de cartographie choisi (O-02).
-- **Rôles de convoi** (chef de convoi, serre-file) et discussion de balade : Missions 05 et 07.
+- **Rôles de convoi** (chef de convoi, serre-file) : ✅ Mission 05. Discussion de balade : Mission 07.
 

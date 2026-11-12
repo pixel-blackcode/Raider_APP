@@ -51,6 +51,9 @@ String describeError(BuildContext context, Object error) {
     'start_in_past' => l10n.errorStartInPast,
     'capacity_below_participants' => l10n.errorCapacityBelowParticipants,
     'organizes_active_rides' => l10n.errorOrganizesActiveRides,
+    'ride_not_in_progress' => l10n.errorRideNotInProgress,
+    'sharing_disabled' => l10n.errorSharingDisabled,
+    'too_frequent' => l10n.errorRateLimited,
     _ => l10n.errorUnknown,
   };
 }

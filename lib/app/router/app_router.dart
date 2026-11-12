@@ -11,6 +11,7 @@ import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/clubs/presentation/club_detail_screen.dart';
 import '../../features/clubs/presentation/club_form_screen.dart';
 import '../../features/clubs/presentation/clubs_screen.dart';
+import '../../features/convoy/presentation/convoy_screen.dart';
 import '../../features/garage/presentation/garage_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/marketplace/presentation/marketplace_screen.dart';
@@ -110,6 +111,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                         parentNavigatorKey: _rootNavigatorKey,
                         builder: (context, state) => RideFormScreen(
                           rideId: state.pathParameters['rideId'],
+                        ),
+                      ),
+                      GoRoute(
+                        path: 'convoi',
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => ConvoyScreen(
+                          rideId: state.pathParameters['rideId']!,
                         ),
                       ),
                     ],

@@ -10,6 +10,9 @@ import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_repository.dart';
 import 'package:rider_group/features/clubs/domain/club.dart';
 import 'package:rider_group/features/clubs/domain/club_draft.dart';
+import 'package:rider_group/features/convoy/data/convoy_repository.dart';
+import 'package:rider_group/features/convoy/data/location_service.dart';
+import 'package:rider_group/features/convoy/domain/convoy.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_repository.dart';
@@ -759,4 +762,82 @@ class FakeRidesRepository implements RidesRepository {
       _sync(invitation.rideId);
     }
   }
+}
+
+/// Doublure du convoi : positions poussées à la main, règles serveur
+/// simplifiées (partage requis, balade en cours gérée par le test).
+class FakeConvoyRepository implements ConvoyRepository {
+  final positionsCtrl = StreamController<List<RiderPosition>>.broadcast();
+  List<RiderPosition> current = const [];
+  final roleMap = <ConvoyRole, String>{};
+  final sharing = <String, bool>{};
+  final published = <RiderPosition>[];
+  final calls = <String>[];
+  AppException? publishError;
+
+  void push(List<RiderPosition> positions) {
+    current = positions;
+    positionsCtrl.add(positions);
+  }
+
+  @override
+  Stream<List<RiderPosition>> watchPositions(String rideId) async* {
+    yield current;
+    yield* positionsCtrl.stream;
+  }
+
+  @override
+  Future<Map<ConvoyRole, String>> roles(String rideId) async => {...roleMap};
+
+  @override
+  Future<bool> isSharing(String rideId, String userId) async =>
+      sharing[rideId] ?? false;
+
+  @override
+  Future<void> setSharing(String rideId, {required bool enabled}) async {
+    calls.add('setSharing:$enabled');
+    sharing[rideId] = enabled;
+  }
+
+  @override
+  Future<void> publish(String rideId, RiderPosition position) async {
+    calls.add('publish');
+    if (publishError != null) throw publishError!;
+    published.add(position);
+  }
+
+  @override
+  Future<void> setRole(String rideId, ConvoyRole role, String? userId) async {
+    calls.add('setRole:${role.name}:$userId');
+    if (userId == null) {
+      roleMap.remove(role);
+    } else {
+      roleMap[role] = userId;
+    }
+  }
+}
+
+class FakeLocationService implements LocationService {
+  LocationAccess access = LocationAccess.granted;
+  final ctrl = StreamController<RiderPosition>.broadcast();
+  var permissionRequests = 0;
+
+  @override
+  Future<LocationAccess> ensurePermission() async {
+    permissionRequests++;
+    return access;
+  }
+
+  @override
+  Stream<RiderPosition> positions() => ctrl.stream;
+
+  void emit(double lat, double lng, {double? speedMps}) => ctrl.add(
+    RiderPosition(
+      userId: '',
+      lat: lat,
+      lng: lng,
+      recordedAt: DateTime.now().toUtc(),
+      speedMps: speedMps,
+    ),
+  );
 }

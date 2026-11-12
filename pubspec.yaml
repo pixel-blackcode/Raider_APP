@@ -45,6 +45,8 @@ dependencies:
   image_picker: ^1.2.4
   flutter_secure_storage: ^11.2.0
   timezone: ^0.11.2
+  maplibre_gl: ^0.28.0
+  geolocator: ^14.1.2
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +70,18 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Titres dynamiques (licence OFL, assets/fonts/OFL.txt), intégrés à
+  # l'application : aucun téléchargement de police à l'exécution.
+  fonts:
+    - family: BarlowCondensed
+      fonts:
+        - asset: assets/fonts/BarlowCondensed-600.ttf
+          weight: 600
+        - asset: assets/fonts/BarlowCondensed-700.ttf
+          weight: 700
+        - asset: assets/fonts/BarlowCondensed-800.ttf
+          weight: 800
 
   # To add assets to your application, add an assets section, like this:
   # assets:

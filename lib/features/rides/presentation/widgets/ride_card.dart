@@ -28,105 +28,161 @@ class RideCard extends StatelessWidget {
             ride.maxParticipants!,
           );
 
+    final scheme = theme.colorScheme;
+    final muted = ride.status.isTerminal;
     return Card(
       key: Key('ride-card-${ride.id}'),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.md),
+        child: IntrinsicHeight(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // Bloc date plein : lisible d'un coup d'œil, même au soleil.
               Container(
-                width: 56,
+                width: 68,
+                color: muted ? scheme.onSurfaceVariant : scheme.primary,
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(12),
-                ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '${local.day}',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        color: theme.colorScheme.onPrimaryContainer,
+                      RideTime.formatShortDate(
+                        ride.startsAt,
+                        ride.timezone,
+                      ).split(' ').first.replaceAll('.', '').toUpperCase(),
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: scheme.onPrimary,
+                        letterSpacing: 1.2,
                         fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      '${local.day}',
+                      style: theme.textTheme.displaySmall?.copyWith(
+                        color: scheme.onPrimary,
+                        fontSize: 34,
                       ),
                     ),
                     Text(
                       RideTime.formatShortDate(
                         ride.startsAt,
                         ride.timezone,
-                      ).split(' ').last,
-                      style: theme.textTheme.labelSmall?.copyWith(
-                        color: theme.colorScheme.onPrimaryContainer,
+                      ).split(' ').last.replaceAll('.', '').toUpperCase(),
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        color: scheme.onPrimary,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: AppSpacing.md),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      ride.title,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      '${ride.shortSchedule()} · ${ride.city}',
-                      style: theme.textTheme.bodySmall,
-                    ),
-                    Text(
-                      '${ride.startLabel} → ${ride.destinationLabel}',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Wrap(
-                      spacing: AppSpacing.sm,
-                      runSpacing: AppSpacing.xs,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        RideStatusBadge(ride: ride),
-                        Text(
-                          '${ride.difficulty.label(l10n)} · $capacity',
-                          style: theme.textTheme.labelMedium,
-                        ),
-                        if (ride.clubName != null)
-                          Text(
-                            ride.clubName!,
-                            style: theme.textTheme.labelMedium?.copyWith(
-                              color: theme.colorScheme.primary,
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              ride.title,
+                              style: theme.textTheme.titleLarge?.copyWith(
+                                color: scheme.onSurface,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                        if (badge != null)
+                          const SizedBox(width: AppSpacing.sm),
+                          RideStatusBadge(ride: ride),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.xs),
+                      Row(
+                        children: [
+                          Icon(Icons.schedule, size: 16, color: scheme.primary),
+                          const SizedBox(width: 4),
                           Text(
-                            badge!,
-                            style: theme.textTheme.labelMedium?.copyWith(
-                              color: theme.colorScheme.tertiary,
+                            '${RideTime.formatTime(ride.startsAt, ride.timezone)} · ${ride.city}',
+                            style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        '${ride.startLabel} → ${ride.destinationLabel}',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: scheme.onSurfaceVariant,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      Wrap(
+                        spacing: AppSpacing.md,
+                        runSpacing: AppSpacing.xs,
+                        children: [
+                          _Meta(
+                            icon: Icons.terrain,
+                            text: ride.difficulty.label(l10n),
+                          ),
+                          _Meta(
+                            icon: Icons.people_alt_outlined,
+                            text: capacity,
+                          ),
+                          if (ride.clubName != null)
+                            _Meta(
+                              icon: Icons.groups,
+                              text: ride.clubName!,
+                              accent: true,
+                            ),
+                          if (badge != null)
+                            _Meta(
+                              icon: Icons.hourglass_top,
+                              text: badge!,
+                              accent: true,
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _Meta extends StatelessWidget {
+  const _Meta({required this.icon, required this.text, this.accent = false});
+
+  final IconData icon;
+  final String text;
+  final bool accent;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = accent
+        ? theme.colorScheme.primary
+        : theme.colorScheme.onSurface;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 16, color: color),
+        const SizedBox(width: 4),
+        Text(text, style: theme.textTheme.labelLarge?.copyWith(color: color)),
+      ],
     );
   }
 }
@@ -139,18 +195,22 @@ class RideStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = ride.statusColor(context);
+    // Pastille pleine : statut lisible d'un coup d'œil.
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        border: Border.all(color: color),
+        color: color,
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
         ride.statusLabel(AppLocalizations.of(context)),
         style: TextStyle(
-          color: color,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
+          color: ThemeData.estimateBrightnessForColor(color) == Brightness.dark
+              ? Colors.white
+              : Colors.black,
+          fontSize: 11,
+          letterSpacing: 0.3,
+          fontWeight: FontWeight.w800,
         ),
       ),
     );

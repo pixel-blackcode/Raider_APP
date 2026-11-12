@@ -90,6 +90,9 @@ class AppException implements Exception {
     'start_in_past',
     'capacity_below_participants',
     'organizes_active_rides',
+    'ride_not_in_progress',
+    'sharing_disabled',
+    'too_frequent',
   };
 
   static String _authCode(AuthException error) {

@@ -72,6 +72,14 @@ class AppConfig {
   static const authRedirectScheme = 'com.ridergroup.ridergroup';
   static const authRedirectUri = '$authRedirectScheme://auth-callback';
 
+  /// Style de carte MapLibre (tuiles OpenStreetMap, décision D-34).
+  /// Par défaut : OpenFreeMap, gratuit, sans clé, usage commercial permis.
+  /// Remplaçable sans modifier le code : `--dart-define=MAP_STYLE_URL=...`.
+  static const mapStyleUrl = String.fromEnvironment(
+    'MAP_STYLE_URL',
+    defaultValue: 'https://tiles.openfreemap.org/styles/liberty',
+  );
+
   final AppEnvironment environment;
   final String supabaseUrl;
   final String supabasePublishableKey;

@@ -2235,6 +2235,186 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Les inscriptions par e-mail sont désactivées sur le serveur. Contactez l\'administrateur de Rider Group.'**
   String get errorSignupDisabled;
+
+  /// No description provided for @convoyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode Convoi'**
+  String get convoyTitle;
+
+  /// No description provided for @convoyOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir le mode Convoi'**
+  String get convoyOpen;
+
+  /// No description provided for @convoySafety.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ne manipulez pas le téléphone en roulant : arrêtez-vous en lieu sûr.'**
+  String get convoySafety;
+
+  /// No description provided for @convoyStartSharing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager ma position'**
+  String get convoyStartSharing;
+
+  /// No description provided for @convoyStopSharing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrêter le partage'**
+  String get convoyStopSharing;
+
+  /// No description provided for @convoySharingOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre position n\'est pas partagée.'**
+  String get convoySharingOff;
+
+  /// No description provided for @convoySharingStarting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Activation du partage…'**
+  String get convoySharingStarting;
+
+  /// No description provided for @convoyWaitingFix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partage actif — recherche du signal GPS…'**
+  String get convoyWaitingFix;
+
+  /// No description provided for @convoyLastSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partage actif — dernière position envoyée à {time}. Il s\'arrête si vous quittez cet écran.'**
+  String convoyLastSent(String time);
+
+  /// No description provided for @convoyNotSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position NON transmise (réseau ?). Nouvel essai automatique.'**
+  String get convoyNotSent;
+
+  /// No description provided for @convoyLocationOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'La localisation du téléphone est désactivée. Activez-la dans les réglages.'**
+  String get convoyLocationOff;
+
+  /// No description provided for @convoyLocationDenied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rider Group n\'a pas l\'autorisation d\'utiliser votre position.'**
+  String get convoyLocationDenied;
+
+  /// No description provided for @convoyLocationDeniedForever.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autorisation refusée définitivement : modifiez-la dans les réglages du téléphone.'**
+  String get convoyLocationDeniedForever;
+
+  /// No description provided for @convoyNotRunningTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La balade n\'est pas en cours'**
+  String get convoyNotRunningTitle;
+
+  /// No description provided for @convoyNotRunningBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mode Convoi est disponible uniquement pendant la balade.'**
+  String get convoyNotRunningBody;
+
+  /// No description provided for @convoyParticipantsOnly.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mode Convoi est réservé aux participants confirmés.'**
+  String get convoyParticipantsOnly;
+
+  /// No description provided for @convoyYou.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous'**
+  String get convoyYou;
+
+  /// No description provided for @convoyRoleLeader.
+  ///
+  /// In fr, this message translates to:
+  /// **'chef de convoi'**
+  String get convoyRoleLeader;
+
+  /// No description provided for @convoyRoleSweeper.
+  ///
+  /// In fr, this message translates to:
+  /// **'serre-file'**
+  String get convoyRoleSweeper;
+
+  /// No description provided for @convoyNotSharing.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ne partage pas sa position'**
+  String get convoyNotSharing;
+
+  /// No description provided for @convoyLive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position à jour'**
+  String get convoyLive;
+
+  /// No description provided for @convoyAging.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position de plus d\'une minute'**
+  String get convoyAging;
+
+  /// No description provided for @convoyStale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position ancienne ({minutes} min) : réseau absent ou arrêt — à vérifier'**
+  String convoyStale(int minutes);
+
+  /// No description provided for @convoySeparated.
+  ///
+  /// In fr, this message translates to:
+  /// **'À {km} km du chef de convoi — peut-être séparé'**
+  String convoySeparated(String km);
+
+  /// No description provided for @convoyAssignRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rôle de convoi'**
+  String get convoyAssignRole;
+
+  /// No description provided for @convoyMakeLeader.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nommer chef de convoi'**
+  String get convoyMakeLeader;
+
+  /// No description provided for @convoyMakeSweeper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nommer serre-file'**
+  String get convoyMakeSweeper;
+
+  /// No description provided for @convoyClearRole.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer le rôle de convoi'**
+  String get convoyClearRole;
+
+  /// No description provided for @errorRideNotInProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'La balade n\'est pas en cours : le partage de position est arrêté.'**
+  String get errorRideNotInProgress;
+
+  /// No description provided for @errorSharingDisabled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le partage de position est désactivé.'**
+  String get errorSharingDisabled;
 }
 
 class _AppLocalizationsDelegate

@@ -16,6 +16,9 @@ import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../convoy/data/convoy_repository.dart';
+import '../../convoy/domain/convoy.dart';
+import '../../convoy/presentation/convoy_screen.dart';
 import '../../profile/data/profile_repository.dart';
 import '../data/rides_providers.dart';
 import '../data/rides_repository.dart';
@@ -229,6 +232,20 @@ class _RideDetailBody extends ConsumerWidget {
             title: l10n.rideStatusCancelled,
             message: ride.cancellationReason ?? l10n.rideCancelledNoReason,
           ),
+        if (ride.status == RideStatus.inProgress &&
+            (detail.myStatus == ParticipantStatus.confirmed ||
+                detail.canManage)) ...[
+          const SizedBox(height: AppSpacing.sm),
+          SizedBox(
+            height: AppSpacing.convoyTouchTarget,
+            child: FilledButton.icon(
+              key: const Key('ride-open-convoy'),
+              onPressed: () => context.push(AppRoutes.convoy(ride.id)),
+              icon: const Icon(Icons.navigation, size: 28),
+              label: Text(l10n.convoyOpen, style: theme.textTheme.titleLarge),
+            ),
+          ),
+        ],
         const SizedBox(height: AppSpacing.sm),
         _ParticipationSection(detail: detail),
         if (ride.description.isNotEmpty) ...[
@@ -616,6 +633,13 @@ class _ParticipantTile extends ConsumerWidget {
     final me = ref.watch(currentUserIdProvider);
     final isOrganizer = participant.userId == detail.ride.organizerId;
     final hidden = participant.displayName.isEmpty;
+    final roles =
+        ref.watch(convoyRolesProvider(detail.ride.id)).value ?? const {};
+    ConvoyRole? convoyRole;
+    for (final e in roles.entries) {
+      if (e.value == participant.userId) convoyRole = e.key;
+    }
+    final canAssign = detail.canManage && !detail.ride.status.isTerminal;
     final canRemove =
         detail.canManage &&
         !isOrganizer &&
@@ -636,35 +660,91 @@ class _ParticipantTile extends ConsumerWidget {
         [
           if (!hidden) '@${participant.username}',
           if (isOrganizer) l10n.rideOrganizerRole,
+          if (convoyRole == ConvoyRole.leader) l10n.convoyRoleLeader,
+          if (convoyRole == ConvoyRole.sweeper) l10n.convoyRoleSweeper,
         ].join(' · '),
       ),
-      trailing: !canRemove
+      trailing: !canRemove && !canAssign
           ? null
-          : IconButton(
-              key: Key('ride-remove-${participant.userId}'),
-              tooltip: l10n.rideRemoveParticipant,
-              icon: const Icon(Icons.person_remove_outlined),
-              onPressed: () async {
-                final confirmed = await showConfirmDialog(
-                  context,
-                  title: l10n.rideRemoveParticipant,
-                  message: l10n.rideRemoveConfirm(
-                    hidden ? l10n.profileHidden : participant.displayName,
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (canAssign)
+                  PopupMenuButton<String>(
+                    key: Key('ride-convoy-role-${participant.userId}'),
+                    tooltip: l10n.convoyAssignRole,
+                    icon: const Icon(Icons.flag_outlined),
+                    onSelected: (value) async {
+                      final repo = ref.read(convoyRepositoryProvider);
+                      if (repo == null) return;
+                      final messenger = ScaffoldMessenger.of(context);
+                      try {
+                        if (value == 'clear') {
+                          await repo.setRole(detail.ride.id, convoyRole!, null);
+                        } else {
+                          await repo.setRole(
+                            detail.ride.id,
+                            ConvoyRole.tryParse(value)!,
+                            participant.userId,
+                          );
+                        }
+                        ref.invalidate(convoyRolesProvider(detail.ride.id));
+                      } catch (error) {
+                        if (context.mounted) {
+                          messenger
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              SnackBar(
+                                content: Text(describeError(context, error)),
+                              ),
+                            );
+                        }
+                      }
+                    },
+                    itemBuilder: (_) => [
+                      PopupMenuItem(
+                        value: 'leader',
+                        child: Text(l10n.convoyMakeLeader),
+                      ),
+                      PopupMenuItem(
+                        value: 'sweeper',
+                        child: Text(l10n.convoyMakeSweeper),
+                      ),
+                      if (convoyRole != null)
+                        PopupMenuItem(
+                          value: 'clear',
+                          child: Text(l10n.convoyClearRole),
+                        ),
+                    ],
                   ),
-                  confirmLabel: l10n.rideRemoveParticipant,
-                );
-                if (confirmed && context.mounted) {
-                  await runRideAction(
-                    context,
-                    ref,
-                    (repo) => repo.removeParticipant(
-                      detail.ride.id,
-                      participant.userId,
-                    ),
-                    rideId: detail.ride.id,
-                  );
-                }
-              },
+                if (canRemove)
+                  IconButton(
+                    key: Key('ride-remove-${participant.userId}'),
+                    tooltip: l10n.rideRemoveParticipant,
+                    icon: const Icon(Icons.person_remove_outlined),
+                    onPressed: () async {
+                      final confirmed = await showConfirmDialog(
+                        context,
+                        title: l10n.rideRemoveParticipant,
+                        message: l10n.rideRemoveConfirm(
+                          hidden ? l10n.profileHidden : participant.displayName,
+                        ),
+                        confirmLabel: l10n.rideRemoveParticipant,
+                      );
+                      if (confirmed && context.mounted) {
+                        await runRideAction(
+                          context,
+                          ref,
+                          (repo) => repo.removeParticipant(
+                            detail.ride.id,
+                            participant.userId,
+                          ),
+                          rideId: detail.ride.id,
+                        );
+                      }
+                    },
+                  ),
+              ],
             ),
     );
   }

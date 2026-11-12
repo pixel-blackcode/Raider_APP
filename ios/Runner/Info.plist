@@ -19,6 +19,8 @@
 	</array>
 	<key>FlutterDeepLinkingEnabled</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Rider Group utilise votre position uniquement pendant une balade, si vous activez le partage en mode Convoi, pour l'afficher aux participants de cette balade.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Rider Group accède à vos photos uniquement pour choisir votre photo de profil ou le logo et la couverture d'un club.</string>
 	<key>NSCameraUsageDescription</key>
