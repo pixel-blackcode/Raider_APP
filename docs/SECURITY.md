@@ -109,6 +109,17 @@ Règles complémentaires :
 - **Rétention (D-35)** : purge 72 h après la fin ou l'annulation (`private.purge_ride_positions`, pg_cron toutes les heures).
 - Les rôles de convoi sont attribués par les gestionnaires de la balade et journalisés (`ride.convoy_role`).
 
+## SOS (Mission 06)
+
+- **Déclenchement** uniquement via `raise_sos` (SECURITY DEFINER) : balade en cours, participant confirmé ou gestionnaire ; au plus 5 alertes par 10 min ; coordonnées et horodatage contrôlés.
+- **Idempotence** : `(user_id, client_ref)` unique ; un renvoi renvoie l'alerte existante.
+- **Lecture** (RLS) : l'auteur, les participants confirmés et les gestionnaires de la balade. Un participant retiré perd l'accès. Anonymes : aucun accès. Realtime applique la même RLS.
+- **Accusés** (`acknowledge_sos`) : destinataires seulement, pas l'auteur, alerte active.
+- **Clôture** (`close_sos`) : l'auteur annule ou résout ; un gestionnaire résout ; pas de réouverture.
+- Aucune écriture directe dans les tables ; actions journalisées (`sos.raise`, `sos.resolved`, `sos.cancelled`).
+- **Rétention** : coordonnées effacées 72 h après la fin ou l'annulation de la balade (`private.purge_sos_locations`, pg_cron) ; l'alerte reste dans l'historique.
+- Le numéro d'urgence est stocké uniquement sur l'appareil.
+
 ## Journal d'audit
 
 `private.audit_logs` enregistre l'auteur, l'action, l'entité et les détails de chaque opération sensible :

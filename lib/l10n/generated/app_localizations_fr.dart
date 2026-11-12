@@ -1324,4 +1324,172 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get errorSharingDisabled => 'Le partage de position est désactivé.';
+
+  @override
+  String get errorAlertClosed => 'Cette alerte est déjà close.';
+
+  @override
+  String get errorOwnAlert =>
+      'Vous ne pouvez pas accuser réception de votre propre alerte.';
+
+  @override
+  String get sosTitle => 'SOS et assistance';
+
+  @override
+  String get sosOpen => 'SOS';
+
+  @override
+  String get sosDisclaimer =>
+      'Rider Group prévient les participants de la balade. Ce n\'est pas un service de secours : en cas de danger, appelez les secours.';
+
+  @override
+  String sosCall(String number) {
+    return 'Appeler le $number';
+  }
+
+  @override
+  String sosCallFailed(String number) {
+    return 'Impossible d\'ouvrir le téléphone. Composez le $number vous-même.';
+  }
+
+  @override
+  String get sosChooseKind => 'Que se passe-t-il ?';
+
+  @override
+  String get sosKindBreakdown => 'Panne';
+
+  @override
+  String get sosKindAccident => 'Accident';
+
+  @override
+  String get sosKindAssistance => 'Besoin d\'aide';
+
+  @override
+  String get sosKindDelay => 'Je suis en retard';
+
+  @override
+  String sosConfirmTitle(String kind) {
+    return 'Envoyer l\'alerte « $kind » ?';
+  }
+
+  @override
+  String get sosConfirmBody =>
+      'Les participants de la balade recevront votre alerte et votre dernière position connue.';
+
+  @override
+  String get sosConfirmSend => 'Envoyer l\'alerte';
+
+  @override
+  String get sosSending =>
+      'Envoi en cours… L\'alerte n\'est PAS encore transmise.';
+
+  @override
+  String get sosFailedTitle => 'ALERTE NON TRANSMISE';
+
+  @override
+  String get sosFailedBody =>
+      'Personne n\'a été prévenu. Réessayez ou appelez directement.';
+
+  @override
+  String get sosRetry => 'Réessayer l\'envoi';
+
+  @override
+  String get sosAbandon => 'Abandonner';
+
+  @override
+  String sosSentTitle(String time) {
+    return 'Alerte transmise à $time';
+  }
+
+  @override
+  String get sosNoAckYet => 'Pas encore d\'accusé de réception.';
+
+  @override
+  String sosAckedBy(String names) {
+    return 'Vu par : $names';
+  }
+
+  @override
+  String get sosPositionDevice => 'Position GPS envoyée';
+
+  @override
+  String get sosPositionConvoy => 'Dernière position du mode Convoi envoyée';
+
+  @override
+  String get sosPositionNone => 'Aucune position disponible';
+
+  @override
+  String get sosCancelMine => 'Annuler (fausse alerte)';
+
+  @override
+  String get sosResolveMine => 'Problème résolu';
+
+  @override
+  String get sosIncomingTitle => 'Alertes en cours';
+
+  @override
+  String sosIncomingFrom(String kind, String name) {
+    return '$kind — $name';
+  }
+
+  @override
+  String sosSince(String time) {
+    return 'Depuis $time';
+  }
+
+  @override
+  String get sosAck => 'J\'ai vu, je m\'en occupe';
+
+  @override
+  String get sosAcked => 'Vous avez accusé réception';
+
+  @override
+  String get sosOpenMap => 'Voir sur la carte';
+
+  @override
+  String get sosResolveByManager => 'Marquer comme résolue';
+
+  @override
+  String get sosClosedResolved => 'Alerte résolue';
+
+  @override
+  String get sosClosedCancelled => 'Alerte annulée';
+
+  @override
+  String get sosParticipantsOnly =>
+      'Le SOS est réservé aux participants de la balade en cours.';
+
+  @override
+  String get sosNotRunningBody =>
+      'Le SOS est disponible pendant une balade en cours. En dehors, appelez directement les secours.';
+
+  @override
+  String sosBanner(String kind) {
+    return 'SOS : $kind dans votre balade';
+  }
+
+  @override
+  String sosBannerMore(int count) {
+    return '+$count autre(s)';
+  }
+
+  @override
+  String get sosBannerView => 'Voir';
+
+  @override
+  String get sosBannerDismiss => 'Masquer';
+
+  @override
+  String get settingsSafety => 'Sécurité';
+
+  @override
+  String get settingsEmergencyNumber => 'Numéro d\'appel d\'urgence';
+
+  @override
+  String get settingsEmergencyNumberHint =>
+      'Proposé sur l\'écran SOS. Sa disponibilité dépend du pays et de l\'opérateur.';
+
+  @override
+  String get settingsEmergencyNumberInvalid =>
+      'Numéro invalide (chiffres uniquement, + autorisé au début).';
 }

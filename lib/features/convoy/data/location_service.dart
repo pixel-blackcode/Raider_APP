@@ -14,6 +14,10 @@ abstract interface class LocationService {
 
   /// Positions de l'appareil (userId vide : rempli par l'appelant).
   Stream<RiderPosition> positions();
+
+  /// Position actuelle, ou dernière connue, ou null (sans attendre plus de
+  /// [timeout]). Utilisée par le SOS : on n'attend jamais le GPS pour alerter.
+  Future<RiderPosition?> current({Duration timeout});
 }
 
 class DeviceLocationService implements LocationService {
@@ -35,25 +39,46 @@ class DeviceLocationService implements LocationService {
   }
 
   @override
-  Stream<RiderPosition> positions() =>
-      Geolocator.getPositionStream(
-        // Filtre de distance : pas de mise à jour pour quelques mètres.
-        locationSettings: const LocationSettings(
+  Stream<RiderPosition> positions() => Geolocator.getPositionStream(
+    // Filtre de distance : pas de mise à jour pour quelques mètres.
+    locationSettings: const LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 15,
+    ),
+  ).map(_fromGeo);
+
+  @override
+  Future<RiderPosition?> current({
+    Duration timeout = const Duration(seconds: 8),
+  }) async {
+    try {
+      final p = await Geolocator.getCurrentPosition(
+        locationSettings: LocationSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 15,
-        ),
-      ).map(
-        (p) => RiderPosition(
-          userId: '',
-          lat: p.latitude,
-          lng: p.longitude,
-          recordedAt: p.timestamp.toUtc(),
-          accuracyM: p.accuracy,
-          headingDeg: p.heading < 0 ? null : p.heading,
-          speedMps: p.speed < 0 ? null : p.speed,
+          timeLimit: timeout,
         ),
       );
+      return _fromGeo(p);
+    } catch (_) {
+      try {
+        final last = await Geolocator.getLastKnownPosition();
+        return last == null ? null : _fromGeo(last);
+      } catch (_) {
+        return null;
+      }
+    }
+  }
 }
+
+RiderPosition _fromGeo(Position p) => RiderPosition(
+  userId: '',
+  lat: p.latitude,
+  lng: p.longitude,
+  recordedAt: p.timestamp.toUtc(),
+  accuracyM: p.accuracy,
+  headingDeg: p.heading < 0 ? null : p.heading,
+  speedMps: p.speed < 0 ? null : p.speed,
+);
 
 final locationServiceProvider = Provider<LocationService>(
   (ref) => DeviceLocationService(),

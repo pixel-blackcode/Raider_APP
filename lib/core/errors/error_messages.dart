@@ -54,6 +54,8 @@ String describeError(BuildContext context, Object error) {
     'ride_not_in_progress' => l10n.errorRideNotInProgress,
     'sharing_disabled' => l10n.errorSharingDisabled,
     'too_frequent' => l10n.errorRateLimited,
+    'alert_closed' => l10n.errorAlertClosed,
+    'own_alert' => l10n.errorOwnAlert,
     _ => l10n.errorUnknown,
   };
 }

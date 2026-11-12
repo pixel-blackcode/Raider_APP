@@ -40,6 +40,9 @@
 | D-35 | **Positions GPS conservées 72 heures après la fin de la balade**, puis supprimées. | Décision du propriétaire (11/11/2026). Mise en œuvre et purge automatique : Mission 05. |
 | D-36 | **Fond de carte par défaut : style « liberty » d'OpenFreeMap** (tuiles OpenStreetMap, gratuit, sans clé ni compte), remplaçable sans changer le code via `MAP_STYLE_URL`. | Conforme à D-34. Risque : service communautaire sans SLA ; prévoir un hébergeur de tuiles (ou auto-hébergement) avant une forte audience. |
 | D-37 | **Convoi : suivi au premier plan uniquement** ; dernière position seulement (pas d'historique) ; cadence adaptative 30/15/8 s ; seuils d'alerte 2 km et 3 min. | Évite un service d'arrière-plan permanent (batterie, refus App Store, vie privée). À réévaluer après essais terrain. |
+| D-38 | **SOS : notification dans l'application d'abord** (bandeau rouge, son, vibration via le temps réel). Notifications push (Firebase/APNs) reportées. | Décision du propriétaire (12/11/2026). Limite affichée : un destinataire application fermée n'est pas prévenu. |
+| D-39 | **Destinataires d'un SOS : participants confirmés et organisateurs de la balade en cours.** | Décision du propriétaire (12/11/2026) : simple et respectueux de la vie privée. |
+| D-40 | **Appel d'urgence : 112 par défaut, modifiable** dans les Paramètres, stocké sur l'appareil ; disponibilité non garantie en RDC, affichée comme telle. | Décision du propriétaire (12/11/2026). |
 | D-31 | Suppression de compte : fichiers de club conservés sans propriétaire ; refus tant qu'on organise une balade active avec des inscrits ; historique des balades terminées conservé. | Documentation Supabase (« You cannot delete a user if they are the owner of any objects in Supabase Storage ») ; évite d'effacer l'historique ou d'abandonner une balade en cours. |
 
 ## Décisions ouvertes (validation du propriétaire requise)

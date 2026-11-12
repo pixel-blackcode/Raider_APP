@@ -24,6 +24,7 @@ import '../../features/rides/presentation/ride_detail_screen.dart';
 import '../../features/rides/presentation/ride_form_screen.dart';
 import '../../features/rides/presentation/rides_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/sos/presentation/sos_screen.dart';
 import 'app_routes.dart';
 import 'app_shell.dart';
 import 'auth_guard.dart';
@@ -119,6 +120,12 @@ final routerProvider = Provider<GoRouter>((ref) {
                         builder: (context, state) => ConvoyScreen(
                           rideId: state.pathParameters['rideId']!,
                         ),
+                      ),
+                      GoRoute(
+                        path: 'sos',
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) =>
+                            SosScreen(rideId: state.pathParameters['rideId']!),
                       ),
                     ],
                   ),

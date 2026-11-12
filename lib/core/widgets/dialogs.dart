@@ -39,6 +39,8 @@ Future<String?> showTextPrompt(
   required String confirmLabel,
   int maxLength = 500,
   String? prefix,
+  String? initialValue,
+  TextInputType? keyboardType,
 }) {
   return showDialog<String>(
     context: context,
@@ -48,6 +50,8 @@ Future<String?> showTextPrompt(
       confirmLabel: confirmLabel,
       maxLength: maxLength,
       prefix: prefix,
+      initialValue: initialValue,
+      keyboardType: keyboardType,
     ),
   );
 }
@@ -61,6 +65,8 @@ class _TextPromptDialog extends StatefulWidget {
     required this.confirmLabel,
     required this.maxLength,
     this.prefix,
+    this.initialValue,
+    this.keyboardType,
   });
 
   final String title;
@@ -68,13 +74,15 @@ class _TextPromptDialog extends StatefulWidget {
   final String confirmLabel;
   final int maxLength;
   final String? prefix;
+  final String? initialValue;
+  final TextInputType? keyboardType;
 
   @override
   State<_TextPromptDialog> createState() => _TextPromptDialogState();
 }
 
 class _TextPromptDialogState extends State<_TextPromptDialog> {
-  final _controller = TextEditingController();
+  late final _controller = TextEditingController(text: widget.initialValue);
 
   @override
   void dispose() {
@@ -92,6 +100,7 @@ class _TextPromptDialogState extends State<_TextPromptDialog> {
         controller: _controller,
         autofocus: true,
         maxLength: widget.maxLength,
+        keyboardType: widget.keyboardType,
         decoration: InputDecoration(
           labelText: widget.label,
           prefixText: widget.prefix,

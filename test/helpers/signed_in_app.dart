@@ -14,6 +14,8 @@ import 'package:rider_group/features/convoy/presentation/convoy_map.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_providers.dart';
+import 'package:rider_group/features/sos/data/emergency.dart';
+import 'package:rider_group/features/sos/data/sos_repository.dart';
 
 import 'fakes.dart';
 import 'pump_app.dart';
@@ -37,6 +39,8 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeRidesRepository? rides,
   FakeConvoyRepository? convoy,
   FakeLocationService? location,
+  FakeSosRepository? sos,
+  FakeExternalActions? actions,
 }) {
   return pumpRiderGroupApp(
     tester,
@@ -66,6 +70,13 @@ Future<ProviderContainer> pumpOnlineApp(
       ),
       locationServiceProvider.overrideWithValue(
         location ?? FakeLocationService(),
+      ),
+      sosRepositoryProvider.overrideWithValue(
+        sos ??
+            FakeSosRepository(currentUserId: auth.currentSession?.userId ?? ''),
+      ),
+      externalActionsProvider.overrideWithValue(
+        actions ?? FakeExternalActions(),
       ),
       // La carte native (MapLibre) n'existe pas en test : simple liste.
       convoyMapBuilderProvider.overrideWithValue(

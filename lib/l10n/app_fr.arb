@@ -557,5 +557,118 @@
   "convoyMakeSweeper": "Nommer serre-file",
   "convoyClearRole": "Retirer le rôle de convoi",
   "errorRideNotInProgress": "La balade n'est pas en cours : le partage de position est arrêté.",
-  "errorSharingDisabled": "Le partage de position est désactivé."
+  "errorSharingDisabled": "Le partage de position est désactivé.",
+  "errorAlertClosed": "Cette alerte est déjà close.",
+  "errorOwnAlert": "Vous ne pouvez pas accuser réception de votre propre alerte.",
+  "sosTitle": "SOS et assistance",
+  "sosOpen": "SOS",
+  "sosDisclaimer": "Rider Group prévient les participants de la balade. Ce n'est pas un service de secours : en cas de danger, appelez les secours.",
+  "sosCall": "Appeler le {number}",
+  "@sosCall": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "sosCallFailed": "Impossible d'ouvrir le téléphone. Composez le {number} vous-même.",
+  "@sosCallFailed": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "sosChooseKind": "Que se passe-t-il ?",
+  "sosKindBreakdown": "Panne",
+  "sosKindAccident": "Accident",
+  "sosKindAssistance": "Besoin d'aide",
+  "sosKindDelay": "Je suis en retard",
+  "sosConfirmTitle": "Envoyer l'alerte « {kind} » ?",
+  "@sosConfirmTitle": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "sosConfirmBody": "Les participants de la balade recevront votre alerte et votre dernière position connue.",
+  "sosConfirmSend": "Envoyer l'alerte",
+  "sosSending": "Envoi en cours… L'alerte n'est PAS encore transmise.",
+  "sosFailedTitle": "ALERTE NON TRANSMISE",
+  "sosFailedBody": "Personne n'a été prévenu. Réessayez ou appelez directement.",
+  "sosRetry": "Réessayer l'envoi",
+  "sosAbandon": "Abandonner",
+  "sosSentTitle": "Alerte transmise à {time}",
+  "@sosSentTitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "sosNoAckYet": "Pas encore d'accusé de réception.",
+  "sosAckedBy": "Vu par : {names}",
+  "@sosAckedBy": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "sosPositionDevice": "Position GPS envoyée",
+  "sosPositionConvoy": "Dernière position du mode Convoi envoyée",
+  "sosPositionNone": "Aucune position disponible",
+  "sosCancelMine": "Annuler (fausse alerte)",
+  "sosResolveMine": "Problème résolu",
+  "sosIncomingTitle": "Alertes en cours",
+  "sosIncomingFrom": "{kind} — {name}",
+  "@sosIncomingFrom": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "sosSince": "Depuis {time}",
+  "@sosSince": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "sosAck": "J'ai vu, je m'en occupe",
+  "sosAcked": "Vous avez accusé réception",
+  "sosOpenMap": "Voir sur la carte",
+  "sosResolveByManager": "Marquer comme résolue",
+  "sosClosedResolved": "Alerte résolue",
+  "sosClosedCancelled": "Alerte annulée",
+  "sosParticipantsOnly": "Le SOS est réservé aux participants de la balade en cours.",
+  "sosNotRunningBody": "Le SOS est disponible pendant une balade en cours. En dehors, appelez directement les secours.",
+  "sosBanner": "SOS : {kind} dans votre balade",
+  "@sosBanner": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "sosBannerMore": "+{count} autre(s)",
+  "@sosBannerMore": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sosBannerView": "Voir",
+  "sosBannerDismiss": "Masquer",
+  "settingsSafety": "Sécurité",
+  "settingsEmergencyNumber": "Numéro d'appel d'urgence",
+  "settingsEmergencyNumberHint": "Proposé sur l'écran SOS. Sa disponibilité dépend du pays et de l'opérateur.",
+  "settingsEmergencyNumberInvalid": "Numéro invalide (chiffres uniquement, + autorisé au début)."
 }

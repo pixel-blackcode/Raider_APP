@@ -31,6 +31,7 @@ abstract final class AppRoutes {
   static String ride(String id) => '/balades/$id';
   static String editRide(String id) => '/balades/$id/modifier';
   static String convoy(String id) => '/balades/$id/convoi';
+  static String sos(String id) => '/balades/$id/sos';
 
   // Clubs.
   static const newClub = '/clubs/nouveau';

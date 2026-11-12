@@ -19,6 +19,9 @@ import 'package:rider_group/features/rides/data/rides_repository.dart';
 import 'package:rider_group/features/rides/domain/ride.dart';
 import 'package:rider_group/features/rides/domain/ride_draft.dart';
 import 'package:rider_group/features/rides/domain/ride_state_machine.dart';
+import 'package:rider_group/features/sos/data/emergency.dart';
+import 'package:rider_group/features/sos/data/sos_repository.dart';
+import 'package:rider_group/features/sos/domain/sos.dart';
 
 /// Authentification en mémoire. Les mots de passe sont ceux de [accounts].
 class FakeAuthRepository implements AuthRepository {
@@ -831,6 +834,20 @@ class FakeLocationService implements LocationService {
   @override
   Stream<RiderPosition> positions() => ctrl.stream;
 
+  /// Position renvoyée par [current] (null : GPS indisponible).
+  RiderPosition? fix = RiderPosition(
+    userId: '',
+    lat: -4.3217,
+    lng: 15.3125,
+    recordedAt: DateTime.utc(2026, 11, 12, 10),
+    accuracyM: 10,
+  );
+
+  @override
+  Future<RiderPosition?> current({
+    Duration timeout = const Duration(seconds: 8),
+  }) async => fix;
+
   void emit(double lat, double lng, {double? speedMps}) => ctrl.add(
     RiderPosition(
       userId: '',
@@ -840,4 +857,161 @@ class FakeLocationService implements LocationService {
       speedMps: speedMps,
     ),
   );
+}
+
+/// Doublure SOS : flux pilotés par le test, pannes réseau simulables.
+class FakeSosRepository implements SosRepository {
+  FakeSosRepository({required this.currentUserId});
+
+  String currentUserId;
+  final alerts = <SosAlert>[];
+  final acks = <SosAck>[];
+  final calls = <String>[];
+  final raised = <({String clientRef, RiderPosition? position})>[];
+  final _alertsCtrl = StreamController<List<SosAlert>>.broadcast();
+  final _acksCtrl = StreamController<List<SosAck>>.broadcast();
+
+  /// Erreur levée par les prochains appels à [raise] (réseau coupé...).
+  AppException? raiseError;
+
+  /// Si non nul, [raise] attend ce signal (envoi « en cours »).
+  Completer<void>? raiseGate;
+  var _seq = 0;
+
+  void _emit() {
+    _alertsCtrl.add(List.of(alerts));
+    _acksCtrl.add(List.of(acks));
+  }
+
+  SosAlert addAlert({
+    required String rideId,
+    required String userId,
+    SosKind kind = SosKind.breakdown,
+    double? lat = -4.33,
+    double? lng = 15.32,
+    String? message,
+  }) {
+    final a = SosAlert(
+      id: 'sos-${++_seq}',
+      rideId: rideId,
+      userId: userId,
+      clientRef: 'ref-$_seq',
+      kind: kind,
+      status: SosStatus.active,
+      createdAt: DateTime.now().toUtc(),
+      lat: lat,
+      lng: lng,
+      message: message,
+      positionSource: lat == null ? null : 'device',
+    );
+    alerts.add(a);
+    _emit();
+    return a;
+  }
+
+  void addAck(String alertId, String userId) {
+    acks.add(
+      SosAck(alertId: alertId, userId: userId, ackedAt: DateTime.now().toUtc()),
+    );
+    _emit();
+  }
+
+  @override
+  Future<SosAlert> raise({
+    required String rideId,
+    required SosKind kind,
+    required String clientRef,
+    String? message,
+    RiderPosition? position,
+  }) async {
+    calls.add('raise:${kind.dbValue}');
+    raised.add((clientRef: clientRef, position: position));
+    if (raiseGate != null) await raiseGate!.future;
+    if (raiseError != null) throw raiseError!;
+    for (final a in alerts) {
+      if (a.clientRef == clientRef) return a;
+    }
+    final a = SosAlert(
+      id: 'sos-${++_seq}',
+      rideId: rideId,
+      userId: currentUserId,
+      clientRef: clientRef,
+      kind: kind,
+      status: SosStatus.active,
+      createdAt: DateTime.now().toUtc(),
+      lat: position?.lat,
+      lng: position?.lng,
+      positionSource: position == null ? null : 'device',
+    );
+    alerts.add(a);
+    _emit();
+    return a;
+  }
+
+  @override
+  Future<void> acknowledge(String alertId) async {
+    calls.add('ack:$alertId');
+    addAck(alertId, currentUserId);
+  }
+
+  @override
+  Future<SosAlert> close(
+    String alertId,
+    SosStatus status, {
+    String? note,
+  }) async {
+    calls.add('close:$alertId:${status.dbValue}');
+    final i = alerts.indexWhere((a) => a.id == alertId);
+    final a = alerts[i];
+    alerts[i] = SosAlert(
+      id: a.id,
+      rideId: a.rideId,
+      userId: a.userId,
+      clientRef: a.clientRef,
+      kind: a.kind,
+      status: status,
+      createdAt: a.createdAt,
+      closedAt: DateTime.now().toUtc(),
+      closedBy: currentUserId,
+    );
+    _emit();
+    return alerts[i];
+  }
+
+  @override
+  Stream<List<SosAlert>> watchRideAlerts(String rideId) async* {
+    List<SosAlert> forRide(List<SosAlert> all) =>
+        all.where((a) => a.rideId == rideId).toList();
+    yield forRide(alerts);
+    yield* _alertsCtrl.stream.map(forRide);
+  }
+
+  @override
+  Stream<List<SosAlert>> watchRecentAlerts() async* {
+    yield List.of(alerts);
+    yield* _alertsCtrl.stream;
+  }
+
+  @override
+  Stream<List<SosAck>> watchAcks(String rideId) async* {
+    yield List.of(acks);
+    yield* _acksCtrl.stream;
+  }
+}
+
+class FakeExternalActions implements ExternalActions {
+  final dialed = <String>[];
+  final maps = <String>[];
+
+  @override
+  Future<bool> dial(String number) async {
+    dialed.add(number);
+    return true;
+  }
+
+  @override
+  Future<bool> openMap(double lat, double lng) async {
+    maps.add('$lat,$lng');
+    return true;
+  }
 }

@@ -245,6 +245,20 @@ class _RideDetailBody extends ConsumerWidget {
               label: Text(l10n.convoyOpen, style: theme.textTheme.titleLarge),
             ),
           ),
+          const SizedBox(height: AppSpacing.sm),
+          SizedBox(
+            height: AppSpacing.convoyTouchTarget,
+            child: FilledButton.icon(
+              key: const Key('ride-open-sos'),
+              style: FilledButton.styleFrom(
+                backgroundColor: theme.extension<RiderColors>()!.sos,
+                foregroundColor: theme.extension<RiderColors>()!.onSos,
+              ),
+              onPressed: () => context.push(AppRoutes.sos(ride.id)),
+              icon: const Icon(Icons.sos, size: 28),
+              label: Text(l10n.sosTitle, style: theme.textTheme.titleLarge),
+            ),
+          ),
         ],
         const SizedBox(height: AppSpacing.sm),
         _ParticipationSection(detail: detail),

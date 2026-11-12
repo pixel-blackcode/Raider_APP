@@ -78,6 +78,23 @@ Préparer : A organise une balade, B la rejoint (confirmé), A la **démarre**.
 | 5.8 | A : terminer la balade | L'envoi de B s'arrête ; plus de carte pour personne |
 | 5.9 | Compte C non inscrit : ouvrir le lien de la balade | Pas de bouton Convoi, aucune position visible |
 
+## 6. SOS (deux téléphones)
+
+Préparer : A organise une balade, B la rejoint, A la **démarre**. Les deux gardent l'application ouverte.
+
+| # | Action | Résultat attendu |
+| --- | --- | --- |
+| 6.1 | B : fiche de la balade → bouton rouge « SOS et assistance » | Avertissement « pas un service de secours », bouton « Appeler le 112 », 4 choix |
+| 6.2 | B : « Panne » → « Envoyer l'alerte » | « Alerte transmise à HH:MM » ; « Pas encore d'accusé de réception » |
+| 6.3 | A (sur n'importe quel écran) | Bandeau rouge « SOS : Panne dans votre balade », son et vibration |
+| 6.4 | A : « Voir » → « Voir sur la carte » | La position de B s'ouvre dans OpenStreetMap |
+| 6.5 | A : « J'ai vu, je m'en occupe » | Chez B : « Vu par : A » ; le bandeau de A disparaît |
+| 6.6 | B : « Problème résolu » | L'alerte disparaît chez A |
+| 6.7 | B : activer le **mode avion**, puis « Accident » → Envoyer | « ALERTE NON TRANSMISE » en rouge ; jamais « transmise » |
+| 6.8 | B : désactiver le mode avion → « Réessayer l'envoi » | « Alerte transmise » ; A ne reçoit qu'**une** alerte. Puis « Annuler (fausse alerte) » |
+| 6.9 | B : Paramètres → Numéro d'appel d'urgence → saisir un autre numéro | L'écran SOS propose « Appeler le <nouveau numéro> » ; le composeur s'ouvre (l'appel n'est pas lancé automatiquement) |
+| 6.10 | Compte C non inscrit : ouvrir la balade | Pas de bouton SOS ; aucune alerte visible |
+
 ## Signaler un problème
 
 Pour chaque anomalie, note :

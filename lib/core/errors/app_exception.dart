@@ -93,6 +93,8 @@ class AppException implements Exception {
     'ride_not_in_progress',
     'sharing_disabled',
     'too_frequent',
+    'alert_closed',
+    'own_alert',
   };
 
   static String _authCode(AuthException error) {

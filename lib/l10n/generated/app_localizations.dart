@@ -2415,6 +2415,288 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Le partage de position est désactivé.'**
   String get errorSharingDisabled;
+
+  /// No description provided for @errorAlertClosed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette alerte est déjà close.'**
+  String get errorAlertClosed;
+
+  /// No description provided for @errorOwnAlert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous ne pouvez pas accuser réception de votre propre alerte.'**
+  String get errorOwnAlert;
+
+  /// No description provided for @sosTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'SOS et assistance'**
+  String get sosTitle;
+
+  /// No description provided for @sosOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'SOS'**
+  String get sosOpen;
+
+  /// No description provided for @sosDisclaimer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rider Group prévient les participants de la balade. Ce n\'est pas un service de secours : en cas de danger, appelez les secours.'**
+  String get sosDisclaimer;
+
+  /// No description provided for @sosCall.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appeler le {number}'**
+  String sosCall(String number);
+
+  /// No description provided for @sosCallFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible d\'ouvrir le téléphone. Composez le {number} vous-même.'**
+  String sosCallFailed(String number);
+
+  /// No description provided for @sosChooseKind.
+  ///
+  /// In fr, this message translates to:
+  /// **'Que se passe-t-il ?'**
+  String get sosChooseKind;
+
+  /// No description provided for @sosKindBreakdown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Panne'**
+  String get sosKindBreakdown;
+
+  /// No description provided for @sosKindAccident.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accident'**
+  String get sosKindAccident;
+
+  /// No description provided for @sosKindAssistance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Besoin d\'aide'**
+  String get sosKindAssistance;
+
+  /// No description provided for @sosKindDelay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je suis en retard'**
+  String get sosKindDelay;
+
+  /// No description provided for @sosConfirmTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer l\'alerte « {kind} » ?'**
+  String sosConfirmTitle(String kind);
+
+  /// No description provided for @sosConfirmBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les participants de la balade recevront votre alerte et votre dernière position connue.'**
+  String get sosConfirmBody;
+
+  /// No description provided for @sosConfirmSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer l\'alerte'**
+  String get sosConfirmSend;
+
+  /// No description provided for @sosSending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoi en cours… L\'alerte n\'est PAS encore transmise.'**
+  String get sosSending;
+
+  /// No description provided for @sosFailedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'ALERTE NON TRANSMISE'**
+  String get sosFailedTitle;
+
+  /// No description provided for @sosFailedBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personne n\'a été prévenu. Réessayez ou appelez directement.'**
+  String get sosFailedBody;
+
+  /// No description provided for @sosRetry.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer l\'envoi'**
+  String get sosRetry;
+
+  /// No description provided for @sosAbandon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abandonner'**
+  String get sosAbandon;
+
+  /// No description provided for @sosSentTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alerte transmise à {time}'**
+  String sosSentTitle(String time);
+
+  /// No description provided for @sosNoAckYet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore d\'accusé de réception.'**
+  String get sosNoAckYet;
+
+  /// No description provided for @sosAckedBy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vu par : {names}'**
+  String sosAckedBy(String names);
+
+  /// No description provided for @sosPositionDevice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position GPS envoyée'**
+  String get sosPositionDevice;
+
+  /// No description provided for @sosPositionConvoy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernière position du mode Convoi envoyée'**
+  String get sosPositionConvoy;
+
+  /// No description provided for @sosPositionNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune position disponible'**
+  String get sosPositionNone;
+
+  /// No description provided for @sosCancelMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler (fausse alerte)'**
+  String get sosCancelMine;
+
+  /// No description provided for @sosResolveMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Problème résolu'**
+  String get sosResolveMine;
+
+  /// No description provided for @sosIncomingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alertes en cours'**
+  String get sosIncomingTitle;
+
+  /// No description provided for @sosIncomingFrom.
+  ///
+  /// In fr, this message translates to:
+  /// **'{kind} — {name}'**
+  String sosIncomingFrom(String kind, String name);
+
+  /// No description provided for @sosSince.
+  ///
+  /// In fr, this message translates to:
+  /// **'Depuis {time}'**
+  String sosSince(String time);
+
+  /// No description provided for @sosAck.
+  ///
+  /// In fr, this message translates to:
+  /// **'J\'ai vu, je m\'en occupe'**
+  String get sosAck;
+
+  /// No description provided for @sosAcked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez accusé réception'**
+  String get sosAcked;
+
+  /// No description provided for @sosOpenMap.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir sur la carte'**
+  String get sosOpenMap;
+
+  /// No description provided for @sosResolveByManager.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marquer comme résolue'**
+  String get sosResolveByManager;
+
+  /// No description provided for @sosClosedResolved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alerte résolue'**
+  String get sosClosedResolved;
+
+  /// No description provided for @sosClosedCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alerte annulée'**
+  String get sosClosedCancelled;
+
+  /// No description provided for @sosParticipantsOnly.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le SOS est réservé aux participants de la balade en cours.'**
+  String get sosParticipantsOnly;
+
+  /// No description provided for @sosNotRunningBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le SOS est disponible pendant une balade en cours. En dehors, appelez directement les secours.'**
+  String get sosNotRunningBody;
+
+  /// No description provided for @sosBanner.
+  ///
+  /// In fr, this message translates to:
+  /// **'SOS : {kind} dans votre balade'**
+  String sosBanner(String kind);
+
+  /// No description provided for @sosBannerMore.
+  ///
+  /// In fr, this message translates to:
+  /// **'+{count} autre(s)'**
+  String sosBannerMore(int count);
+
+  /// No description provided for @sosBannerView.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir'**
+  String get sosBannerView;
+
+  /// No description provided for @sosBannerDismiss.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer'**
+  String get sosBannerDismiss;
+
+  /// No description provided for @settingsSafety.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sécurité'**
+  String get settingsSafety;
+
+  /// No description provided for @settingsEmergencyNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro d\'appel d\'urgence'**
+  String get settingsEmergencyNumber;
+
+  /// No description provided for @settingsEmergencyNumberHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Proposé sur l\'écran SOS. Sa disponibilité dépend du pays et de l\'opérateur.'**
+  String get settingsEmergencyNumberHint;
+
+  /// No description provided for @settingsEmergencyNumberInvalid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro invalide (chiffres uniquement, + autorisé au début).'**
+  String get settingsEmergencyNumberInvalid;
 }
 
 class _AppLocalizationsDelegate

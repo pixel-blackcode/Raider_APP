@@ -5,8 +5,10 @@ import '../../../core/backend/backend_providers.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/theme_mode_controller.dart';
 import '../../../core/widgets/backend_status_card.dart';
+import '../../../core/widgets/dialogs.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../sos/data/emergency.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -45,6 +47,42 @@ class SettingsScreen extends ConsumerWidget {
             selected: {themeMode},
             onSelectionChanged: (selection) =>
                 ref.read(themeModeProvider.notifier).setMode(selection.first),
+          ),
+          SectionHeader(title: l10n.settingsSafety),
+          ListTile(
+            key: const Key('settings-emergency-number'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.phone_in_talk_outlined),
+            title: Text(l10n.settingsEmergencyNumber),
+            subtitle: Text(
+              '${ref.watch(emergencyNumberProvider)} · '
+              '${l10n.settingsEmergencyNumberHint}',
+            ),
+            trailing: const Icon(Icons.edit_outlined),
+            onTap: () async {
+              final value = await showTextPrompt(
+                context,
+                title: l10n.settingsEmergencyNumber,
+                label: l10n.settingsEmergencyNumber,
+                confirmLabel: l10n.actionSave,
+                maxLength: 16,
+                initialValue: ref.read(emergencyNumberProvider),
+                keyboardType: TextInputType.phone,
+              );
+              if (value == null) return;
+              final ok = await ref
+                  .read(emergencyNumberProvider.notifier)
+                  .set(value);
+              if (!ok && context.mounted) {
+                ScaffoldMessenger.of(context)
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text(l10n.settingsEmergencyNumberInvalid),
+                    ),
+                  );
+              }
+            },
           ),
           SectionHeader(title: l10n.settingsServer),
           const BackendStatusCard(),

@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/router/app_routes.dart';
 import '../../../core/errors/app_exception.dart';
 import '../../../core/errors/error_messages.dart';
 import '../../../core/theme/app_colors.dart';
@@ -189,7 +191,28 @@ class _ConvoyScreenState extends ConsumerState<ConvoyScreen> {
     final l10n = AppLocalizations.of(context);
     final detail = ref.watch(rideDetailProvider(widget.rideId));
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.convoyTitle)),
+      appBar: AppBar(
+        title: Text(l10n.convoyTitle),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: AppSpacing.sm),
+            child: FilledButton.icon(
+              key: const Key('convoy-sos'),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context)
+                    .extension<RiderColors>()!
+                    .sos,
+                foregroundColor: Theme.of(context)
+                    .extension<RiderColors>()!
+                    .onSos,
+              ),
+              onPressed: () => context.push(AppRoutes.sos(widget.rideId)),
+              icon: const Icon(Icons.sos),
+              label: Text(l10n.sosOpen),
+            ),
+          ),
+        ],
+      ),
       body: AsyncValueView(
         value: detail,
         onRetry: () => ref.invalidate(rideDetailProvider(widget.rideId)),

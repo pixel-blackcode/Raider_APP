@@ -9,7 +9,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | 03 — Clubs | Création libre, public/privé, adhésion, rôles, vérification facultative. | ✅ Livrée — en attente de validation |
 | 04 — Balades | Création, recherche, 3 modes d'adhésion, participants, machine à états, verrouillage. | ✅ Livrée — en attente de validation |
 | 05 — GPS et mode Convoi | Carte, partage volontaire, temps réel, chef de convoi / serre-file, retardataires, confidentialité, rétention. | ✅ Livrée — en attente de validation (+ refonte visuelle : typographie Barlow Condensed, cartes de balade contrastées) |
-| 06 — SOS | Alertes, notifications, accusés de réception, gestion des échecs de transmission. | À venir |
+| 06 — SOS | Alertes, notifications, accusés de réception, gestion des échecs de transmission. | ✅ Livrée — en attente de validation (notifications dans l'application ; push à venir, D-38) |
 | 07 — Communauté | Publications, photos, commentaires, messagerie, modération. | À venir |
 | 08 — Marketplace | Annonces sans paiement, recherche, favoris, contact vendeur. | À venir |
 | 09 — Garage | Motos, historique d'entretien, rappels. | À venir |
@@ -59,6 +59,26 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R03-9 | Essai réel sur un projet Supabase + appareil. | **À faire par le propriétaire** (aucun projet Supabase ni appareil disponible dans l'environnement cloud) |
 
 | R03-10 | Logo et couverture : ajout par owner/admin uniquement ; images d'un club masqué invisibles aux non-membres. | SQL `04_media_privacy_account_test.sql` + widget |
+
+## Mission 06 — scénarios de recette
+
+| # | Scénario (numéro du critère d'acceptation) | Preuve |
+| --- | --- | --- |
+| R06-1 | Panne, accident, demande d'aide, retard : choix en un geste, intention confirmée avant l'envoi. | widget `sos_flow_test.dart` |
+| R06-2 | Une alerte non transmise n'est **jamais** présentée comme envoyée : « en cours d'envoi » puis « ALERTE NON TRANSMISE » avec « Réessayer » (12). | widget + tests du suivi d'envoi |
+| R06-3 | Renvoi après coupure réseau sans doublon (identifiant d'alerte choisi par l'appareil). | SQL `08_sos_test.sql` + widget |
+| R06-4 | Dernière position : GPS de l'appareil, sinon dernière position du mode Convoi, sinon « aucune position » ; l'alerte part même sans GPS. | SQL + widget |
+| R06-5 | Destinataires : participants confirmés et organisateurs de la balade en cours uniquement ; non-participants, participants retirés et anonymes ne voient rien. | SQL |
+| R06-6 | Bandeau rouge, son et vibration chez les destinataires (application ouverte) ; accusé « J'ai vu, je m'en occupe » visible par l'auteur. | widget + SQL |
+| R06-7 | Clôture : l'auteur annule ou résout, un organisateur peut résoudre ; une alerte close ne se rouvre pas. | SQL + widget |
+| R06-8 | Appel d'urgence (112 par défaut, modifiable dans les Paramètres), accessible même hors balade ; avertissement « pas un service de secours ». | widget |
+| R06-9 | Limitation : 5 alertes / 10 min ; coordonnées effacées 72 h après la fin de la balade, historique conservé. | SQL |
+| R06-10 | Essai réel à deux téléphones (TEST_GUIDE §6). | 📱 **À faire par le propriétaire** |
+
+**Limites connues (assumées) :**
+- **Pas encore de notification push** (D-38) : un destinataire dont l'application est fermée ne voit l'alerte qu'en la rouvrant. Le SOS ne remplace pas un appel.
+- La moto du motard n'est pas encore jointe à l'alerte : le Garage arrive en Mission 09.
+- Une alerte « non transmise » est conservée tant que l'application reste ouverte ; si l'application est fermée avant le renvoi, elle est perdue (aucun envoi fantôme).
 
 ## Mission 05 — scénarios de recette
 
