@@ -43,6 +43,13 @@ void main() {
       AppException.from(const AuthException('x', code: 'email_exists')).code,
       AppException.userAlreadyExists,
     );
+    // Configuration Supabase : fournisseur Email désactivé.
+    expect(
+      AppException.from(
+        const AuthException('x', code: 'email_provider_disabled'),
+      ).code,
+      AppException.signupDisabled,
+    );
   });
 
   test('erreurs réseau', () {

@@ -505,5 +505,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "errorSignupDisabled": "Les inscriptions par e-mail sont désactivées sur le serveur. Contactez l'administrateur de Rider Group."
 }

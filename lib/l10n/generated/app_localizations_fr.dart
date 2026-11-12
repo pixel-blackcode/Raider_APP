@@ -1216,4 +1216,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String deleteAccountBlockedRidesBody(String rides) {
     return 'Vous organisez des balades qui comptent d\'autres inscrits : $rides. Annulez-les depuis leur fiche avant de supprimer votre compte.';
   }
+
+  @override
+  String get errorSignupDisabled =>
+      'Les inscriptions par e-mail sont désactivées sur le serveur. Contactez l\'administrateur de Rider Group.';
 }

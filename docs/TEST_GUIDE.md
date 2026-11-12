@@ -11,6 +11,8 @@ L'idéal est d'avoir **deux téléphones Android** ou plus, et donc deux comptes
 4. Ouvre le fichier et autorise l'installation depuis cette source si Android le demande.
 5. Lance l'application. **Attendu :** l'écran de connexion s'affiche, sans le bandeau « Serveur non configuré ».
 
+> ⚠️ Dans Supabase, *Authentication → Sign In / Providers → **Email*** : le fournisseur **Email doit rester activé**, ainsi que « Allow new users to sign up ». Seule l'option **« Confirm email »** peut être désactivée pour les tests. Si le fournisseur est désactivé, l'inscription échoue avec « Les inscriptions par e-mail sont désactivées sur le serveur ».
+>
 > Si la confirmation des e-mails est activée dans Supabase, le service d'e-mails intégré n'envoie qu'environ 2 à 4 messages par heure. Pour tester à plusieurs, désactive temporairement « Confirm email » dans Supabase (*Authentication → Providers → Email*), sur ce projet de test uniquement.
 
 ## 1. Comptes et profil

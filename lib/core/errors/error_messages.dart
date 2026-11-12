@@ -35,6 +35,7 @@ String describeError(BuildContext context, Object error) {
     'invitations_disabled' => l10n.errorInvitationsDisabled,
     'owns_clubs_with_members' => l10n.errorOwnsClubsWithMembers,
     'same_password' => l10n.errorSamePassword,
+    'signup_disabled' => l10n.errorSignupDisabled,
     'unsupported_image' => l10n.errorUnsupportedImage,
     'image_too_large' => l10n.errorImageTooLarge,
     'ride_not_found' => l10n.errorRideNotFound,

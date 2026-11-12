@@ -50,6 +50,7 @@ class AppException implements Exception {
   static const weakPassword = 'weak_password';
   static const rateLimited = 'rate_limited';
   static const samePassword = 'same_password';
+  static const signupDisabled = 'signup_disabled';
 
   // Codes des médias.
   static const unsupportedImage = 'unsupported_image';
@@ -104,6 +105,10 @@ class AppException implements Exception {
         return weakPassword;
       case 'same_password':
         return samePassword;
+      // Inscriptions désactivées dans la configuration Supabase.
+      case 'email_provider_disabled':
+      case 'signup_disabled':
+        return signupDisabled;
       case 'over_request_rate_limit':
       case 'over_email_send_rate_limit':
         return rateLimited;

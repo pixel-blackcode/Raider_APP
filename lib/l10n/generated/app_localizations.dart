@@ -2229,6 +2229,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Vous organisez des balades qui comptent d\'autres inscrits : {rides}. Annulez-les depuis leur fiche avant de supprimer votre compte.'**
   String deleteAccountBlockedRidesBody(String rides);
+
+  /// No description provided for @errorSignupDisabled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les inscriptions par e-mail sont désactivées sur le serveur. Contactez l\'administrateur de Rider Group.'**
+  String get errorSignupDisabled;
 }
 
 class _AppLocalizationsDelegate
