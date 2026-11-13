@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_providers.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/theme_mode_controller.dart';
 import '../../../core/widgets/backend_status_card.dart';
@@ -89,6 +90,11 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm),
           Text(
             l10n.environmentLabel(config.environment.code),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          Text(
+            l10n.buildLabel(AppConfig.buildId),
+            key: const Key('settings-build'),
             style: Theme.of(context).textTheme.bodySmall,
           ),
           SectionHeader(title: l10n.settingsAbout),

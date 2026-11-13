@@ -72,6 +72,13 @@ class AppConfig {
   static const authRedirectScheme = 'com.ridergroup.ridergroup';
   static const authRedirectUri = '$authRedirectScheme://auth-callback';
 
+  /// Version installée (identifiant court du commit, fourni par la CI) :
+  /// permet de vérifier qu'on teste bien le dernier APK.
+  static const buildId = String.fromEnvironment(
+    'APP_BUILD',
+    defaultValue: 'local',
+  );
+
   /// Style de carte MapLibre (tuiles OpenStreetMap, décision D-34).
   /// Par défaut : OpenFreeMap, gratuit, sans clé, usage commercial permis.
   /// Remplaçable sans modifier le code : `--dart-define=MAP_STYLE_URL=...`.

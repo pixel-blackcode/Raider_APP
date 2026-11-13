@@ -3333,6 +3333,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'il y a {hours} h'**
   String timeHoursAgo(int hours);
+
+  /// No description provided for @buildLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version : {build}'**
+  String buildLabel(String build);
+
+  /// No description provided for @convoyRoleButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rôle'**
+  String get convoyRoleButton;
 }
 
 class _AppLocalizationsDelegate

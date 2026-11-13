@@ -717,7 +717,31 @@ class _ParticipantTile extends ConsumerWidget {
                   PopupMenuButton<String>(
                     key: Key('ride-convoy-role-${participant.userId}'),
                     tooltip: l10n.convoyAssignRole,
-                    icon: const Icon(Icons.flag_outlined),
+                    // Bouton libellé (une icône seule passait inaperçue).
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 12,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.flag_outlined,
+                            size: 20,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            l10n.convoyRoleButton,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     onSelected: (value) async {
                       final repo = ref.read(convoyRepositoryProvider);
                       if (repo == null) return;

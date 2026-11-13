@@ -832,5 +832,14 @@
         "type": "int"
       }
     }
-  }
+  },
+  "buildLabel": "Version : {build}",
+  "@buildLabel": {
+    "placeholders": {
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "convoyRoleButton": "Rôle"
 }

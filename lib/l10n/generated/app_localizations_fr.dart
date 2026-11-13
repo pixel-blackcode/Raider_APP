@@ -1845,4 +1845,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String timeHoursAgo(int hours) {
     return 'il y a $hours h';
   }
+
+  @override
+  String buildLabel(String build) {
+    return 'Version : $build';
+  }
+
+  @override
+  String get convoyRoleButton => 'Rôle';
 }

@@ -97,7 +97,7 @@ jobs:
 
       # Vérifie la chaîne de build release (R8, plugins natifs) à chaque push.
       - name: Build APK release (sans backend configuré)
-        run: flutter build apk --release
+        run: flutter build apk --release --dart-define=APP_BUILD="${GITHUB_SHA::7}"
 
       - uses: actions/upload-artifact@v5
         with:
@@ -139,7 +139,8 @@ jobs:
           flutter build apk --release \
             --dart-define=APP_ENV=dev \
             --dart-define=SUPABASE_URL="$SUPABASE_URL" \
-            --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY"
+            --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
+            --dart-define=APP_BUILD="${GITHUB_SHA::7}"
           mv build/app/outputs/flutter-apk/app-release.apk \
              build/app/outputs/flutter-apk/rider-group-dev.apk
 
