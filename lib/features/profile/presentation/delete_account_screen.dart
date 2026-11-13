@@ -60,9 +60,9 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
     setState(() => _busy = true);
     try {
       // Les fichiers ne peuvent être supprimés qu'avant le compte.
-      await ref
-          .read(mediaRepositoryProvider)
-          ?.removeFolder(MediaBucket.avatars, userId);
+      final media = ref.read(mediaRepositoryProvider);
+      await media?.removeFolder(MediaBucket.avatars, userId);
+      await media?.removeFolder(MediaBucket.postMedia, userId);
       await auth.deleteAccount();
       messenger
         ..hideCurrentSnackBar()

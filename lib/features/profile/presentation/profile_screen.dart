@@ -13,6 +13,7 @@ import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../community/data/community_providers.dart';
 import '../data/profile_repository.dart';
 import '../domain/profile.dart';
 
@@ -230,6 +231,27 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
           title: Text(l10n.privacyTitle),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.push(AppRoutes.privacySettings),
+        ),
+        ListTile(
+          key: const Key('profile-blocked'),
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(Icons.block),
+          title: Text(l10n.blockedUsersTitle),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push(AppRoutes.blockedUsers),
+        ),
+        Consumer(
+          builder: (context, ref, _) =>
+              (ref.watch(amIModeratorProvider).value ?? false)
+              ? ListTile(
+                  key: const Key('profile-moderation'),
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.gavel_outlined),
+                  title: Text(l10n.moderationTitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(AppRoutes.moderation),
+                )
+              : const SizedBox.shrink(),
         ),
         ListTile(
           key: const Key('profile-change-password'),

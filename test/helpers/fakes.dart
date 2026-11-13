@@ -10,9 +10,13 @@ import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_repository.dart';
 import 'package:rider_group/features/clubs/domain/club.dart';
 import 'package:rider_group/features/clubs/domain/club_draft.dart';
+import 'package:rider_group/features/community/data/community_repository.dart';
+import 'package:rider_group/features/community/domain/community.dart';
 import 'package:rider_group/features/convoy/data/convoy_repository.dart';
 import 'package:rider_group/features/convoy/data/location_service.dart';
 import 'package:rider_group/features/convoy/domain/convoy.dart';
+import 'package:rider_group/features/messages/data/messaging_repository.dart';
+import 'package:rider_group/features/messages/domain/messaging.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_repository.dart';
@@ -1013,5 +1017,394 @@ class FakeExternalActions implements ExternalActions {
   Future<bool> openMap(double lat, double lng) async {
     maps.add('$lat,$lng');
     return true;
+  }
+}
+
+/// Doublure de la communauté : règles serveur simplifiées (blocage,
+/// audience club, auteur), pannes simulables.
+class FakeCommunityRepository implements CommunityRepository {
+  FakeCommunityRepository({
+    required this.currentUserId,
+    this.profiles = const {},
+    this.clubMembers = const {},
+  });
+
+  String currentUserId;
+  final Map<String, Profile> profiles;
+
+  /// club → membres.
+  final Map<String, Set<String>> clubMembers;
+  final posts = <Post>[];
+  final commentList = <PostComment>[];
+  final blocks = <(String, String)>{};
+  final reports = <String>[];
+  final calls = <String>[];
+  final createdRefs = <String>[];
+  final moderators = <String>{};
+  final queue = <ModerationItem>[];
+  AppException? createError;
+  var _seq = 0;
+
+  bool _blocked(String a, String b) =>
+      blocks.contains((a, b)) || blocks.contains((b, a));
+
+  bool _visible(Post p) =>
+      p.authorId == currentUserId ||
+      (!p.hidden &&
+          !_blocked(p.authorId, currentUserId) &&
+          (p.audience == PostAudience.public ||
+              (clubMembers[p.clubId] ?? const {}).contains(currentUserId)));
+
+  Post addPost({
+    required String authorId,
+    String body = 'Sortie au fleuve',
+    String? clubId,
+    PostAudience audience = PostAudience.public,
+    List<String> mediaPaths = const [],
+    bool hidden = false,
+  }) {
+    final p = Post(
+      id: 'post-${++_seq}',
+      authorId: authorId,
+      authorName: profiles[authorId]?.displayName ?? '',
+      clubId: clubId,
+      clubName: clubId == null ? null : 'Club $clubId',
+      audience: audience,
+      body: body,
+      hidden: hidden,
+      mediaPaths: mediaPaths,
+      createdAt: DateTime.now().toUtc().subtract(Duration(minutes: _seq)),
+    );
+    posts.insert(0, p);
+    return p;
+  }
+
+  Post _withCounts(Post p) => Post(
+    id: p.id,
+    authorId: p.authorId,
+    authorName: p.authorName,
+    clubId: p.clubId,
+    clubName: p.clubName,
+    audience: p.audience,
+    body: p.body,
+    hidden: p.hidden,
+    createdAt: p.createdAt,
+    mediaPaths: p.mediaPaths,
+    commentCount: commentList.where((c) => c.postId == p.id).length,
+    reactions: p.reactions,
+    myReaction: p.myReaction,
+  );
+
+  @override
+  Future<List<Post>> feed({
+    String? clubId,
+    String? authorId,
+    DateTime? before,
+    int limit = 20,
+  }) async => [
+    for (final p in posts)
+      if (_visible(p) &&
+          (clubId == null || p.clubId == clubId) &&
+          (authorId == null || p.authorId == authorId))
+        _withCounts(p),
+  ];
+
+  @override
+  Future<Post?> post(String postId) async {
+    for (final p in posts) {
+      if (p.id == postId && _visible(p)) return _withCounts(p);
+    }
+    return null;
+  }
+
+  @override
+  Future<String> createPost({
+    required String clientRef,
+    required String body,
+    PostAudience audience = PostAudience.public,
+    String? clubId,
+    List<String> mediaPaths = const [],
+  }) async {
+    calls.add('createPost:${audience.dbValue}:${mediaPaths.length}');
+    createdRefs.add(clientRef);
+    if (createError != null) throw createError!;
+    return addPost(
+      authorId: currentUserId,
+      body: body,
+      clubId: clubId,
+      audience: audience,
+      mediaPaths: mediaPaths,
+    ).id;
+  }
+
+  @override
+  Future<List<String>> deletePost(String postId) async {
+    calls.add('deletePost:$postId');
+    final p = posts.firstWhere((p) => p.id == postId);
+    posts.remove(p);
+    return p.mediaPaths;
+  }
+
+  @override
+  Future<List<PostComment>> comments(String postId) async => [
+    for (final c in commentList)
+      if (c.postId == postId && !_blocked(c.authorId, currentUserId)) c,
+  ];
+
+  @override
+  Future<void> addComment(String postId, String body, String clientRef) async {
+    calls.add('addComment');
+    commentList.add(
+      PostComment(
+        id: 'c-${++_seq}',
+        postId: postId,
+        authorId: currentUserId,
+        authorName: profiles[currentUserId]?.displayName ?? '',
+        body: body,
+        createdAt: DateTime.now().toUtc(),
+      ),
+    );
+  }
+
+  @override
+  Future<void> deleteComment(String commentId) async {
+    calls.add('deleteComment:$commentId');
+    commentList.removeWhere((c) => c.id == commentId);
+  }
+
+  @override
+  Future<void> setReaction(String postId, ReactionKind? kind) async {
+    calls.add('react:$postId:${kind?.dbValue}');
+    final i = posts.indexWhere((p) => p.id == postId);
+    posts[i] = posts[i].withMyReaction(kind);
+  }
+
+  @override
+  Future<void> block(String userId) async {
+    calls.add('block:$userId');
+    blocks.add((currentUserId, userId));
+  }
+
+  @override
+  Future<void> unblock(String userId) async {
+    calls.add('unblock:$userId');
+    blocks.remove((currentUserId, userId));
+  }
+
+  @override
+  Future<List<BlockedUser>> blockedUsers() async => [
+    for (final (a, b) in blocks)
+      if (a == currentUserId)
+        BlockedUser(
+          userId: b,
+          displayName: profiles[b]?.displayName ?? b,
+          username: profiles[b]?.username ?? b,
+        ),
+  ];
+
+  @override
+  Future<void> report(
+    ReportTarget target,
+    String targetId,
+    ReportReason reason, {
+    String? details,
+  }) async {
+    reports.add('${target.name}:$targetId:${reason.name}');
+  }
+
+  @override
+  Future<bool> amIModerator() async => moderators.contains(currentUserId);
+
+  @override
+  Future<List<ModerationItem>> moderationQueue() async =>
+      moderators.contains(currentUserId) ? List.of(queue) : const [];
+
+  @override
+  Future<void> moderate(
+    ReportTarget target,
+    String targetId,
+    ModerationAction action, {
+    String? note,
+  }) async {
+    calls.add('moderate:${target.name}:$targetId:${action.name}');
+    queue.removeWhere((i) => i.targetId == targetId);
+  }
+}
+
+/// Doublure de la messagerie : flux pilotés par le test, pannes réseau.
+class FakeMessagingRepository implements MessagingRepository {
+  FakeMessagingRepository({
+    required this.currentUserId,
+    this.profiles = const {},
+  });
+
+  String currentUserId;
+  final Map<String, Profile> profiles;
+  final conversations = <ConversationSummary>[];
+  final members = <String, Set<String>>{};
+  final messages = <ChatMessage>[];
+  final calls = <String>[];
+  final sentRefs = <String>[];
+  final _changes = StreamController<void>.broadcast();
+  AppException? sendError;
+  var _seq = 0;
+
+  ConversationSummary addConversation({
+    ConversationKind kind = ConversationKind.direct,
+    String title = 'Conversation',
+    String? otherUserId,
+    String? rideId,
+    Set<String> memberIds = const {},
+    bool blocked = false,
+  }) {
+    final c = ConversationSummary(
+      id: 'conv-${++_seq}',
+      kind: kind,
+      title: title,
+      otherUserId: otherUserId,
+      rideId: rideId,
+      blocked: blocked,
+    );
+    conversations.add(c);
+    members[c.id] = {currentUserId, ...memberIds, ?otherUserId};
+    return c;
+  }
+
+  ChatMessage addMessage(String conversationId, String senderId, String body) {
+    final m = ChatMessage(
+      id: 'm-${++_seq}',
+      conversationId: conversationId,
+      senderId: senderId,
+      senderName: profiles[senderId]?.displayName,
+      body: body,
+      clientRef: 'ref-$_seq',
+      createdAt: DateTime.now().toUtc().add(Duration(milliseconds: _seq)),
+    );
+    messages.add(m);
+    _changes.add(null);
+    return m;
+  }
+
+  final _read = <String, DateTime>{};
+
+  @override
+  Future<List<ConversationSummary>> inbox() async => [
+    for (final c in conversations)
+      if (members[c.id]?.contains(currentUserId) ?? false)
+        ConversationSummary(
+          id: c.id,
+          kind: c.kind,
+          title: c.title,
+          otherUserId: c.otherUserId,
+          rideId: c.rideId,
+          blocked: c.blocked,
+          lastMessage: messages
+              .where((m) => m.conversationId == c.id)
+              .lastOrNull
+              ?.body,
+          lastMessageAt: messages
+              .where((m) => m.conversationId == c.id)
+              .lastOrNull
+              ?.createdAt,
+          unreadCount: messages
+              .where(
+                (m) =>
+                    m.conversationId == c.id &&
+                    m.senderId != currentUserId &&
+                    m.createdAt.isAfter(
+                      _read[c.id] ?? DateTime.fromMillisecondsSinceEpoch(0),
+                    ),
+              )
+              .length,
+        ),
+  ];
+
+  @override
+  Stream<void> inboxChanges() => _changes.stream;
+
+  @override
+  Future<String> openDirect(String userId) async {
+    calls.add('openDirect:$userId');
+    for (final c in conversations) {
+      if (c.kind == ConversationKind.direct && c.otherUserId == userId) {
+        return c.id;
+      }
+    }
+    return addConversation(
+      otherUserId: userId,
+      title: profiles[userId]?.displayName ?? '',
+    ).id;
+  }
+
+  @override
+  Future<String> createGroup(String title, List<String> memberIds) async {
+    calls.add('createGroup:$title:${memberIds.join(',')}');
+    return addConversation(
+      kind: ConversationKind.group,
+      title: title,
+      memberIds: memberIds.toSet(),
+    ).id;
+  }
+
+  @override
+  Future<String> openRide(String rideId) async {
+    calls.add('openRide:$rideId');
+    for (final c in conversations) {
+      if (c.rideId == rideId) return c.id;
+    }
+    return addConversation(
+      kind: ConversationKind.ride,
+      title: 'Balade',
+      rideId: rideId,
+    ).id;
+  }
+
+  @override
+  Stream<List<ChatMessage>> watchMessages(String conversationId) async* {
+    List<ChatMessage> now() =>
+        messages.where((m) => m.conversationId == conversationId).toList();
+    yield now();
+    yield* _changes.stream.map((_) => now());
+  }
+
+  @override
+  Future<ChatMessage> send(
+    String conversationId,
+    String body,
+    String clientRef,
+  ) async {
+    calls.add('send:$body');
+    sentRefs.add(clientRef);
+    if (sendError != null) throw sendError!;
+    for (final m in messages) {
+      if (m.clientRef == clientRef) return m;
+    }
+    final m = ChatMessage(
+      id: 'm-${++_seq}',
+      conversationId: conversationId,
+      senderId: currentUserId,
+      body: body,
+      clientRef: clientRef,
+      createdAt: DateTime.now().toUtc(),
+    );
+    messages.add(m);
+    _changes.add(null);
+    return m;
+  }
+
+  @override
+  Future<void> deleteMessage(String messageId) async {
+    calls.add('delete:$messageId');
+  }
+
+  @override
+  Future<void> markRead(String conversationId) async {
+    _read[conversationId] = DateTime.now().toUtc().add(const Duration(days: 1));
+  }
+
+  @override
+  Future<void> removeMember(String conversationId, String userId) async {
+    calls.add('remove:$conversationId:$userId');
+    members[conversationId]?.remove(userId);
   }
 }

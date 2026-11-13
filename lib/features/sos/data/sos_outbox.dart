@@ -1,27 +1,15 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/errors/app_exception.dart';
+import '../../../core/utils/client_ref.dart';
 import '../../convoy/data/location_service.dart';
 import '../../convoy/domain/convoy.dart';
 import '../domain/sos.dart';
 import 'sos_repository.dart';
 
-/// Identifiant aléatoire (UUID v4) de l'alerte, choisi par l'appareil : un
-/// renvoi après une coupure réseau ne crée pas de doublon côté serveur.
-String newClientRef([Random? random]) {
-  final r = random ?? Random.secure();
-  final b = List<int>.generate(16, (_) => r.nextInt(256));
-  b[6] = (b[6] & 0x0f) | 0x40;
-  b[8] = (b[8] & 0x3f) | 0x80;
-  String hex(int from, int to) => b
-      .sublist(from, to)
-      .map((x) => x.toRadixString(16).padLeft(2, '0'))
-      .join();
-  return '${hex(0, 4)}-${hex(4, 6)}-${hex(6, 8)}-${hex(8, 10)}-${hex(10, 16)}';
-}
+export '../../../core/utils/client_ref.dart';
 
 /// Alertes que J'envoie, par balade, avec leur état de transmission réel.
 class SosOutbox extends Notifier<Map<String, OutgoingSos>> {

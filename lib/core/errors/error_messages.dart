@@ -56,6 +56,9 @@ String describeError(BuildContext context, Object error) {
     'too_frequent' => l10n.errorRateLimited,
     'alert_closed' => l10n.errorAlertClosed,
     'own_alert' => l10n.errorOwnAlert,
+    'blocked' => l10n.errorBlocked,
+    'content_hidden' => l10n.errorContentHidden,
+    'conversation_not_found' => l10n.errorConversationNotFound,
     _ => l10n.errorUnknown,
   };
 }

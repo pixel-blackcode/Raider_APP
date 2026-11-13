@@ -10,7 +10,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | 04 — Balades | Création, recherche, 3 modes d'adhésion, participants, machine à états, verrouillage. | ✅ Livrée — en attente de validation |
 | 05 — GPS et mode Convoi | Carte, partage volontaire, temps réel, chef de convoi / serre-file, retardataires, confidentialité, rétention. | ✅ Livrée — en attente de validation (+ refonte visuelle : typographie Barlow Condensed, cartes de balade contrastées) |
 | 06 — SOS | Alertes, notifications, accusés de réception, gestion des échecs de transmission. | ✅ Livrée — en attente de validation (notifications dans l'application ; push à venir, D-38) |
-| 07 — Communauté | Publications, photos, commentaires, messagerie, modération. | À venir |
+| 07 — Communauté | Publications, photos, commentaires, messagerie, modération. | ✅ Livrée — en attente de validation (style « Vibrant & Block » appliqué au fil et à la messagerie) |
 | 08 — Marketplace | Annonces sans paiement, recherche, favoris, contact vendeur. | À venir |
 | 09 — Garage | Motos, historique d'entretien, rappels. | À venir |
 | 10 — Gamification et administration | Badges, défis, tableau de bord web, modération. | À venir |
@@ -59,6 +59,29 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R03-9 | Essai réel sur un projet Supabase + appareil. | **À faire par le propriétaire** (aucun projet Supabase ni appareil disponible dans l'environnement cloud) |
 
 | R03-10 | Logo et couverture : ajout par owner/admin uniquement ; images d'un club masqué invisibles aux non-membres. | SQL `04_media_privacy_account_test.sql` + widget |
+
+## Mission 07 — scénarios de recette
+
+| # | Scénario (numéro du critère d'acceptation) | Preuve |
+| --- | --- | --- |
+| R07-1 | Publier un texte et jusqu'à 4 photos dans le fil ; publication vide refusée. | widget `community_flow_test.dart` + SQL `09_community_test.sql` |
+| R07-2 | Publication non envoyée jamais présentée comme publiée ; renvoi sans doublon, photos envoyées une seule fois. | widget + SQL (idempotence) |
+| R07-3 | Espace du club : publication « membres du club » invisible pour les non-membres, photos comprises (5). | SQL + widget |
+| R07-4 | Réactions (j'aime, en feu, respect), une par motard ; commentaires avec suppression par l'auteur ou l'auteur de la publication. | SQL + widget |
+| R07-5 | Blocage réciproque : contenus masqués, commentaires et messages impossibles ; liste des motards bloqués et déblocage. | SQL + widget |
+| R07-6 | Signalement d'une publication, d'un commentaire, d'un message ou d'un motard ; 3 signalements distincts masquent le contenu en attente de modération. | SQL + widget |
+| R07-7 | Modération (15) : administrateurs partout, modérateurs de club sur leur club seulement ; masquer, rétablir, classer ; motard ordinaire sans accès. | SQL + widget |
+| R07-8 | Messagerie privée (une conversation par paire), de groupe (créateur, départ), non-lus et badge de l'onglet. | SQL + widget |
+| R07-9 | Message non envoyé affiché « Non envoyé — touchez pour réessayer », renvoi sans doublon. | widget + SQL |
+| R07-10 | Discussion de balade : participants confirmés et organisateurs ; un participant retiré perd l'accès. | SQL + widget |
+| R07-11 | Profil public d'un motard : identité, publications, message, blocage, signalement. | widget |
+| R07-12 | Essai réel sur téléphone (TEST_GUIDE §7). | 📱 **À faire par le propriétaire** |
+
+**Limites connues (assumées) :**
+- Vidéos non prises en charge pour l'instant (stockage gratuit limité) ; photos uniquement.
+- Messages texte uniquement ; pas de notification push (comme D-38) : les nouveaux messages apparaissent quand l'application est ouverte (badge et temps réel).
+- Le fil charge les 30 publications les plus récentes (pagination à venir).
+- La suspension de comptes signalés relève du tableau d'administration (Mission 10).
 
 ## Mission 06 — scénarios de recette
 

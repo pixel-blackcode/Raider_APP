@@ -2697,6 +2697,642 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Numéro invalide (chiffres uniquement, + autorisé au début).'**
   String get settingsEmergencyNumberInvalid;
+
+  /// No description provided for @blockAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloquer {name}'**
+  String blockAction(String name);
+
+  /// No description provided for @blockShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloquer'**
+  String get blockShort;
+
+  /// No description provided for @blockTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloquer {name} ?'**
+  String blockTitle(String name);
+
+  /// No description provided for @blockBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous ne verrez plus ses publications ni ses commentaires, et vous ne pourrez plus vous écrire. Cette personne n\'est pas prévenue. Vous pourrez débloquer à tout moment depuis votre profil.'**
+  String get blockBody;
+
+  /// No description provided for @blockConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bloquer'**
+  String get blockConfirm;
+
+  /// No description provided for @blockDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} est bloqué.'**
+  String blockDone(String name);
+
+  /// No description provided for @unblockAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Débloquer'**
+  String get unblockAction;
+
+  /// No description provided for @blockedUsersTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motards bloqués'**
+  String get blockedUsersTitle;
+
+  /// No description provided for @blockedUsersEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun motard bloqué'**
+  String get blockedUsersEmptyTitle;
+
+  /// No description provided for @blockedUsersEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Depuis une publication ou un profil, le menu permet de bloquer un motard.'**
+  String get blockedUsersEmptyBody;
+
+  /// No description provided for @chatTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conversation'**
+  String get chatTitle;
+
+  /// No description provided for @chatHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre message'**
+  String get chatHint;
+
+  /// No description provided for @chatSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get chatSend;
+
+  /// No description provided for @chatSending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoi…'**
+  String get chatSending;
+
+  /// No description provided for @chatFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non envoyé — touchez pour réessayer'**
+  String get chatFailed;
+
+  /// No description provided for @chatDeleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message supprimé'**
+  String get chatDeleted;
+
+  /// No description provided for @chatHiddenNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message masqué par la modération'**
+  String get chatHiddenNotice;
+
+  /// No description provided for @chatNoMessages.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun message pour l\'instant'**
+  String get chatNoMessages;
+
+  /// No description provided for @chatBlockedNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous ne pouvez pas écrire dans cette conversation (motard bloqué).'**
+  String get chatBlockedNotice;
+
+  /// No description provided for @chatDeleteTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer ce message ?'**
+  String get chatDeleteTitle;
+
+  /// No description provided for @chatDeleteBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Il sera remplacé par « Message supprimé » pour tout le monde.'**
+  String get chatDeleteBody;
+
+  /// No description provided for @chatLeave.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter le groupe'**
+  String get chatLeave;
+
+  /// No description provided for @chatLeaveTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quitter ce groupe ?'**
+  String get chatLeaveTitle;
+
+  /// No description provided for @chatLeaveBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous ne recevrez plus ses messages.'**
+  String get chatLeaveBody;
+
+  /// No description provided for @chatSeeProfile.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le profil'**
+  String get chatSeeProfile;
+
+  /// No description provided for @chatSeeRide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir la balade'**
+  String get chatSeeRide;
+
+  /// No description provided for @clubPostsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publications du club'**
+  String get clubPostsTitle;
+
+  /// No description provided for @clubNewPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier dans le club'**
+  String get clubNewPost;
+
+  /// No description provided for @clubPostsEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune publication dans ce club pour l\'instant.'**
+  String get clubPostsEmpty;
+
+  /// No description provided for @commentsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaires'**
+  String get commentsTitle;
+
+  /// No description provided for @commentsEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun commentaire. Soyez le premier !'**
+  String get commentsEmpty;
+
+  /// No description provided for @commentHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre commentaire'**
+  String get commentHint;
+
+  /// No description provided for @commentSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer le commentaire'**
+  String get commentSend;
+
+  /// No description provided for @commentNotSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaire non envoyé.'**
+  String get commentNotSent;
+
+  /// No description provided for @commentHiddenNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commentaire masqué par la modération'**
+  String get commentHiddenNotice;
+
+  /// No description provided for @errorBlocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Action impossible : l\'un de vous a bloqué l\'autre.'**
+  String get errorBlocked;
+
+  /// No description provided for @errorContentHidden.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce contenu est masqué par la modération.'**
+  String get errorContentHidden;
+
+  /// No description provided for @errorConversationNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette conversation n\'existe pas ou ne vous est plus accessible.'**
+  String get errorConversationNotFound;
+
+  /// No description provided for @feedLoadError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Impossible de charger les publications. Vérifiez votre connexion.'**
+  String get feedLoadError;
+
+  /// No description provided for @messagesNew.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau message'**
+  String get messagesNew;
+
+  /// No description provided for @moderationTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modération'**
+  String get moderationTitle;
+
+  /// No description provided for @moderationEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rien à traiter'**
+  String get moderationEmptyTitle;
+
+  /// No description provided for @moderationEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun signalement en attente.'**
+  String get moderationEmptyBody;
+
+  /// No description provided for @moderationReports.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 signalement} other{{count} signalements}}'**
+  String moderationReports(int count);
+
+  /// No description provided for @moderationAuthor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Auteur : {name}'**
+  String moderationAuthor(String name);
+
+  /// No description provided for @moderationCurrentlyHidden.
+  ///
+  /// In fr, this message translates to:
+  /// **'Actuellement masqué'**
+  String get moderationCurrentlyHidden;
+
+  /// No description provided for @moderationHide.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquer'**
+  String get moderationHide;
+
+  /// No description provided for @moderationRestore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rétablir'**
+  String get moderationRestore;
+
+  /// No description provided for @moderationDismiss.
+  ///
+  /// In fr, this message translates to:
+  /// **'Classer sans suite'**
+  String get moderationDismiss;
+
+  /// No description provided for @moderationDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Décision enregistrée.'**
+  String get moderationDone;
+
+  /// No description provided for @newConvDirect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Privée'**
+  String get newConvDirect;
+
+  /// No description provided for @newConvGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupe'**
+  String get newConvGroup;
+
+  /// No description provided for @newConvUsername.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pseudonyme du motard'**
+  String get newConvUsername;
+
+  /// No description provided for @newConvOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire'**
+  String get newConvOpen;
+
+  /// No description provided for @newConvGroupTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du groupe'**
+  String get newConvGroupTitle;
+
+  /// No description provided for @newConvAddMember.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter ce motard'**
+  String get newConvAddMember;
+
+  /// No description provided for @newConvCreateGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer le groupe'**
+  String get newConvCreateGroup;
+
+  /// No description provided for @newConvUserNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun motard visible avec ce pseudonyme.'**
+  String get newConvUserNotFound;
+
+  /// No description provided for @postTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publication'**
+  String get postTitle;
+
+  /// No description provided for @postNewTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle publication'**
+  String get postNewTitle;
+
+  /// No description provided for @postNewClubTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier dans le club'**
+  String get postNewClubTitle;
+
+  /// No description provided for @postPublish.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier'**
+  String get postPublish;
+
+  /// No description provided for @postBodyHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partagez une sortie, une photo, un conseil…'**
+  String get postBodyHint;
+
+  /// No description provided for @postEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrivez un texte ou ajoutez une photo.'**
+  String get postEmpty;
+
+  /// No description provided for @postNotSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publication NON envoyée.'**
+  String get postNotSent;
+
+  /// No description provided for @postPublished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publication partagée.'**
+  String get postPublished;
+
+  /// No description provided for @postGuidelines.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restez respectueux. Les contenus signalés par plusieurs motards sont masqués en attendant la modération.'**
+  String get postGuidelines;
+
+  /// No description provided for @postAudiencePublic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous les motards'**
+  String get postAudiencePublic;
+
+  /// No description provided for @postAudienceClub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Membres du club'**
+  String get postAudienceClub;
+
+  /// No description provided for @postAudienceClubShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'membres'**
+  String get postAudienceClubShort;
+
+  /// No description provided for @postHiddenNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquée par la modération : visible seulement par vous et les modérateurs.'**
+  String get postHiddenNotice;
+
+  /// No description provided for @postDeleteTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer cette publication ?'**
+  String get postDeleteTitle;
+
+  /// No description provided for @postDeleteBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'La publication, ses photos et ses commentaires seront supprimés.'**
+  String get postDeleteBody;
+
+  /// No description provided for @postDeleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publication supprimée.'**
+  String get postDeleted;
+
+  /// No description provided for @postNotFoundTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publication introuvable'**
+  String get postNotFoundTitle;
+
+  /// No description provided for @postNotFoundBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Elle a été supprimée, masquée, ou ne vous est pas accessible.'**
+  String get postNotFoundBody;
+
+  /// No description provided for @reactionLike.
+  ///
+  /// In fr, this message translates to:
+  /// **'J\'aime'**
+  String get reactionLike;
+
+  /// No description provided for @reactionFire.
+  ///
+  /// In fr, this message translates to:
+  /// **'En feu'**
+  String get reactionFire;
+
+  /// No description provided for @reactionRespect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Respect'**
+  String get reactionRespect;
+
+  /// No description provided for @reportAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler'**
+  String get reportAction;
+
+  /// No description provided for @reportTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler : {target}'**
+  String reportTitle(String target);
+
+  /// No description provided for @reportDetails.
+  ///
+  /// In fr, this message translates to:
+  /// **'Précisions (facultatif)'**
+  String get reportDetails;
+
+  /// No description provided for @reportSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer le signalement'**
+  String get reportSend;
+
+  /// No description provided for @reportSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signalement envoyé. Merci.'**
+  String get reportSent;
+
+  /// No description provided for @reportTargetPost.
+  ///
+  /// In fr, this message translates to:
+  /// **'publication'**
+  String get reportTargetPost;
+
+  /// No description provided for @reportTargetComment.
+  ///
+  /// In fr, this message translates to:
+  /// **'commentaire'**
+  String get reportTargetComment;
+
+  /// No description provided for @reportTargetMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'message'**
+  String get reportTargetMessage;
+
+  /// No description provided for @reportTargetUser.
+  ///
+  /// In fr, this message translates to:
+  /// **'motard'**
+  String get reportTargetUser;
+
+  /// No description provided for @reportReasonSpam.
+  ///
+  /// In fr, this message translates to:
+  /// **'Spam ou publicité'**
+  String get reportReasonSpam;
+
+  /// No description provided for @reportReasonHarassment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Harcèlement ou insulte'**
+  String get reportReasonHarassment;
+
+  /// No description provided for @reportReasonHate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Haine ou discrimination'**
+  String get reportReasonHate;
+
+  /// No description provided for @reportReasonViolence.
+  ///
+  /// In fr, this message translates to:
+  /// **'Violence ou danger'**
+  String get reportReasonViolence;
+
+  /// No description provided for @reportReasonNudity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nudité ou contenu sexuel'**
+  String get reportReasonNudity;
+
+  /// No description provided for @reportReasonScam.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arnaque'**
+  String get reportReasonScam;
+
+  /// No description provided for @reportReasonOther.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre'**
+  String get reportReasonOther;
+
+  /// No description provided for @rideOpenChat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Discussion de la balade'**
+  String get rideOpenChat;
+
+  /// No description provided for @riderProfileTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motard'**
+  String get riderProfileTitle;
+
+  /// No description provided for @riderSendMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Message'**
+  String get riderSendMessage;
+
+  /// No description provided for @riderPostsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publications'**
+  String get riderPostsTitle;
+
+  /// No description provided for @riderNoPosts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune publication visible.'**
+  String get riderNoPosts;
+
+  /// No description provided for @riderBlockedNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez bloqué ce motard.'**
+  String get riderBlockedNotice;
+
+  /// No description provided for @riderNotVisibleTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil non visible'**
+  String get riderNotVisibleTitle;
+
+  /// No description provided for @riderNotVisibleBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce motard a choisi de limiter la visibilité de son profil.'**
+  String get riderNotVisibleBody;
+
+  /// No description provided for @timeJustNow.
+  ///
+  /// In fr, this message translates to:
+  /// **'à l\'instant'**
+  String get timeJustNow;
+
+  /// No description provided for @timeMinutesAgo.
+  ///
+  /// In fr, this message translates to:
+  /// **'il y a {minutes} min'**
+  String timeMinutesAgo(int minutes);
+
+  /// No description provided for @timeHoursAgo.
+  ///
+  /// In fr, this message translates to:
+  /// **'il y a {hours} h'**
+  String timeHoursAgo(int hours);
 }
 
 class _AppLocalizationsDelegate

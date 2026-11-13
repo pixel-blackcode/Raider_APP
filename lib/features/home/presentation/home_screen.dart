@@ -9,13 +9,15 @@ import '../../../core/widgets/info_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/shortcut_tile.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../community/data/community_providers.dart';
+import '../../community/presentation/post_feed.dart';
 import 'home_clubs_section.dart';
 import 'home_rides_section.dart';
 
 /// Accueil : prochaines balades, clubs et publications communautaires.
 ///
-/// Tant que les modules correspondants ne sont pas livrés, chaque section
-/// affiche un état vide explicite (aucune donnée fictive).
+/// Chaque section affiche un état vide explicite quand il n'y a rien à
+/// montrer (aucune donnée fictive).
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -26,6 +28,13 @@ class HomeScreen extends StatelessWidget {
     final colors = theme.extension<RiderColors>()!;
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        key: const Key('home-new-post'),
+        heroTag: null,
+        onPressed: () => context.push(AppRoutes.newPost()),
+        icon: const Icon(Icons.edit_outlined),
+        label: Text(l10n.postPublish),
+      ),
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
@@ -101,8 +110,8 @@ class HomeScreen extends StatelessWidget {
           ),
           const HomeClubsSection(),
           SectionHeader(title: l10n.homeCommunity),
-          InfoCard(icon: Icons.forum_outlined, message: l10n.homeNoPosts),
-          const SizedBox(height: AppSpacing.lg),
+          const PostFeed(query: homeFeed),
+          const SizedBox(height: 88),
         ],
       ),
     );

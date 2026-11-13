@@ -1492,4 +1492,357 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingsEmergencyNumberInvalid =>
       'Numéro invalide (chiffres uniquement, + autorisé au début).';
+
+  @override
+  String blockAction(String name) {
+    return 'Bloquer $name';
+  }
+
+  @override
+  String get blockShort => 'Bloquer';
+
+  @override
+  String blockTitle(String name) {
+    return 'Bloquer $name ?';
+  }
+
+  @override
+  String get blockBody =>
+      'Vous ne verrez plus ses publications ni ses commentaires, et vous ne pourrez plus vous écrire. Cette personne n\'est pas prévenue. Vous pourrez débloquer à tout moment depuis votre profil.';
+
+  @override
+  String get blockConfirm => 'Bloquer';
+
+  @override
+  String blockDone(String name) {
+    return '$name est bloqué.';
+  }
+
+  @override
+  String get unblockAction => 'Débloquer';
+
+  @override
+  String get blockedUsersTitle => 'Motards bloqués';
+
+  @override
+  String get blockedUsersEmptyTitle => 'Aucun motard bloqué';
+
+  @override
+  String get blockedUsersEmptyBody =>
+      'Depuis une publication ou un profil, le menu permet de bloquer un motard.';
+
+  @override
+  String get chatTitle => 'Conversation';
+
+  @override
+  String get chatHint => 'Votre message';
+
+  @override
+  String get chatSend => 'Envoyer';
+
+  @override
+  String get chatSending => 'Envoi…';
+
+  @override
+  String get chatFailed => 'Non envoyé — touchez pour réessayer';
+
+  @override
+  String get chatDeleted => 'Message supprimé';
+
+  @override
+  String get chatHiddenNotice => 'Message masqué par la modération';
+
+  @override
+  String get chatNoMessages => 'Aucun message pour l\'instant';
+
+  @override
+  String get chatBlockedNotice =>
+      'Vous ne pouvez pas écrire dans cette conversation (motard bloqué).';
+
+  @override
+  String get chatDeleteTitle => 'Supprimer ce message ?';
+
+  @override
+  String get chatDeleteBody =>
+      'Il sera remplacé par « Message supprimé » pour tout le monde.';
+
+  @override
+  String get chatLeave => 'Quitter le groupe';
+
+  @override
+  String get chatLeaveTitle => 'Quitter ce groupe ?';
+
+  @override
+  String get chatLeaveBody => 'Vous ne recevrez plus ses messages.';
+
+  @override
+  String get chatSeeProfile => 'Voir le profil';
+
+  @override
+  String get chatSeeRide => 'Voir la balade';
+
+  @override
+  String get clubPostsTitle => 'Publications du club';
+
+  @override
+  String get clubNewPost => 'Publier dans le club';
+
+  @override
+  String get clubPostsEmpty =>
+      'Aucune publication dans ce club pour l\'instant.';
+
+  @override
+  String get commentsTitle => 'Commentaires';
+
+  @override
+  String get commentsEmpty => 'Aucun commentaire. Soyez le premier !';
+
+  @override
+  String get commentHint => 'Votre commentaire';
+
+  @override
+  String get commentSend => 'Envoyer le commentaire';
+
+  @override
+  String get commentNotSent => 'Commentaire non envoyé.';
+
+  @override
+  String get commentHiddenNotice => 'Commentaire masqué par la modération';
+
+  @override
+  String get errorBlocked =>
+      'Action impossible : l\'un de vous a bloqué l\'autre.';
+
+  @override
+  String get errorContentHidden => 'Ce contenu est masqué par la modération.';
+
+  @override
+  String get errorConversationNotFound =>
+      'Cette conversation n\'existe pas ou ne vous est plus accessible.';
+
+  @override
+  String get feedLoadError =>
+      'Impossible de charger les publications. Vérifiez votre connexion.';
+
+  @override
+  String get messagesNew => 'Nouveau message';
+
+  @override
+  String get moderationTitle => 'Modération';
+
+  @override
+  String get moderationEmptyTitle => 'Rien à traiter';
+
+  @override
+  String get moderationEmptyBody => 'Aucun signalement en attente.';
+
+  @override
+  String moderationReports(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count signalements',
+      one: '1 signalement',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String moderationAuthor(String name) {
+    return 'Auteur : $name';
+  }
+
+  @override
+  String get moderationCurrentlyHidden => 'Actuellement masqué';
+
+  @override
+  String get moderationHide => 'Masquer';
+
+  @override
+  String get moderationRestore => 'Rétablir';
+
+  @override
+  String get moderationDismiss => 'Classer sans suite';
+
+  @override
+  String get moderationDone => 'Décision enregistrée.';
+
+  @override
+  String get newConvDirect => 'Privée';
+
+  @override
+  String get newConvGroup => 'Groupe';
+
+  @override
+  String get newConvUsername => 'Pseudonyme du motard';
+
+  @override
+  String get newConvOpen => 'Écrire';
+
+  @override
+  String get newConvGroupTitle => 'Nom du groupe';
+
+  @override
+  String get newConvAddMember => 'Ajouter ce motard';
+
+  @override
+  String get newConvCreateGroup => 'Créer le groupe';
+
+  @override
+  String get newConvUserNotFound => 'Aucun motard visible avec ce pseudonyme.';
+
+  @override
+  String get postTitle => 'Publication';
+
+  @override
+  String get postNewTitle => 'Nouvelle publication';
+
+  @override
+  String get postNewClubTitle => 'Publier dans le club';
+
+  @override
+  String get postPublish => 'Publier';
+
+  @override
+  String get postBodyHint => 'Partagez une sortie, une photo, un conseil…';
+
+  @override
+  String get postEmpty => 'Écrivez un texte ou ajoutez une photo.';
+
+  @override
+  String get postNotSent => 'Publication NON envoyée.';
+
+  @override
+  String get postPublished => 'Publication partagée.';
+
+  @override
+  String get postGuidelines =>
+      'Restez respectueux. Les contenus signalés par plusieurs motards sont masqués en attendant la modération.';
+
+  @override
+  String get postAudiencePublic => 'Tous les motards';
+
+  @override
+  String get postAudienceClub => 'Membres du club';
+
+  @override
+  String get postAudienceClubShort => 'membres';
+
+  @override
+  String get postHiddenNotice =>
+      'Masquée par la modération : visible seulement par vous et les modérateurs.';
+
+  @override
+  String get postDeleteTitle => 'Supprimer cette publication ?';
+
+  @override
+  String get postDeleteBody =>
+      'La publication, ses photos et ses commentaires seront supprimés.';
+
+  @override
+  String get postDeleted => 'Publication supprimée.';
+
+  @override
+  String get postNotFoundTitle => 'Publication introuvable';
+
+  @override
+  String get postNotFoundBody =>
+      'Elle a été supprimée, masquée, ou ne vous est pas accessible.';
+
+  @override
+  String get reactionLike => 'J\'aime';
+
+  @override
+  String get reactionFire => 'En feu';
+
+  @override
+  String get reactionRespect => 'Respect';
+
+  @override
+  String get reportAction => 'Signaler';
+
+  @override
+  String reportTitle(String target) {
+    return 'Signaler : $target';
+  }
+
+  @override
+  String get reportDetails => 'Précisions (facultatif)';
+
+  @override
+  String get reportSend => 'Envoyer le signalement';
+
+  @override
+  String get reportSent => 'Signalement envoyé. Merci.';
+
+  @override
+  String get reportTargetPost => 'publication';
+
+  @override
+  String get reportTargetComment => 'commentaire';
+
+  @override
+  String get reportTargetMessage => 'message';
+
+  @override
+  String get reportTargetUser => 'motard';
+
+  @override
+  String get reportReasonSpam => 'Spam ou publicité';
+
+  @override
+  String get reportReasonHarassment => 'Harcèlement ou insulte';
+
+  @override
+  String get reportReasonHate => 'Haine ou discrimination';
+
+  @override
+  String get reportReasonViolence => 'Violence ou danger';
+
+  @override
+  String get reportReasonNudity => 'Nudité ou contenu sexuel';
+
+  @override
+  String get reportReasonScam => 'Arnaque';
+
+  @override
+  String get reportReasonOther => 'Autre';
+
+  @override
+  String get rideOpenChat => 'Discussion de la balade';
+
+  @override
+  String get riderProfileTitle => 'Motard';
+
+  @override
+  String get riderSendMessage => 'Message';
+
+  @override
+  String get riderPostsTitle => 'Publications';
+
+  @override
+  String get riderNoPosts => 'Aucune publication visible.';
+
+  @override
+  String get riderBlockedNotice => 'Vous avez bloqué ce motard.';
+
+  @override
+  String get riderNotVisibleTitle => 'Profil non visible';
+
+  @override
+  String get riderNotVisibleBody =>
+      'Ce motard a choisi de limiter la visibilité de son profil.';
+
+  @override
+  String get timeJustNow => 'à l\'instant';
+
+  @override
+  String timeMinutesAgo(int minutes) {
+    return 'il y a $minutes min';
+  }
+
+  @override
+  String timeHoursAgo(int hours) {
+    return 'il y a $hours h';
+  }
 }

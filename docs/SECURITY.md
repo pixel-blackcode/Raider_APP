@@ -120,6 +120,15 @@ Règles complémentaires :
 - **Rétention** : coordonnées effacées 72 h après la fin ou l'annulation de la balade (`private.purge_sos_locations`, pg_cron) ; l'alerte reste dans l'historique.
 - Le numéro d'urgence est stocké uniquement sur l'appareil.
 
+## Communauté et messagerie (Mission 07)
+
+- **Publications** (RLS `can_view_post`) : connectés uniquement ; audience « club » réservée aux membres ; contenus masqués visibles seulement par l'auteur et les modérateurs ; blocage réciproque appliqué partout (fil, commentaires, réactions, messages).
+- **Écritures** uniquement via fonctions serveur idempotentes (`create_post`, `add_comment`, `send_message`…) avec limites : 10 publications/h, 20 commentaires/10 min, 30 messages/min.
+- **Photos** (`post-media`, privé, 5 Mo, images) : dépôt dans son propre dossier ; une photo n'est rattachée que si le fichier existe réellement dans ce dossier ; lecture si la publication est visible.
+- **Signalements** : chacun ne voit que les siens ; 3 signalements distincts masquent le contenu ; file de modération limitée au périmètre du modérateur (administrateurs : tout ; modérateurs de club : leur club).
+- **Messagerie** : conversations privées et de groupe réservées à leurs membres ; discussion de balade réservée aux participants confirmés et organisateurs (accès recalculé à chaque lecture) ; pas de message vers ou depuis un motard bloqué.
+- Suppression de compte : publications, commentaires et réactions supprimés ; photos effacées par l'application avant la suppression ; messages conservés sans auteur.
+
 ## Journal d'audit
 
 `private.audit_logs` enregistre l'auteur, l'action, l'entité et les détails de chaque opération sensible :

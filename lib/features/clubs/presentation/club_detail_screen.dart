@@ -15,6 +15,7 @@ import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../community/presentation/post_feed.dart';
 import '../../profile/data/profile_repository.dart';
 import '../../rides/data/rides_providers.dart';
 import '../../rides/presentation/widgets/ride_card.dart';
@@ -232,6 +233,7 @@ class _ClubDetailBody extends ConsumerWidget {
           Text(club.rules),
         ],
         _ClubRidesSection(detail: detail),
+        _ClubPostsSection(detail: detail),
         if (permissions.canReviewRequests) _AdminSection(detail: detail),
         SectionHeader(title: l10n.clubMembersTitle),
         if (detail.members.isEmpty)
@@ -694,6 +696,41 @@ class _ClubRidesSection extends ConsumerWidget {
             icon: const Icon(Icons.add_road),
             label: Text(l10n.clubOrganizeRide),
           ),
+      ],
+    );
+  }
+}
+
+/// Espace de publication du club : publications des membres et bouton
+/// « Publier dans le club » réservé aux membres.
+class _ClubPostsSection extends ConsumerWidget {
+  const _ClubPostsSection({required this.detail});
+
+  final ClubDetail detail;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final isMember = ClubPermissions(detail.myRole).isMember;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionHeader(title: l10n.clubPostsTitle),
+        if (isMember)
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+            child: OutlinedButton.icon(
+              key: const Key('club-new-post'),
+              onPressed: () =>
+                  context.push(AppRoutes.newPost(clubId: detail.club.id)),
+              icon: const Icon(Icons.edit_outlined),
+              label: Text(l10n.clubNewPost),
+            ),
+          ),
+        PostFeed(
+          query: (clubId: detail.club.id, authorId: null),
+          emptyMessage: l10n.clubPostsEmpty,
+        ),
       ],
     );
   }

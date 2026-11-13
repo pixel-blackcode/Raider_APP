@@ -11,11 +11,18 @@ import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/clubs/presentation/club_detail_screen.dart';
 import '../../features/clubs/presentation/club_form_screen.dart';
 import '../../features/clubs/presentation/clubs_screen.dart';
+import '../../features/community/presentation/blocked_users_screen.dart';
+import '../../features/community/presentation/moderation_screen.dart';
+import '../../features/community/presentation/post_composer_screen.dart';
+import '../../features/community/presentation/post_detail_screen.dart';
+import '../../features/community/presentation/rider_profile_screen.dart';
 import '../../features/convoy/presentation/convoy_screen.dart';
 import '../../features/garage/presentation/garage_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/marketplace/presentation/marketplace_screen.dart';
+import '../../features/messages/presentation/chat_screen.dart';
 import '../../features/messages/presentation/messages_screen.dart';
+import '../../features/messages/presentation/new_conversation_screen.dart';
 import '../../features/profile/presentation/delete_account_screen.dart';
 import '../../features/profile/presentation/edit_profile_screen.dart';
 import '../../features/profile/presentation/privacy_settings_screen.dart';
@@ -170,6 +177,21 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.messages,
                 builder: (context, state) => const MessagesScreen(),
+                routes: [
+                  // « nouveau » doit précéder le paramètre « :conversationId ».
+                  GoRoute(
+                    path: 'nouveau',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => const NewConversationScreen(),
+                  ),
+                  GoRoute(
+                    path: ':conversationId',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => ChatScreen(
+                      conversationId: state.pathParameters['conversationId']!,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -194,6 +216,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                     parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => const DeleteAccountScreen(),
                   ),
+                  GoRoute(
+                    path: 'bloques',
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => const BlockedUsersScreen(),
+                  ),
                 ],
               ),
             ],
@@ -214,6 +241,29 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.settings,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/publier',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            PostComposerScreen(clubId: state.uri.queryParameters['club']),
+      ),
+      GoRoute(
+        path: '/publications/:postId',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            PostDetailScreen(postId: state.pathParameters['postId']!),
+      ),
+      GoRoute(
+        path: '/motards/:userId',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            RiderProfileScreen(userId: state.pathParameters['userId']!),
+      ),
+      GoRoute(
+        path: AppRoutes.moderation,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const ModerationScreen(),
       ),
     ],
   );

@@ -33,6 +33,20 @@ abstract final class AppRoutes {
   static String convoy(String id) => '/balades/$id/convoi';
   static String sos(String id) => '/balades/$id/sos';
 
+  // Communauté.
+  static String newPost({String? clubId}) => Uri(
+    path: '/publier',
+    queryParameters: clubId == null ? null : {'club': clubId},
+  ).toString();
+  static String post(String id) => '/publications/$id';
+  static String rider(String id) => '/motards/$id';
+  static const blockedUsers = '/profil/bloques';
+  static const moderation = '/moderation';
+
+  // Messagerie.
+  static const newConversation = '/messages/nouveau';
+  static String chat(String id) => '/messages/$id';
+
   // Clubs.
   static const newClub = '/clubs/nouveau';
   static String club(String id) => '/clubs/$id';

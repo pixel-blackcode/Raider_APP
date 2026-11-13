@@ -43,6 +43,12 @@
 | D-38 | **SOS : notification dans l'application d'abord** (bandeau rouge, son, vibration via le temps réel). Notifications push (Firebase/APNs) reportées. | Décision du propriétaire (12/11/2026). Limite affichée : un destinataire application fermée n'est pas prévenu. |
 | D-39 | **Destinataires d'un SOS : participants confirmés et organisateurs de la balade en cours.** | Décision du propriétaire (12/11/2026) : simple et respectueux de la vie privée. |
 | D-40 | **Appel d'urgence : 112 par défaut, modifiable** dans les Paramètres, stocké sur l'appareil ; disponibilité non garantie en RDC, affichée comme telle. | Décision du propriétaire (12/11/2026). |
+| D-41 | **Style visuel « Vibrant & Block » adapté** à la marque (orange conservé) pour le fil et la messagerie : blocs à fort contraste, titres Barlow Condensed, photos bord à bord, zones tactiles ≥ 48 dp. | Recommandation de la base UI/UX (« Social Media App » → Vibrant & Block-based) ; palette néon écartée pour garder l'identité et la lisibilité au soleil. |
+| D-42 | **Publications : audience « tous les motards connectés » ou « membres du club »** ; aucune publication visible sans compte. | Respect de la confidentialité des clubs ; pas de diffusion publique sur Internet. |
+| D-43 | **Photos seulement (4 max, 5 Mo)** ; vidéos reportées. | Coût et limites du stockage gratuit. |
+| D-44 | **Blocage réciproque et silencieux** : la personne bloquée n'est pas prévenue. | Pratique standard de sécurité des réseaux sociaux. |
+| D-45 | **3 signalements distincts masquent automatiquement** un contenu en attendant la décision d'un modérateur. | Limite l'exposition aux contenus abusifs sans attendre ; réversible (« Rétablir »). |
+| D-46 | **Discussion de balade : accès dérivé de la participation** (pas de liste de membres séparée). | Un participant retiré perd l'accès immédiatement, comme pour le Convoi et le SOS. |
 | D-31 | Suppression de compte : fichiers de club conservés sans propriétaire ; refus tant qu'on organise une balade active avec des inscrits ; historique des balades terminées conservé. | Documentation Supabase (« You cannot delete a user if they are the owner of any objects in Supabase Storage ») ; évite d'effacer l'historique ou d'abandonner une balade en cours. |
 
 ## Décisions ouvertes (validation du propriétaire requise)

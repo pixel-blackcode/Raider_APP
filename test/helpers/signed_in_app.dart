@@ -8,9 +8,11 @@ import 'package:rider_group/core/media/photo_picker.dart';
 import 'package:rider_group/features/auth/data/auth_providers.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_providers.dart';
+import 'package:rider_group/features/community/data/community_repository.dart';
 import 'package:rider_group/features/convoy/data/convoy_repository.dart';
 import 'package:rider_group/features/convoy/data/location_service.dart';
 import 'package:rider_group/features/convoy/presentation/convoy_map.dart';
+import 'package:rider_group/features/messages/data/messaging_repository.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_providers.dart';
@@ -41,6 +43,8 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeLocationService? location,
   FakeSosRepository? sos,
   FakeExternalActions? actions,
+  FakeCommunityRepository? community,
+  FakeMessagingRepository? messaging,
 }) {
   return pumpRiderGroupApp(
     tester,
@@ -77,6 +81,20 @@ Future<ProviderContainer> pumpOnlineApp(
       ),
       externalActionsProvider.overrideWithValue(
         actions ?? FakeExternalActions(),
+      ),
+      communityRepositoryProvider.overrideWithValue(
+        community ??
+            FakeCommunityRepository(
+              currentUserId: auth.currentSession?.userId ?? '',
+              profiles: testProfiles,
+            ),
+      ),
+      messagingRepositoryProvider.overrideWithValue(
+        messaging ??
+            FakeMessagingRepository(
+              currentUserId: auth.currentSession?.userId ?? '',
+              profiles: testProfiles,
+            ),
       ),
       // La carte native (MapLibre) n'existe pas en test : simple liste.
       convoyMapBuilderProvider.overrideWithValue(

@@ -9,7 +9,8 @@ import '../errors/app_exception.dart';
 /// Buckets Storage (privés) et leurs limites, identiques à la migration SQL.
 enum MediaBucket {
   avatars('avatars', 2 * 1024 * 1024),
-  clubMedia('club-media', 5 * 1024 * 1024);
+  clubMedia('club-media', 5 * 1024 * 1024),
+  postMedia('post-media', 5 * 1024 * 1024);
 
   const MediaBucket(this.id, this.maxBytes);
 

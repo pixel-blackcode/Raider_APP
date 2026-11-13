@@ -95,6 +95,23 @@ Préparer : A organise une balade, B la rejoint, A la **démarre**. Les deux gar
 | 6.9 | B : Paramètres → Numéro d'appel d'urgence → saisir un autre numéro | L'écran SOS propose « Appeler le <nouveau numéro> » ; le composeur s'ouvre (l'appel n'est pas lancé automatiquement) |
 | 6.10 | Compte C non inscrit : ouvrir la balade | Pas de bouton SOS ; aucune alerte visible |
 
+## 7. Communauté et messagerie (un téléphone suffit, deux comptes)
+
+Astuce : avec un seul téléphone, déconnectez-vous et reconnectez-vous avec le compte B entre les étapes.
+
+| # | Action | Résultat attendu |
+| --- | --- | --- |
+| 7.1 | A : Accueil → « Publier » → texte + 2 photos → Publier | « Publication partagée » ; elle apparaît en haut du fil avec ses photos |
+| 7.2 | A : mode avion → nouvelle publication → Publier | « Publication NON envoyée » ; rien dans le fil. Mode avion désactivé → Publier : une seule publication |
+| 7.3 | B : réagir « En feu », puis commenter la publication de A | Compteurs mis à jour ; commentaire visible |
+| 7.4 | B : menu de la publication → Signaler → « Spam » | « Signalement envoyé. Merci. » |
+| 7.5 | Fiche d'un club dont A est membre → « Publier dans le club » (Membres du club) | Visible par les membres ; invisible pour un compte non membre |
+| 7.6 | B : touche le nom de A → profil → « Message » → écrire | Conversation ouverte ; chez A : badge sur l'onglet Messages |
+| 7.7 | B : mode avion → envoyer un message | « Non envoyé — touchez pour réessayer » ; après reconnexion, toucher : envoyé une seule fois |
+| 7.8 | A : Messages → « Nouveau message » → Groupe → ajouter B par pseudonyme → Créer | Groupe créé ; B le voit dans ses messages |
+| 7.9 | Fiche d'une balade où A et B sont inscrits → « Discussion de la balade » | Les deux participants écrivent dans la même discussion |
+| 7.10 | B : profil de A → Bloquer | Les publications de A disparaissent chez B ; plus de message possible. Profil → Motards bloqués → Débloquer |
+
 ## Signaler un problème
 
 Pour chaque anomalie, note :

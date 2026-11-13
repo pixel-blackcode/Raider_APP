@@ -670,5 +670,167 @@
   "settingsSafety": "Sécurité",
   "settingsEmergencyNumber": "Numéro d'appel d'urgence",
   "settingsEmergencyNumberHint": "Proposé sur l'écran SOS. Sa disponibilité dépend du pays et de l'opérateur.",
-  "settingsEmergencyNumberInvalid": "Numéro invalide (chiffres uniquement, + autorisé au début)."
+  "settingsEmergencyNumberInvalid": "Numéro invalide (chiffres uniquement, + autorisé au début).",
+  "blockAction": "Bloquer {name}",
+  "@blockAction": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "blockShort": "Bloquer",
+  "blockTitle": "Bloquer {name} ?",
+  "@blockTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "blockBody": "Vous ne verrez plus ses publications ni ses commentaires, et vous ne pourrez plus vous écrire. Cette personne n'est pas prévenue. Vous pourrez débloquer à tout moment depuis votre profil.",
+  "blockConfirm": "Bloquer",
+  "blockDone": "{name} est bloqué.",
+  "@blockDone": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "unblockAction": "Débloquer",
+  "blockedUsersTitle": "Motards bloqués",
+  "blockedUsersEmptyTitle": "Aucun motard bloqué",
+  "blockedUsersEmptyBody": "Depuis une publication ou un profil, le menu permet de bloquer un motard.",
+  "chatTitle": "Conversation",
+  "chatHint": "Votre message",
+  "chatSend": "Envoyer",
+  "chatSending": "Envoi…",
+  "chatFailed": "Non envoyé — touchez pour réessayer",
+  "chatDeleted": "Message supprimé",
+  "chatHiddenNotice": "Message masqué par la modération",
+  "chatNoMessages": "Aucun message pour l'instant",
+  "chatBlockedNotice": "Vous ne pouvez pas écrire dans cette conversation (motard bloqué).",
+  "chatDeleteTitle": "Supprimer ce message ?",
+  "chatDeleteBody": "Il sera remplacé par « Message supprimé » pour tout le monde.",
+  "chatLeave": "Quitter le groupe",
+  "chatLeaveTitle": "Quitter ce groupe ?",
+  "chatLeaveBody": "Vous ne recevrez plus ses messages.",
+  "chatSeeProfile": "Voir le profil",
+  "chatSeeRide": "Voir la balade",
+  "clubPostsTitle": "Publications du club",
+  "clubNewPost": "Publier dans le club",
+  "clubPostsEmpty": "Aucune publication dans ce club pour l'instant.",
+  "commentsTitle": "Commentaires",
+  "commentsEmpty": "Aucun commentaire. Soyez le premier !",
+  "commentHint": "Votre commentaire",
+  "commentSend": "Envoyer le commentaire",
+  "commentNotSent": "Commentaire non envoyé.",
+  "commentHiddenNotice": "Commentaire masqué par la modération",
+  "errorBlocked": "Action impossible : l'un de vous a bloqué l'autre.",
+  "errorContentHidden": "Ce contenu est masqué par la modération.",
+  "errorConversationNotFound": "Cette conversation n'existe pas ou ne vous est plus accessible.",
+  "feedLoadError": "Impossible de charger les publications. Vérifiez votre connexion.",
+  "messagesNew": "Nouveau message",
+  "moderationTitle": "Modération",
+  "moderationEmptyTitle": "Rien à traiter",
+  "moderationEmptyBody": "Aucun signalement en attente.",
+  "moderationReports": "{count, plural, =1{1 signalement} other{{count} signalements}}",
+  "@moderationReports": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moderationAuthor": "Auteur : {name}",
+  "@moderationAuthor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "moderationCurrentlyHidden": "Actuellement masqué",
+  "moderationHide": "Masquer",
+  "moderationRestore": "Rétablir",
+  "moderationDismiss": "Classer sans suite",
+  "moderationDone": "Décision enregistrée.",
+  "newConvDirect": "Privée",
+  "newConvGroup": "Groupe",
+  "newConvUsername": "Pseudonyme du motard",
+  "newConvOpen": "Écrire",
+  "newConvGroupTitle": "Nom du groupe",
+  "newConvAddMember": "Ajouter ce motard",
+  "newConvCreateGroup": "Créer le groupe",
+  "newConvUserNotFound": "Aucun motard visible avec ce pseudonyme.",
+  "postTitle": "Publication",
+  "postNewTitle": "Nouvelle publication",
+  "postNewClubTitle": "Publier dans le club",
+  "postPublish": "Publier",
+  "postBodyHint": "Partagez une sortie, une photo, un conseil…",
+  "postEmpty": "Écrivez un texte ou ajoutez une photo.",
+  "postNotSent": "Publication NON envoyée.",
+  "postPublished": "Publication partagée.",
+  "postGuidelines": "Restez respectueux. Les contenus signalés par plusieurs motards sont masqués en attendant la modération.",
+  "postAudiencePublic": "Tous les motards",
+  "postAudienceClub": "Membres du club",
+  "postAudienceClubShort": "membres",
+  "postHiddenNotice": "Masquée par la modération : visible seulement par vous et les modérateurs.",
+  "postDeleteTitle": "Supprimer cette publication ?",
+  "postDeleteBody": "La publication, ses photos et ses commentaires seront supprimés.",
+  "postDeleted": "Publication supprimée.",
+  "postNotFoundTitle": "Publication introuvable",
+  "postNotFoundBody": "Elle a été supprimée, masquée, ou ne vous est pas accessible.",
+  "reactionLike": "J'aime",
+  "reactionFire": "En feu",
+  "reactionRespect": "Respect",
+  "reportAction": "Signaler",
+  "reportTitle": "Signaler : {target}",
+  "@reportTitle": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "reportDetails": "Précisions (facultatif)",
+  "reportSend": "Envoyer le signalement",
+  "reportSent": "Signalement envoyé. Merci.",
+  "reportTargetPost": "publication",
+  "reportTargetComment": "commentaire",
+  "reportTargetMessage": "message",
+  "reportTargetUser": "motard",
+  "reportReasonSpam": "Spam ou publicité",
+  "reportReasonHarassment": "Harcèlement ou insulte",
+  "reportReasonHate": "Haine ou discrimination",
+  "reportReasonViolence": "Violence ou danger",
+  "reportReasonNudity": "Nudité ou contenu sexuel",
+  "reportReasonScam": "Arnaque",
+  "reportReasonOther": "Autre",
+  "rideOpenChat": "Discussion de la balade",
+  "riderProfileTitle": "Motard",
+  "riderSendMessage": "Message",
+  "riderPostsTitle": "Publications",
+  "riderNoPosts": "Aucune publication visible.",
+  "riderBlockedNotice": "Vous avez bloqué ce motard.",
+  "riderNotVisibleTitle": "Profil non visible",
+  "riderNotVisibleBody": "Ce motard a choisi de limiter la visibilité de son profil.",
+  "timeJustNow": "à l'instant",
+  "timeMinutesAgo": "il y a {minutes} min",
+  "@timeMinutesAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "timeHoursAgo": "il y a {hours} h",
+  "@timeHoursAgo": {
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  }
 }

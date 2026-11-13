@@ -95,6 +95,9 @@ class AppException implements Exception {
     'too_frequent',
     'alert_closed',
     'own_alert',
+    'blocked',
+    'content_hidden',
+    'conversation_not_found',
   };
 
   static String _authCode(AuthException error) {

@@ -19,6 +19,7 @@ import '../../auth/data/auth_providers.dart';
 import '../../convoy/data/convoy_repository.dart';
 import '../../convoy/domain/convoy.dart';
 import '../../convoy/presentation/convoy_screen.dart';
+import '../../messages/data/messaging_repository.dart';
 import '../../profile/data/profile_repository.dart';
 import '../data/rides_providers.dart';
 import '../data/rides_repository.dart';
@@ -258,6 +259,35 @@ class _RideDetailBody extends ConsumerWidget {
               icon: const Icon(Icons.sos, size: 28),
               label: Text(l10n.sosTitle, style: theme.textTheme.titleLarge),
             ),
+          ),
+        ],
+        if (ride.status != RideStatus.draft &&
+            (detail.myStatus == ParticipantStatus.confirmed ||
+                detail.canManage)) ...[
+          const SizedBox(height: AppSpacing.sm),
+          OutlinedButton.icon(
+            key: const Key('ride-open-chat'),
+            style: OutlinedButton.styleFrom(
+              minimumSize: const Size.fromHeight(48),
+            ),
+            onPressed: () async {
+              try {
+                final id = await ref
+                    .read(messagingRepositoryProvider)!
+                    .openRide(ride.id);
+                if (context.mounted) await context.push(AppRoutes.chat(id));
+              } catch (error) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(content: Text(describeError(context, error))),
+                    );
+                }
+              }
+            },
+            icon: const Icon(Icons.forum_outlined),
+            label: Text(l10n.rideOpenChat),
           ),
         ],
         const SizedBox(height: AppSpacing.sm),
