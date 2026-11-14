@@ -234,4 +234,39 @@ void main() {
     await go(tester, container, AppRoutes.profile);
     expect(find.byKey(const Key('profile-moderation')), findsNothing);
   });
+
+  testWidgets('accueil : défilement stable jusqu’en bas et retour', (
+    tester,
+  ) async {
+    for (var i = 0; i < 12; i++) {
+      community.addPost(authorId: bob.id, body: 'Publication $i');
+    }
+    await start(tester);
+    final scrollable = find.descendant(
+      of: find.byType(CustomScrollView),
+      matching: find.byType(Scrollable),
+    );
+    double offset() =>
+        tester.state<ScrollableState>(scrollable.first).position.pixels;
+
+    // Descente par petits pas : la position ne recule jamais.
+    var last = offset();
+    for (var i = 0; i < 60; i++) {
+      await tester.drag(scrollable.first, const Offset(0, -300));
+      await tester.pumpAndSettle();
+      expect(offset(), greaterThanOrEqualTo(last));
+      last = offset();
+    }
+    expect(find.text('Publication 11'), findsOneWidget);
+
+    // Remontée : la position ne fait jamais de bond vers le bas.
+    for (var i = 0; i < 60; i++) {
+      await tester.drag(scrollable.first, const Offset(0, 300));
+      await tester.pumpAndSettle();
+      expect(offset(), lessThanOrEqualTo(last));
+      last = offset();
+    }
+    expect(offset(), 0);
+    expect(find.text('Prochaines balades'), findsOneWidget);
+  });
 }

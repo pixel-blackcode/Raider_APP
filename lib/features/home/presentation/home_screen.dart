@@ -45,73 +45,95 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        children: [
-          Text(
-            l10n.homeWelcomeTitle,
-            style: theme.textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.w700,
+      // Défilement stable : les sections du haut restent montées (blocs fixes)
+      // et seules les publications sont construites à la demande ; sinon les
+      // sections rechargées hors écran changeaient de hauteur et la page
+      // « sautait » en descendant.
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.md,
+              AppSpacing.md,
+              AppSpacing.md,
+              0,
             ),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            l10n.homeWelcomeBody,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          const BackendStatusCard(hideWhenReady: true),
-          const SizedBox(height: AppSpacing.sm),
-          InfoCard(
-            icon: Icons.health_and_safety_outlined,
-            message: l10n.safetyNotice,
-            color: colors.warning,
-          ),
-          SectionHeader(title: l10n.homeShortcuts),
-          Row(
-            children: [
-              Expanded(
-                child: ShortcutTile(
-                  key: const Key('shortcut-garage'),
-                  icon: Icons.two_wheeler,
-                  title: l10n.garageTitle,
-                  subtitle: l10n.garageSubtitle,
-                  onTap: () => context.push(AppRoutes.garage),
-                ),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    l10n.homeWelcomeTitle,
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.xs),
+                  Text(
+                    l10n.homeWelcomeBody,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  const BackendStatusCard(hideWhenReady: true),
+                  const SizedBox(height: AppSpacing.sm),
+                  InfoCard(
+                    icon: Icons.health_and_safety_outlined,
+                    message: l10n.safetyNotice,
+                    color: colors.warning,
+                  ),
+                  SectionHeader(title: l10n.homeShortcuts),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ShortcutTile(
+                          key: const Key('shortcut-garage'),
+                          icon: Icons.two_wheeler,
+                          title: l10n.garageTitle,
+                          subtitle: l10n.garageSubtitle,
+                          onTap: () => context.push(AppRoutes.garage),
+                        ),
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: ShortcutTile(
+                          key: const Key('shortcut-marketplace'),
+                          icon: Icons.storefront_outlined,
+                          title: l10n.marketplaceTitle,
+                          subtitle: l10n.marketplaceSubtitle,
+                          onTap: () => context.push(AppRoutes.marketplace),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SectionHeader(
+                    title: l10n.homeUpcomingRides,
+                    trailing: TextButton(
+                      onPressed: () => context.go(AppRoutes.rides),
+                      child: Text(l10n.homeSeeAll),
+                    ),
+                  ),
+                  const HomeRidesSection(),
+                  SectionHeader(
+                    title: l10n.homeClubs,
+                    trailing: TextButton(
+                      onPressed: () => context.go(AppRoutes.clubs),
+                      child: Text(l10n.homeSeeAll),
+                    ),
+                  ),
+                  const HomeClubsSection(),
+                  SectionHeader(title: l10n.homeCommunity),
+                ],
               ),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: ShortcutTile(
-                  key: const Key('shortcut-marketplace'),
-                  icon: Icons.storefront_outlined,
-                  title: l10n.marketplaceTitle,
-                  subtitle: l10n.marketplaceSubtitle,
-                  onTap: () => context.push(AppRoutes.marketplace),
-                ),
-              ),
-            ],
-          ),
-          SectionHeader(
-            title: l10n.homeUpcomingRides,
-            trailing: TextButton(
-              onPressed: () => context.go(AppRoutes.rides),
-              child: Text(l10n.homeSeeAll),
             ),
           ),
-          const HomeRidesSection(),
-          SectionHeader(
-            title: l10n.homeClubs,
-            trailing: TextButton(
-              onPressed: () => context.go(AppRoutes.clubs),
-              child: Text(l10n.homeSeeAll),
-            ),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: AppSpacing.md),
+            sliver: PostSliverFeed(query: homeFeed),
           ),
-          const HomeClubsSection(),
-          SectionHeader(title: l10n.homeCommunity),
-          const PostFeed(query: homeFeed),
-          const SizedBox(height: 88),
+          // Espace pour le bouton « Publier ».
+          const SliverToBoxAdapter(child: SizedBox(height: 88)),
         ],
       ),
     );

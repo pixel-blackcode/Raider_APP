@@ -31,8 +31,50 @@ class PostFeed extends ConsumerWidget {
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [for (final p in posts) PostCard(post: p)],
+              children: [
+                for (final p in posts) PostCard(key: ValueKey(p.id), post: p),
+              ],
             ),
+    );
+  }
+}
+
+/// Version « sliver » du fil, pour un CustomScrollView : chaque publication
+/// est construite à la demande (fil long sans à-coups ni surconsommation).
+class PostSliverFeed extends ConsumerWidget {
+  const PostSliverFeed({super.key, required this.query, this.emptyMessage});
+
+  final FeedQuery query;
+  final String? emptyMessage;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final feed = ref.watch(feedProvider(query));
+    // Pendant un rafraîchissement, la liste précédente reste affichée.
+    final posts = feed.value;
+    if (posts == null) {
+      return SliverToBoxAdapter(
+        child: feed.hasError
+            ? InfoCard(icon: Icons.cloud_off, message: l10n.feedLoadError)
+            : const Padding(
+                padding: EdgeInsets.all(24),
+                child: Center(child: CircularProgressIndicator()),
+              ),
+      );
+    }
+    if (posts.isEmpty) {
+      return SliverToBoxAdapter(
+        child: InfoCard(
+          icon: Icons.forum_outlined,
+          message: emptyMessage ?? l10n.homeNoPosts,
+        ),
+      );
+    }
+    return SliverList.builder(
+      itemCount: posts.length,
+      itemBuilder: (context, i) =>
+          PostCard(key: ValueKey(posts[i].id), post: posts[i]),
     );
   }
 }
