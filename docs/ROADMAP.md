@@ -75,7 +75,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R07-9 | Message non envoyé affiché « Non envoyé — touchez pour réessayer », renvoi sans doublon. | widget + SQL |
 | R07-10 | Discussion de balade : participants confirmés et organisateurs ; un participant retiré perd l'accès. | SQL + widget |
 | R07-11 | Profil public d'un motard : identité, publications, message, blocage, signalement. | widget |
-| R07-12 | Essai réel sur téléphone (TEST_GUIDE §7). | 📱 **À faire par le propriétaire** |
+| R07-12 | Essai réel sur téléphone (TEST_GUIDE §7). | ✅ 23/23 réussis (communauté, messagerie, interface), version 1828581 (14/11/2026) |
 
 **Limites connues (assumées) :**
 - Vidéos non prises en charge pour l'instant (stockage gratuit limité) ; photos uniquement.
@@ -96,7 +96,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R06-7 | Clôture : l'auteur annule ou résout, un organisateur peut résoudre ; une alerte close ne se rouvre pas. | SQL + widget |
 | R06-8 | Appel d'urgence (112 par défaut, modifiable dans les Paramètres), accessible même hors balade ; avertissement « pas un service de secours ». | widget |
 | R06-9 | Limitation : 5 alertes / 10 min ; coordonnées effacées 72 h après la fin de la balade, historique conservé. | SQL |
-| R06-10 | Essai réel à deux téléphones (TEST_GUIDE §6). | 📱 **À faire par le propriétaire** |
+| R06-10 | Essai réel à deux téléphones (TEST_GUIDE §6). | ✅ Un téléphone : 8/8 réussis, dont l'alerte en mode avion « non transmise » (14/11/2026). 📱 Réception sur un second téléphone : à faire |
 
 **Limites connues (assumées) :**
 - **Pas encore de notification push** (D-38) : un destinataire dont l'application est fermée ne voit l'alerte qu'en la rouvrant. Le SOS ne remplace pas un appel.
@@ -116,7 +116,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R05-7 | Chef de convoi / serre-file désignés par les gestionnaires, parmi les confirmés. | SQL + widget |
 | R05-8 | Alertes : « peut-être séparé » (> 2 km du chef), « position ancienne » (> 3 min). Pas de fausse alerte si le chef lui-même est sans signal. | Tests unitaires `convoy_domain_test.dart` + widget |
 | R05-9 | Économie batterie/données : envoi toutes les 30 s à l'arrêt, 15 s en ville, 8 s sur route ; filtre 15 m ; le serveur refuse plus d'un envoi par 3 s. | Tests unitaires + SQL (`too_frequent`) |
-| R05-10 | Essai réel à deux téléphones (TEST_GUIDE §5). | 📱 **À faire par le propriétaire** |
+| R05-10 | Essai réel à deux téléphones (TEST_GUIDE §5). | ✅ Un téléphone : 7/7 réussis (14/11/2026). 📱 Suivi entre deux téléphones : à faire quand un second appareil sera disponible |
 
 **Limites connues (assumées) :**
 - Suivi **application ouverte uniquement** : écran éteint ou application en arrière-plan, Android/iOS peuvent suspendre l'envoi. L'écran Convoi l'indique. Le suivi en arrière-plan demanderait un service de premier plan Android et une justification App Store (D-37).
