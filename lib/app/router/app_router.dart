@@ -11,6 +11,8 @@ import '../../features/auth/presentation/sign_up_screen.dart';
 import '../../features/clubs/presentation/club_detail_screen.dart';
 import '../../features/clubs/presentation/club_form_screen.dart';
 import '../../features/clubs/presentation/clubs_screen.dart';
+import '../../features/clubs/presentation/verification_admin_screen.dart';
+import '../../features/clubs/presentation/verification_request_screen.dart';
 import '../../features/community/presentation/blocked_users_screen.dart';
 import '../../features/community/presentation/moderation_screen.dart';
 import '../../features/community/presentation/post_composer_screen.dart';
@@ -169,6 +171,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                           clubId: state.pathParameters['clubId'],
                         ),
                       ),
+                      GoRoute(
+                        path: 'verification',
+                        parentNavigatorKey: _rootNavigatorKey,
+                        builder: (context, state) => VerificationRequestScreen(
+                          clubId: state.pathParameters['clubId']!,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -291,6 +300,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.notifications,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.verificationAdmin,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const VerificationAdminScreen(),
       ),
       GoRoute(
         path: AppRoutes.moderation,

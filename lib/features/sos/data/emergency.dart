@@ -41,6 +41,9 @@ abstract interface class ExternalActions {
 
   /// Ouvre une position dans une carte (OpenStreetMap, navigateur ou app).
   Future<bool> openMap(double lat, double lng);
+
+  /// Ouvre une conversation WhatsApp (outil de l'équipe Rider Group).
+  Future<bool> openWhatsApp(String phone);
 }
 
 class UrlLauncherActions implements ExternalActions {
@@ -54,6 +57,12 @@ class UrlLauncherActions implements ExternalActions {
       'mlat': '$lat',
       'mlon': '$lng',
     }).replace(fragment: 'map=17/$lat/$lng'),
+    mode: LaunchMode.externalApplication,
+  );
+
+  @override
+  Future<bool> openWhatsApp(String phone) => launchUrl(
+    Uri.https('wa.me', '/${phone.replaceAll(RegExp(r'[^0-9]'), '')}'),
     mode: LaunchMode.externalApplication,
   );
 }

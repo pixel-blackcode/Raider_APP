@@ -9,6 +9,7 @@ import 'package:rider_group/core/sound/alert_sound.dart';
 import 'package:rider_group/features/auth/data/auth_repository.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_repository.dart';
+import 'package:rider_group/features/clubs/data/verification_admin_repository.dart';
 import 'package:rider_group/features/clubs/domain/club.dart';
 import 'package:rider_group/features/clubs/domain/club_draft.dart';
 import 'package:rider_group/features/community/data/community_repository.dart';
@@ -443,9 +444,12 @@ class FakeClubsRepository implements ClubsRepository {
     String clubId,
   ) async => verificationRequests[clubId];
 
+  VerificationForm? lastVerificationForm;
+
   @override
-  Future<void> requestVerification(String clubId, {String? message}) async {
+  Future<void> requestVerification(String clubId, VerificationForm form) async {
     calls.add('requestVerification');
+    lastVerificationForm = form;
     verificationRequests[clubId] = const ClubVerificationRequest(
       id: 'ver-1',
       status: VerificationStatus.pending,
@@ -1054,6 +1058,14 @@ class FakeExternalActions implements ExternalActions {
   @override
   Future<bool> openMap(double lat, double lng) async {
     maps.add('$lat,$lng');
+    return true;
+  }
+
+  final whatsapp = <String>[];
+
+  @override
+  Future<bool> openWhatsApp(String phone) async {
+    whatsapp.add(phone);
     return true;
   }
 }
@@ -1712,5 +1724,35 @@ class FakeNotificationsRepository implements NotificationsRepository {
         );
       }
     }
+  }
+}
+
+class FakeVerificationAdminRepository implements VerificationAdminRepository {
+  FakeVerificationAdminRepository({this.isAdmin = false});
+
+  bool isAdmin;
+  final items = <VerificationQueueItem>[];
+  final calls = <String>[];
+
+  @override
+  Future<bool> amIPlatformAdmin() async => isAdmin;
+
+  @override
+  Future<List<VerificationQueueItem>> queue() async => List.of(items);
+
+  @override
+  Future<void> review(
+    String requestId, {
+    required bool approve,
+    String? note,
+    DateTime? validUntil,
+  }) async {
+    calls.add('review:$requestId:$approve:${validUntil != null}');
+    items.removeWhere((i) => i.requestId == requestId);
+  }
+
+  @override
+  Future<void> revoke(String clubId, {String? note}) async {
+    calls.add('revoke:$clubId');
   }
 }

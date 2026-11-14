@@ -362,9 +362,33 @@ void main() {
     );
     await tester.tap(find.byKey(const Key('club-request-verification')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const Key('text-dialog-ok')));
+    // Formulaire : avantages, AUCUN prix ni paiement (règles des stores).
+    expect(find.text('Pourquoi faire vérifier votre club ?'), findsOneWidget);
+    for (final word in ['prix', 'payer', 'paiement', 'tarif', r'$', 'USD']) {
+      expect(find.textContaining(word), findsNothing, reason: word);
+    }
+    // Validation locale.
+    await tester.ensureVisible(find.byKey(const Key('verification-submit')));
+    await tester.tap(find.byKey(const Key('verification-submit')));
+    await tester.pumpAndSettle();
+    expect(clubs.calls, isNot(contains('requestVerification')));
+    await tester.enterText(
+      find.byKey(const Key('verification-official-name')),
+      'Kin Riders ASBL',
+    );
+    await tester.enterText(
+      find.byKey(const Key('verification-contact-name')),
+      'Alice Kabila',
+    );
+    await tester.enterText(
+      find.byKey(const Key('verification-phone')),
+      '+243 81 234 5678',
+    );
+    await tester.ensureVisible(find.byKey(const Key('verification-submit')));
+    await tester.tap(find.byKey(const Key('verification-submit')));
     await tester.pumpAndSettle();
     expect(clubs.calls, contains('requestVerification'));
+    expect(clubs.lastVerificationForm!.contactPhone, '+243812345678');
     expect(find.byKey(const Key('club-verification-pending')), findsOneWidget);
     // Le badge n'apparaît pas tant que l'administration n'a pas validé.
     expect(find.byKey(const Key('club-verified-badge')), findsNothing);

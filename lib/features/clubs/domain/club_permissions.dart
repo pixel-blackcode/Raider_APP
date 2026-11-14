@@ -24,7 +24,9 @@ class ClubPermissions {
 
   bool get canReviewRequests => _rank >= ClubRole.admin.rank;
 
-  bool get canRequestVerification => role == ClubRole.owner;
+  /// Propriétaire ou administrateur du club.
+  bool get canRequestVerification =>
+      role == ClubRole.owner || role == ClubRole.admin;
 
   bool get canDeleteClub => role == ClubRole.owner;
 

@@ -13,6 +13,7 @@ import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../clubs/data/verification_admin_repository.dart';
 import '../../community/data/community_providers.dart';
 import '../data/profile_repository.dart';
 import '../domain/profile.dart';
@@ -239,6 +240,19 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
           title: Text(l10n.blockedUsersTitle),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.push(AppRoutes.blockedUsers),
+        ),
+        Consumer(
+          builder: (context, ref, _) =>
+              (ref.watch(amIPlatformAdminProvider).value ?? false)
+              ? ListTile(
+                  key: const Key('profile-verification-admin'),
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.verified_user_outlined),
+                  title: Text(l10n.verificationAdminTitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(AppRoutes.verificationAdmin),
+                )
+              : const SizedBox.shrink(),
         ),
         Consumer(
           builder: (context, ref, _) =>

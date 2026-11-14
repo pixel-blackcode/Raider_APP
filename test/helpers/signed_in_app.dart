@@ -10,6 +10,7 @@ import 'package:rider_group/core/sound/alert_sound.dart';
 import 'package:rider_group/features/auth/data/auth_providers.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_providers.dart';
+import 'package:rider_group/features/clubs/data/verification_admin_repository.dart';
 import 'package:rider_group/features/community/data/community_repository.dart';
 import 'package:rider_group/features/convoy/data/convoy_repository.dart';
 import 'package:rider_group/features/convoy/data/location_service.dart';
@@ -52,6 +53,7 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeMarketplaceRepository? marketplace,
   FakeNotificationsRepository? notifications,
   FakeAlertSound? sound,
+  FakeVerificationAdminRepository? verificationAdmin,
   List<Override> extraOverrides = const [],
 }) {
   return pumpRiderGroupApp(
@@ -115,6 +117,9 @@ Future<ProviderContainer> pumpOnlineApp(
         notifications ?? FakeNotificationsRepository(),
       ),
       alertSoundProvider.overrideWithValue(sound ?? FakeAlertSound()),
+      verificationAdminRepositoryProvider.overrideWithValue(
+        verificationAdmin ?? FakeVerificationAdminRepository(),
+      ),
       ...extraOverrides,
       // La carte native (MapLibre) n'existe pas en test : simple liste.
       convoyMapBuilderProvider.overrideWithValue(

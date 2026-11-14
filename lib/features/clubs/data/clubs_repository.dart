@@ -57,5 +57,6 @@ abstract interface class ClubsRepository {
   /// Dernière demande de vérification (owner/admin uniquement).
   Future<ClubVerificationRequest?> latestVerificationRequest(String clubId);
 
-  Future<void> requestVerification(String clubId, {String? message});
+  /// Demande de vérification (examinée par l'équipe, sans paiement).
+  Future<void> requestVerification(String clubId, VerificationForm form);
 }

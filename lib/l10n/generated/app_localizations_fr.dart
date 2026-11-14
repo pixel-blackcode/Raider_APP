@@ -515,7 +515,7 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get clubVerificationRequest => 'Demander le badge Vérifié';
+  String get clubVerificationRequest => 'Demander la vérification';
 
   @override
   String get clubVerificationMessage =>
@@ -534,7 +534,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get clubVerificationHelp =>
-      'Le badge est facultatif et accordé après examen par l\'équipe Rider Group. Il ne donne accès à aucune donnée privée.';
+      'Le badge est facultatif et accordé après examen par l\'équipe Rider Group.';
 
   @override
   String get errorNetwork =>
@@ -2202,4 +2202,160 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingsSoundsHint =>
       'Quand l\'application est ouverte. Les alertes SOS sonnent toujours.';
+
+  @override
+  String get verificationTitle => 'Vérification du club';
+
+  @override
+  String get verificationAdvantagesTitle =>
+      'Pourquoi faire vérifier votre club ?';
+
+  @override
+  String get verificationAdvantageBadge =>
+      'Le badge « Vérifié » s\'affiche sur la fiche du club et dans la liste des clubs.';
+
+  @override
+  String get verificationAdvantageTrust =>
+      'Les motards savent que votre club a été contrôlé par l\'équipe Rider Group.';
+
+  @override
+  String get verificationAdvantageName =>
+      'Votre nom est protégé : en cas de litige sur le nom d\'un club, l\'équipe tranche en faveur du club vérifié.';
+
+  @override
+  String get verificationAdvantageRenewal =>
+      'Le badge est valable pour une durée définie et se renouvelle sur demande.';
+
+  @override
+  String get verificationProcess =>
+      'L\'équipe Rider Group examine votre demande et peut vous contacter au numéro indiqué. Vous êtes prévenu dans l\'application dès qu\'une décision est prise.';
+
+  @override
+  String get verificationOfficialName => 'Nom officiel du club';
+
+  @override
+  String get verificationContactName => 'Nom du responsable';
+
+  @override
+  String get verificationPhone => 'Numéro WhatsApp du responsable';
+
+  @override
+  String get verificationPhoneHelp =>
+      'Format international, ex. +243 81 234 5678';
+
+  @override
+  String get verificationPhoneInvalid =>
+      'Numéro invalide (8 à 15 chiffres, + autorisé au début)';
+
+  @override
+  String verificationDocuments(int count) {
+    return 'Documents justificatifs ($count/5)';
+  }
+
+  @override
+  String get verificationDocumentsHelp =>
+      'Facultatif : statuts, récépissé, pièce d\'identité du responsable. Visibles uniquement par votre club et l\'équipe Rider Group.';
+
+  @override
+  String get verificationAddDocument => 'Ajouter un document';
+
+  @override
+  String verificationDocumentN(int n) {
+    return 'Document $n';
+  }
+
+  @override
+  String get verificationSubmit => 'Envoyer la demande';
+
+  @override
+  String get verificationRenew => 'Renouveler la vérification';
+
+  @override
+  String verificationExpiresOn(String date) {
+    return 'Votre vérification expire le $date.';
+  }
+
+  @override
+  String verificationValidUntil(String date) {
+    return 'Vérifié jusqu\'au $date';
+  }
+
+  @override
+  String get verificationRevoke => 'Retirer la vérification';
+
+  @override
+  String get verificationAdminTitle => 'Vérifications (équipe)';
+
+  @override
+  String get verificationAdminEmptyTitle => 'Aucune demande en attente';
+
+  @override
+  String get verificationAdminEmptyBody =>
+      'Les nouvelles demandes de vérification apparaîtront ici.';
+
+  @override
+  String verificationOfficialNameValue(String name) {
+    return 'Nom officiel : $name';
+  }
+
+  @override
+  String verificationContactValue(String name) {
+    return 'Responsable : $name';
+  }
+
+  @override
+  String verificationRequester(String name) {
+    return 'Demande envoyée par $name';
+  }
+
+  @override
+  String verificationContactWhatsApp(String phone) {
+    return 'WhatsApp $phone';
+  }
+
+  @override
+  String get verificationApprove => 'Valider';
+
+  @override
+  String get verificationReject => 'Refuser';
+
+  @override
+  String get verificationNote => 'Note (facultative)';
+
+  @override
+  String get verificationDuration => 'Durée de la vérification';
+
+  @override
+  String verificationMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mois',
+      one: '1 mois',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String notifVerificationApproved(String club) {
+    return 'Votre club $club est maintenant vérifié';
+  }
+
+  @override
+  String notifVerificationRejected(String club) {
+    return 'La demande de vérification de $club n\'a pas été retenue';
+  }
+
+  @override
+  String notifVerificationExpiring(String club) {
+    return 'La vérification de $club expire bientôt. Contactez l\'équipe Rider Group pour la renouveler.';
+  }
+
+  @override
+  String notifVerificationExpired(String club) {
+    return 'La vérification de $club a expiré';
+  }
+
+  @override
+  String get verificationOneYear => '1 an';
 }

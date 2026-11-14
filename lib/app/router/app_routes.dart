@@ -58,4 +58,6 @@ abstract final class AppRoutes {
   static const newClub = '/clubs/nouveau';
   static String club(String id) => '/clubs/$id';
   static String editClub(String id) => '/clubs/$id/modifier';
+  static String clubVerification(String id) => '/clubs/$id/verification';
+  static const verificationAdmin = '/equipe/verifications';
 }

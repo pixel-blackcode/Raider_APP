@@ -1009,7 +1009,7 @@ abstract class AppLocalizations {
   /// No description provided for @clubVerificationRequest.
   ///
   /// In fr, this message translates to:
-  /// **'Demander le badge Vérifié'**
+  /// **'Demander la vérification'**
   String get clubVerificationRequest;
 
   /// No description provided for @clubVerificationMessage.
@@ -1039,7 +1039,7 @@ abstract class AppLocalizations {
   /// No description provided for @clubVerificationHelp.
   ///
   /// In fr, this message translates to:
-  /// **'Le badge est facultatif et accordé après examen par l\'équipe Rider Group. Il ne donne accès à aucune donnée privée.'**
+  /// **'Le badge est facultatif et accordé après examen par l\'équipe Rider Group.'**
   String get clubVerificationHelp;
 
   /// No description provided for @errorNetwork.
@@ -3939,6 +3939,234 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Quand l\'application est ouverte. Les alertes SOS sonnent toujours.'**
   String get settingsSoundsHint;
+
+  /// No description provided for @verificationTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification du club'**
+  String get verificationTitle;
+
+  /// No description provided for @verificationAdvantagesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi faire vérifier votre club ?'**
+  String get verificationAdvantagesTitle;
+
+  /// No description provided for @verificationAdvantageBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le badge « Vérifié » s\'affiche sur la fiche du club et dans la liste des clubs.'**
+  String get verificationAdvantageBadge;
+
+  /// No description provided for @verificationAdvantageTrust.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les motards savent que votre club a été contrôlé par l\'équipe Rider Group.'**
+  String get verificationAdvantageTrust;
+
+  /// No description provided for @verificationAdvantageName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre nom est protégé : en cas de litige sur le nom d\'un club, l\'équipe tranche en faveur du club vérifié.'**
+  String get verificationAdvantageName;
+
+  /// No description provided for @verificationAdvantageRenewal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le badge est valable pour une durée définie et se renouvelle sur demande.'**
+  String get verificationAdvantageRenewal;
+
+  /// No description provided for @verificationProcess.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équipe Rider Group examine votre demande et peut vous contacter au numéro indiqué. Vous êtes prévenu dans l\'application dès qu\'une décision est prise.'**
+  String get verificationProcess;
+
+  /// No description provided for @verificationOfficialName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom officiel du club'**
+  String get verificationOfficialName;
+
+  /// No description provided for @verificationContactName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du responsable'**
+  String get verificationContactName;
+
+  /// No description provided for @verificationPhone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro WhatsApp du responsable'**
+  String get verificationPhone;
+
+  /// No description provided for @verificationPhoneHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Format international, ex. +243 81 234 5678'**
+  String get verificationPhoneHelp;
+
+  /// No description provided for @verificationPhoneInvalid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro invalide (8 à 15 chiffres, + autorisé au début)'**
+  String get verificationPhoneInvalid;
+
+  /// No description provided for @verificationDocuments.
+  ///
+  /// In fr, this message translates to:
+  /// **'Documents justificatifs ({count}/5)'**
+  String verificationDocuments(int count);
+
+  /// No description provided for @verificationDocumentsHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facultatif : statuts, récépissé, pièce d\'identité du responsable. Visibles uniquement par votre club et l\'équipe Rider Group.'**
+  String get verificationDocumentsHelp;
+
+  /// No description provided for @verificationAddDocument.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un document'**
+  String get verificationAddDocument;
+
+  /// No description provided for @verificationDocumentN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Document {n}'**
+  String verificationDocumentN(int n);
+
+  /// No description provided for @verificationSubmit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer la demande'**
+  String get verificationSubmit;
+
+  /// No description provided for @verificationRenew.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renouveler la vérification'**
+  String get verificationRenew;
+
+  /// No description provided for @verificationExpiresOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre vérification expire le {date}.'**
+  String verificationExpiresOn(String date);
+
+  /// No description provided for @verificationValidUntil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifié jusqu\'au {date}'**
+  String verificationValidUntil(String date);
+
+  /// No description provided for @verificationRevoke.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer la vérification'**
+  String get verificationRevoke;
+
+  /// No description provided for @verificationAdminTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifications (équipe)'**
+  String get verificationAdminTitle;
+
+  /// No description provided for @verificationAdminEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune demande en attente'**
+  String get verificationAdminEmptyTitle;
+
+  /// No description provided for @verificationAdminEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les nouvelles demandes de vérification apparaîtront ici.'**
+  String get verificationAdminEmptyBody;
+
+  /// No description provided for @verificationOfficialNameValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom officiel : {name}'**
+  String verificationOfficialNameValue(String name);
+
+  /// No description provided for @verificationContactValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Responsable : {name}'**
+  String verificationContactValue(String name);
+
+  /// No description provided for @verificationRequester.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande envoyée par {name}'**
+  String verificationRequester(String name);
+
+  /// No description provided for @verificationContactWhatsApp.
+  ///
+  /// In fr, this message translates to:
+  /// **'WhatsApp {phone}'**
+  String verificationContactWhatsApp(String phone);
+
+  /// No description provided for @verificationApprove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider'**
+  String get verificationApprove;
+
+  /// No description provided for @verificationReject.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get verificationReject;
+
+  /// No description provided for @verificationNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note (facultative)'**
+  String get verificationNote;
+
+  /// No description provided for @verificationDuration.
+  ///
+  /// In fr, this message translates to:
+  /// **'Durée de la vérification'**
+  String get verificationDuration;
+
+  /// No description provided for @verificationMonths.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 mois} other{{count} mois}}'**
+  String verificationMonths(int count);
+
+  /// No description provided for @notifVerificationApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre club {club} est maintenant vérifié'**
+  String notifVerificationApproved(String club);
+
+  /// No description provided for @notifVerificationRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'La demande de vérification de {club} n\'a pas été retenue'**
+  String notifVerificationRejected(String club);
+
+  /// No description provided for @notifVerificationExpiring.
+  ///
+  /// In fr, this message translates to:
+  /// **'La vérification de {club} expire bientôt. Contactez l\'équipe Rider Group pour la renouveler.'**
+  String notifVerificationExpiring(String club);
+
+  /// No description provided for @notifVerificationExpired.
+  ///
+  /// In fr, this message translates to:
+  /// **'La vérification de {club} a expiré'**
+  String notifVerificationExpired(String club);
+
+  /// No description provided for @verificationOneYear.
+  ///
+  /// In fr, this message translates to:
+  /// **'1 an'**
+  String get verificationOneYear;
 }
 
 class _AppLocalizationsDelegate

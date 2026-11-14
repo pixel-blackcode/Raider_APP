@@ -21,6 +21,7 @@ import '../../rides/data/rides_providers.dart';
 import '../../rides/presentation/widgets/ride_card.dart';
 import '../data/clubs_providers.dart';
 import '../data/clubs_repository.dart';
+import '../data/verification_admin_repository.dart';
 import '../domain/club.dart';
 import '../domain/club_permissions.dart';
 import 'widgets/club_card.dart';
@@ -472,8 +473,10 @@ class _AdminSection extends ConsumerWidget {
                 ),
               ),
             ),
-        if (permissions.canRequestVerification && !club.isVerified)
+        if (permissions.canRequestVerification &&
+            (!club.isVerified || club.canRenewVerification))
           _VerificationTile(detail: detail),
+        _AdminVerificationTile(club: club),
       ],
     );
   }
@@ -509,30 +512,23 @@ class _VerificationTile extends ConsumerWidget {
             ].join('\n'),
           ),
         const SizedBox(height: AppSpacing.sm),
+        if (detail.club.canRenewVerification)
+          InfoCard(
+            icon: Icons.event_repeat,
+            message: l10n.verificationExpiresOn(
+              _day(detail.club.verifiedUntil!),
+            ),
+          ),
         OutlinedButton.icon(
           key: const Key('club-request-verification'),
-          onPressed: () async {
-            final message = await showTextPrompt(
-              context,
-              title: l10n.clubVerificationRequest,
-              label: l10n.clubVerificationMessage,
-              confirmLabel: l10n.clubRequestSend,
-              maxLength: 1000,
-            );
-            if (message == null || !context.mounted) return;
-            await runClubAction(
-              context,
-              ref,
-              (repo) => repo.requestVerification(
-                detail.club.id,
-                message: message.isEmpty ? null : message,
-              ),
-              clubId: detail.club.id,
-              successMessage: l10n.clubVerificationSent,
-            );
-          },
+          onPressed: () =>
+              context.push(AppRoutes.clubVerification(detail.club.id)),
           icon: const Icon(Icons.verified_outlined),
-          label: Text(l10n.clubVerificationRequest),
+          label: Text(
+            detail.club.canRenewVerification
+                ? l10n.verificationRenew
+                : l10n.clubVerificationRequest,
+          ),
         ),
         const SizedBox(height: AppSpacing.xs),
         Text(
@@ -732,6 +728,65 @@ class _ClubPostsSection extends ConsumerWidget {
           emptyMessage: l10n.clubPostsEmpty,
         ),
       ],
+    );
+  }
+}
+
+String _day(DateTime d) {
+  final l = d.toLocal();
+  String two(int v) => v.toString().padLeft(2, '0');
+  return '${two(l.day)}/${two(l.month)}/${l.year}';
+}
+
+/// Équipe Rider Group : date de fin du badge et retrait (litige, erreur).
+class _AdminVerificationTile extends ConsumerWidget {
+  const _AdminVerificationTile({required this.club});
+
+  final Club club;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final isAdmin = ref.watch(amIPlatformAdminProvider).value ?? false;
+    if (!isAdmin || !club.isVerified) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (club.verifiedUntil != null)
+            Text(l10n.verificationValidUntil(_day(club.verifiedUntil!))),
+          OutlinedButton.icon(
+            key: const Key('club-revoke-verification'),
+            onPressed: () async {
+              final note = await showTextPrompt(
+                context,
+                title: l10n.verificationRevoke,
+                label: l10n.verificationNote,
+                confirmLabel: l10n.verificationRevoke,
+                maxLength: 1000,
+              );
+              if (note == null || !context.mounted) return;
+              try {
+                await ref
+                    .read(verificationAdminRepositoryProvider)!
+                    .revoke(club.id, note: note.isEmpty ? null : note);
+                ref.invalidate(clubDetailProvider(club.id));
+              } catch (error) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(content: Text(describeError(context, error))),
+                    );
+                }
+              }
+            },
+            icon: const Icon(Icons.remove_moderator_outlined),
+            label: Text(l10n.verificationRevoke),
+          ),
+        ],
+      ),
     );
   }
 }

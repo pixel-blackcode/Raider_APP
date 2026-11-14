@@ -241,13 +241,14 @@ select tests.throws(
 
 select tests.authenticate_as('bob');
 select tests.throws(
-  format('select public.request_club_verification(%L)', tests.club_id('Lions Lubumbashi')),
-  'not_allowed', 'seul le propriétaire demande la vérification');
+  format('select public.request_club_verification(%L, ''Lions'', ''Dave'', ''+243810000000'')', tests.club_id('Lions Lubumbashi')),
+  'not_allowed', 'un simple membre ne demande pas la vérification');
 
 select tests.authenticate_as('dave');
-select public.request_club_verification(tests.club_id('Lions Lubumbashi'), 'Club fondé en 2015');
+select public.request_club_verification(tests.club_id('Lions Lubumbashi'), 'Lions Lubumbashi ASBL', 'Dave',
+  '+243 81 000 0000', 'Club fondé en 2015');
 select tests.throws(
-  format('select public.request_club_verification(%L)', tests.club_id('Lions Lubumbashi')),
+  format('select public.request_club_verification(%L, ''Lions'', ''Dave'', ''+243810000000'')', tests.club_id('Lions Lubumbashi')),
   'verification_pending', 'une seule demande en attente');
 select tests.throws(
   format('select public.review_club_verification(%L, true)',
@@ -275,7 +276,7 @@ select tests.ok(
 
 select tests.authenticate_as('dave');
 select tests.throws(
-  format('select public.request_club_verification(%L)', tests.club_id('Lions Lubumbashi')),
+  format('select public.request_club_verification(%L, ''Lions'', ''Dave'', ''+243810000000'')', tests.club_id('Lions Lubumbashi')),
   'already_verified', 'pas de nouvelle demande pour un club déjà vérifié');
 
 -- -----------------------------------------------------------------------------

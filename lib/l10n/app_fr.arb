@@ -215,12 +215,12 @@
       }
     }
   },
-  "clubVerificationRequest": "Demander le badge Vérifié",
+  "clubVerificationRequest": "Demander la vérification",
   "clubVerificationMessage": "Présentez votre club (ancienneté, références…)",
   "clubVerificationSent": "Demande de vérification envoyée",
   "clubVerificationPending": "Demande de vérification en cours d'examen par l'équipe Rider Group.",
   "clubVerificationRejected": "La précédente demande de vérification a été refusée.",
-  "clubVerificationHelp": "Le badge est facultatif et accordé après examen par l'équipe Rider Group. Il ne donne accès à aucune donnée privée.",
+  "clubVerificationHelp": "Le badge est facultatif et accordé après examen par l'équipe Rider Group.",
   "errorNetwork": "Connexion impossible. Vérifiez votre accès Internet et réessayez.",
   "errorBackendUnavailable": "Le serveur n'est pas configuré sur cette version de l'application.",
   "errorNotAuthenticated": "Votre session a expiré. Reconnectez-vous.",
@@ -1109,5 +1109,134 @@
   },
   "settingsNotifications": "Notifications",
   "settingsSounds": "Sons des notifications et messages",
-  "settingsSoundsHint": "Quand l'application est ouverte. Les alertes SOS sonnent toujours."
+  "settingsSoundsHint": "Quand l'application est ouverte. Les alertes SOS sonnent toujours.",
+  "verificationTitle": "Vérification du club",
+  "verificationAdvantagesTitle": "Pourquoi faire vérifier votre club ?",
+  "verificationAdvantageBadge": "Le badge « Vérifié » s'affiche sur la fiche du club et dans la liste des clubs.",
+  "verificationAdvantageTrust": "Les motards savent que votre club a été contrôlé par l'équipe Rider Group.",
+  "verificationAdvantageName": "Votre nom est protégé : en cas de litige sur le nom d'un club, l'équipe tranche en faveur du club vérifié.",
+  "verificationAdvantageRenewal": "Le badge est valable pour une durée définie et se renouvelle sur demande.",
+  "verificationProcess": "L'équipe Rider Group examine votre demande et peut vous contacter au numéro indiqué. Vous êtes prévenu dans l'application dès qu'une décision est prise.",
+  "verificationOfficialName": "Nom officiel du club",
+  "verificationContactName": "Nom du responsable",
+  "verificationPhone": "Numéro WhatsApp du responsable",
+  "verificationPhoneHelp": "Format international, ex. +243 81 234 5678",
+  "verificationPhoneInvalid": "Numéro invalide (8 à 15 chiffres, + autorisé au début)",
+  "verificationDocuments": "Documents justificatifs ({count}/5)",
+  "@verificationDocuments": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "verificationDocumentsHelp": "Facultatif : statuts, récépissé, pièce d'identité du responsable. Visibles uniquement par votre club et l'équipe Rider Group.",
+  "verificationAddDocument": "Ajouter un document",
+  "verificationDocumentN": "Document {n}",
+  "@verificationDocumentN": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "verificationSubmit": "Envoyer la demande",
+  "verificationRenew": "Renouveler la vérification",
+  "verificationExpiresOn": "Votre vérification expire le {date}.",
+  "@verificationExpiresOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "verificationValidUntil": "Vérifié jusqu'au {date}",
+  "@verificationValidUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "verificationRevoke": "Retirer la vérification",
+  "verificationAdminTitle": "Vérifications (équipe)",
+  "verificationAdminEmptyTitle": "Aucune demande en attente",
+  "verificationAdminEmptyBody": "Les nouvelles demandes de vérification apparaîtront ici.",
+  "verificationOfficialNameValue": "Nom officiel : {name}",
+  "@verificationOfficialNameValue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "verificationContactValue": "Responsable : {name}",
+  "@verificationContactValue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "verificationRequester": "Demande envoyée par {name}",
+  "@verificationRequester": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "verificationContactWhatsApp": "WhatsApp {phone}",
+  "@verificationContactWhatsApp": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "verificationApprove": "Valider",
+  "verificationReject": "Refuser",
+  "verificationNote": "Note (facultative)",
+  "verificationDuration": "Durée de la vérification",
+  "verificationMonths": "{count, plural, =1{1 mois} other{{count} mois}}",
+  "@verificationMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notifVerificationApproved": "Votre club {club} est maintenant vérifié",
+  "@notifVerificationApproved": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifVerificationRejected": "La demande de vérification de {club} n'a pas été retenue",
+  "@notifVerificationRejected": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifVerificationExpiring": "La vérification de {club} expire bientôt. Contactez l'équipe Rider Group pour la renouveler.",
+  "@notifVerificationExpiring": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifVerificationExpired": "La vérification de {club} a expiré",
+  "@notifVerificationExpired": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "verificationOneYear": "1 an"
 }

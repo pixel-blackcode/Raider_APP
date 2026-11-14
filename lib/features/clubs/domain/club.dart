@@ -68,6 +68,7 @@ class Club {
     this.isListed = true,
     this.memberCount = 0,
     this.verifiedAt,
+    this.verifiedUntil,
     this.suspendedAt,
     this.createdAt,
     this.logoPath,
@@ -87,6 +88,7 @@ class Club {
     ownerId: json['owner_id'] as String,
     memberCount: (json['member_count'] as num?)?.toInt() ?? 0,
     verifiedAt: _date(json['verified_at']),
+    verifiedUntil: _date(json['verified_until']),
     suspendedAt: _date(json['suspended_at']),
     createdAt: _date(json['created_at']),
     logoPath: json['logo_path'] as String?,
@@ -105,6 +107,9 @@ class Club {
   final String ownerId;
   final int memberCount;
   final DateTime? verifiedAt;
+
+  /// Fin de validité du badge (null : sans échéance).
+  final DateTime? verifiedUntil;
   final DateTime? suspendedAt;
   final DateTime? createdAt;
 
@@ -112,7 +117,15 @@ class Club {
   final String? logoPath;
   final String? coverPath;
 
-  bool get isVerified => verifiedAt != null;
+  bool get isVerified =>
+      verifiedAt != null &&
+      (verifiedUntil == null || verifiedUntil!.isAfter(DateTime.now()));
+
+  /// Renouvellement possible dans les 30 derniers jours de validité.
+  bool get canRenewVerification =>
+      isVerified &&
+      verifiedUntil != null &&
+      verifiedUntil!.difference(DateTime.now()).inDays <= 30;
   bool get isSuspended => suspendedAt != null;
   bool get isPrivate => visibility == ClubVisibility.private;
 }
@@ -263,3 +276,72 @@ class ClubVerificationRequest {
 
 DateTime? _date(Object? value) =>
     value is String ? DateTime.tryParse(value) : null;
+
+/// Formulaire de demande de vérification (aucun prix, aucun paiement).
+class VerificationForm {
+  const VerificationForm({
+    required this.officialName,
+    required this.contactName,
+    required this.contactPhone,
+    this.message,
+    this.documentPaths = const [],
+  });
+
+  final String officialName;
+  final String contactName;
+
+  /// Numéro WhatsApp : l'équipe contacte le club hors de l'application.
+  final String contactPhone;
+  final String? message;
+  final List<String> documentPaths;
+}
+
+/// Demande vue par l'équipe Rider Group.
+class VerificationQueueItem {
+  const VerificationQueueItem({
+    required this.requestId,
+    required this.clubId,
+    required this.clubName,
+    required this.clubCity,
+    required this.officialName,
+    required this.contactName,
+    required this.contactPhone,
+    required this.status,
+    required this.createdAt,
+    this.requesterName,
+    this.message,
+    this.documentPaths = const [],
+  });
+
+  factory VerificationQueueItem.fromJson(Map<String, dynamic> j) =>
+      VerificationQueueItem(
+        requestId: j['request_id'] as String,
+        clubId: j['club_id'] as String,
+        clubName: j['club_name'] as String,
+        clubCity: (j['club_city'] as String?) ?? '',
+        requesterName: j['requester_name'] as String?,
+        officialName: (j['official_name'] as String?) ?? '',
+        contactName: (j['contact_name'] as String?) ?? '',
+        contactPhone: (j['contact_phone'] as String?) ?? '',
+        message: j['message'] as String?,
+        documentPaths: [
+          for (final p in (j['document_paths'] as List?) ?? const [])
+            p as String,
+        ],
+        status: VerificationStatus.parse(j['status'] as String),
+        createdAt: DateTime.parse(j['created_at'] as String).toUtc(),
+      );
+
+  final String requestId;
+  final String clubId;
+  final String clubName;
+  final String clubCity;
+  final String? requesterName;
+  final String officialName;
+  final String contactName;
+  final String contactPhone;
+  final String? message;
+  final List<String> documentPaths;
+  final VerificationStatus status;
+  final DateTime createdAt;
+}

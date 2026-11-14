@@ -149,6 +149,18 @@ Astuce : avec un seul téléphone, déconnectez-vous et reconnectez-vous avec le
 | 10.5 | Paramètres → désactiver « Sons des notifications et messages » | Plus de son (les alertes SOS sonnent toujours) |
 | 10.6 | Cloche → « Tout lire » | La pastille disparaît |
 
+## 11. Vérification des clubs (sans paiement)
+
+| # | Action | Résultat attendu |
+| --- | --- | --- |
+| 11.1 | Propriétaire ou administrateur d'un club : fiche du club → « Demander la vérification » | Avantages, formulaire ; **aucun prix ni paiement** |
+| 11.2 | Remplir nom officiel, responsable, numéro WhatsApp (+ documents facultatifs) → Envoyer | « Demande de vérification envoyée » ; fiche : « en cours d'examen » |
+| 11.3 | Compte de l'équipe (ajouté dans `private.platform_admins`) : Profil → « Vérifications (équipe) » | La demande avec les coordonnées et documents ; bouton WhatsApp |
+| 11.4 | Équipe : « Valider » → durée 1 an | Le club voit le badge « Vérifié » et reçoit une notification |
+| 11.5 | Équipe : fiche du club → « Retirer la vérification » | Le badge disparaît |
+
+Pour la revue Apple / Google : fournir un compte de test qui possède déjà un club vérifié.
+
 ## Signaler un problème
 
 Pour chaque anomalie, note :

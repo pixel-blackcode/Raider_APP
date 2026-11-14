@@ -12,7 +12,7 @@ class SupabaseClubsRepository implements ClubsRepository {
 
   static const _clubColumns =
       'id, name, description, rules, city, country_code, visibility, '
-      'is_listed, join_policy, owner_id, member_count, verified_at, '
+      'is_listed, join_policy, owner_id, member_count, verified_at, verified_until, '
       'suspended_at, created_at, logo_path, cover_path';
 
   Future<T> _guard<T>(Future<T> Function() body) async {
@@ -291,10 +291,18 @@ class SupabaseClubsRepository implements ClubsRepository {
       });
 
   @override
-  Future<void> requestVerification(String clubId, {String? message}) => _guard(
-    () => _client.rpc<void>(
-      'request_club_verification',
-      params: {'p_club_id': clubId, 'p_message': message},
-    ),
-  );
+  Future<void> requestVerification(String clubId, VerificationForm form) =>
+      _guard(
+        () => _client.rpc<Object?>(
+          'request_club_verification',
+          params: {
+            'p_club_id': clubId,
+            'p_official_name': form.officialName,
+            'p_contact_name': form.contactName,
+            'p_contact_phone': form.contactPhone,
+            'p_message': form.message,
+            'p_document_paths': form.documentPaths,
+          },
+        ),
+      );
 }

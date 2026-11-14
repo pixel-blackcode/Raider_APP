@@ -95,7 +95,7 @@ void main() {
       const p = ClubPermissions(ClubRole.admin);
       expect(p.canEditDetails, isTrue);
       expect(p.canChangeSettings, isFalse);
-      expect(p.canRequestVerification, isFalse);
+      expect(p.canRequestVerification, isTrue);
       expect(p.canLeave, isTrue);
       expect(p.assignableRoles(member(ClubRole.member)), [ClubRole.moderator]);
       expect(p.assignableRoles(member(ClubRole.admin)), isEmpty);

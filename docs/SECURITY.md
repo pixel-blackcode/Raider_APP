@@ -151,6 +151,14 @@ Règles complémentaires :
 - Les actions proposées dans la cloche (approuver, accepter…) passent par les fonctions existantes, qui revérifient les droits.
 - Rétention : 90 jours (`rider-purge-notifications`, pg_cron).
 
+## Vérification des clubs (D-53)
+
+- **Aucun prix ni paiement** dans l'application ni dans la base (vérifié par test).
+- Demande par le propriétaire ou un administrateur du club ; coordonnées et documents visibles **uniquement** par le club (owner/admin) et l'équipe Rider Group ; documents dans le bucket privé `verification-docs`.
+- Examen, validation (avec date de fin), refus et retrait **réservés à l'équipe** (`private.platform_admins`, table séparée attribuée côté serveur) ; toute tentative d'un autre compte est refusée par le serveur, même si l'écran était affiché.
+- Le club ne peut ni modifier `verified_at` ni `verified_until` (droits par colonne).
+- Tâche quotidienne `rider-club-verifications` : rappels neutres 7 jours avant et la veille, retrait automatique à l'échéance ; toutes les actions sont journalisées (`club.verification.*`).
+
 ## Journal d'audit
 
 `private.audit_logs` enregistre l'auteur, l'action, l'entité et les détails de chaque opération sensible :
