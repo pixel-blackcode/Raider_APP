@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/media/media_repository.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/generated/app_localizations.dart';
 import '../../domain/ride.dart';
@@ -35,128 +37,157 @@ class RideCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Bloc date plein : lisible d'un coup d'œil, même au soleil.
-              Container(
-                width: 68,
-                color: muted ? scheme.onSurfaceVariant : scheme.primary,
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      RideTime.formatShortDate(
-                        ride.startsAt,
-                        ride.timezone,
-                      ).split(' ').first.replaceAll('.', '').toUpperCase(),
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        color: scheme.onPrimary,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w700,
-                      ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (ride.coverPath != null)
+              Consumer(
+                builder: (context, ref, _) {
+                  final cover = ref
+                      .watch(mediaRepositoryProvider)
+                      ?.imageProvider(MediaBucket.rideMedia, ride.coverPath);
+                  if (cover == null) return const SizedBox.shrink();
+                  return SizedBox(
+                    key: Key('ride-card-cover-${ride.id}'),
+                    height: 120,
+                    child: Image(
+                      image: cover,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, _, _) => const SizedBox.shrink(),
                     ),
-                    Text(
-                      '${local.day}',
-                      style: theme.textTheme.displaySmall?.copyWith(
-                        color: scheme.onPrimary,
-                        fontSize: 34,
-                      ),
-                    ),
-                    Text(
-                      RideTime.formatShortDate(
-                        ride.startsAt,
-                        ride.timezone,
-                      ).split(' ').last.replaceAll('.', '').toUpperCase(),
-                      style: theme.textTheme.labelMedium?.copyWith(
-                        color: scheme.onPrimary,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Bloc date plein : lisible d'un coup d'œil, même au soleil.
+                  Container(
+                    width: 68,
+                    color: muted ? scheme.onSurfaceVariant : scheme.primary,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.sm,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          RideTime.formatShortDate(
+                            ride.startsAt,
+                            ride.timezone,
+                          ).split(' ').first.replaceAll('.', '').toUpperCase(),
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: scheme.onPrimary,
+                            letterSpacing: 1.2,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          '${local.day}',
+                          style: theme.textTheme.displaySmall?.copyWith(
+                            color: scheme.onPrimary,
+                            fontSize: 34,
+                          ),
+                        ),
+                        Text(
+                          RideTime.formatShortDate(
+                            ride.startsAt,
+                            ride.timezone,
+                          ).split(' ').last.replaceAll('.', '').toUpperCase(),
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: scheme.onPrimary,
+                            letterSpacing: 1.2,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: Text(
-                              ride.title,
-                              style: theme.textTheme.titleLarge?.copyWith(
-                                color: scheme.onSurface,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  ride.title,
+                                  style: theme.textTheme.titleLarge?.copyWith(
+                                    color: scheme.onSurface,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                              const SizedBox(width: AppSpacing.sm),
+                              RideStatusBadge(ride: ride),
+                            ],
                           ),
-                          const SizedBox(width: AppSpacing.sm),
-                          RideStatusBadge(ride: ride),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Row(
-                        children: [
-                          Icon(Icons.schedule, size: 16, color: scheme.primary),
-                          const SizedBox(width: 4),
+                          const SizedBox(height: AppSpacing.xs),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.schedule,
+                                size: 16,
+                                color: scheme.primary,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${RideTime.formatTime(ride.startsAt, ride.timezone)} · ${ride.city}',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 2),
                           Text(
-                            '${RideTime.formatTime(ride.startsAt, ride.timezone)} · ${ride.city}',
+                            '${ride.startLabel} → ${ride.destinationLabel}',
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w600,
+                              color: scheme.onSurfaceVariant,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          Wrap(
+                            spacing: AppSpacing.md,
+                            runSpacing: AppSpacing.xs,
+                            children: [
+                              _Meta(
+                                icon: Icons.terrain,
+                                text: ride.difficulty.label(l10n),
+                              ),
+                              _Meta(
+                                icon: Icons.people_alt_outlined,
+                                text: capacity,
+                              ),
+                              if (ride.clubName != null)
+                                _Meta(
+                                  icon: Icons.groups,
+                                  text: ride.clubName!,
+                                  accent: true,
+                                ),
+                              if (badge != null)
+                                _Meta(
+                                  icon: Icons.hourglass_top,
+                                  text: badge!,
+                                  accent: true,
+                                ),
+                            ],
                           ),
                         ],
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        '${ride.startLabel} → ${ride.destinationLabel}',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: scheme.onSurfaceVariant,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      Wrap(
-                        spacing: AppSpacing.md,
-                        runSpacing: AppSpacing.xs,
-                        children: [
-                          _Meta(
-                            icon: Icons.terrain,
-                            text: ride.difficulty.label(l10n),
-                          ),
-                          _Meta(
-                            icon: Icons.people_alt_outlined,
-                            text: capacity,
-                          ),
-                          if (ride.clubName != null)
-                            _Meta(
-                              icon: Icons.groups,
-                              text: ride.clubName!,
-                              accent: true,
-                            ),
-                          if (badge != null)
-                            _Meta(
-                              icon: Icons.hourglass_top,
-                              text: badge!,
-                              accent: true,
-                            ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

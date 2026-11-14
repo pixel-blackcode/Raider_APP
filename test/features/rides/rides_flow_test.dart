@@ -47,6 +47,14 @@ Future<void> fillRideForm(WidgetTester tester) async {
 }
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
+  // Les listes longues ne construisent que ce qui est proche de l'écran.
+  if (finder.evaluate().isEmpty) {
+    await tester.scrollUntilVisible(
+      finder,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+  }
   await tester.ensureVisible(finder);
   await tester.pumpAndSettle();
   await tester.tap(finder);
@@ -384,6 +392,11 @@ void main() {
 
     await tapVisible(tester, find.byKey(const Key('club-organize-ride')));
     await fillRideForm(tester);
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('ride-field-open-to-non-members')),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     expect(
       find.byKey(const Key('ride-field-open-to-non-members')),
       findsOneWidget,

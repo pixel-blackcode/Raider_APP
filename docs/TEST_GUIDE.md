@@ -128,6 +128,16 @@ Astuce : avec un seul téléphone, déconnectez-vous et reconnectez-vous avec le
 | 8.10 | Messages → Nouveau message → taper le début d'un nom (ex. « pix ») | Liste de motards proposés |
 | 8.11 | Clubs → Découvrir → taper un nom avec une faute | Le club est trouvé |
 
+## 9. Balades enrichies
+
+| # | Action | Résultat attendu |
+| --- | --- | --- |
+| 9.1 | Balades → Organiser → toucher la zone « Ajouter une photo de couverture » | La photo apparaît en haut du formulaire |
+| 9.2 | « Pointer le départ sur la carte » → déplacer la carte sous l'épingle → « Valider ce point » ; idem pour l'arrivée | « Point pointé ✓ » ; « ≈ X km à vol d'oiseau » |
+| 9.3 | Publier | La carte de la balade montre la photo ; la fiche affiche photo, distance, « Voir le départ » et « Voir l'arrivée » |
+| 9.4 | Démarrer la balade, ouvrir le Convoi, partager sa position et rouler quelques centaines de mètres | Bandeau « Itinéraire du chef de convoi · dernier point à HH:MM » ; trait orange sur la carte |
+| 9.5 | Toucher « Rejoindre » | La carte du téléphone s'ouvre sur le dernier point du chef |
+
 ## Signaler un problème
 
 Pour chaque anomalie, note :

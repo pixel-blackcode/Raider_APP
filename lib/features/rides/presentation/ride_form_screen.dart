@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
 import '../../../core/errors/error_messages.dart';
+import '../../../core/geo/point_picker.dart';
+import '../../../core/media/media_repository.dart';
+import '../../../core/media/photo_picker.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/empty_state.dart';
@@ -121,6 +124,16 @@ class _RideFormState extends ConsumerState<_RideForm> {
     if (_ride == null) BikeType.any,
   };
   late String _zone = _ride?.timezone ?? RideTimeZone.kinshasa.id;
+  late GeoPoint? _startPoint =
+      _ride?.startLat == null || _ride?.startLng == null
+      ? null
+      : GeoPoint(_ride!.startLat!, _ride.startLng!);
+  late GeoPoint? _destinationPoint =
+      _ride?.destinationLat == null || _ride?.destinationLng == null
+      ? null
+      : GeoPoint(_ride!.destinationLat!, _ride.destinationLng!);
+  PickedImage? _cover;
+  bool _removeCover = false;
   late DateTime _date;
   late TimeOfDay _time;
   bool _busy = false;
@@ -182,7 +195,70 @@ class _RideFormState extends ConsumerState<_RideForm> {
     joinPolicy: _joinPolicy,
     difficulty: _difficulty,
     bikeTypes: _bikeTypes,
+    startLat: _startPoint?.lat,
+    startLng: _startPoint?.lng,
+    destinationLat: _destinationPoint?.lat,
+    destinationLng: _destinationPoint?.lng,
   );
+
+  Future<void> _pickPoint({required bool start}) async {
+    final l10n = AppLocalizations.of(context);
+    final picked = await ref.read(pointPickerProvider)(
+      context,
+      initial: start ? _startPoint : (_destinationPoint ?? _startPoint),
+      title: start ? l10n.rideMapPickStart : l10n.rideMapPickDestination,
+    );
+    if (picked == null || !mounted) return;
+    setState(() => start ? _startPoint = picked : _destinationPoint = picked);
+  }
+
+  Future<void> _pickCover() async {
+    try {
+      final image = await ref
+          .read(photoPickerProvider)
+          .pick(maxDimension: 1600);
+      if (image == null) return;
+      image.validateFor(MediaBucket.rideMedia);
+      setState(() {
+        _cover = image;
+        _removeCover = false;
+      });
+    } catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(content: Text(describeError(context, error))),
+          );
+      }
+    }
+  }
+
+  /// Photo de couverture, après l'enregistrement de la balade (son dossier
+  /// porte l'identifiant de la balade).
+  Future<void> _saveCover(String rideId) async {
+    final repository = ref.read(ridesRepositoryProvider)!;
+    final media = ref.read(mediaRepositoryProvider);
+    String? old;
+    if (_cover != null && media != null) {
+      final path = await media.upload(
+        MediaBucket.rideMedia,
+        folder: rideId,
+        baseName: 'cover',
+        image: _cover!,
+      );
+      old = await repository.setCover(rideId, path);
+    } else if (_removeCover) {
+      old = await repository.setCover(rideId, null);
+    } else {
+      return;
+    }
+    if (old != null) {
+      try {
+        await media?.remove(MediaBucket.rideMedia, [old]);
+      } catch (_) {}
+    }
+  }
 
   Future<void> _pickDate() async {
     final now = DateTime.now();
@@ -226,10 +302,19 @@ class _RideFormState extends ConsumerState<_RideForm> {
     try {
       if (_isEditing) {
         await repository.updateRide(_ride!.id, draft);
+        await _saveCover(_ride.id);
         ref.refreshRides(_ride.id);
         if (mounted) context.pop();
       } else {
         final ride = await repository.createRide(draft, publish: publish);
+        try {
+          await _saveCover(ride.id);
+        } catch (error) {
+          // La balade existe : on la montre et on signale la photo manquante.
+          messenger
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(content: Text(l10n.rideCoverNotSaved)));
+        }
         ref.refreshRides();
         if (mounted) context.pushReplacement(AppRoutes.ride(ride.id));
       }
@@ -262,6 +347,18 @@ class _RideFormState extends ConsumerState<_RideForm> {
       child: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
+          _CoverPicker(
+            picked: _cover,
+            remotePath: _removeCover ? null : _ride?.coverPath,
+            onPick: _busy ? null : _pickCover,
+            onRemove: _busy
+                ? null
+                : () => setState(() {
+                    _cover = null;
+                    _removeCover = _ride?.coverPath != null;
+                  }),
+          ),
+          const SizedBox(height: AppSpacing.md),
           TextFormField(
             key: const Key('ride-field-title'),
             controller: _title,
@@ -337,6 +434,13 @@ class _RideFormState extends ConsumerState<_RideForm> {
             validator: (v) =>
                 _lengthValidator(v, 2, 120, l10n.validationRidePlace),
           ),
+          _PointRow(
+            keyName: 'ride-pick-start',
+            point: _startPoint,
+            label: l10n.rideMapPickStart,
+            onPick: () => _pickPoint(start: true),
+            onClear: () => setState(() => _startPoint = null),
+          ),
           TextFormField(
             key: const Key('ride-field-destination'),
             controller: _destination,
@@ -348,6 +452,24 @@ class _RideFormState extends ConsumerState<_RideForm> {
             validator: (v) =>
                 _lengthValidator(v, 2, 120, l10n.validationRidePlace),
           ),
+          _PointRow(
+            keyName: 'ride-pick-destination',
+            point: _destinationPoint,
+            label: l10n.rideMapPickDestination,
+            onPick: () => _pickPoint(start: false),
+            onClear: () => setState(() => _destinationPoint = null),
+          ),
+          if (_draft.distanceMeters != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+              child: Text(
+                l10n.rideDistance(formatDistance(_draft.distanceMeters!)),
+                key: const Key('ride-distance'),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.primary,
+                ),
+              ),
+            ),
           TextFormField(
             controller: _itinerary,
             maxLength: 3000,
@@ -519,6 +641,128 @@ class _RideFormState extends ConsumerState<_RideForm> {
           ],
           const SizedBox(height: AppSpacing.xl),
         ],
+      ),
+    );
+  }
+}
+
+/// Point pointé sur la carte (facultatif) : bouton, état, effacement.
+class _PointRow extends StatelessWidget {
+  const _PointRow({
+    required this.keyName,
+    required this.point,
+    required this.label,
+    required this.onPick,
+    required this.onClear,
+  });
+
+  final String keyName;
+  final GeoPoint? point;
+  final String label;
+  final VoidCallback onPick;
+  final VoidCallback onClear;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: Row(
+        children: [
+          Expanded(
+            child: OutlinedButton.icon(
+              key: Key(keyName),
+              onPressed: onPick,
+              icon: Icon(
+                point == null
+                    ? Icons.add_location_alt_outlined
+                    : Icons.edit_location_alt,
+              ),
+              label: Text(point == null ? label : l10n.rideMapPointSet),
+            ),
+          ),
+          if (point != null)
+            IconButton(
+              key: Key('$keyName-clear'),
+              tooltip: l10n.rideMapClear,
+              onPressed: onClear,
+              icon: const Icon(Icons.close),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Photo de couverture facultative de la balade.
+class _CoverPicker extends ConsumerWidget {
+  const _CoverPicker({
+    required this.picked,
+    required this.remotePath,
+    required this.onPick,
+    required this.onRemove,
+  });
+
+  final PickedImage? picked;
+  final String? remotePath;
+  final VoidCallback? onPick;
+  final VoidCallback? onRemove;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final remote = ref
+        .watch(mediaRepositoryProvider)
+        ?.imageProvider(MediaBucket.rideMedia, remotePath);
+    final ImageProvider? image = picked != null
+        ? MemoryImage(picked!.bytes)
+        : remote;
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Material(
+          color: scheme.surfaceContainerHighest,
+          child: InkWell(
+            key: const Key('ride-cover-pick'),
+            onTap: onPick,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                if (image != null)
+                  Image(
+                    image: image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                  )
+                else
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add_photo_alternate_outlined,
+                        size: 40,
+                        color: scheme.onSurfaceVariant,
+                      ),
+                      Text(l10n.rideCoverAdd),
+                    ],
+                  ),
+                if (image != null)
+                  Positioned(
+                    right: 8,
+                    top: 8,
+                    child: IconButton.filledTonal(
+                      key: const Key('ride-cover-remove'),
+                      tooltip: l10n.actionDelete,
+                      onPressed: onRemove,
+                      icon: const Icon(Icons.close),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

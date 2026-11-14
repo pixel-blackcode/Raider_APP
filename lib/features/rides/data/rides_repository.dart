@@ -33,6 +33,10 @@ abstract interface class RidesRepository {
 
   Future<void> updateRide(String rideId, RideDraft draft);
 
+  /// Enregistre (ou retire avec null) la photo de couverture ; retourne
+  /// l'ancien chemin (à effacer).
+  Future<String?> setCover(String rideId, String? path);
+
   Future<void> setStatus(String rideId, RideAction action, {String? reason});
 
   Future<void> deleteDraft(String rideId);

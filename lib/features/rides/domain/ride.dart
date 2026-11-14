@@ -1,3 +1,5 @@
+import '../../convoy/domain/convoy.dart';
+
 /// Statut d'une balade (miroir de l'énumération SQL `ride_status`).
 enum RideStatus {
   draft('draft'),
@@ -125,6 +127,7 @@ class Ride {
     this.startLng,
     this.destinationLat,
     this.destinationLng,
+    this.coverPath,
     this.itinerary = '',
     this.difficulty = RideDifficulty.moderate,
     this.bikeTypes = const [BikeType.any],
@@ -159,6 +162,7 @@ class Ride {
       destinationLabel: json['destination_label'] as String,
       destinationLat: (json['destination_lat'] as num?)?.toDouble(),
       destinationLng: (json['destination_lng'] as num?)?.toDouble(),
+      coverPath: json['cover_path'] as String?,
       itinerary: (json['itinerary'] as String?) ?? '',
       difficulty: RideDifficulty.parse(
         (json['difficulty'] as String?) ?? 'moderate',
@@ -203,6 +207,23 @@ class Ride {
   final String destinationLabel;
   final double? destinationLat;
   final double? destinationLng;
+
+  /// Photo de couverture (bucket `ride-media`), facultative.
+  final String? coverPath;
+
+  /// Distance approximative à vol d'oiseau (mètres) entre départ et arrivée.
+  double? get distanceMeters =>
+      startLat == null ||
+          startLng == null ||
+          destinationLat == null ||
+          destinationLng == null
+      ? null
+      : ConvoyMath.distanceMeters(
+          startLat!,
+          startLng!,
+          destinationLat!,
+          destinationLng!,
+        );
   final String itinerary;
   final RideDifficulty difficulty;
   final List<BikeType> bikeTypes;

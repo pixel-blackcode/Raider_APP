@@ -525,6 +525,10 @@ class FakeRidesRepository implements RidesRepository {
     DateTime? startsAt,
     String timezone = 'Africa/Kinshasa',
     Map<String, ParticipantStatus> others = const {},
+    double? startLat,
+    double? startLng,
+    double? destinationLat,
+    double? destinationLng,
   }) {
     final id = 'ride-${++_seq}';
     members[id] = {organizerId: ParticipantStatus.confirmed, ...others};
@@ -545,6 +549,10 @@ class FakeRidesRepository implements RidesRepository {
       maxParticipants: maxParticipants,
       clubId: clubId,
       clubName: clubName,
+      startLat: startLat,
+      startLng: startLng,
+      destinationLat: destinationLat,
+      destinationLng: destinationLng,
     );
     _sync(id);
     return rides[id]!;
@@ -573,6 +581,11 @@ class FakeRidesRepository implements RidesRepository {
       clubId: r.clubId,
       clubName: r.clubName,
       participantCount: count,
+      startLat: r.startLat,
+      startLng: r.startLng,
+      destinationLat: r.destinationLat,
+      destinationLng: r.destinationLng,
+      coverPath: covers[id] ?? r.coverPath,
     );
   }
 
@@ -656,7 +669,22 @@ class FakeRidesRepository implements RidesRepository {
       clubId: draft.clubId,
       startsAt: draft.startsAt,
       timezone: draft.timezone,
+      startLat: draft.startLat,
+      startLng: draft.startLng,
+      destinationLat: draft.destinationLat,
+      destinationLng: draft.destinationLng,
     );
+  }
+
+  final covers = <String, String?>{};
+
+  @override
+  Future<String?> setCover(String rideId, String? path) async {
+    calls.add('setCover:$rideId:$path');
+    final old = covers[rideId];
+    covers[rideId] = path;
+    _sync(rideId);
+    return old;
   }
 
   @override
@@ -814,6 +842,11 @@ class FakeConvoyRepository implements ConvoyRepository {
     if (publishError != null) throw publishError!;
     published.add(position);
   }
+
+  final trailPoints = <TrailPoint>[];
+
+  @override
+  Future<List<TrailPoint>> trail(String rideId) async => List.of(trailPoints);
 
   @override
   Future<void> setRole(String rideId, ConvoyRole role, String? userId) async {

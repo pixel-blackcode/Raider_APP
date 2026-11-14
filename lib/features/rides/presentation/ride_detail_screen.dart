@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_routes.dart';
 import '../../../core/errors/app_exception.dart';
 import '../../../core/errors/error_messages.dart';
+import '../../../core/geo/point_picker.dart';
 import '../../../core/media/media_repository.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -12,6 +13,7 @@ import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/dialogs.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/info_card.dart';
+import '../../../core/widgets/photo_viewer.dart';
 import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -21,6 +23,7 @@ import '../../convoy/domain/convoy.dart';
 import '../../convoy/presentation/convoy_screen.dart';
 import '../../messages/data/messaging_repository.dart';
 import '../../profile/data/profile_repository.dart';
+import '../../sos/data/emergency.dart';
 import '../data/rides_providers.dart';
 import '../data/rides_repository.dart';
 import '../domain/ride.dart';
@@ -170,9 +173,32 @@ class _RideDetailBody extends ConsumerWidget {
             ride.maxParticipants!,
           );
 
+    final cover = ref
+        .watch(mediaRepositoryProvider)
+        ?.imageProvider(MediaBucket.rideMedia, ride.coverPath);
+    final distance = ride.distanceMeters;
+
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
+        if (cover != null) ...[
+          GestureDetector(
+            key: const Key('ride-cover'),
+            onTap: () => openPhotoViewer(context, images: [cover]),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Image(
+                  image: cover,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+        ],
         Text(
           ride.title,
           key: const Key('ride-detail-title'),
@@ -210,6 +236,36 @@ class _RideDetailBody extends ConsumerWidget {
           Icons.route,
           '${ride.startLabel} → ${ride.destinationLabel} · ${ride.city}',
         ),
+        if (distance != null)
+          infoRow(
+            Icons.straighten,
+            l10n.rideDistance(formatDistance(distance)),
+            key: const Key('ride-detail-distance'),
+          ),
+        if (ride.startLat != null || ride.destinationLat != null)
+          Wrap(
+            spacing: AppSpacing.sm,
+            children: [
+              if (ride.startLat != null && ride.startLng != null)
+                OutlinedButton.icon(
+                  key: const Key('ride-open-start-map'),
+                  onPressed: () => ref
+                      .read(externalActionsProvider)
+                      .openMap(ride.startLat!, ride.startLng!),
+                  icon: const Icon(Icons.trip_origin, size: 18),
+                  label: Text(l10n.rideSeeStart),
+                ),
+              if (ride.destinationLat != null && ride.destinationLng != null)
+                OutlinedButton.icon(
+                  key: const Key('ride-open-destination-map'),
+                  onPressed: () => ref
+                      .read(externalActionsProvider)
+                      .openMap(ride.destinationLat!, ride.destinationLng!),
+                  icon: const Icon(Icons.flag_outlined, size: 18),
+                  label: Text(l10n.rideSeeDestination),
+                ),
+            ],
+          ),
         if (ride.clubName != null)
           infoRow(Icons.groups_outlined, l10n.rideClubLabel(ride.clubName!)),
         infoRow(

@@ -927,5 +927,32 @@
   "listingDeleteTitle": "Supprimer cette annonce ?",
   "listingDeleteBody": "L'annonce et ses photos seront supprimées.",
   "listingDeleted": "Annonce supprimée.",
-  "reportTargetListing": "annonce"
+  "reportTargetListing": "annonce",
+  "mapMyPosition": "Ma position",
+  "mapConfirmPoint": "Valider ce point",
+  "rideMapPickStart": "Pointer le départ sur la carte (facultatif)",
+  "rideMapPickDestination": "Pointer l'arrivée sur la carte (facultatif)",
+  "rideMapPointSet": "Point pointé sur la carte ✓ (modifier)",
+  "rideMapClear": "Retirer le point",
+  "rideDistance": "≈ {distance} à vol d'oiseau",
+  "@rideDistance": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "rideSeeStart": "Voir le départ",
+  "rideSeeDestination": "Voir l'arrivée",
+  "rideCoverAdd": "Ajouter une photo de couverture (facultatif)",
+  "rideCoverNotSaved": "Balade enregistrée, mais la photo n'a pas pu être envoyée. Réessayez depuis « Modifier ».",
+  "convoyTrailInfo": "Itinéraire du chef de convoi · dernier point à {time}",
+  "@convoyTrailInfo": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "convoyTrailJoin": "Rejoindre"
 }

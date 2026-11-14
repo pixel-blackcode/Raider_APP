@@ -138,6 +138,11 @@ Règles complémentaires :
 - **Localisation approximative** (ville, quartier) : jamais d'adresse exacte.
 - Signalement et modération identiques aux publications ; les annonces masquées restent visibles par leur vendeur avec une mention.
 
+## Balades enrichies (Mission 08 bis)
+
+- **Couverture** (`ride-media`, privé, 5 Mo, images) : dossier `<id de la balade>/`, dépôt et suppression par les gestionnaires de la balade, lecture si la balade est visible ; `set_ride_cover` vérifie le dossier et l'existence du fichier.
+- **Itinéraire** (`ride_trail_points`) : alimenté uniquement par le serveur (déclencheur sur les positions partagées), seulement pour le chef de convoi ou, à défaut, l'organisateur (D-51) ; lecture réservée aux participants confirmés et gestionnaires pendant la balade ; 5 000 points au plus ; purgé 72 h après la fin avec les positions.
+
 ## Journal d'audit
 
 `private.audit_logs` enregistre l'auteur, l'action, l'entité et les détails de chaque opération sensible :

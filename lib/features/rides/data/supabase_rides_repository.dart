@@ -20,7 +20,7 @@ class SupabaseRidesRepository implements RidesRepository {
       'destination_lat, destination_lng, itinerary, difficulty, '
       'recommended_bike_types, max_participants, conditions, visibility, '
       'open_to_non_members, join_policy, status, joins_locked, '
-      'participant_count, cancellation_reason, '
+      'participant_count, cancellation_reason, cover_path, '
       'clubs(name), organizer:profiles!rides_organizer_id_fkey(display_name)';
 
   static const _participantColumns =
@@ -166,6 +166,8 @@ class SupabaseRidesRepository implements RidesRepository {
           'p_timezone': draft.timezone,
           'p_start_lat': draft.startLat,
           'p_start_lng': draft.startLng,
+          'p_destination_lat': draft.destinationLat,
+          'p_destination_lng': draft.destinationLng,
           'p_itinerary': draft.itinerary.trim(),
           'p_difficulty': draft.difficulty.dbValue,
           'p_recommended_bike_types': [
@@ -178,6 +180,14 @@ class SupabaseRidesRepository implements RidesRepository {
       );
       return Ride.fromJson(created);
     },
+  );
+
+  @override
+  Future<String?> setCover(String rideId, String? path) => _guard(
+    () => _client.rpc<String?>(
+      'set_ride_cover',
+      params: {'p_ride_id': rideId, 'p_path': path},
+    ),
   );
 
   @override

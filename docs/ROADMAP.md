@@ -12,7 +12,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | 06 — SOS | Alertes, notifications, accusés de réception, gestion des échecs de transmission. | ✅ Livrée — en attente de validation (notifications dans l'application ; push à venir, D-38) |
 | 07 — Communauté | Publications, photos, commentaires, messagerie, modération. | ✅ Livrée — en attente de validation (style « Vibrant & Block » appliqué au fil et à la messagerie) |
 | 08 — Marketplace | Annonces sans paiement (10 photos), recherche tolérante, filtres, favoris, contact vendeur, signalement. Améliorations : zoom des photos, 10 photos par publication, recherche de motards et de clubs malgré les fautes. | ✅ Livrée — en attente de validation |
-| 08 bis — Balades enrichies | Photo de couverture des balades ; départ et arrivée pointés sur une carte (facultatif) avec distance approximative ; itinéraire du chef de convoi pour les retardataires. | À venir |
+| 08 bis — Balades enrichies | Photo de couverture des balades ; départ et arrivée pointés sur une carte (facultatif) avec distance approximative ; itinéraire du chef de convoi pour les retardataires. | ✅ Livrée — en attente de validation |
 | 08 ter — Notifications | Cloche avec badge (demandes d'adhésion à approuver, messages, réactions, balades modifiées), sons dans l'application ; puis notifications push (Firebase). | À venir |
 | 09 — Certification et regroupements | Certification mensuelle : motard 9 $, club 20 $, regroupement 20 $ ; paiement Mobile Money hors application, référence saisie et rapprochée par l'administration ; badges ; regroupements de clubs ; événements moto (certifiés) ; boutiques (certifiés) ; mise en avant des contenus certifiés ; réactualisation des annonces. | À venir |
 | 10 — Garage | Motos, historique d'entretien, rappels. | À venir |
@@ -62,6 +62,15 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R03-9 | Essai réel sur un projet Supabase + appareil. | **À faire par le propriétaire** (aucun projet Supabase ni appareil disponible dans l'environnement cloud) |
 
 | R03-10 | Logo et couverture : ajout par owner/admin uniquement ; images d'un club masqué invisibles aux non-membres. | SQL `04_media_privacy_account_test.sql` + widget |
+
+## Mission 08 bis — scénarios de recette
+
+| # | Scénario | Preuve |
+| --- | --- | --- |
+| R08b-1 | Photo de couverture facultative à la création ou à la modification ; visible sur la carte de la balade et sur la fiche (zoom). Seuls les gestionnaires la changent. | SQL `11_rides_media_trail_test.sql` + widget `ride_media_trail_test.dart` |
+| R08b-2 | Départ et arrivée pointés sur une carte (facultatif) ; distance « à vol d'oiseau » affichée dans le formulaire et sur la fiche ; boutons « Voir le départ / l'arrivée ». | SQL + widget |
+| R08b-3 | Itinéraire du chef de convoi (à défaut : de l'organisateur) enregistré pendant la balade à partir des positions partagées, un point tous les 25 m au moins ; visible des participants seulement ; « Rejoindre » ouvre le dernier point ; supprimé 72 h après la fin. | SQL + widget |
+| R08b-4 | Essai réel sur téléphone (TEST_GUIDE §9). | 📱 **À faire par le propriétaire** |
 
 ## Mission 08 — scénarios de recette
 

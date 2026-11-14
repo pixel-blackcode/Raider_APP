@@ -15,6 +15,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
 import '../../rides/data/rides_providers.dart';
 import '../../rides/domain/ride.dart';
+import '../../sos/data/emergency.dart';
 import '../data/convoy_repository.dart';
 import '../data/location_service.dart';
 import '../domain/convoy.dart';
@@ -25,6 +26,13 @@ final convoyPositionsProvider = StreamProvider.autoDispose
       final repo = ref.watch(convoyRepositoryProvider);
       if (repo == null) return Stream.value(const []);
       return repo.watchPositions(rideId);
+    });
+
+final convoyTrailProvider = FutureProvider.autoDispose
+    .family<List<TrailPoint>, String>((ref, rideId) async {
+      final repo = ref.watch(convoyRepositoryProvider);
+      if (repo == null) return const [];
+      return repo.trail(rideId);
     });
 
 final convoyRolesProvider = FutureProvider.autoDispose
@@ -63,7 +71,10 @@ class _ConvoyScreenState extends ConsumerState<ConvoyScreen> {
     super.initState();
     // Rafraîchit l'ancienneté des positions affichées.
     _tick = Timer.periodic(const Duration(seconds: 15), (_) {
-      if (mounted) setState(() => _now = DateTime.now().toUtc());
+      if (!mounted) return;
+      setState(() => _now = DateTime.now().toUtc());
+      // Itinéraire du chef : rafraîchi au même rythme.
+      ref.invalidate(convoyTrailProvider(widget.rideId));
     });
     _restoreSharing();
   }
@@ -263,11 +274,14 @@ class _ConvoyScreenState extends ConsumerState<ConvoyScreen> {
       now: _now,
     );
     final mapBuilder = ref.watch(convoyMapBuilderProvider);
+    final trail =
+        ref.watch(convoyTrailProvider(widget.rideId)).value ?? const [];
 
     return Column(
       children: [
         _SafetyBanner(text: l10n.convoySafety),
-        Expanded(flex: 3, child: mapBuilder(members, me)),
+        Expanded(flex: 3, child: mapBuilder(members, me, trail)),
+        if (trail.isNotEmpty) _TrailBar(trail: trail),
         _ShareBar(
           state: _share,
           lastSent: _lastSent,
@@ -456,6 +470,45 @@ class _MemberList extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// Itinéraire du chef de convoi : pour qu'un retardataire suive le chemin.
+class _TrailBar extends ConsumerWidget {
+  const _TrailBar({required this.trail});
+
+  final List<TrailPoint> trail;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final last = trail.last;
+    final t = last.recordedAt.toLocal();
+    final time =
+        '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+    return Material(
+      key: const Key('convoy-trail'),
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.xs,
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.timeline),
+            const SizedBox(width: AppSpacing.sm),
+            Expanded(child: Text(l10n.convoyTrailInfo(time))),
+            TextButton(
+              key: const Key('convoy-trail-open'),
+              onPressed: () =>
+                  ref.read(externalActionsProvider).openMap(last.lat, last.lng),
+              child: Text(l10n.convoyTrailJoin),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

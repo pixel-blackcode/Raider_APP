@@ -2039,4 +2039,49 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reportTargetListing => 'annonce';
+
+  @override
+  String get mapMyPosition => 'Ma position';
+
+  @override
+  String get mapConfirmPoint => 'Valider ce point';
+
+  @override
+  String get rideMapPickStart => 'Pointer le départ sur la carte (facultatif)';
+
+  @override
+  String get rideMapPickDestination =>
+      'Pointer l\'arrivée sur la carte (facultatif)';
+
+  @override
+  String get rideMapPointSet => 'Point pointé sur la carte ✓ (modifier)';
+
+  @override
+  String get rideMapClear => 'Retirer le point';
+
+  @override
+  String rideDistance(String distance) {
+    return '≈ $distance à vol d\'oiseau';
+  }
+
+  @override
+  String get rideSeeStart => 'Voir le départ';
+
+  @override
+  String get rideSeeDestination => 'Voir l\'arrivée';
+
+  @override
+  String get rideCoverAdd => 'Ajouter une photo de couverture (facultatif)';
+
+  @override
+  String get rideCoverNotSaved =>
+      'Balade enregistrée, mais la photo n\'a pas pu être envoyée. Réessayez depuis « Modifier ».';
+
+  @override
+  String convoyTrailInfo(String time) {
+    return 'Itinéraire du chef de convoi · dernier point à $time';
+  }
+
+  @override
+  String get convoyTrailJoin => 'Rejoindre';
 }

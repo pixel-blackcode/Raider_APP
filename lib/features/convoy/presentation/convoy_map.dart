@@ -10,19 +10,29 @@ import '../domain/convoy.dart';
 typedef ConvoyMapBuilder = Widget Function(
   List<ConvoyMember> members,
   String? meId,
+  List<TrailPoint> trail,
 );
 
 final convoyMapBuilderProvider = Provider<ConvoyMapBuilder>(
   (ref) =>
-      (members, meId) => ConvoyMap(members: members, meId: meId),
+      (members, meId, trail) =>
+          ConvoyMap(members: members, meId: meId, trail: trail),
 );
 
 /// Carte MapLibre (OpenStreetMap) avec un point par participant qui partage.
 class ConvoyMap extends StatefulWidget {
-  const ConvoyMap({super.key, required this.members, this.meId});
+  const ConvoyMap({
+    super.key,
+    required this.members,
+    this.meId,
+    this.trail = const [],
+  });
 
   final List<ConvoyMember> members;
   final String? meId;
+
+  /// Itinéraire du chef de convoi, tracé en orange.
+  final List<TrailPoint> trail;
 
   @override
   State<ConvoyMap> createState() => _ConvoyMapState();
@@ -56,6 +66,17 @@ class _ConvoyMapState extends State<ConvoyMap> {
     final c = _controller;
     if (c == null || !_styleReady) return;
     await c.clearCircles();
+    await c.clearLines();
+    if (widget.trail.length >= 2) {
+      await c.addLine(
+        LineOptions(
+          geometry: [for (final p in widget.trail) LatLng(p.lat, p.lng)],
+          lineColor: '#c2410c',
+          lineWidth: 5,
+          lineOpacity: 0.8,
+        ),
+      );
+    }
     final sharing = widget.members.where((m) => m.position != null).toList();
     for (final m in sharing) {
       await c.addCircle(

@@ -3693,6 +3693,84 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'annonce'**
   String get reportTargetListing;
+
+  /// No description provided for @mapMyPosition.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ma position'**
+  String get mapMyPosition;
+
+  /// No description provided for @mapConfirmPoint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider ce point'**
+  String get mapConfirmPoint;
+
+  /// No description provided for @rideMapPickStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pointer le départ sur la carte (facultatif)'**
+  String get rideMapPickStart;
+
+  /// No description provided for @rideMapPickDestination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pointer l\'arrivée sur la carte (facultatif)'**
+  String get rideMapPickDestination;
+
+  /// No description provided for @rideMapPointSet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Point pointé sur la carte ✓ (modifier)'**
+  String get rideMapPointSet;
+
+  /// No description provided for @rideMapClear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer le point'**
+  String get rideMapClear;
+
+  /// No description provided for @rideDistance.
+  ///
+  /// In fr, this message translates to:
+  /// **'≈ {distance} à vol d\'oiseau'**
+  String rideDistance(String distance);
+
+  /// No description provided for @rideSeeStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le départ'**
+  String get rideSeeStart;
+
+  /// No description provided for @rideSeeDestination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir l\'arrivée'**
+  String get rideSeeDestination;
+
+  /// No description provided for @rideCoverAdd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une photo de couverture (facultatif)'**
+  String get rideCoverAdd;
+
+  /// No description provided for @rideCoverNotSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Balade enregistrée, mais la photo n\'a pas pu être envoyée. Réessayez depuis « Modifier ».'**
+  String get rideCoverNotSaved;
+
+  /// No description provided for @convoyTrailInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Itinéraire du chef de convoi · dernier point à {time}'**
+  String convoyTrailInfo(String time);
+
+  /// No description provided for @convoyTrailJoin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejoindre'**
+  String get convoyTrailJoin;
 }
 
 class _AppLocalizationsDelegate

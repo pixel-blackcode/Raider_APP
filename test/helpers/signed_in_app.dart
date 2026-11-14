@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rider_group/core/backend/backend_status.dart';
 import 'package:rider_group/core/config/app_config.dart';
@@ -47,6 +48,7 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeCommunityRepository? community,
   FakeMessagingRepository? messaging,
   FakeMarketplaceRepository? marketplace,
+  List<Override> extraOverrides = const [],
 }) {
   return pumpRiderGroupApp(
     tester,
@@ -105,10 +107,12 @@ Future<ProviderContainer> pumpOnlineApp(
               profiles: testProfiles,
             ),
       ),
+      ...extraOverrides,
       // La carte native (MapLibre) n'existe pas en test : simple liste.
       convoyMapBuilderProvider.overrideWithValue(
-        (members, meId) => Text(
-          'map:${members.where((m) => m.position != null).length}',
+        (members, meId, trail) => Text(
+          'map:${members.where((m) => m.position != null).length}'
+          ' trail:${trail.length}',
           key: const Key('convoy-map-fake'),
         ),
       ),

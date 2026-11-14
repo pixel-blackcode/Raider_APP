@@ -22,6 +22,9 @@ abstract interface class ConvoyRepository {
 
   /// `userId` null : retire le rôle.
   Future<void> setRole(String rideId, ConvoyRole role, String? userId);
+
+  /// Itinéraire parcouru par le chef de convoi (balade en cours).
+  Future<List<TrailPoint>> trail(String rideId);
 }
 
 class SupabaseConvoyRepository implements ConvoyRepository {
@@ -55,6 +58,17 @@ class SupabaseConvoyRepository implements ConvoyRepository {
         if (ConvoyRole.tryParse(r['role'] as String?) != null)
           ConvoyRole.tryParse(r['role'] as String?)!: r['user_id'] as String,
     };
+  });
+
+  @override
+  Future<List<TrailPoint>> trail(String rideId) => _guard(() async {
+    final rows = await _client
+        .from('ride_trail_points')
+        .select('lat, lng, recorded_at')
+        .eq('ride_id', rideId)
+        .order('recorded_at')
+        .limit(5000);
+    return rows.map(TrailPoint.fromJson).toList();
   });
 
   @override

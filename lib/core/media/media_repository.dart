@@ -11,7 +11,8 @@ enum MediaBucket {
   avatars('avatars', 2 * 1024 * 1024),
   clubMedia('club-media', 5 * 1024 * 1024),
   postMedia('post-media', 5 * 1024 * 1024),
-  listingMedia('listing-media', 5 * 1024 * 1024);
+  listingMedia('listing-media', 5 * 1024 * 1024),
+  rideMedia('ride-media', 5 * 1024 * 1024);
 
   const MediaBucket(this.id, this.maxBytes);
 

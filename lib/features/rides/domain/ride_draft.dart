@@ -1,3 +1,4 @@
+import '../../convoy/domain/convoy.dart';
 import 'ride.dart';
 
 /// Données saisies pour créer ou modifier une balade.
@@ -21,6 +22,8 @@ class RideDraft {
     this.conditions = '',
     this.startLat,
     this.startLng,
+    this.destinationLat,
+    this.destinationLng,
   });
 
   factory RideDraft.fromRide(Ride ride) => RideDraft(
@@ -42,6 +45,8 @@ class RideDraft {
     conditions: ride.conditions,
     startLat: ride.startLat,
     startLng: ride.startLng,
+    destinationLat: ride.destinationLat,
+    destinationLng: ride.destinationLng,
   );
 
   final String title;
@@ -64,6 +69,23 @@ class RideDraft {
   final String conditions;
   final double? startLat;
   final double? startLng;
+  final double? destinationLat;
+  final double? destinationLng;
+
+  /// Distance approximative à vol d'oiseau (mètres), si les deux points sont
+  /// pointés sur la carte.
+  double? get distanceMeters =>
+      startLat == null ||
+          startLng == null ||
+          destinationLat == null ||
+          destinationLng == null
+      ? null
+      : ConvoyMath.distanceMeters(
+          startLat!,
+          startLng!,
+          destinationLat!,
+          destinationLng!,
+        );
 
   /// Problèmes de saisie (miroir des contraintes SQL de `rides`).
   List<RideDraftIssue> validate({
@@ -117,6 +139,10 @@ class RideDraft {
     'open_to_non_members':
         visibility == RideVisibility.club && openToNonMembers,
     'join_policy': joinPolicy.dbValue,
+    'start_lat': startLat,
+    'start_lng': startLng,
+    'destination_lat': destinationLat,
+    'destination_lng': destinationLng,
   };
 }
 

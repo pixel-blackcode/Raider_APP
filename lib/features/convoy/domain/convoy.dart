@@ -210,3 +210,22 @@ abstract final class PublishCadence {
     return const Duration(seconds: 8); // sur route
   }
 }
+
+/// Point de l'itinéraire du chef de convoi (pour les retardataires).
+class TrailPoint {
+  const TrailPoint({
+    required this.lat,
+    required this.lng,
+    required this.recordedAt,
+  });
+
+  factory TrailPoint.fromJson(Map<String, dynamic> j) => TrailPoint(
+    lat: (j['lat'] as num).toDouble(),
+    lng: (j['lng'] as num).toDouble(),
+    recordedAt: DateTime.parse(j['recorded_at'] as String).toUtc(),
+  );
+
+  final double lat;
+  final double lng;
+  final DateTime recordedAt;
+}
