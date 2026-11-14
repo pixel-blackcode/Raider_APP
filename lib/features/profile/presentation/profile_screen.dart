@@ -14,6 +14,7 @@ import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
 import '../../clubs/data/verification_admin_repository.dart';
+import '../../clubs/presentation/widgets/verified_badge.dart';
 import '../../community/data/community_providers.dart';
 import '../data/profile_repository.dart';
 import '../domain/profile.dart';
@@ -195,6 +196,13 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
           style: theme.textTheme.headlineSmall,
           textAlign: TextAlign.center,
         ),
+        if (profile.isVerified)
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: AppSpacing.xs),
+              child: VerifiedBadge(key: Key('profile-verified-badge')),
+            ),
+          ),
         Text(
           '@${profile.username}',
           style: theme.textTheme.bodyMedium?.copyWith(
@@ -225,6 +233,32 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
           label: Text(l10n.profileEdit),
         ),
         SectionHeader(title: l10n.profileAccountSection),
+        if (!profile.isVerified || profile.canRenewVerification)
+          ListTile(
+            key: const Key('profile-request-verification'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(
+              Icons.verified_outlined,
+              color: VerifiedBadge.blue,
+            ),
+            title: Text(
+              profile.isVerified
+                  ? l10n.riderVerificationRenew
+                  : l10n.riderVerificationCta,
+            ),
+            subtitle: Consumer(
+              builder: (context, ref, _) {
+                final r = ref.watch(myRiderVerificationRequestProvider).value;
+                return Text(switch (r?.status) {
+                  'pending' => l10n.riderVerificationPending,
+                  'rejected' => l10n.riderVerificationRejected,
+                  _ => l10n.riderVerificationSubtitle,
+                });
+              },
+            ),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(AppRoutes.riderVerification),
+          ),
         ListTile(
           key: const Key('profile-privacy'),
           contentPadding: EdgeInsets.zero,

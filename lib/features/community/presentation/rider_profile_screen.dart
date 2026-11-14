@@ -12,6 +12,7 @@ import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../clubs/presentation/widgets/verified_badge.dart';
 import '../../messages/data/messaging_repository.dart';
 import '../data/community_providers.dart';
 import '../data/community_repository.dart';
@@ -67,10 +68,23 @@ class RiderProfileScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          p.displayName,
-                          key: const Key('rider-name'),
-                          style: theme.textTheme.headlineSmall,
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                p.displayName,
+                                key: const Key('rider-name'),
+                                style: theme.textTheme.headlineSmall,
+                              ),
+                            ),
+                            if (p.isVerified) ...[
+                              const SizedBox(width: AppSpacing.xs),
+                              const VerifiedBadge(
+                                key: Key('rider-verified-badge'),
+                                compact: true,
+                              ),
+                            ],
+                          ],
                         ),
                         Text('@${p.username}'),
                         if (p.city != null && p.city!.isNotEmpty)

@@ -120,6 +120,19 @@ class FakeProfileRepository implements ProfileRepository {
 
   final Map<String, Profile> profiles;
   final settings = <String, PrivacySettings>{};
+  ({String status, String? note})? verificationRequest;
+  final verificationForms = <RiderVerificationForm>[];
+
+  @override
+  Future<({String status, String? note})?> latestVerificationRequest(
+    String userId,
+  ) async => verificationRequest;
+
+  @override
+  Future<void> requestVerification(RiderVerificationForm form) async {
+    verificationForms.add(form);
+    verificationRequest = (status: 'pending', note: null);
+  }
 
   @override
   Future<void> setAvatarPath(String userId, String? path) async {
@@ -188,6 +201,7 @@ class FakeClubsRepository implements ClubsRepository {
     ClubJoinPolicy joinPolicy = ClubJoinPolicy.open,
     bool isListed = true,
     bool verified = false,
+    bool isRegroupement = false,
     Map<String, ClubRole> members = const {},
   }) {
     final id = 'club-${++_seq}';
@@ -203,6 +217,7 @@ class FakeClubsRepository implements ClubsRepository {
       ownerId: ownerId,
       memberCount: roles[id]!.length,
       verifiedAt: verified ? DateTime(2026) : null,
+      isRegroupement: isRegroupement,
     );
     return clubs[id]!;
   }
@@ -221,6 +236,7 @@ class FakeClubsRepository implements ClubsRepository {
       ownerId: c.ownerId,
       memberCount: roles[clubId]!.length,
       verifiedAt: c.verifiedAt,
+      isRegroupement: c.isRegroupement,
     );
   }
 
@@ -296,6 +312,7 @@ class FakeClubsRepository implements ClubsRepository {
       visibility: draft.visibility,
       joinPolicy: draft.joinPolicy,
       isListed: draft.effectiveIsListed,
+      isRegroupement: draft.isRegroupement,
     );
   }
 
@@ -1757,5 +1774,27 @@ class FakeVerificationAdminRepository implements VerificationAdminRepository {
   @override
   Future<void> revoke(String clubId, {String? note}) async {
     calls.add('revoke:$clubId');
+  }
+
+  final riderItems = <RiderVerificationQueueItem>[];
+
+  @override
+  Future<List<RiderVerificationQueueItem>> riderQueue() async =>
+      List.of(riderItems);
+
+  @override
+  Future<void> reviewRider(
+    String requestId, {
+    required bool approve,
+    String? note,
+    DateTime? validUntil,
+  }) async {
+    calls.add('reviewRider:$requestId:$approve:${validUntil != null}');
+    riderItems.removeWhere((i) => i.requestId == requestId);
+  }
+
+  @override
+  Future<void> revokeRider(String userId, {String? note}) async {
+    calls.add('revokeRider:$userId');
   }
 }

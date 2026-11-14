@@ -20,6 +20,17 @@ abstract interface class VerificationAdminRepository {
   });
 
   Future<void> revoke(String clubId, {String? note});
+
+  Future<List<RiderVerificationQueueItem>> riderQueue();
+
+  Future<void> reviewRider(
+    String requestId, {
+    required bool approve,
+    String? note,
+    DateTime? validUntil,
+  });
+
+  Future<void> revokeRider(String userId, {String? note});
 }
 
 class SupabaseVerificationAdminRepository
@@ -75,6 +86,41 @@ class SupabaseVerificationAdminRepository
       params: {'p_club_id': clubId, 'p_note': note},
     ),
   );
+
+  @override
+  Future<List<RiderVerificationQueueItem>> riderQueue() => _guard(() async {
+    final data = await _client.rpc<Object?>('rider_verification_queue');
+    return [
+      for (final r in (data as List?) ?? const [])
+        RiderVerificationQueueItem.fromJson(r as Map<String, dynamic>),
+    ];
+  });
+
+  @override
+  Future<void> reviewRider(
+    String requestId, {
+    required bool approve,
+    String? note,
+    DateTime? validUntil,
+  }) => _guard(
+    () => _client.rpc<void>(
+      'review_rider_verification',
+      params: {
+        'p_request_id': requestId,
+        'p_approve': approve,
+        'p_note': note,
+        'p_valid_until': validUntil?.toUtc().toIso8601String(),
+      },
+    ),
+  );
+
+  @override
+  Future<void> revokeRider(String userId, {String? note}) => _guard(
+    () => _client.rpc<void>(
+      'revoke_rider_verification',
+      params: {'p_user_id': userId, 'p_note': note},
+    ),
+  );
 }
 
 final verificationAdminRepositoryProvider =
@@ -96,4 +142,11 @@ final verificationQueueProvider =
       final repo = ref.watch(verificationAdminRepositoryProvider);
       if (repo == null) return const [];
       return repo.queue();
+    });
+
+final riderVerificationQueueProvider =
+    FutureProvider.autoDispose<List<RiderVerificationQueueItem>>((ref) async {
+      final repo = ref.watch(verificationAdminRepositoryProvider);
+      if (repo == null) return const [];
+      return repo.riderQueue();
     });

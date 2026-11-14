@@ -8,6 +8,8 @@ class Profile {
     this.countryCode = 'CD',
     this.bio,
     this.avatarPath,
+    this.verifiedAt,
+    this.verifiedUntil,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
@@ -18,6 +20,8 @@ class Profile {
     countryCode: (json['country_code'] as String?) ?? 'CD',
     bio: json['bio'] as String?,
     avatarPath: json['avatar_path'] as String?,
+    verifiedAt: _date(json['verified_at']),
+    verifiedUntil: _date(json['verified_until']),
   );
 
   final String id;
@@ -29,6 +33,20 @@ class Profile {
 
   /// Chemin dans le bucket privé `avatars` (`<id>/<fichier>`).
   final String? avatarPath;
+
+  /// Vérification du motard par l'équipe (D-55), sans paiement.
+  final DateTime? verifiedAt;
+  final DateTime? verifiedUntil;
+
+  bool get isVerified =>
+      verifiedAt != null &&
+      (verifiedUntil == null || verifiedUntil!.isAfter(DateTime.now()));
+
+  /// Renouvellement possible dans les 30 derniers jours de validité.
+  bool get canRenewVerification =>
+      isVerified &&
+      verifiedUntil != null &&
+      verifiedUntil!.difference(DateTime.now()).inDays <= 30;
 
   Profile copyWith({
     String? username,
@@ -45,6 +63,8 @@ class Profile {
     countryCode: countryCode,
     bio: bio ?? this.bio,
     avatarPath: clearAvatar ? null : avatarPath ?? this.avatarPath,
+    verifiedAt: verifiedAt,
+    verifiedUntil: verifiedUntil,
   );
 }
 
@@ -110,3 +130,6 @@ class PrivacySettings {
     allowRideInvitations: allowRideInvitations ?? this.allowRideInvitations,
   );
 }
+
+DateTime? _date(Object? value) =>
+    value is String ? DateTime.tryParse(value) : null;

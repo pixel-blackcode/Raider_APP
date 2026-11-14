@@ -73,6 +73,7 @@ class Club {
     this.createdAt,
     this.logoPath,
     this.coverPath,
+    this.isRegroupement = false,
   });
 
   factory Club.fromJson(Map<String, dynamic> json) => Club(
@@ -93,6 +94,7 @@ class Club {
     createdAt: _date(json['created_at']),
     logoPath: json['logo_path'] as String?,
     coverPath: json['cover_path'] as String?,
+    isRegroupement: json['kind'] == 'regroupement',
   );
 
   final String id;
@@ -116,6 +118,9 @@ class Club {
   /// Chemins dans le bucket privé `club-media` (`<id>/<fichier>`).
   final String? logoPath;
   final String? coverPath;
+
+  /// Regroupement de motards (D-54) plutôt que club ; fixé à la création.
+  final bool isRegroupement;
 
   bool get isVerified =>
       verifiedAt != null &&
@@ -343,5 +348,61 @@ class VerificationQueueItem {
   final String? message;
   final List<String> documentPaths;
   final VerificationStatus status;
+  final DateTime createdAt;
+}
+
+/// Demande de vérification d'un motard (nom réel, WhatsApp, pièce facultative).
+class RiderVerificationForm {
+  const RiderVerificationForm({
+    required this.realName,
+    required this.contactPhone,
+    this.message,
+    this.documentPaths = const [],
+  });
+
+  final String realName;
+  final String contactPhone;
+  final String? message;
+  final List<String> documentPaths;
+}
+
+/// Demande d'un motard vue par l'équipe Rider Group.
+class RiderVerificationQueueItem {
+  const RiderVerificationQueueItem({
+    required this.requestId,
+    required this.userId,
+    required this.username,
+    required this.displayName,
+    required this.realName,
+    required this.contactPhone,
+    required this.createdAt,
+    this.message,
+    this.documentPaths = const [],
+  });
+
+  factory RiderVerificationQueueItem.fromJson(Map<String, dynamic> j) =>
+      RiderVerificationQueueItem(
+        requestId: j['request_id'] as String,
+        userId: j['user_id'] as String,
+        username: (j['username'] as String?) ?? '',
+        displayName: (j['display_name'] as String?) ?? '',
+        realName: (j['real_name'] as String?) ?? '',
+        contactPhone: (j['contact_phone'] as String?) ?? '',
+        message: j['message'] as String?,
+        documentPaths: [
+          for (final p in (j['document_paths'] as List?) ?? const [])
+            p as String,
+        ],
+        createdAt: DateTime.parse(j['created_at'] as String).toUtc(),
+      );
+
+  final String requestId;
+  final String userId;
+  final String username;
+  final String displayName;
+  final String realName;
+  final String contactPhone;
+  final String? message;
+  final List<String> documentPaths;
   final DateTime createdAt;
 }

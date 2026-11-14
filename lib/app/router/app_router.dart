@@ -302,6 +302,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const NotificationsScreen(),
       ),
       GoRoute(
+        path: AppRoutes.riderVerification,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const VerificationRequestScreen(),
+      ),
+      GoRoute(
         path: AppRoutes.verificationAdmin,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const VerificationAdminScreen(),

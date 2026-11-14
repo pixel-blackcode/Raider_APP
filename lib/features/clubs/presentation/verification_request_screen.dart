@@ -7,21 +7,27 @@ import '../../../core/media/media_repository.dart';
 import '../../../core/media/photo_picker.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../auth/data/auth_providers.dart';
 import '../../community/presentation/community_ui.dart';
+import '../../profile/data/profile_repository.dart';
 import '../data/clubs_providers.dart';
 import '../domain/club.dart';
 
-/// Demande de vérification d'un club : avantages et formulaire.
+/// Demande de vérification d'un club, d'un regroupement ou (sans [clubId])
+/// du motard connecté : avantages et formulaire.
 ///
 /// Règles des magasins d'applications : AUCUN prix, montant ni paiement.
 /// L'équipe Rider Group examine la demande et contacte le club en dehors de
 /// l'application.
 class VerificationRequestScreen extends ConsumerStatefulWidget {
-  const VerificationRequestScreen({super.key, required this.clubId});
+  const VerificationRequestScreen({super.key, this.clubId});
 
-  final String clubId;
+  /// `null` : vérification du motard (nom réel, WhatsApp, pièce facultative).
+  final String? clubId;
 
-  static const maxDocuments = 5;
+  bool get isRider => clubId == null;
+
+  int get maxDocuments => isRider ? 3 : 5;
 
   @override
   ConsumerState<VerificationRequestScreen> createState() =>
@@ -66,21 +72,44 @@ class _VerificationRequestScreenState
     setState(() => _busy = true);
     try {
       final media = ref.read(mediaRepositoryProvider);
+      final folder =
+          widget.clubId ?? 'riders/${ref.read(currentUserIdProvider)}';
       final paths = <String>[];
       for (final d in _docs) {
         paths.add(
           _uploaded[d] ??= await media!.upload(
             MediaBucket.verificationDocs,
-            folder: widget.clubId,
+            folder: folder,
             baseName: 'document',
             image: d,
           ),
         );
       }
+      final phone = _phone.text.replaceAll(RegExp(r'[\s.\-()]'), '');
+      final message = _message.text.trim().isEmpty
+          ? null
+          : _message.text.trim();
+      if (widget.isRider) {
+        await ref
+            .read(profileRepositoryProvider)!
+            .requestVerification(
+              RiderVerificationForm(
+                realName: _contact.text.trim(),
+                contactPhone: phone,
+                message: message,
+                documentPaths: paths,
+              ),
+            );
+        ref.invalidate(myRiderVerificationRequestProvider);
+        if (!mounted) return;
+        showSnack(context, l10n.clubVerificationSent);
+        context.pop();
+        return;
+      }
       await ref
           .read(clubsRepositoryProvider)!
           .requestVerification(
-            widget.clubId,
+            widget.clubId!,
             VerificationForm(
               officialName: _official.text.trim(),
               contactName: _contact.text.trim(),
@@ -91,7 +120,7 @@ class _VerificationRequestScreenState
               documentPaths: paths,
             ),
           );
-      ref.invalidate(clubDetailProvider(widget.clubId));
+      ref.invalidate(clubDetailProvider(widget.clubId!));
       if (!mounted) return;
       showSnack(context, l10n.clubVerificationSent);
       context.pop();
@@ -133,31 +162,42 @@ class _VerificationRequestScreenState
               style: theme.textTheme.titleLarge,
             ),
             const SizedBox(height: AppSpacing.sm),
-            advantage(Icons.verified, l10n.verificationAdvantageBadge),
-            advantage(
-              Icons.handshake_outlined,
-              l10n.verificationAdvantageTrust,
-            ),
-            advantage(Icons.shield_outlined, l10n.verificationAdvantageName),
+            if (widget.isRider) ...[
+              advantage(Icons.verified, l10n.riderVerificationAdvantageBadge),
+              advantage(
+                Icons.handshake_outlined,
+                l10n.riderVerificationAdvantageTrust,
+              ),
+            ] else ...[
+              advantage(Icons.verified, l10n.verificationAdvantageBadge),
+              advantage(
+                Icons.handshake_outlined,
+                l10n.verificationAdvantageTrust,
+              ),
+              advantage(Icons.shield_outlined, l10n.verificationAdvantageName),
+            ],
             advantage(Icons.event_repeat, l10n.verificationAdvantageRenewal),
             const SizedBox(height: AppSpacing.md),
             Text(l10n.verificationProcess, style: theme.textTheme.bodyMedium),
             const SizedBox(height: AppSpacing.md),
-            TextFormField(
-              key: const Key('verification-official-name'),
-              controller: _official,
-              maxLength: 120,
-              decoration: InputDecoration(
-                labelText: l10n.verificationOfficialName,
+            if (!widget.isRider)
+              TextFormField(
+                key: const Key('verification-official-name'),
+                controller: _official,
+                maxLength: 120,
+                decoration: InputDecoration(
+                  labelText: l10n.verificationOfficialName,
+                ),
+                validator: need,
               ),
-              validator: need,
-            ),
             TextFormField(
               key: const Key('verification-contact-name'),
               controller: _contact,
               maxLength: 120,
               decoration: InputDecoration(
-                labelText: l10n.verificationContactName,
+                labelText: widget.isRider
+                    ? l10n.riderVerificationRealName
+                    : l10n.verificationContactName,
               ),
               validator: need,
             ),
@@ -190,7 +230,9 @@ class _VerificationRequestScreenState
               style: theme.textTheme.titleMedium,
             ),
             Text(
-              l10n.verificationDocumentsHelp,
+              widget.isRider
+                  ? l10n.riderVerificationDocumentsHelp
+                  : l10n.verificationDocumentsHelp,
               style: theme.textTheme.bodySmall,
             ),
             const SizedBox(height: AppSpacing.xs),
@@ -206,7 +248,7 @@ class _VerificationRequestScreenState
                         ? null
                         : () => setState(() => _docs.removeAt(i)),
                   ),
-                if (_docs.length < VerificationRequestScreen.maxDocuments)
+                if (_docs.length < widget.maxDocuments)
                   ActionChip(
                     key: const Key('verification-add-document'),
                     avatar: const Icon(Icons.add),

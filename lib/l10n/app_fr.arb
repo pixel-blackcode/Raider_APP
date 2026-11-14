@@ -1242,5 +1242,33 @@
   "mapConfirmStart": "Valider le départ",
   "mapConfirmDestination": "Valider l'arrivée",
   "mapNoDestination": "Sans lieu d'arrivée",
-  "rideMapPickRoute": "Pointer départ et arrivée sur la carte (facultatif)"
+  "rideMapPickRoute": "Pointer départ et arrivée sur la carte (facultatif)",
+  "groupKindClub": "Club",
+  "groupKindRegroupement": "Regroupement",
+  "groupKindClubHelp": "Un club : une équipe de motards avec son nom, ses règles et ses responsables.",
+  "groupKindRegroupementHelp": "Un regroupement : des motards de clubs différents ou sans club qui roulent ensemble.",
+  "regroupementCreate": "Créer le regroupement",
+  "riderVerificationCta": "Faire vérifier mon profil",
+  "riderVerificationRenew": "Renouveler la vérification",
+  "riderVerificationSubtitle": "Badge bleu après examen par l'équipe Rider Group",
+  "riderVerificationPending": "Demande en cours d'examen",
+  "riderVerificationRejected": "Demande refusée : vous pouvez en faire une nouvelle",
+  "riderVerificationRealName": "Nom réel",
+  "riderVerificationDocumentsHelp": "Facultatif : une pièce d'identité (3 photos au plus), visible seulement par l'équipe.",
+  "riderVerificationAdvantageBadge": "Un badge bleu à côté de votre nom",
+  "riderVerificationAdvantageTrust": "Les autres motards savent que votre profil est authentique",
+  "verificationTabClubs": "Clubs et regroupements",
+  "verificationTabRiders": "Motards",
+  "verificationRealNameValue": "Nom réel : {name}",
+  "@verificationRealNameValue": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRiderVerificationApproved": "Votre profil est vérifié",
+  "notifRiderVerificationRejected": "Votre demande de vérification n'a pas été acceptée",
+  "notifRiderVerificationExpiring": "La vérification de votre profil arrive bientôt à échéance",
+  "notifRiderVerificationExpired": "La vérification de votre profil a pris fin"
 }

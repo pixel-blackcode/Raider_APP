@@ -11,6 +11,7 @@ class ClubDraft {
     this.description = '',
     this.rules = '',
     this.countryCode = 'CD',
+    this.isRegroupement = false,
   });
 
   factory ClubDraft.fromClub(Club club) => ClubDraft(
@@ -22,6 +23,7 @@ class ClubDraft {
     description: club.description,
     rules: club.rules,
     countryCode: club.countryCode,
+    isRegroupement: club.isRegroupement,
   );
 
   final String name;
@@ -32,6 +34,9 @@ class ClubDraft {
   final String description;
   final String rules;
   final String countryCode;
+
+  /// Création d'un regroupement de motards plutôt que d'un club.
+  final bool isRegroupement;
 
   /// Un club public est toujours référencé.
   bool get effectiveIsListed =>

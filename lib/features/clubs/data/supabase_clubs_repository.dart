@@ -112,7 +112,7 @@ class SupabaseClubsRepository implements ClubsRepository {
   @override
   Future<Club> createClub(ClubDraft draft) => _guard(() async {
     final row = await _client.rpc<Map<String, dynamic>>(
-      'create_club',
+      draft.isRegroupement ? 'create_regroupement' : 'create_club',
       params: {
         'p_name': draft.name.trim(),
         'p_city': draft.city.trim(),

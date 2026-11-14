@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/backend_providers.dart';
 import '../../../core/errors/app_exception.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../clubs/domain/club.dart' show RiderVerificationForm;
 import '../domain/profile.dart';
 
 abstract interface class ProfileRepository {
@@ -19,6 +20,15 @@ abstract interface class ProfileRepository {
   Future<PrivacySettings> fetchPrivacySettings(String userId);
 
   Future<void> savePrivacySettings(String userId, PrivacySettings settings);
+
+  /// Statut de la dernière demande de vérification (`pending`, `approved`,
+  /// `rejected`) et la note de l'équipe ; `null` si aucune demande.
+  Future<({String status, String? note})?> latestVerificationRequest(
+    String userId,
+  );
+
+  /// Demande de vérification du motard (examinée par l'équipe, sans paiement).
+  Future<void> requestVerification(RiderVerificationForm form);
 }
 
 class SupabaseProfileRepository implements ProfileRepository {
@@ -27,7 +37,8 @@ class SupabaseProfileRepository implements ProfileRepository {
   final SupabaseClient _client;
 
   static const _columns =
-      'id, username, display_name, city, country_code, bio, avatar_path';
+      'id, username, display_name, city, country_code, bio, avatar_path, '
+      'verified_at, verified_until';
 
   @override
   Future<Profile?> fetchProfile(String userId) async {
@@ -118,6 +129,46 @@ class SupabaseProfileRepository implements ProfileRepository {
       throw AppException.from(error);
     }
   }
+
+  @override
+  Future<({String status, String? note})?> latestVerificationRequest(
+    String userId,
+  ) async {
+    try {
+      final row = await _client
+          .from('rider_verification_requests')
+          .select('status, review_note')
+          .eq('user_id', userId)
+          .order('created_at', ascending: false)
+          .limit(1)
+          .maybeSingle();
+      return row == null
+          ? null
+          : (
+              status: row['status'] as String,
+              note: row['review_note'] as String?,
+            );
+    } catch (error) {
+      throw AppException.from(error);
+    }
+  }
+
+  @override
+  Future<void> requestVerification(RiderVerificationForm form) async {
+    try {
+      await _client.rpc<Object?>(
+        'request_rider_verification',
+        params: {
+          'p_real_name': form.realName,
+          'p_contact_phone': form.contactPhone,
+          'p_message': form.message,
+          'p_document_paths': form.documentPaths,
+        },
+      );
+    } catch (error) {
+      throw AppException.from(error);
+    }
+  }
 }
 
 final profileRepositoryProvider = Provider<ProfileRepository?>((ref) {
@@ -141,3 +192,12 @@ final privacySettingsProvider = FutureProvider.autoDispose<PrivacySettings>((
   if (userId == null || repository == null) return const PrivacySettings();
   return repository.fetchPrivacySettings(userId);
 });
+
+/// Dernière demande de vérification de l'utilisateur connecté.
+final myRiderVerificationRequestProvider =
+    FutureProvider.autoDispose<({String status, String? note})?>((ref) async {
+      final userId = ref.watch(currentUserIdProvider);
+      final repository = ref.watch(profileRepositoryProvider);
+      if (userId == null || repository == null) return null;
+      return repository.latestVerificationRequest(userId);
+    });

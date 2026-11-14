@@ -83,6 +83,10 @@ String notificationText(AppLocalizations l10n, AppNotification n) {
     'club_verification_rejected' => l10n.notifVerificationRejected(club),
     'club_verification_expiring' => l10n.notifVerificationExpiring(club),
     'club_verification_expired' => l10n.notifVerificationExpired(club),
+    'rider_verification_approved' => l10n.notifRiderVerificationApproved,
+    'rider_verification_rejected' => l10n.notifRiderVerificationRejected,
+    'rider_verification_expiring' => l10n.notifRiderVerificationExpiring,
+    'rider_verification_expired' => l10n.notifRiderVerificationExpired,
     'post_comment' => l10n.notifPostComment(who),
     'post_reaction' => l10n.notifPostReaction(who),
     _ => l10n.notificationsTitle,
@@ -160,6 +164,8 @@ class _NotificationTileState extends ConsumerState<_NotificationTile> {
       context.push(AppRoutes.ride(n.rideId!));
     } else if (n.clubId != null) {
       context.push(AppRoutes.club(n.clubId!));
+    } else if (n.kind.startsWith('rider_verification')) {
+      context.push(AppRoutes.profile);
     }
   }
 

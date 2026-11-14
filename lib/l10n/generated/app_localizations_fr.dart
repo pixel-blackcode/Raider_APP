@@ -2370,4 +2370,79 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get rideMapPickRoute =>
       'Pointer départ et arrivée sur la carte (facultatif)';
+
+  @override
+  String get groupKindClub => 'Club';
+
+  @override
+  String get groupKindRegroupement => 'Regroupement';
+
+  @override
+  String get groupKindClubHelp =>
+      'Un club : une équipe de motards avec son nom, ses règles et ses responsables.';
+
+  @override
+  String get groupKindRegroupementHelp =>
+      'Un regroupement : des motards de clubs différents ou sans club qui roulent ensemble.';
+
+  @override
+  String get regroupementCreate => 'Créer le regroupement';
+
+  @override
+  String get riderVerificationCta => 'Faire vérifier mon profil';
+
+  @override
+  String get riderVerificationRenew => 'Renouveler la vérification';
+
+  @override
+  String get riderVerificationSubtitle =>
+      'Badge bleu après examen par l\'équipe Rider Group';
+
+  @override
+  String get riderVerificationPending => 'Demande en cours d\'examen';
+
+  @override
+  String get riderVerificationRejected =>
+      'Demande refusée : vous pouvez en faire une nouvelle';
+
+  @override
+  String get riderVerificationRealName => 'Nom réel';
+
+  @override
+  String get riderVerificationDocumentsHelp =>
+      'Facultatif : une pièce d\'identité (3 photos au plus), visible seulement par l\'équipe.';
+
+  @override
+  String get riderVerificationAdvantageBadge =>
+      'Un badge bleu à côté de votre nom';
+
+  @override
+  String get riderVerificationAdvantageTrust =>
+      'Les autres motards savent que votre profil est authentique';
+
+  @override
+  String get verificationTabClubs => 'Clubs et regroupements';
+
+  @override
+  String get verificationTabRiders => 'Motards';
+
+  @override
+  String verificationRealNameValue(String name) {
+    return 'Nom réel : $name';
+  }
+
+  @override
+  String get notifRiderVerificationApproved => 'Votre profil est vérifié';
+
+  @override
+  String get notifRiderVerificationRejected =>
+      'Votre demande de vérification n\'a pas été acceptée';
+
+  @override
+  String get notifRiderVerificationExpiring =>
+      'La vérification de votre profil arrive bientôt à échéance';
+
+  @override
+  String get notifRiderVerificationExpired =>
+      'La vérification de votre profil a pris fin';
 }

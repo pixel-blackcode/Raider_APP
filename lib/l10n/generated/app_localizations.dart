@@ -4191,6 +4191,132 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Pointer départ et arrivée sur la carte (facultatif)'**
   String get rideMapPickRoute;
+
+  /// No description provided for @groupKindClub.
+  ///
+  /// In fr, this message translates to:
+  /// **'Club'**
+  String get groupKindClub;
+
+  /// No description provided for @groupKindRegroupement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Regroupement'**
+  String get groupKindRegroupement;
+
+  /// No description provided for @groupKindClubHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un club : une équipe de motards avec son nom, ses règles et ses responsables.'**
+  String get groupKindClubHelp;
+
+  /// No description provided for @groupKindRegroupementHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un regroupement : des motards de clubs différents ou sans club qui roulent ensemble.'**
+  String get groupKindRegroupementHelp;
+
+  /// No description provided for @regroupementCreate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer le regroupement'**
+  String get regroupementCreate;
+
+  /// No description provided for @riderVerificationCta.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faire vérifier mon profil'**
+  String get riderVerificationCta;
+
+  /// No description provided for @riderVerificationRenew.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renouveler la vérification'**
+  String get riderVerificationRenew;
+
+  /// No description provided for @riderVerificationSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Badge bleu après examen par l\'équipe Rider Group'**
+  String get riderVerificationSubtitle;
+
+  /// No description provided for @riderVerificationPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande en cours d\'examen'**
+  String get riderVerificationPending;
+
+  /// No description provided for @riderVerificationRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande refusée : vous pouvez en faire une nouvelle'**
+  String get riderVerificationRejected;
+
+  /// No description provided for @riderVerificationRealName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom réel'**
+  String get riderVerificationRealName;
+
+  /// No description provided for @riderVerificationDocumentsHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facultatif : une pièce d\'identité (3 photos au plus), visible seulement par l\'équipe.'**
+  String get riderVerificationDocumentsHelp;
+
+  /// No description provided for @riderVerificationAdvantageBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un badge bleu à côté de votre nom'**
+  String get riderVerificationAdvantageBadge;
+
+  /// No description provided for @riderVerificationAdvantageTrust.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les autres motards savent que votre profil est authentique'**
+  String get riderVerificationAdvantageTrust;
+
+  /// No description provided for @verificationTabClubs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clubs et regroupements'**
+  String get verificationTabClubs;
+
+  /// No description provided for @verificationTabRiders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motards'**
+  String get verificationTabRiders;
+
+  /// No description provided for @verificationRealNameValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom réel : {name}'**
+  String verificationRealNameValue(String name);
+
+  /// No description provided for @notifRiderVerificationApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre profil est vérifié'**
+  String get notifRiderVerificationApproved;
+
+  /// No description provided for @notifRiderVerificationRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre demande de vérification n\'a pas été acceptée'**
+  String get notifRiderVerificationRejected;
+
+  /// No description provided for @notifRiderVerificationExpiring.
+  ///
+  /// In fr, this message translates to:
+  /// **'La vérification de votre profil arrive bientôt à échéance'**
+  String get notifRiderVerificationExpiring;
+
+  /// No description provided for @notifRiderVerificationExpired.
+  ///
+  /// In fr, this message translates to:
+  /// **'La vérification de votre profil a pris fin'**
+  String get notifRiderVerificationExpired;
 }
 
 class _AppLocalizationsDelegate

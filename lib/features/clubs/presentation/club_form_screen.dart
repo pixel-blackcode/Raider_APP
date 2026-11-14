@@ -98,6 +98,7 @@ class _ClubFormState extends ConsumerState<_ClubForm> {
   late ClubVisibility _visibility = _initial.visibility;
   late ClubJoinPolicy _joinPolicy = _initial.joinPolicy;
   late bool _isListed = _initial.isListed;
+  late bool _isRegroupement = _initial.isRegroupement;
   bool _busy = false;
 
   bool get _isEditing => widget.club != null;
@@ -127,6 +128,7 @@ class _ClubFormState extends ConsumerState<_ClubForm> {
     visibility: _visibility,
     joinPolicy: _joinPolicy,
     isListed: _isListed,
+    isRegroupement: _isRegroupement,
   );
 
   Future<void> _submit() async {
@@ -171,6 +173,35 @@ class _ClubFormState extends ConsumerState<_ClubForm> {
         physics: widget.embedded ? const NeverScrollableScrollPhysics() : null,
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
+          if (!_isEditing) ...[
+            SegmentedButton<bool>(
+              key: const Key('club-field-kind'),
+              segments: [
+                ButtonSegment(
+                  value: false,
+                  icon: const Icon(Icons.groups_outlined),
+                  label: Text(l10n.groupKindClub),
+                ),
+                ButtonSegment(
+                  value: true,
+                  icon: const Icon(Icons.diversity_3_outlined),
+                  label: Text(l10n.groupKindRegroupement),
+                ),
+              ],
+              selected: {_isRegroupement},
+              onSelectionChanged: _busy
+                  ? null
+                  : (s) => setState(() => _isRegroupement = s.first),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              _isRegroupement
+                  ? l10n.groupKindRegroupementHelp
+                  : l10n.groupKindClubHelp,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ],
           TextFormField(
             key: const Key('club-field-name'),
             controller: _name,
@@ -283,7 +314,13 @@ class _ClubFormState extends ConsumerState<_ClubForm> {
           FilledButton(
             key: const Key('club-submit'),
             onPressed: _busy ? null : _submit,
-            child: Text(_isEditing ? l10n.actionSave : l10n.clubCreate),
+            child: Text(
+              _isEditing
+                  ? l10n.actionSave
+                  : _isRegroupement
+                  ? l10n.regroupementCreate
+                  : l10n.clubCreate,
+            ),
           ),
         ],
       ),

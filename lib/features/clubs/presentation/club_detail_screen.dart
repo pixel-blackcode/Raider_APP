@@ -186,6 +186,14 @@ class _ClubDetailBody extends ConsumerWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
+                  if (club.isRegroupement)
+                    Text(
+                      l10n.groupKindRegroupement,
+                      key: const Key('club-kind-regroupement'),
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: theme.colorScheme.primary,
+                      ),
+                    ),
                   if (club.isVerified) ...[
                     const SizedBox(height: AppSpacing.xs),
                     const VerifiedBadge(key: Key('club-verified-badge')),

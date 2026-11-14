@@ -25,21 +25,206 @@ class VerificationAdminScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final queue = ref.watch(verificationQueueProvider);
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.verificationAdminTitle)),
-      body: AsyncValueView(
-        value: queue,
-        onRetry: () => ref.invalidate(verificationQueueProvider),
-        data: (items) => items.isEmpty
-            ? EmptyState(
-                icon: Icons.verified_user_outlined,
-                title: l10n.verificationAdminEmptyTitle,
-                message: l10n.verificationAdminEmptyBody,
-              )
-            : ListView(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                children: [for (final i in items) _RequestCard(item: i)],
+    final riders = ref.watch(riderVerificationQueueProvider);
+    final empty = EmptyState(
+      icon: Icons.verified_user_outlined,
+      title: l10n.verificationAdminEmptyTitle,
+      message: l10n.verificationAdminEmptyBody,
+    );
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.verificationAdminTitle),
+          bottom: TabBar(
+            tabs: [
+              Tab(text: l10n.verificationTabClubs),
+              Tab(
+                key: const Key('verification-tab-riders'),
+                text: l10n.verificationTabRiders,
               ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            AsyncValueView(
+              value: queue,
+              onRetry: () => ref.invalidate(verificationQueueProvider),
+              data: (items) => items.isEmpty
+                  ? empty
+                  : ListView(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      children: [for (final i in items) _RequestCard(item: i)],
+                    ),
+            ),
+            AsyncValueView(
+              value: riders,
+              onRetry: () => ref.invalidate(riderVerificationQueueProvider),
+              data: (items) => items.isEmpty
+                  ? empty
+                  : ListView(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      children: [
+                        for (final i in items) _RiderRequestCard(item: i),
+                      ],
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Durée de validité choisie par l'équipe (null : annulé).
+Future<DateTime?> _pickValidity(BuildContext context) async {
+  final l10n = AppLocalizations.of(context);
+  final months = await showDialog<int>(
+    context: context,
+    builder: (context) => SimpleDialog(
+      title: Text(l10n.verificationDuration),
+      children: [
+        for (final m in const [1, 6, 12])
+          SimpleDialogOption(
+            key: Key('verification-duration-$m'),
+            onPressed: () => Navigator.pop(context, m),
+            child: Text(
+              m == 12 ? l10n.verificationOneYear : l10n.verificationMonths(m),
+            ),
+          ),
+      ],
+    ),
+  );
+  if (months == null) return null;
+  final now = DateTime.now();
+  return DateTime(now.year, now.month + months, now.day, 23, 59);
+}
+
+class _RiderRequestCard extends ConsumerStatefulWidget {
+  const _RiderRequestCard({required this.item});
+
+  final RiderVerificationQueueItem item;
+
+  @override
+  ConsumerState<_RiderRequestCard> createState() => _RiderRequestCardState();
+}
+
+class _RiderRequestCardState extends ConsumerState<_RiderRequestCard> {
+  bool _busy = false;
+
+  Future<void> _decide(bool approve) async {
+    final l10n = AppLocalizations.of(context);
+    DateTime? until;
+    if (approve) {
+      until = await _pickValidity(context);
+      if (until == null) return;
+    }
+    if (!mounted) return;
+    final note = await showTextPrompt(
+      context,
+      title: approve ? l10n.verificationApprove : l10n.verificationReject,
+      label: l10n.verificationNote,
+      confirmLabel: approve
+          ? l10n.verificationApprove
+          : l10n.verificationReject,
+      maxLength: 1000,
+    );
+    if (note == null || !mounted) return;
+    setState(() => _busy = true);
+    try {
+      await ref
+          .read(verificationAdminRepositoryProvider)!
+          .reviewRider(
+            widget.item.requestId,
+            approve: approve,
+            note: note.isEmpty ? null : note,
+            validUntil: until,
+          );
+      ref.invalidate(riderVerificationQueueProvider);
+      if (mounted) showSnack(context, l10n.moderationDone);
+    } catch (error) {
+      if (mounted) showSnack(context, describeError(context, error));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final i = widget.item;
+    final media = ref.watch(mediaRepositoryProvider);
+    final docs = [
+      for (final p in i.documentPaths)
+        media?.imageProvider(MediaBucket.verificationDocs, p),
+    ];
+    return Card(
+      key: Key('rider-verification-request-${i.requestId}'),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            InkWell(
+              onTap: () => context.push(AppRoutes.rider(i.userId)),
+              child: Text(
+                '${i.displayName} · @${i.username}',
+                style: theme.textTheme.titleLarge,
+              ),
+            ),
+            Text(l10n.verificationRealNameValue(i.realName)),
+            if (i.message != null) ...[
+              const SizedBox(height: AppSpacing.xs),
+              Text('« ${i.message} »'),
+            ],
+            const SizedBox(height: AppSpacing.sm),
+            OutlinedButton.icon(
+              onPressed: () => ref
+                  .read(externalActionsProvider)
+                  .openWhatsApp(i.contactPhone),
+              icon: const Icon(Icons.chat_outlined),
+              label: Text(l10n.verificationContactWhatsApp(i.contactPhone)),
+            ),
+            if (docs.isNotEmpty)
+              Wrap(
+                spacing: AppSpacing.xs,
+                children: [
+                  for (var d = 0; d < docs.length; d++)
+                    ActionChip(
+                      avatar: const Icon(Icons.description_outlined),
+                      label: Text(l10n.verificationDocumentN(d + 1)),
+                      onPressed: () => openPhotoViewer(
+                        context,
+                        images: docs,
+                        initialIndex: d,
+                      ),
+                    ),
+                ],
+              ),
+            const SizedBox(height: AppSpacing.sm),
+            Row(
+              children: [
+                Expanded(
+                  child: FilledButton(
+                    key: Key('rider-verification-approve-${i.requestId}'),
+                    onPressed: _busy ? null : () => _decide(true),
+                    child: Text(l10n.verificationApprove),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: OutlinedButton(
+                    key: Key('rider-verification-reject-${i.requestId}'),
+                    onPressed: _busy ? null : () => _decide(false),
+                    child: Text(l10n.verificationReject),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -61,27 +246,8 @@ class _RequestCardState extends ConsumerState<_RequestCard> {
     final l10n = AppLocalizations.of(context);
     DateTime? until;
     if (approve) {
-      final months = await showDialog<int>(
-        context: context,
-        builder: (context) => SimpleDialog(
-          title: Text(l10n.verificationDuration),
-          children: [
-            for (final m in const [1, 6, 12])
-              SimpleDialogOption(
-                key: Key('verification-duration-$m'),
-                onPressed: () => Navigator.pop(context, m),
-                child: Text(
-                  m == 12
-                      ? l10n.verificationOneYear
-                      : l10n.verificationMonths(m),
-                ),
-              ),
-          ],
-        ),
-      );
-      if (months == null) return;
-      final now = DateTime.now();
-      until = DateTime(now.year, now.month + months, now.day, 23, 59);
+      until = await _pickValidity(context);
+      if (until == null) return;
     }
     if (!mounted) return;
     final note = await showTextPrompt(

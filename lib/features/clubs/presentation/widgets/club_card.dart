@@ -55,6 +55,7 @@ class ClubCard extends StatelessWidget {
                     const SizedBox(height: AppSpacing.xs),
                     Text(
                       [
+                        if (club.isRegroupement) l10n.groupKindRegroupement,
                         club.city,
                         club.visibility.label(l10n),
                         l10n.clubMemberCount(club.memberCount),
