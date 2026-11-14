@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/router/app_router.dart';
 import '../../../app/router/app_routes.dart';
+import '../../../core/sound/alert_sound.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -64,7 +65,8 @@ class _SosAlertsOverlayState extends ConsumerState<SosAlertsOverlay> {
       final fresh = next.where((a) => !_signaled.contains(a.id)).toList();
       if (fresh.isEmpty) return;
       _signaled.addAll(fresh.map((a) => a.id));
-      SystemSound.play(SystemSoundType.alert);
+      // Le SOS sonne toujours, même si les sons sont désactivés.
+      ref.read(alertSoundProvider).alert();
       HapticFeedback.heavyImpact();
     });
     final incoming = ref.watch(incomingSosProvider);

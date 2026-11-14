@@ -25,6 +25,7 @@ import '../../features/marketplace/presentation/marketplace_screen.dart';
 import '../../features/messages/presentation/chat_screen.dart';
 import '../../features/messages/presentation/messages_screen.dart';
 import '../../features/messages/presentation/new_conversation_screen.dart';
+import '../../features/notifications/presentation/notifications_screen.dart';
 import '../../features/profile/presentation/delete_account_screen.dart';
 import '../../features/profile/presentation/edit_profile_screen.dart';
 import '../../features/profile/presentation/privacy_settings_screen.dart';
@@ -285,6 +286,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) =>
             RiderProfileScreen(userId: state.pathParameters['userId']!),
+      ),
+      GoRoute(
+        path: AppRoutes.notifications,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const NotificationsScreen(),
       ),
       GoRoute(
         path: AppRoutes.moderation,

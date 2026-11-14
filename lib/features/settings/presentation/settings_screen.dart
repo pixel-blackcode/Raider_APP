@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_providers.dart';
 import '../../../core/config/app_config.dart';
+import '../../../core/sound/alert_sound.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/theme_mode_controller.dart';
 import '../../../core/widgets/backend_status_card.dart';
@@ -48,6 +49,16 @@ class SettingsScreen extends ConsumerWidget {
             selected: {themeMode},
             onSelectionChanged: (selection) =>
                 ref.read(themeModeProvider.notifier).setMode(selection.first),
+          ),
+          SectionHeader(title: l10n.settingsNotifications),
+          SwitchListTile(
+            key: const Key('settings-sounds'),
+            contentPadding: EdgeInsets.zero,
+            secondary: const Icon(Icons.volume_up_outlined),
+            title: Text(l10n.settingsSounds),
+            subtitle: Text(l10n.settingsSoundsHint),
+            value: ref.watch(soundsEnabledProvider),
+            onChanged: (v) => ref.read(soundsEnabledProvider.notifier).set(v),
           ),
           SectionHeader(title: l10n.settingsSafety),
           ListTile(

@@ -11,6 +11,7 @@ import '../../../core/widgets/shortcut_tile.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../community/data/community_providers.dart';
 import '../../community/presentation/post_feed.dart';
+import '../../notifications/presentation/notification_bell.dart';
 import 'home_clubs_section.dart';
 import 'home_rides_section.dart';
 
@@ -38,6 +39,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: [
+          const NotificationBell(),
           IconButton(
             tooltip: l10n.settingsTitle,
             icon: const Icon(Icons.settings_outlined),

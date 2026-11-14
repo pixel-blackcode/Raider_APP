@@ -2084,4 +2084,122 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get convoyTrailJoin => 'Rejoindre';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get notificationsReadAll => 'Tout lire';
+
+  @override
+  String get notificationsEmptyTitle => 'Aucune notification';
+
+  @override
+  String get notificationsEmptyBody =>
+      'Les demandes, invitations, réactions et changements de balade apparaîtront ici.';
+
+  @override
+  String get notificationsDone => 'C\'est fait.';
+
+  @override
+  String get notifApprove => 'Approuver';
+
+  @override
+  String get notifReject => 'Refuser';
+
+  @override
+  String get notifAccept => 'Accepter';
+
+  @override
+  String get notifDecline => 'Décliner';
+
+  @override
+  String notifRideJoinRequest(String who, String ride) {
+    return '$who demande à rejoindre « $ride »';
+  }
+
+  @override
+  String notifRideJoined(String who, String ride) {
+    return '$who a rejoint « $ride »';
+  }
+
+  @override
+  String notifRideRequestApproved(String ride) {
+    return 'Votre demande pour « $ride » est acceptée';
+  }
+
+  @override
+  String notifRideRequestRejected(String ride) {
+    return 'Votre demande pour « $ride » n\'a pas été retenue';
+  }
+
+  @override
+  String notifRideRemoved(String ride) {
+    return 'Vous avez été retiré de « $ride »';
+  }
+
+  @override
+  String notifRideInvitation(String who, String ride) {
+    return '$who vous invite à « $ride »';
+  }
+
+  @override
+  String notifRideLocked(String ride) {
+    return 'Les inscriptions à « $ride » sont fermées';
+  }
+
+  @override
+  String notifRideStarted(String ride) {
+    return '« $ride » a démarré : ouvrez le mode Convoi';
+  }
+
+  @override
+  String notifRideFinished(String ride) {
+    return '« $ride » est terminée';
+  }
+
+  @override
+  String notifRideCancelled(String ride) {
+    return '« $ride » est annulée';
+  }
+
+  @override
+  String notifClubJoinRequest(String who, String club) {
+    return '$who demande à rejoindre $club';
+  }
+
+  @override
+  String notifClubRequestApproved(String club) {
+    return 'Bienvenue dans $club : votre demande est acceptée';
+  }
+
+  @override
+  String notifClubRequestRejected(String club) {
+    return 'Votre demande pour $club n\'a pas été retenue';
+  }
+
+  @override
+  String notifClubInvitation(String who, String club) {
+    return '$who vous invite à rejoindre $club';
+  }
+
+  @override
+  String notifPostComment(String who) {
+    return '$who a commenté votre publication';
+  }
+
+  @override
+  String notifPostReaction(String who) {
+    return '$who a réagi à votre publication';
+  }
+
+  @override
+  String get settingsNotifications => 'Notifications';
+
+  @override
+  String get settingsSounds => 'Sons des notifications et messages';
+
+  @override
+  String get settingsSoundsHint =>
+      'Quand l\'application est ouverte. Les alertes SOS sonnent toujours.';
 }

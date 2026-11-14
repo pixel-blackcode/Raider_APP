@@ -11,6 +11,7 @@ import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/backend_status_card.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../notifications/presentation/notification_bell.dart';
 import '../data/clubs_providers.dart';
 import '../domain/club.dart';
 import 'widgets/club_card.dart';
@@ -46,6 +47,7 @@ class ClubsScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.clubsTitle),
+          actions: const [NotificationBell()],
           bottom: TabBar(
             tabs: [
               Tab(text: l10n.clubsTabMine),

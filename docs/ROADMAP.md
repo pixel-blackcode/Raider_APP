@@ -13,7 +13,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | 07 — Communauté | Publications, photos, commentaires, messagerie, modération. | ✅ Livrée — en attente de validation (style « Vibrant & Block » appliqué au fil et à la messagerie) |
 | 08 — Marketplace | Annonces sans paiement (10 photos), recherche tolérante, filtres, favoris, contact vendeur, signalement. Améliorations : zoom des photos, 10 photos par publication, recherche de motards et de clubs malgré les fautes. | ✅ Livrée — en attente de validation |
 | 08 bis — Balades enrichies | Photo de couverture des balades ; départ et arrivée pointés sur une carte (facultatif) avec distance approximative ; itinéraire du chef de convoi pour les retardataires. | ✅ Livrée — en attente de validation |
-| 08 ter — Notifications | Cloche avec badge (demandes d'adhésion à approuver, messages, réactions, balades modifiées), sons dans l'application ; puis notifications push (Firebase). | À venir |
+| 08 ter — Notifications | Cloche avec badge (demandes d'adhésion à approuver, messages, réactions, balades modifiées), sons dans l'application ; puis notifications push (Firebase). | ✅ Cloche et sons livrés — en attente de validation ; push (Firebase) à faire |
 | 09 — Certification et regroupements | Certification mensuelle : motard 9 $, club 20 $, regroupement 20 $ ; paiement Mobile Money hors application, référence saisie et rapprochée par l'administration ; badges ; regroupements de clubs ; événements moto (certifiés) ; boutiques (certifiés) ; mise en avant des contenus certifiés ; réactualisation des annonces. | À venir |
 | 10 — Garage | Motos, historique d'entretien, rappels. | À venir |
 | 11 — Gamification et administration | Badges, défis, tableau de bord web, modération. | À venir |
@@ -62,6 +62,17 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R03-9 | Essai réel sur un projet Supabase + appareil. | **À faire par le propriétaire** (aucun projet Supabase ni appareil disponible dans l'environnement cloud) |
 
 | R03-10 | Logo et couverture : ajout par owner/admin uniquement ; images d'un club masqué invisibles aux non-membres. | SQL `04_media_privacy_account_test.sql` + widget |
+
+## Mission 08 ter — scénarios de recette
+
+| # | Scénario | Preuve |
+| --- | --- | --- |
+| R08t-1 | Notifications créées par le serveur seul (déclencheurs) : demande de participation, nouveau participant, demande acceptée / refusée, retrait, invitation, balade verrouillée / démarrée / terminée / annulée, demande d'adhésion à un club, décision, invitation au club, commentaire et réaction. | SQL `12_notifications_test.sql` |
+| R08t-2 | Jamais pour sa propre action ni entre motards bloqués ; chacun ne lit que les siennes ; rétention 90 jours. | SQL |
+| R08t-3 | Cloche avec pastille sur l'Accueil, les Balades et les Clubs ; liste ; « Tout lire » ; un appui ouvre la balade, le club ou la publication. | widget `notifications_flow_test.dart` |
+| R08t-4 | Approuver / refuser une demande, accepter / décliner une invitation directement depuis la cloche. | widget |
+| R08t-5 | Son du téléphone à l'arrivée d'une notification ou d'un message (application ouverte) ; désactivable dans les Paramètres ; le SOS sonne toujours. | widget |
+| R08t-6 | Essai réel (TEST_GUIDE §10). | 📱 **À faire par le propriétaire** |
 
 ## Mission 08 bis — scénarios de recette
 

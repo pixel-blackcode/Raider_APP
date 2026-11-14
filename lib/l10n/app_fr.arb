@@ -954,5 +954,160 @@
       }
     }
   },
-  "convoyTrailJoin": "Rejoindre"
+  "convoyTrailJoin": "Rejoindre",
+  "notificationsTitle": "Notifications",
+  "notificationsReadAll": "Tout lire",
+  "notificationsEmptyTitle": "Aucune notification",
+  "notificationsEmptyBody": "Les demandes, invitations, réactions et changements de balade apparaîtront ici.",
+  "notificationsDone": "C'est fait.",
+  "notifApprove": "Approuver",
+  "notifReject": "Refuser",
+  "notifAccept": "Accepter",
+  "notifDecline": "Décliner",
+  "notifRideJoinRequest": "{who} demande à rejoindre « {ride} »",
+  "@notifRideJoinRequest": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideJoined": "{who} a rejoint « {ride} »",
+  "@notifRideJoined": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideRequestApproved": "Votre demande pour « {ride} » est acceptée",
+  "@notifRideRequestApproved": {
+    "placeholders": {
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideRequestRejected": "Votre demande pour « {ride} » n'a pas été retenue",
+  "@notifRideRequestRejected": {
+    "placeholders": {
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideRemoved": "Vous avez été retiré de « {ride} »",
+  "@notifRideRemoved": {
+    "placeholders": {
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideInvitation": "{who} vous invite à « {ride} »",
+  "@notifRideInvitation": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideLocked": "Les inscriptions à « {ride} » sont fermées",
+  "@notifRideLocked": {
+    "placeholders": {
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideStarted": "« {ride} » a démarré : ouvrez le mode Convoi",
+  "@notifRideStarted": {
+    "placeholders": {
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideFinished": "« {ride} » est terminée",
+  "@notifRideFinished": {
+    "placeholders": {
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifRideCancelled": "« {ride} » est annulée",
+  "@notifRideCancelled": {
+    "placeholders": {
+      "ride": {
+        "type": "String"
+      }
+    }
+  },
+  "notifClubJoinRequest": "{who} demande à rejoindre {club}",
+  "@notifClubJoinRequest": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifClubRequestApproved": "Bienvenue dans {club} : votre demande est acceptée",
+  "@notifClubRequestApproved": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifClubRequestRejected": "Votre demande pour {club} n'a pas été retenue",
+  "@notifClubRequestRejected": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifClubInvitation": "{who} vous invite à rejoindre {club}",
+  "@notifClubInvitation": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifPostComment": "{who} a commenté votre publication",
+  "@notifPostComment": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifPostReaction": "{who} a réagi à votre publication",
+  "@notifPostReaction": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsNotifications": "Notifications",
+  "settingsSounds": "Sons des notifications et messages",
+  "settingsSoundsHint": "Quand l'application est ouverte. Les alertes SOS sonnent toujours."
 }

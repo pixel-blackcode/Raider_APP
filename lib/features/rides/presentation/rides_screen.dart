@@ -12,6 +12,7 @@ import '../../../core/widgets/backend_status_card.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../notifications/presentation/notification_bell.dart';
 import '../data/rides_providers.dart';
 import '../domain/ride.dart';
 import '../domain/ride_time.dart';
@@ -47,6 +48,7 @@ class RidesScreen extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.ridesTitle),
+          actions: const [NotificationBell()],
           bottom: TabBar(
             tabs: [
               Tab(text: l10n.ridesTabUpcoming),

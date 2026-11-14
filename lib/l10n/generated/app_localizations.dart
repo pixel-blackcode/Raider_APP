@@ -3771,6 +3771,174 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Rejoindre'**
   String get convoyTrailJoin;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @notificationsReadAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout lire'**
+  String get notificationsReadAll;
+
+  /// No description provided for @notificationsEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune notification'**
+  String get notificationsEmptyTitle;
+
+  /// No description provided for @notificationsEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les demandes, invitations, réactions et changements de balade apparaîtront ici.'**
+  String get notificationsEmptyBody;
+
+  /// No description provided for @notificationsDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'C\'est fait.'**
+  String get notificationsDone;
+
+  /// No description provided for @notifApprove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approuver'**
+  String get notifApprove;
+
+  /// No description provided for @notifReject.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get notifReject;
+
+  /// No description provided for @notifAccept.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accepter'**
+  String get notifAccept;
+
+  /// No description provided for @notifDecline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Décliner'**
+  String get notifDecline;
+
+  /// No description provided for @notifRideJoinRequest.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} demande à rejoindre « {ride} »'**
+  String notifRideJoinRequest(String who, String ride);
+
+  /// No description provided for @notifRideJoined.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} a rejoint « {ride} »'**
+  String notifRideJoined(String who, String ride);
+
+  /// No description provided for @notifRideRequestApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre demande pour « {ride} » est acceptée'**
+  String notifRideRequestApproved(String ride);
+
+  /// No description provided for @notifRideRequestRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre demande pour « {ride} » n\'a pas été retenue'**
+  String notifRideRequestRejected(String ride);
+
+  /// No description provided for @notifRideRemoved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez été retiré de « {ride} »'**
+  String notifRideRemoved(String ride);
+
+  /// No description provided for @notifRideInvitation.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} vous invite à « {ride} »'**
+  String notifRideInvitation(String who, String ride);
+
+  /// No description provided for @notifRideLocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les inscriptions à « {ride} » sont fermées'**
+  String notifRideLocked(String ride);
+
+  /// No description provided for @notifRideStarted.
+  ///
+  /// In fr, this message translates to:
+  /// **'« {ride} » a démarré : ouvrez le mode Convoi'**
+  String notifRideStarted(String ride);
+
+  /// No description provided for @notifRideFinished.
+  ///
+  /// In fr, this message translates to:
+  /// **'« {ride} » est terminée'**
+  String notifRideFinished(String ride);
+
+  /// No description provided for @notifRideCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'« {ride} » est annulée'**
+  String notifRideCancelled(String ride);
+
+  /// No description provided for @notifClubJoinRequest.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} demande à rejoindre {club}'**
+  String notifClubJoinRequest(String who, String club);
+
+  /// No description provided for @notifClubRequestApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bienvenue dans {club} : votre demande est acceptée'**
+  String notifClubRequestApproved(String club);
+
+  /// No description provided for @notifClubRequestRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre demande pour {club} n\'a pas été retenue'**
+  String notifClubRequestRejected(String club);
+
+  /// No description provided for @notifClubInvitation.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} vous invite à rejoindre {club}'**
+  String notifClubInvitation(String who, String club);
+
+  /// No description provided for @notifPostComment.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} a commenté votre publication'**
+  String notifPostComment(String who);
+
+  /// No description provided for @notifPostReaction.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} a réagi à votre publication'**
+  String notifPostReaction(String who);
+
+  /// No description provided for @settingsNotifications.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotifications;
+
+  /// No description provided for @settingsSounds.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sons des notifications et messages'**
+  String get settingsSounds;
+
+  /// No description provided for @settingsSoundsHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quand l\'application est ouverte. Les alertes SOS sonnent toujours.'**
+  String get settingsSoundsHint;
 }
 
 class _AppLocalizationsDelegate

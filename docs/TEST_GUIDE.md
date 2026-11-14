@@ -138,6 +138,17 @@ Astuce : avec un seul téléphone, déconnectez-vous et reconnectez-vous avec le
 | 9.4 | Démarrer la balade, ouvrir le Convoi, partager sa position et rouler quelques centaines de mètres | Bandeau « Itinéraire du chef de convoi · dernier point à HH:MM » ; trait orange sur la carte |
 | 9.5 | Toucher « Rejoindre » | La carte du téléphone s'ouvre sur le dernier point du chef |
 
+## 10. Notifications et sons
+
+| # | Action | Résultat attendu |
+| --- | --- | --- |
+| 10.1 | Compte A : balade « sur approbation ». Compte B : demander à participer | Chez A : son, pastille sur la cloche (Accueil, Balades, Clubs) |
+| 10.2 | A : cloche → « Approuver » | B est confirmé ; chez B : « Votre demande … est acceptée » |
+| 10.3 | B : commenter / réagir à une publication de A | Notification chez A ; un appui ouvre la publication |
+| 10.4 | A : démarrer la balade | Chez B : « … a démarré : ouvrez le mode Convoi » |
+| 10.5 | Paramètres → désactiver « Sons des notifications et messages » | Plus de son (les alertes SOS sonnent toujours) |
+| 10.6 | Cloche → « Tout lire » | La pastille disparaît |
+
 ## Signaler un problème
 
 Pour chaque anomalie, note :

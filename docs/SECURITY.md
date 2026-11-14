@@ -143,6 +143,14 @@ Règles complémentaires :
 - **Couverture** (`ride-media`, privé, 5 Mo, images) : dossier `<id de la balade>/`, dépôt et suppression par les gestionnaires de la balade, lecture si la balade est visible ; `set_ride_cover` vérifie le dossier et l'existence du fichier.
 - **Itinéraire** (`ride_trail_points`) : alimenté uniquement par le serveur (déclencheur sur les positions partagées), seulement pour le chef de convoi ou, à défaut, l'organisateur (D-51) ; lecture réservée aux participants confirmés et gestionnaires pendant la balade ; 5 000 points au plus ; purgé 72 h après la fin avec les positions.
 
+## Notifications (Mission 08 ter)
+
+- Créées **uniquement par le serveur** (déclencheurs SECURITY DEFINER) ; aucune écriture par les clients.
+- Lecture par le **seul destinataire** (RLS) ; temps réel soumis à la même règle.
+- Aucune notification pour sa propre action ni entre motards qui se sont bloqués.
+- Les actions proposées dans la cloche (approuver, accepter…) passent par les fonctions existantes, qui revérifient les droits.
+- Rétention : 90 jours (`rider-purge-notifications`, pg_cron).
+
 ## Journal d'audit
 
 `private.audit_logs` enregistre l'auteur, l'action, l'entité et les détails de chaque opération sensible :

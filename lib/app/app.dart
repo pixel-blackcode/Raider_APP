@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/theme/app_theme.dart';
 import '../core/theme/theme_mode_controller.dart';
+import '../features/notifications/presentation/notification_bell.dart';
 import '../features/sos/presentation/sos_banner.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'router/app_router.dart';
@@ -22,8 +23,11 @@ class RiderGroupApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: router,
       // Alertes SOS reçues : bandeau visible sur tous les écrans.
-      builder: (context, child) =>
-          SosAlertsOverlay(child: child ?? const SizedBox.shrink()),
+      builder: (context, child) => SosAlertsOverlay(
+        child: NotificationSoundListener(
+          child: child ?? const SizedBox.shrink(),
+        ),
+      ),
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeMode,

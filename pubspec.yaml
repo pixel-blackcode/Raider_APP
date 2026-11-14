@@ -48,6 +48,7 @@ dependencies:
   maplibre_gl: ^0.28.0
   geolocator: ^14.1.2
   url_launcher: ^6.3.3
+  flutter_ringtone_player: ^4.0.0+4
 
 dev_dependencies:
   flutter_test:

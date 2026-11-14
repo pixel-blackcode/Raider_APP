@@ -14,6 +14,7 @@ abstract final class AppRoutes {
   static String listing(String id) => '/marketplace/annonces/$id';
   static String editListing(String id) => '/marketplace/annonces/$id/modifier';
   static const settings = '/parametres';
+  static const notifications = '/notifications';
   static const editProfile = '/profil/modifier';
   static const privacySettings = '/profil/confidentialite';
   static const deleteAccount = '/profil/supprimer-mon-compte';

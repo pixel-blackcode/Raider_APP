@@ -5,6 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:rider_group/core/errors/app_exception.dart';
 import 'package:rider_group/core/media/media_repository.dart';
 import 'package:rider_group/core/media/photo_picker.dart';
+import 'package:rider_group/core/sound/alert_sound.dart';
 import 'package:rider_group/features/auth/data/auth_repository.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_repository.dart';
@@ -19,6 +20,8 @@ import 'package:rider_group/features/marketplace/data/marketplace_repository.dar
 import 'package:rider_group/features/marketplace/domain/marketplace.dart';
 import 'package:rider_group/features/messages/data/messaging_repository.dart';
 import 'package:rider_group/features/messages/domain/messaging.dart';
+import 'package:rider_group/features/notifications/data/notifications_repository.dart';
+import 'package:rider_group/features/notifications/domain/app_notification.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_repository.dart';
@@ -1629,6 +1632,85 @@ class FakeMarketplaceRepository implements MarketplaceRepository {
       favorites.add(id);
     } else {
       favorites.remove(id);
+    }
+  }
+}
+
+class FakeAlertSound implements AlertSound {
+  final played = <String>[];
+
+  @override
+  Future<void> notification() async => played.add('notification');
+
+  @override
+  Future<void> alert() async => played.add('alert');
+}
+
+class FakeNotificationsRepository implements NotificationsRepository {
+  final items = <AppNotification>[];
+  final _changes = StreamController<void>.broadcast();
+  final calls = <String>[];
+  var _seq = 0;
+
+  AppNotification add(
+    String kind, {
+    String? actorId,
+    String? actorName,
+    String? rideId,
+    String? rideTitle,
+    String? clubId,
+    String? clubName,
+    String? postId,
+    String? refId,
+    bool actionable = false,
+  }) {
+    final n = AppNotification(
+      id: 'n-${++_seq}',
+      kind: kind,
+      actorId: actorId,
+      actorName: actorName,
+      rideId: rideId,
+      rideTitle: rideTitle,
+      clubId: clubId,
+      clubName: clubName,
+      postId: postId,
+      refId: refId,
+      actionable: actionable,
+      createdAt: DateTime.now().toUtc(),
+    );
+    items.insert(0, n);
+    _changes.add(null);
+    return n;
+  }
+
+  @override
+  Future<List<AppNotification>> list() async => List.of(items);
+
+  @override
+  Stream<void> changes() => _changes.stream;
+
+  @override
+  Future<void> markRead([List<String>? ids]) async {
+    calls.add('markRead:${ids?.join(',') ?? 'all'}');
+    for (var i = 0; i < items.length; i++) {
+      final n = items[i];
+      if (ids == null || ids.contains(n.id)) {
+        items[i] = AppNotification(
+          id: n.id,
+          kind: n.kind,
+          actorId: n.actorId,
+          actorName: n.actorName,
+          rideId: n.rideId,
+          rideTitle: n.rideTitle,
+          clubId: n.clubId,
+          clubName: n.clubName,
+          postId: n.postId,
+          refId: n.refId,
+          createdAt: n.createdAt,
+          readAt: DateTime.now().toUtc(),
+          actionable: n.actionable,
+        );
+      }
     }
   }
 }

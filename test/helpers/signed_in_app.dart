@@ -6,6 +6,7 @@ import 'package:rider_group/core/backend/backend_status.dart';
 import 'package:rider_group/core/config/app_config.dart';
 import 'package:rider_group/core/media/media_repository.dart';
 import 'package:rider_group/core/media/photo_picker.dart';
+import 'package:rider_group/core/sound/alert_sound.dart';
 import 'package:rider_group/features/auth/data/auth_providers.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
 import 'package:rider_group/features/clubs/data/clubs_providers.dart';
@@ -15,6 +16,7 @@ import 'package:rider_group/features/convoy/data/location_service.dart';
 import 'package:rider_group/features/convoy/presentation/convoy_map.dart';
 import 'package:rider_group/features/marketplace/data/marketplace_repository.dart';
 import 'package:rider_group/features/messages/data/messaging_repository.dart';
+import 'package:rider_group/features/notifications/data/notifications_repository.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_providers.dart';
@@ -48,6 +50,8 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeCommunityRepository? community,
   FakeMessagingRepository? messaging,
   FakeMarketplaceRepository? marketplace,
+  FakeNotificationsRepository? notifications,
+  FakeAlertSound? sound,
   List<Override> extraOverrides = const [],
 }) {
   return pumpRiderGroupApp(
@@ -107,6 +111,10 @@ Future<ProviderContainer> pumpOnlineApp(
               profiles: testProfiles,
             ),
       ),
+      notificationsRepositoryProvider.overrideWithValue(
+        notifications ?? FakeNotificationsRepository(),
+      ),
+      alertSoundProvider.overrideWithValue(sound ?? FakeAlertSound()),
       ...extraOverrides,
       // La carte native (MapLibre) n'existe pas en test : simple liste.
       convoyMapBuilderProvider.overrideWithValue(
