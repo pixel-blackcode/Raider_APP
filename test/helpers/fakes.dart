@@ -17,6 +17,8 @@ import 'package:rider_group/features/community/domain/community.dart';
 import 'package:rider_group/features/convoy/data/convoy_repository.dart';
 import 'package:rider_group/features/convoy/data/location_service.dart';
 import 'package:rider_group/features/convoy/domain/convoy.dart';
+import 'package:rider_group/features/events/data/events_repository.dart';
+import 'package:rider_group/features/events/domain/moto_event.dart';
 import 'package:rider_group/features/marketplace/data/marketplace_repository.dart';
 import 'package:rider_group/features/marketplace/domain/marketplace.dart';
 import 'package:rider_group/features/messages/data/messaging_repository.dart';
@@ -1514,6 +1516,8 @@ class FakeMarketplaceRepository implements MarketplaceRepository {
     ListingStatus status = ListingStatus.available,
     String city = 'Kinshasa',
     List<String> mediaPaths = const [],
+    bool sellerVerified = false,
+    DateTime? bumpedAt,
   }) {
     final l = Listing(
       id: 'listing-${++_seq}',
@@ -1528,12 +1532,16 @@ class FakeMarketplaceRepository implements MarketplaceRepository {
       status: status,
       mediaPaths: mediaPaths,
       createdAt: DateTime.now().toUtc(),
+      sellerVerified: sellerVerified,
+      bumpedAt: bumpedAt,
     );
     listings.insert(0, l);
     return l;
   }
 
   Listing _view(Listing l) => Listing(
+    sellerVerified: l.sellerVerified,
+    bumpedAt: l.bumpedAt,
     id: l.id,
     sellerId: l.sellerId,
     sellerName: l.sellerName,
@@ -1652,6 +1660,11 @@ class FakeMarketplaceRepository implements MarketplaceRepository {
     final l = listings.firstWhere((l) => l.id == id);
     listings.remove(l);
     return l.mediaPaths;
+  }
+
+  @override
+  Future<void> bump(String id) async {
+    calls.add('bump:$id');
   }
 
   @override
@@ -1796,5 +1809,100 @@ class FakeVerificationAdminRepository implements VerificationAdminRepository {
   @override
   Future<void> revokeRider(String userId, {String? note}) async {
     calls.add('revokeRider:$userId');
+  }
+}
+
+class FakeEventsRepository implements EventsRepository {
+  final events = <String, MotoEvent>{};
+  final calls = <String>[];
+  var _seq = 0;
+
+  @override
+  Future<List<MotoEvent>> upcoming({String? clubId}) async => [
+    for (final e in events.values)
+      if (!e.isCancelled &&
+          (clubId == null ||
+              e.clubId == clubId ||
+              e.coOrganizers.any(
+                (o) => o.clubId == clubId && o.status == 'accepted',
+              )))
+        e,
+  ];
+
+  @override
+  Future<MotoEvent?> event(String id) async => events[id];
+
+  @override
+  Future<String> create(String clubId, String clientRef, EventDraft d) async {
+    calls.add('create:$clubId');
+    final id = 'event-${++_seq}';
+    events[id] = MotoEvent(
+      id: id,
+      clubId: clubId,
+      clubName: 'Club',
+      title: d.title.trim(),
+      startsAt: d.startsAt.toUtc(),
+      placeName: d.placeName.trim(),
+      city: d.city.trim(),
+      description: d.description,
+      canManage: true,
+    );
+    return id;
+  }
+
+  @override
+  Future<void> update(String id, EventDraft draft) async =>
+      calls.add('update:$id');
+
+  @override
+  Future<String?> setCover(String id, String? path) async => null;
+
+  @override
+  Future<void> cancel(String id) async {
+    calls.add('cancel:$id');
+    final e = events[id]!;
+    events[id] = MotoEvent(
+      id: e.id,
+      clubId: e.clubId,
+      clubName: e.clubName,
+      title: e.title,
+      startsAt: e.startsAt,
+      placeName: e.placeName,
+      city: e.city,
+      canManage: e.canManage,
+      cancelledAt: DateTime.now().toUtc(),
+    );
+  }
+
+  @override
+  Future<void> inviteCoOrganizer(String eventId, String clubId) async =>
+      calls.add('invite:$eventId:$clubId');
+
+  @override
+  Future<void> respondCoOrganizer(
+    String invitationId, {
+    required bool accept,
+  }) async => calls.add('respond:$invitationId:$accept');
+
+  @override
+  Future<void> removeCoOrganizer(String eventId, String clubId) async =>
+      calls.add('remove:$eventId:$clubId');
+
+  @override
+  Future<void> setGoing(String eventId, {required bool going}) async {
+    calls.add('going:$eventId:$going');
+    final e = events[eventId]!;
+    events[eventId] = MotoEvent(
+      id: e.id,
+      clubId: e.clubId,
+      clubName: e.clubName,
+      title: e.title,
+      startsAt: e.startsAt,
+      placeName: e.placeName,
+      city: e.city,
+      canManage: e.canManage,
+      iAmGoing: going,
+      attendeeCount: e.attendeeCount + (going ? 1 : -1),
+    );
   }
 }

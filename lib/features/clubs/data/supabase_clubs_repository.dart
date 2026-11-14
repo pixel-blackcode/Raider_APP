@@ -53,8 +53,14 @@ class SupabaseClubsRepository implements ClubsRepository {
         .order('member_count', ascending: false)
         .order('name')
         .limit(50);
-    return rows.map(Club.fromJson).toList();
+    return _verifiedFirst(rows.map(Club.fromJson).toList());
   });
+
+  /// Clubs et regroupements vérifiés en tête (D-57), ordre conservé sinon.
+  static List<Club> _verifiedFirst(List<Club> clubs) => [
+    ...clubs.where((c) => c.isVerified),
+    ...clubs.where((c) => !c.isVerified),
+  ];
 
   @override
   Future<List<ClubMembership>> myClubs(String userId) => _guard(() async {

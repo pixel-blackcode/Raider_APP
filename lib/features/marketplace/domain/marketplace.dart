@@ -70,6 +70,8 @@ class Listing {
     this.mediaPaths = const [],
     this.isFavorite = false,
     this.favoriteCount = 0,
+    this.sellerVerified = false,
+    this.bumpedAt,
   });
 
   factory Listing.fromJson(Map<String, dynamic> j) => Listing(
@@ -93,6 +95,10 @@ class Listing {
     ],
     isFavorite: (j['is_favorite'] as bool?) ?? false,
     favoriteCount: (j['favorite_count'] as num?)?.toInt() ?? 0,
+    sellerVerified: (j['seller_verified'] as bool?) ?? false,
+    bumpedAt: j['bumped_at'] == null
+        ? null
+        : DateTime.parse(j['bumped_at'] as String).toUtc(),
   );
 
   final String id;
@@ -117,6 +123,21 @@ class Listing {
   final List<String> mediaPaths;
   final bool isFavorite;
   final int favoriteCount;
+
+  /// Vendeur vérifié par l'équipe (badge bleu, réactualisation possible).
+  final bool sellerVerified;
+
+  /// Dernière mise en avant (création ou réactualisation).
+  final DateTime? bumpedAt;
+
+  /// Réactualisation possible : vendeur vérifié, une fois par 24 h (D-57).
+  bool get canBump =>
+      sellerVerified &&
+      status != ListingStatus.sold &&
+      !hidden &&
+      (bumpedAt == null ||
+          DateTime.now().toUtc().difference(bumpedAt!) >=
+              const Duration(hours: 24));
 }
 
 /// Saisie d'une annonce (création ou modification).

@@ -4317,6 +4317,288 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'La vérification de votre profil a pris fin'**
   String get notifRiderVerificationExpired;
+
+  /// No description provided for @actionSearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher'**
+  String get actionSearch;
+
+  /// No description provided for @errorVerificationRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservé aux comptes vérifiés.'**
+  String get errorVerificationRequired;
+
+  /// No description provided for @errorAlreadyInvited.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce club est déjà invité.'**
+  String get errorAlreadyInvited;
+
+  /// No description provided for @errorInvalidState.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette action n\'est plus possible.'**
+  String get errorInvalidState;
+
+  /// No description provided for @eventsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événements moto'**
+  String get eventsTitle;
+
+  /// No description provided for @eventsEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun événement à venir'**
+  String get eventsEmptyTitle;
+
+  /// No description provided for @eventsEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les clubs et regroupements vérifiés publient ici leurs rassemblements et sorties officielles.'**
+  String get eventsEmptyBody;
+
+  /// No description provided for @eventByOrganizer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Par {name}'**
+  String eventByOrganizer(String name);
+
+  /// No description provided for @eventGoingCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Personne n\'a encore confirmé} =1{1 motard y va} other{{count} motards y vont}}'**
+  String eventGoingCount(int count);
+
+  /// No description provided for @eventNewTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvel événement'**
+  String get eventNewTitle;
+
+  /// No description provided for @eventEditTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier l\'événement'**
+  String get eventEditTitle;
+
+  /// No description provided for @eventTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement'**
+  String get eventTitle;
+
+  /// No description provided for @eventCreate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créer un événement'**
+  String get eventCreate;
+
+  /// No description provided for @eventFieldTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get eventFieldTitle;
+
+  /// No description provided for @eventFieldPlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lieu'**
+  String get eventFieldPlace;
+
+  /// No description provided for @eventFieldCity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ville'**
+  String get eventFieldCity;
+
+  /// No description provided for @eventFieldStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Début'**
+  String get eventFieldStart;
+
+  /// No description provided for @eventFieldEnd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fin (facultatif)'**
+  String get eventFieldEnd;
+
+  /// No description provided for @eventNoEnd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Non précisée'**
+  String get eventNoEnd;
+
+  /// No description provided for @eventFieldDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Description'**
+  String get eventFieldDescription;
+
+  /// No description provided for @eventEndBeforeStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'La fin doit être après le début.'**
+  String get eventEndBeforeStart;
+
+  /// No description provided for @eventUntil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jusqu\'au {date}'**
+  String eventUntil(String date);
+
+  /// No description provided for @eventOrganizer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Organisateur'**
+  String get eventOrganizer;
+
+  /// No description provided for @eventCoOrganizer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Co-organisateur'**
+  String get eventCoOrganizer;
+
+  /// No description provided for @eventGoing.
+  ///
+  /// In fr, this message translates to:
+  /// **'J\'y vais'**
+  String get eventGoing;
+
+  /// No description provided for @eventIAmGoing.
+  ///
+  /// In fr, this message translates to:
+  /// **'J\'y vais ✓ (toucher pour annuler)'**
+  String get eventIAmGoing;
+
+  /// No description provided for @eventCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cet événement est annulé.'**
+  String get eventCancelled;
+
+  /// No description provided for @eventCancel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler l\'événement'**
+  String get eventCancel;
+
+  /// No description provided for @eventCancelTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler l\'événement ?'**
+  String get eventCancelTitle;
+
+  /// No description provided for @eventCancelBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les motards inscrits seront prévenus. Cette action est définitive.'**
+  String get eventCancelBody;
+
+  /// No description provided for @eventCover.
+  ///
+  /// In fr, this message translates to:
+  /// **'Photo de couverture'**
+  String get eventCover;
+
+  /// No description provided for @eventInviteCoOrganizer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inviter un co-organisateur'**
+  String get eventInviteCoOrganizer;
+
+  /// No description provided for @eventInviteSearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom du club ou du regroupement vérifié'**
+  String get eventInviteSearch;
+
+  /// No description provided for @eventInviteNoVerified.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun club ou regroupement vérifié trouvé.'**
+  String get eventInviteNoVerified;
+
+  /// No description provided for @eventInviteSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invitation envoyée'**
+  String get eventInviteSent;
+
+  /// No description provided for @eventInvitations.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invitations de co-organisation'**
+  String get eventInvitations;
+
+  /// No description provided for @eventInvitationPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente de réponse'**
+  String get eventInvitationPending;
+
+  /// No description provided for @eventInvitationDeclined.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refusée'**
+  String get eventInvitationDeclined;
+
+  /// No description provided for @eventNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Événement introuvable'**
+  String get eventNotFound;
+
+  /// No description provided for @notifEventCoOrganizerInvitation.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} invite {club} à co-organiser « {title} »'**
+  String notifEventCoOrganizerInvitation(String who, String club, String title);
+
+  /// No description provided for @notifEventCoOrganizerAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'{club} co-organise « {title} »'**
+  String notifEventCoOrganizerAccepted(String club, String title);
+
+  /// No description provided for @notifEventCoOrganizerDeclined.
+  ///
+  /// In fr, this message translates to:
+  /// **'{club} a décliné la co-organisation de « {title} »'**
+  String notifEventCoOrganizerDeclined(String club, String title);
+
+  /// No description provided for @notifEventCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'événement « {title} » est annulé'**
+  String notifEventCancelled(String title);
+
+  /// No description provided for @listingBump.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réactualiser l\'annonce'**
+  String get listingBump;
+
+  /// No description provided for @listingBumpHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Remonte votre annonce en tête du marketplace (une fois par 24 h).'**
+  String get listingBumpHelp;
+
+  /// No description provided for @listingBumpWait.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà réactualisée : de nouveau possible 24 h après.'**
+  String get listingBumpWait;
+
+  /// No description provided for @listingBumped.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce remontée en tête'**
+  String get listingBumped;
 }
 
 class _AppLocalizationsDelegate

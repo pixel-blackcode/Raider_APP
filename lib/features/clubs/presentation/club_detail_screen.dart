@@ -16,6 +16,8 @@ import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
 import '../../community/presentation/post_feed.dart';
+import '../../events/data/events_repository.dart';
+import '../../events/presentation/events_ui.dart';
 import '../../profile/data/profile_repository.dart';
 import '../../rides/data/rides_providers.dart';
 import '../../rides/presentation/widgets/ride_card.dart';
@@ -242,6 +244,7 @@ class _ClubDetailBody extends ConsumerWidget {
           Text(club.rules),
         ],
         _ClubRidesSection(detail: detail),
+        _ClubEventsSection(detail: detail),
         _ClubPostsSection(detail: detail),
         if (permissions.canReviewRequests) _AdminSection(detail: detail),
         SectionHeader(title: l10n.clubMembersTitle),
@@ -659,6 +662,40 @@ class _MemberTile extends ConsumerWidget {
         );
       }
     }
+  }
+}
+
+/// Événements moto du club (organisés ou co-organisés). Création réservée
+/// aux responsables d'un club ou regroupement vérifié (D-56).
+class _ClubEventsSection extends ConsumerWidget {
+  const _ClubEventsSection({required this.detail});
+
+  final ClubDetail detail;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final canCreate =
+        ClubPermissions(detail.myRole).canRequestVerification &&
+        detail.club.isVerified;
+    final events =
+        ref.watch(upcomingEventsProvider(detail.club.id)).value ?? const [];
+    if (events.isEmpty && !canCreate) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionHeader(title: l10n.eventsTitle),
+        for (final e in events)
+          EventCard(event: e, onTap: () => context.push(AppRoutes.event(e.id))),
+        if (canCreate)
+          OutlinedButton.icon(
+            key: const Key('club-create-event'),
+            onPressed: () => context.push(AppRoutes.newEvent(detail.club.id)),
+            icon: const Icon(Icons.celebration_outlined),
+            label: Text(l10n.eventCreate),
+          ),
+      ],
+    );
   }
 }
 

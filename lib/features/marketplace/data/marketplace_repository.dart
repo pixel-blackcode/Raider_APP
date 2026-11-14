@@ -30,6 +30,9 @@ abstract interface class MarketplaceRepository {
   Future<List<String>> delete(String id);
 
   Future<void> setFavorite(String id, {required bool favorite});
+
+  /// Remonte l'annonce en tête (motards vérifiés, une fois par 24 h).
+  Future<void> bump(String id);
 }
 
 class SupabaseMarketplaceRepository implements MarketplaceRepository {
@@ -145,6 +148,11 @@ class SupabaseMarketplaceRepository implements MarketplaceRepository {
     );
     return _paths(data);
   });
+
+  @override
+  Future<void> bump(String id) => _guard(
+    () => _client.rpc<Object?>('bump_listing', params: {'p_listing_id': id}),
+  );
 
   @override
   Future<void> setFavorite(String id, {required bool favorite}) => _guard(

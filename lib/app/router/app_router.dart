@@ -19,6 +19,9 @@ import '../../features/community/presentation/post_composer_screen.dart';
 import '../../features/community/presentation/post_detail_screen.dart';
 import '../../features/community/presentation/rider_profile_screen.dart';
 import '../../features/convoy/presentation/convoy_screen.dart';
+import '../../features/events/presentation/event_detail_screen.dart';
+import '../../features/events/presentation/event_form_screen.dart';
+import '../../features/events/presentation/events_screen.dart';
 import '../../features/garage/presentation/garage_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/marketplace/presentation/listing_detail_screen.dart';
@@ -300,6 +303,29 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.notifications,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.events,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const EventsScreen(),
+      ),
+      GoRoute(
+        path: '/evenements/:eventId',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            EventDetailScreen(eventId: state.pathParameters['eventId']!),
+      ),
+      GoRoute(
+        path: '/evenements/:eventId/modifier',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            EventFormScreen(eventId: state.pathParameters['eventId']),
+      ),
+      GoRoute(
+        path: '/clubs/:clubId/evenement',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            EventFormScreen(clubId: state.pathParameters['clubId']),
       ),
       GoRoute(
         path: AppRoutes.riderVerification,

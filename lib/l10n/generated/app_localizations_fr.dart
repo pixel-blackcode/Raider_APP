@@ -2445,4 +2445,175 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get notifRiderVerificationExpired =>
       'La vérification de votre profil a pris fin';
+
+  @override
+  String get actionSearch => 'Rechercher';
+
+  @override
+  String get errorVerificationRequired => 'Réservé aux comptes vérifiés.';
+
+  @override
+  String get errorAlreadyInvited => 'Ce club est déjà invité.';
+
+  @override
+  String get errorInvalidState => 'Cette action n\'est plus possible.';
+
+  @override
+  String get eventsTitle => 'Événements moto';
+
+  @override
+  String get eventsEmptyTitle => 'Aucun événement à venir';
+
+  @override
+  String get eventsEmptyBody =>
+      'Les clubs et regroupements vérifiés publient ici leurs rassemblements et sorties officielles.';
+
+  @override
+  String eventByOrganizer(String name) {
+    return 'Par $name';
+  }
+
+  @override
+  String eventGoingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count motards y vont',
+      one: '1 motard y va',
+      zero: 'Personne n\'a encore confirmé',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eventNewTitle => 'Nouvel événement';
+
+  @override
+  String get eventEditTitle => 'Modifier l\'événement';
+
+  @override
+  String get eventTitle => 'Événement';
+
+  @override
+  String get eventCreate => 'Créer un événement';
+
+  @override
+  String get eventFieldTitle => 'Titre';
+
+  @override
+  String get eventFieldPlace => 'Lieu';
+
+  @override
+  String get eventFieldCity => 'Ville';
+
+  @override
+  String get eventFieldStart => 'Début';
+
+  @override
+  String get eventFieldEnd => 'Fin (facultatif)';
+
+  @override
+  String get eventNoEnd => 'Non précisée';
+
+  @override
+  String get eventFieldDescription => 'Description';
+
+  @override
+  String get eventEndBeforeStart => 'La fin doit être après le début.';
+
+  @override
+  String eventUntil(String date) {
+    return 'Jusqu\'au $date';
+  }
+
+  @override
+  String get eventOrganizer => 'Organisateur';
+
+  @override
+  String get eventCoOrganizer => 'Co-organisateur';
+
+  @override
+  String get eventGoing => 'J\'y vais';
+
+  @override
+  String get eventIAmGoing => 'J\'y vais ✓ (toucher pour annuler)';
+
+  @override
+  String get eventCancelled => 'Cet événement est annulé.';
+
+  @override
+  String get eventCancel => 'Annuler l\'événement';
+
+  @override
+  String get eventCancelTitle => 'Annuler l\'événement ?';
+
+  @override
+  String get eventCancelBody =>
+      'Les motards inscrits seront prévenus. Cette action est définitive.';
+
+  @override
+  String get eventCover => 'Photo de couverture';
+
+  @override
+  String get eventInviteCoOrganizer => 'Inviter un co-organisateur';
+
+  @override
+  String get eventInviteSearch => 'Nom du club ou du regroupement vérifié';
+
+  @override
+  String get eventInviteNoVerified =>
+      'Aucun club ou regroupement vérifié trouvé.';
+
+  @override
+  String get eventInviteSent => 'Invitation envoyée';
+
+  @override
+  String get eventInvitations => 'Invitations de co-organisation';
+
+  @override
+  String get eventInvitationPending => 'En attente de réponse';
+
+  @override
+  String get eventInvitationDeclined => 'Refusée';
+
+  @override
+  String get eventNotFound => 'Événement introuvable';
+
+  @override
+  String notifEventCoOrganizerInvitation(
+    String who,
+    String club,
+    String title,
+  ) {
+    return '$who invite $club à co-organiser « $title »';
+  }
+
+  @override
+  String notifEventCoOrganizerAccepted(String club, String title) {
+    return '$club co-organise « $title »';
+  }
+
+  @override
+  String notifEventCoOrganizerDeclined(String club, String title) {
+    return '$club a décliné la co-organisation de « $title »';
+  }
+
+  @override
+  String notifEventCancelled(String title) {
+    return 'L\'événement « $title » est annulé';
+  }
+
+  @override
+  String get listingBump => 'Réactualiser l\'annonce';
+
+  @override
+  String get listingBumpHelp =>
+      'Remonte votre annonce en tête du marketplace (une fois par 24 h).';
+
+  @override
+  String get listingBumpWait =>
+      'Déjà réactualisée : de nouveau possible 24 h après.';
+
+  @override
+  String get listingBumped => 'Annonce remontée en tête';
 }

@@ -12,6 +12,7 @@ import '../../../core/widgets/remote_avatar.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../clubs/data/clubs_providers.dart';
 import '../../community/presentation/community_ui.dart';
+import '../../events/data/events_repository.dart';
 import '../../rides/data/rides_providers.dart';
 import '../data/notifications_repository.dart';
 import '../domain/app_notification.dart';
@@ -83,6 +84,22 @@ String notificationText(AppLocalizations l10n, AppNotification n) {
     'club_verification_rejected' => l10n.notifVerificationRejected(club),
     'club_verification_expiring' => l10n.notifVerificationExpiring(club),
     'club_verification_expired' => l10n.notifVerificationExpired(club),
+    'event_coorganizer_invitation' => l10n.notifEventCoOrganizerInvitation(
+      who,
+      club,
+      (n.data['title'] as String?) ?? '',
+    ),
+    'event_coorganizer_accepted' => l10n.notifEventCoOrganizerAccepted(
+      club,
+      (n.data['title'] as String?) ?? '',
+    ),
+    'event_coorganizer_declined' => l10n.notifEventCoOrganizerDeclined(
+      club,
+      (n.data['title'] as String?) ?? '',
+    ),
+    'event_cancelled' => l10n.notifEventCancelled(
+      (n.data['title'] as String?) ?? '',
+    ),
     'rider_verification_approved' => l10n.notifRiderVerificationApproved,
     'rider_verification_rejected' => l10n.notifRiderVerificationRejected,
     'rider_verification_expiring' => l10n.notifRiderVerificationExpiring,
@@ -143,6 +160,11 @@ class _NotificationTileState extends ConsumerState<_NotificationTile> {
               .read(clubsRepositoryProvider)!
               .respondToInvitation(n.refId!, accept: yes);
           ref.invalidate(clubDetailProvider(n.clubId!));
+        case 'event_coorganizer_invitation':
+          await ref
+              .read(eventsRepositoryProvider)!
+              .respondCoOrganizer(n.refId!, accept: yes);
+          ref.refreshEvents(n.data['event_id'] as String?);
       }
       await ref.read(notificationsRepositoryProvider)?.markRead([n.id]);
       ref.invalidate(notificationsProvider);
@@ -158,7 +180,12 @@ class _NotificationTileState extends ConsumerState<_NotificationTile> {
     final n = widget.n;
     ref.read(notificationsRepositoryProvider)?.markRead([n.id]);
     ref.invalidate(notificationsProvider);
-    if (n.postId != null) {
+    final eventId =
+        (n.data['event_id'] as String?) ??
+        (n.kind == 'event_cancelled' ? n.refId : null);
+    if (eventId != null) {
+      context.push(AppRoutes.event(eventId));
+    } else if (n.postId != null) {
       context.push(AppRoutes.post(n.postId!));
     } else if (n.rideId != null) {
       context.push(AppRoutes.ride(n.rideId!));

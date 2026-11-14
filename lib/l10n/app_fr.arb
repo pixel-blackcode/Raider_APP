@@ -1270,5 +1270,113 @@
   "notifRiderVerificationApproved": "Votre profil est vérifié",
   "notifRiderVerificationRejected": "Votre demande de vérification n'a pas été acceptée",
   "notifRiderVerificationExpiring": "La vérification de votre profil arrive bientôt à échéance",
-  "notifRiderVerificationExpired": "La vérification de votre profil a pris fin"
+  "notifRiderVerificationExpired": "La vérification de votre profil a pris fin",
+  "actionSearch": "Rechercher",
+  "errorVerificationRequired": "Réservé aux comptes vérifiés.",
+  "errorAlreadyInvited": "Ce club est déjà invité.",
+  "errorInvalidState": "Cette action n'est plus possible.",
+  "eventsTitle": "Événements moto",
+  "eventsEmptyTitle": "Aucun événement à venir",
+  "eventsEmptyBody": "Les clubs et regroupements vérifiés publient ici leurs rassemblements et sorties officielles.",
+  "eventByOrganizer": "Par {name}",
+  "@eventByOrganizer": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "eventGoingCount": "{count, plural, =0{Personne n'a encore confirmé} =1{1 motard y va} other{{count} motards y vont}}",
+  "@eventGoingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventNewTitle": "Nouvel événement",
+  "eventEditTitle": "Modifier l'événement",
+  "eventTitle": "Événement",
+  "eventCreate": "Créer un événement",
+  "eventFieldTitle": "Titre",
+  "eventFieldPlace": "Lieu",
+  "eventFieldCity": "Ville",
+  "eventFieldStart": "Début",
+  "eventFieldEnd": "Fin (facultatif)",
+  "eventNoEnd": "Non précisée",
+  "eventFieldDescription": "Description",
+  "eventEndBeforeStart": "La fin doit être après le début.",
+  "eventUntil": "Jusqu'au {date}",
+  "@eventUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "eventOrganizer": "Organisateur",
+  "eventCoOrganizer": "Co-organisateur",
+  "eventGoing": "J'y vais",
+  "eventIAmGoing": "J'y vais ✓ (toucher pour annuler)",
+  "eventCancelled": "Cet événement est annulé.",
+  "eventCancel": "Annuler l'événement",
+  "eventCancelTitle": "Annuler l'événement ?",
+  "eventCancelBody": "Les motards inscrits seront prévenus. Cette action est définitive.",
+  "eventCover": "Photo de couverture",
+  "eventInviteCoOrganizer": "Inviter un co-organisateur",
+  "eventInviteSearch": "Nom du club ou du regroupement vérifié",
+  "eventInviteNoVerified": "Aucun club ou regroupement vérifié trouvé.",
+  "eventInviteSent": "Invitation envoyée",
+  "eventInvitations": "Invitations de co-organisation",
+  "eventInvitationPending": "En attente de réponse",
+  "eventInvitationDeclined": "Refusée",
+  "eventNotFound": "Événement introuvable",
+  "notifEventCoOrganizerInvitation": "{who} invite {club} à co-organiser « {title} »",
+  "@notifEventCoOrganizerInvitation": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "club": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notifEventCoOrganizerAccepted": "{club} co-organise « {title} »",
+  "@notifEventCoOrganizerAccepted": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notifEventCoOrganizerDeclined": "{club} a décliné la co-organisation de « {title} »",
+  "@notifEventCoOrganizerDeclined": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notifEventCancelled": "L'événement « {title} » est annulé",
+  "@notifEventCancelled": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "listingBump": "Réactualiser l'annonce",
+  "listingBumpHelp": "Remonte votre annonce en tête du marketplace (une fois par 24 h).",
+  "listingBumpWait": "Déjà réactualisée : de nouveau possible 24 h après.",
+  "listingBumped": "Annonce remontée en tête"
 }

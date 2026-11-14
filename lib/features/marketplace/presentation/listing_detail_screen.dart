@@ -14,6 +14,7 @@ import '../../../core/widgets/photo_viewer.dart';
 import '../../../core/widgets/remote_avatar.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../clubs/presentation/widgets/verified_badge.dart';
 import '../../community/domain/community.dart';
 import '../../community/presentation/community_ui.dart';
 import '../../messages/data/messaging_repository.dart';
@@ -236,9 +237,24 @@ class _ListingBodyState extends ConsumerState<_ListingBody> {
                     l.sellerAvatar,
                   ),
                 ),
-                title: Text(
-                  l.sellerName.isEmpty ? l10n.profileHidden : l.sellerName,
-                  style: theme.textTheme.titleMedium,
+                title: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        l.sellerName.isEmpty
+                            ? l10n.profileHidden
+                            : l.sellerName,
+                        style: theme.textTheme.titleMedium,
+                      ),
+                    ),
+                    if (l.sellerVerified) ...[
+                      const SizedBox(width: AppSpacing.xs),
+                      const VerifiedBadge(
+                        key: Key('listing-seller-verified'),
+                        compact: true,
+                      ),
+                    ],
+                  ],
                 ),
                 subtitle: Text(l10n.listingSeller),
                 trailing: const Icon(Icons.chevron_right),
@@ -282,6 +298,27 @@ class _ListingBodyState extends ConsumerState<_ListingBody> {
                 ),
                 Text(l10n.marketSafety, style: theme.textTheme.bodySmall),
               ] else ...[
+                if (l.sellerVerified) ...[
+                  OutlinedButton.icon(
+                    key: const Key('listing-bump'),
+                    onPressed: _busy || !l.canBump
+                        ? null
+                        : () => _run(() async {
+                            await repo!.bump(l.id);
+                            _refresh();
+                            if (context.mounted) {
+                              showSnack(context, l10n.listingBumped);
+                            }
+                          }),
+                    icon: const Icon(Icons.arrow_upward),
+                    label: Text(l10n.listingBump),
+                  ),
+                  Text(
+                    l.canBump ? l10n.listingBumpHelp : l10n.listingBumpWait,
+                    style: theme.textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                ],
                 Text(
                   l10n.listingStatusTitle,
                   style: theme.textTheme.titleMedium,

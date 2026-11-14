@@ -13,6 +13,7 @@ import '../../community/data/community_providers.dart';
 import '../../community/presentation/post_feed.dart';
 import '../../notifications/presentation/notification_bell.dart';
 import 'home_clubs_section.dart';
+import 'home_events_section.dart';
 import 'home_rides_section.dart';
 
 /// Accueil : prochaines balades, clubs et publications communautaires.
@@ -117,6 +118,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   const HomeRidesSection(),
+                  const HomeEventsSection(),
                   SectionHeader(
                     title: l10n.homeClubs,
                     trailing: TextButton(
