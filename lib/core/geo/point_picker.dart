@@ -13,53 +13,100 @@ class GeoPoint {
   final double lng;
 }
 
-/// Ouvre un sélecteur de point sur carte ; null si annulé. Remplaçable en
-/// test (pas de rendu natif MapLibre en test de widget).
-typedef PointPicker = Future<GeoPoint?> Function(
+/// Départ et arrivée pointés sur une même carte (arrivée facultative).
+typedef RoutePoints = ({GeoPoint start, GeoPoint? destination});
+
+/// Ouvre le sélecteur ; null si annulé. Une seule carte pour les deux
+/// points (ouvrir deux cartes à la suite faisait planter certains Android).
+/// Remplaçable en test (pas de rendu natif MapLibre en test de widget).
+typedef RoutePicker = Future<RoutePoints?> Function(
   BuildContext context, {
-  GeoPoint? initial,
-  required String title,
+  GeoPoint? start,
+  GeoPoint? destination,
 });
 
-final pointPickerProvider = Provider<PointPicker>(
+final routePickerProvider = Provider<RoutePicker>(
   (ref) =>
-      (context, {initial, required title}) =>
-          Navigator.of(context, rootNavigator: true).push<GeoPoint>(
+      (context, {start, destination}) =>
+          Navigator.of(context, rootNavigator: true).push<RoutePoints>(
             MaterialPageRoute(
               fullscreenDialog: true,
               builder: (_) =>
-                  MapPointPickerScreen(initial: initial, title: title),
+                  MapRoutePickerScreen(start: start, destination: destination),
             ),
           ),
 );
 
-/// Carte plein écran : on déplace la carte sous le viseur central, puis
-/// « Valider ce point ».
-class MapPointPickerScreen extends ConsumerStatefulWidget {
-  const MapPointPickerScreen({super.key, this.initial, required this.title});
+/// Carte plein écran en deux étapes : on place le départ sous l'épingle,
+/// on valide, puis de même pour l'arrivée (ou « Sans arrivée »).
+class MapRoutePickerScreen extends ConsumerStatefulWidget {
+  const MapRoutePickerScreen({super.key, this.start, this.destination});
 
-  final GeoPoint? initial;
-  final String title;
+  final GeoPoint? start;
+  final GeoPoint? destination;
 
   @override
-  ConsumerState<MapPointPickerScreen> createState() =>
-      _MapPointPickerScreenState();
+  ConsumerState<MapRoutePickerScreen> createState() =>
+      _MapRoutePickerScreenState();
 }
 
-class _MapPointPickerScreenState extends ConsumerState<MapPointPickerScreen> {
+class _MapRoutePickerScreenState extends ConsumerState<MapRoutePickerScreen> {
   MapLibreMapController? _controller;
-  late LatLng _center = widget.initial == null
+  bool _styleReady = false;
+  GeoPoint? _start;
+  late LatLng _center = widget.start == null
       ? const LatLng(-4.3217, 15.3125) // Kinshasa
-      : LatLng(widget.initial!.lat, widget.initial!.lng);
+      : LatLng(widget.start!.lat, widget.start!.lng);
+
+  bool get _choosingDestination => _start != null;
+
+  @override
+  void dispose() {
+    _controller = null;
+    super.dispose();
+  }
 
   Future<void> _locateMe() async {
     final location = ref.read(locationServiceProvider);
     if (await location.ensurePermission() != LocationAccess.granted) return;
     final p = await location.current();
-    if (p == null) return;
+    if (p == null || !mounted) return;
     await _controller?.animateCamera(
       CameraUpdate.newLatLngZoom(LatLng(p.lat, p.lng), 16),
     );
+  }
+
+  Future<void> _confirm() async {
+    final point = GeoPoint(_center.latitude, _center.longitude);
+    if (!_choosingDestination) {
+      setState(() => _start = point);
+      final c = _controller;
+      if (c != null && _styleReady) {
+        try {
+          await c.addCircle(
+            CircleOptions(
+              geometry: _center,
+              circleRadius: 9,
+              circleColor: '#15803d',
+              circleStrokeColor: '#ffffff',
+              circleStrokeWidth: 3,
+            ),
+          );
+          if (widget.destination != null) {
+            await c.animateCamera(
+              CameraUpdate.newLatLng(
+                LatLng(widget.destination!.lat, widget.destination!.lng),
+              ),
+            );
+          }
+        } catch (_) {
+          // Le marqueur est un confort : jamais bloquant.
+        }
+      }
+      return;
+    }
+    Navigator.of(context)
+        .pop<RoutePoints>((start: _start!, destination: point));
   }
 
   @override
@@ -67,7 +114,11 @@ class _MapPointPickerScreenState extends ConsumerState<MapPointPickerScreen> {
     final l10n = AppLocalizations.of(context);
     final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+        title: Text(
+          _choosingDestination ? l10n.mapStepDestination : l10n.mapStepStart,
+        ),
+      ),
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -75,20 +126,24 @@ class _MapPointPickerScreenState extends ConsumerState<MapPointPickerScreen> {
             styleString: AppConfig.mapStyleUrl,
             initialCameraPosition: CameraPosition(
               target: _center,
-              zoom: widget.initial == null ? 12 : 15,
+              zoom: widget.start == null ? 12 : 15,
             ),
             trackCameraPosition: true,
             onMapCreated: (c) => _controller = c,
+            onStyleLoadedCallback: () => _styleReady = true,
             onCameraIdle: () {
               final pos = _controller?.cameraPosition;
               if (pos != null) _center = pos.target;
             },
           ),
-          // Viseur : la pointe de l'épingle désigne le centre de la carte.
           IgnorePointer(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 40),
-              child: Icon(Icons.location_on, size: 48, color: scheme.primary),
+              child: Icon(
+                _choosingDestination ? Icons.flag : Icons.location_on,
+                size: 48,
+                color: _choosingDestination ? scheme.error : scheme.primary,
+              ),
             ),
           ),
           Positioned(
@@ -106,15 +161,32 @@ class _MapPointPickerScreenState extends ConsumerState<MapPointPickerScreen> {
             right: 16,
             bottom: 24,
             child: SafeArea(
-              child: FilledButton.icon(
-                style: FilledButton.styleFrom(
-                  minimumSize: const Size.fromHeight(56),
-                ),
-                onPressed: () =>
-                    Navigator.of(context)
-                        .pop(GeoPoint(_center.latitude, _center.longitude)),
-                icon: const Icon(Icons.check),
-                label: Text(l10n.mapConfirmPoint),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  FilledButton.icon(
+                    key: const Key('map-confirm'),
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(56),
+                    ),
+                    onPressed: _confirm,
+                    icon: const Icon(Icons.check),
+                    label: Text(
+                      _choosingDestination
+                          ? l10n.mapConfirmDestination
+                          : l10n.mapConfirmStart,
+                    ),
+                  ),
+                  if (_choosingDestination)
+                    TextButton(
+                      key: const Key('map-skip-destination'),
+                      onPressed: () => Navigator.of(
+                        context,
+                      ).pop<RoutePoints>((start: _start!, destination: null)),
+                      child: Text(l10n.mapNoDestination),
+                    ),
+                ],
               ),
             ),
           ),

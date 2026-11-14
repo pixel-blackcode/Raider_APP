@@ -1656,6 +1656,9 @@ class FakeAlertSound implements AlertSound {
 
   @override
   Future<void> alert() async => played.add('alert');
+
+  @override
+  Future<void> stop() async => played.add('stop');
 }
 
 class FakeNotificationsRepository implements NotificationsRepository {

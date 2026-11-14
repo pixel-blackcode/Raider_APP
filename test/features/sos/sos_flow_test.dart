@@ -193,6 +193,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('sos-banner')), findsOneWidget);
     expect(find.text('SOS : Panne dans votre balade'), findsOneWidget);
+    // Le son peut être coupé sans quitter l'application.
+    await tester.tap(find.byKey(const Key('sos-banner-mute')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('sos-banner-mute')), findsNothing);
 
     await tester.tap(find.byKey(const Key('sos-banner-open')));
     await tester.pumpAndSettle();

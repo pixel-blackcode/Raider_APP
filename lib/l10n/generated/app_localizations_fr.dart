@@ -2044,16 +2044,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mapMyPosition => 'Ma position';
 
   @override
-  String get mapConfirmPoint => 'Valider ce point';
-
-  @override
-  String get rideMapPickStart => 'Pointer le départ sur la carte (facultatif)';
-
-  @override
-  String get rideMapPickDestination =>
-      'Pointer l\'arrivée sur la carte (facultatif)';
-
-  @override
   String get rideMapPointSet => 'Point pointé sur la carte ✓ (modifier)';
 
   @override
@@ -2358,4 +2348,26 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get verificationOneYear => '1 an';
+
+  @override
+  String get sosMute => 'Couper le son';
+
+  @override
+  String get mapStepStart => '1/2 · Lieu de départ';
+
+  @override
+  String get mapStepDestination => '2/2 · Lieu d\'arrivée';
+
+  @override
+  String get mapConfirmStart => 'Valider le départ';
+
+  @override
+  String get mapConfirmDestination => 'Valider l\'arrivée';
+
+  @override
+  String get mapNoDestination => 'Sans lieu d\'arrivée';
+
+  @override
+  String get rideMapPickRoute =>
+      'Pointer départ et arrivée sur la carte (facultatif)';
 }

@@ -201,15 +201,17 @@ class _RideFormState extends ConsumerState<_RideForm> {
     destinationLng: _destinationPoint?.lng,
   );
 
-  Future<void> _pickPoint({required bool start}) async {
-    final l10n = AppLocalizations.of(context);
-    final picked = await ref.read(pointPickerProvider)(
+  Future<void> _pickRoute() async {
+    final picked = await ref.read(routePickerProvider)(
       context,
-      initial: start ? _startPoint : (_destinationPoint ?? _startPoint),
-      title: start ? l10n.rideMapPickStart : l10n.rideMapPickDestination,
+      start: _startPoint,
+      destination: _destinationPoint,
     );
     if (picked == null || !mounted) return;
-    setState(() => start ? _startPoint = picked : _destinationPoint = picked);
+    setState(() {
+      _startPoint = picked.start;
+      _destinationPoint = picked.destination;
+    });
   }
 
   Future<void> _pickCover() async {
@@ -434,13 +436,6 @@ class _RideFormState extends ConsumerState<_RideForm> {
             validator: (v) =>
                 _lengthValidator(v, 2, 120, l10n.validationRidePlace),
           ),
-          _PointRow(
-            keyName: 'ride-pick-start',
-            point: _startPoint,
-            label: l10n.rideMapPickStart,
-            onPick: () => _pickPoint(start: true),
-            onClear: () => setState(() => _startPoint = null),
-          ),
           TextFormField(
             key: const Key('ride-field-destination'),
             controller: _destination,
@@ -453,11 +448,14 @@ class _RideFormState extends ConsumerState<_RideForm> {
                 _lengthValidator(v, 2, 120, l10n.validationRidePlace),
           ),
           _PointRow(
-            keyName: 'ride-pick-destination',
-            point: _destinationPoint,
-            label: l10n.rideMapPickDestination,
-            onPick: () => _pickPoint(start: false),
-            onClear: () => setState(() => _destinationPoint = null),
+            keyName: 'ride-pick-route',
+            point: _startPoint,
+            label: l10n.rideMapPickRoute,
+            onPick: _pickRoute,
+            onClear: () => setState(() {
+              _startPoint = null;
+              _destinationPoint = null;
+            }),
           ),
           if (_draft.distanceMeters != null)
             Padding(

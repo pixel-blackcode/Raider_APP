@@ -3700,24 +3700,6 @@ abstract class AppLocalizations {
   /// **'Ma position'**
   String get mapMyPosition;
 
-  /// No description provided for @mapConfirmPoint.
-  ///
-  /// In fr, this message translates to:
-  /// **'Valider ce point'**
-  String get mapConfirmPoint;
-
-  /// No description provided for @rideMapPickStart.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pointer le départ sur la carte (facultatif)'**
-  String get rideMapPickStart;
-
-  /// No description provided for @rideMapPickDestination.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pointer l\'arrivée sur la carte (facultatif)'**
-  String get rideMapPickDestination;
-
   /// No description provided for @rideMapPointSet.
   ///
   /// In fr, this message translates to:
@@ -4167,6 +4149,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'1 an'**
   String get verificationOneYear;
+
+  /// No description provided for @sosMute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couper le son'**
+  String get sosMute;
+
+  /// No description provided for @mapStepStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'1/2 · Lieu de départ'**
+  String get mapStepStart;
+
+  /// No description provided for @mapStepDestination.
+  ///
+  /// In fr, this message translates to:
+  /// **'2/2 · Lieu d\'arrivée'**
+  String get mapStepDestination;
+
+  /// No description provided for @mapConfirmStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider le départ'**
+  String get mapConfirmStart;
+
+  /// No description provided for @mapConfirmDestination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider l\'arrivée'**
+  String get mapConfirmDestination;
+
+  /// No description provided for @mapNoDestination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans lieu d\'arrivée'**
+  String get mapNoDestination;
+
+  /// No description provided for @rideMapPickRoute.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pointer départ et arrivée sur la carte (facultatif)'**
+  String get rideMapPickRoute;
 }
 
 class _AppLocalizationsDelegate

@@ -54,10 +54,7 @@ void main() {
       final picker = FakePhotoPicker(FakePhotoPicker.jpeg());
       final actions = FakeExternalActions();
       // Victoire (Kinshasa) → Kinkole.
-      final points = [
-        const GeoPoint(-4.3317, 15.3139),
-        const GeoPoint(-4.3986, 15.5017),
-      ];
+
       final container = await pumpOnlineApp(
         tester,
         auth: signedInAs(alice),
@@ -66,8 +63,11 @@ void main() {
         picker: picker,
         actions: actions,
         extraOverrides: [
-          pointPickerProvider.overrideWithValue(
-            (context, {initial, required title}) async => points.removeAt(0),
+          routePickerProvider.overrideWithValue(
+            (context, {start, destination}) async => (
+              start: const GeoPoint(-4.3317, 15.3139),
+              destination: const GeoPoint(-4.3986, 15.5017),
+            ),
           ),
         ],
       );
@@ -90,9 +90,8 @@ void main() {
         find.byKey(const Key('ride-field-destination')),
         'Kinkole plage',
       );
-      await tapVisible(tester, find.byKey(const Key('ride-pick-start')));
       expect(find.byKey(const Key('ride-distance')), findsNothing);
-      await tapVisible(tester, find.byKey(const Key('ride-pick-destination')));
+      await tapVisible(tester, find.byKey(const Key('ride-pick-route')));
       expect(find.text('≈ 22,1 km à vol d\'oiseau'), findsOneWidget);
 
       await tapVisible(tester, find.byKey(const Key('ride-publish')));

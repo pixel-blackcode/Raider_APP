@@ -929,9 +929,6 @@
   "listingDeleted": "Annonce supprimée.",
   "reportTargetListing": "annonce",
   "mapMyPosition": "Ma position",
-  "mapConfirmPoint": "Valider ce point",
-  "rideMapPickStart": "Pointer le départ sur la carte (facultatif)",
-  "rideMapPickDestination": "Pointer l'arrivée sur la carte (facultatif)",
   "rideMapPointSet": "Point pointé sur la carte ✓ (modifier)",
   "rideMapClear": "Retirer le point",
   "rideDistance": "≈ {distance} à vol d'oiseau",
@@ -1238,5 +1235,12 @@
       }
     }
   },
-  "verificationOneYear": "1 an"
+  "verificationOneYear": "1 an",
+  "sosMute": "Couper le son",
+  "mapStepStart": "1/2 · Lieu de départ",
+  "mapStepDestination": "2/2 · Lieu d'arrivée",
+  "mapConfirmStart": "Valider le départ",
+  "mapConfirmDestination": "Valider l'arrivée",
+  "mapNoDestination": "Sans lieu d'arrivée",
+  "rideMapPickRoute": "Pointer départ et arrivée sur la carte (facultatif)"
 }

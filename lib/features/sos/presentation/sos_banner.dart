@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -58,6 +60,21 @@ class SosAlertsOverlay extends ConsumerStatefulWidget {
 
 class _SosAlertsOverlayState extends ConsumerState<SosAlertsOverlay> {
   final _signaled = <String>{};
+  Timer? _soundTimer;
+  bool _ringing = false;
+
+  /// Le son s'arrête seul après 20 s, ou dès que le motard réagit.
+  void _stopSound() {
+    _soundTimer?.cancel();
+    if (_ringing) ref.read(alertSoundProvider).stop();
+    if (mounted && _ringing) setState(() => _ringing = false);
+  }
+
+  @override
+  void dispose() {
+    _soundTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +85,17 @@ class _SosAlertsOverlayState extends ConsumerState<SosAlertsOverlay> {
       // Le SOS sonne toujours, même si les sons sont désactivés.
       ref.read(alertSoundProvider).alert();
       HapticFeedback.heavyImpact();
+      _soundTimer?.cancel();
+      _soundTimer = Timer(const Duration(seconds: 20), _stopSound);
+      setState(() => _ringing = true);
     });
     final incoming = ref.watch(incomingSosProvider);
-    if (incoming.isEmpty) return widget.child;
+    if (incoming.isEmpty) {
+      if (_ringing) {
+        WidgetsBinding.instance.addPostFrameCallback((_) => _stopSound());
+      }
+      return widget.child;
+    }
 
     final l10n = AppLocalizations.of(context);
     final colors = Theme.of(context).extension<RiderColors>()!;
@@ -110,23 +135,41 @@ class _SosAlertsOverlayState extends ConsumerState<SosAlertsOverlay> {
                       ],
                     ),
                   ),
+                  if (_ringing)
+                    // Pas d'infobulle : le bandeau est au-dessus du Navigator.
+                    Semantics(
+                      label: l10n.sosMute,
+                      button: true,
+                      child: IconButton(
+                        key: const Key('sos-banner-mute'),
+                        color: colors.onSos,
+                        onPressed: _stopSound,
+                        icon: const Icon(Icons.volume_off),
+                      ),
+                    ),
                   TextButton(
                     key: const Key('sos-banner-open'),
                     style: TextButton.styleFrom(
                       foregroundColor: colors.onSos,
                       textStyle: const TextStyle(fontWeight: FontWeight.w800),
                     ),
-                    onPressed: () => ref
-                        .read(routerProvider)
-                        .push(AppRoutes.sos(latest.rideId)),
+                    onPressed: () {
+                      _stopSound();
+                      ref
+                          .read(routerProvider)
+                          .push(AppRoutes.sos(latest.rideId));
+                    },
                     child: Text(l10n.sosBannerView),
                   ),
                   TextButton(
                     key: const Key('sos-banner-dismiss'),
                     style: TextButton.styleFrom(foregroundColor: colors.onSos),
-                    onPressed: () => ref
-                        .read(dismissedSosProvider.notifier)
-                        .dismiss(latest.id),
+                    onPressed: () {
+                      _stopSound();
+                      ref
+                          .read(dismissedSosProvider.notifier)
+                          .dismiss(latest.id);
+                    },
                     child: Text(l10n.sosBannerDismiss),
                   ),
                 ],

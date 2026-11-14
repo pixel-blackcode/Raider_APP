@@ -11,6 +11,9 @@ abstract interface class AlertSound {
 
   /// Alerte SOS (plus marquée).
   Future<void> alert();
+
+  /// Coupe le son en cours.
+  Future<void> stop();
 }
 
 class RingtoneAlertSound implements AlertSound {
@@ -32,6 +35,13 @@ class RingtoneAlertSound implements AlertSound {
     } catch (_) {
       await SystemSound.play(SystemSoundType.alert);
     }
+  }
+
+  @override
+  Future<void> stop() async {
+    try {
+      await _player.stop();
+    } catch (_) {}
   }
 }
 
