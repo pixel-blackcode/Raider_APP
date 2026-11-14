@@ -8,6 +8,7 @@ import '../../../core/media/media_repository.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/dialogs.dart';
+import '../../../core/widgets/photo_viewer.dart';
 import '../../../core/widgets/remote_avatar.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
@@ -252,10 +253,7 @@ class _PostCardState extends ConsumerState<PostCard> {
           if (p.mediaPaths.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: AppSpacing.xs),
-              child: GestureDetector(
-                onTap: openDetail,
-                child: _PostPhotos(paths: p.mediaPaths),
-              ),
+              child: _PostPhotos(postId: p.id, paths: p.mediaPaths),
             ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
@@ -349,40 +347,76 @@ class _ReactionButton extends StatelessWidget {
   }
 }
 
+/// Photos d'une publication : une grande, ou une grille de 4 au plus avec
+/// « +N » ; un appui ouvre la visionneuse plein écran (zoom).
 class _PostPhotos extends ConsumerWidget {
-  const _PostPhotos({required this.paths});
+  const _PostPhotos({required this.postId, required this.paths});
 
+  final String postId;
   final List<String> paths;
+
+  static const _maxTiles = 4;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final media = ref.watch(mediaRepositoryProvider);
     final scheme = Theme.of(context).colorScheme;
+    final providers = [
+      for (final p in paths) media?.imageProvider(MediaBucket.postMedia, p),
+    ];
 
-    Widget photo(String path) {
-      final provider = media?.imageProvider(MediaBucket.postMedia, path);
+    Widget photo(int i) {
+      final provider = providers[i];
       final placeholder = ColoredBox(
         color: scheme.surfaceContainerHighest,
         child: Icon(Icons.image_outlined, color: scheme.onSurfaceVariant),
       );
-      if (provider == null) return placeholder;
-      return Image(
-        image: provider,
-        fit: BoxFit.cover,
-        errorBuilder: (_, _, _) => placeholder,
+      final hidden = paths.length - _maxTiles;
+      return GestureDetector(
+        key: Key('post-photo-$postId-$i'),
+        onTap: () =>
+            openPhotoViewer(context, images: providers, initialIndex: i),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            if (provider == null)
+              placeholder
+            else
+              Image(
+                image: provider,
+                fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => placeholder,
+              ),
+            if (paths.length > _maxTiles && i == _maxTiles - 1)
+              ColoredBox(
+                color: Colors.black54,
+                child: Center(
+                  child: Text(
+                    '+$hidden',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
       );
     }
 
     if (paths.length == 1) {
-      return AspectRatio(aspectRatio: 4 / 3, child: photo(paths.first));
+      return AspectRatio(aspectRatio: 4 / 3, child: photo(0));
     }
+    final tiles = paths.length > _maxTiles ? _maxTiles : paths.length;
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       mainAxisSpacing: 2,
       crossAxisSpacing: 2,
-      children: [for (final p in paths) photo(p)],
+      children: [for (var i = 0; i < tiles; i++) photo(i)],
     );
   }
 }

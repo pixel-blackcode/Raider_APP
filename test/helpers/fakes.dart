@@ -15,6 +15,8 @@ import 'package:rider_group/features/community/domain/community.dart';
 import 'package:rider_group/features/convoy/data/convoy_repository.dart';
 import 'package:rider_group/features/convoy/data/location_service.dart';
 import 'package:rider_group/features/convoy/domain/convoy.dart';
+import 'package:rider_group/features/marketplace/data/marketplace_repository.dart';
+import 'package:rider_group/features/marketplace/domain/marketplace.dart';
 import 'package:rider_group/features/messages/data/messaging_repository.dart';
 import 'package:rider_group/features/messages/domain/messaging.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
@@ -1213,6 +1215,19 @@ class FakeCommunityRepository implements CommunityRepository {
   }
 
   @override
+  Future<List<RiderHit>> searchRiders(String query) async {
+    String fold(String v) => v.toLowerCase().replaceAll('ph', 'f');
+    final q = fold(query.replaceFirst('@', '').trim());
+    if (q.length < 2) return const [];
+    return [
+      for (final p in profiles.values)
+        if (p.id != currentUserId &&
+            (fold(p.displayName).contains(q) || fold(p.username).contains(q)))
+          RiderHit(id: p.id, username: p.username, displayName: p.displayName),
+    ];
+  }
+
+  @override
   Future<bool> amIModerator() async => moderators.contains(currentUserId);
 
   @override
@@ -1406,5 +1421,181 @@ class FakeMessagingRepository implements MessagingRepository {
   Future<void> removeMember(String conversationId, String userId) async {
     calls.add('remove:$conversationId:$userId');
     members[conversationId]?.remove(userId);
+  }
+}
+
+/// Doublure de la marketplace : filtres simplifiés, pannes simulables.
+class FakeMarketplaceRepository implements MarketplaceRepository {
+  FakeMarketplaceRepository({
+    required this.currentUserId,
+    this.profiles = const {},
+  });
+
+  String currentUserId;
+  final Map<String, Profile> profiles;
+  final listings = <Listing>[];
+  final favorites = <String>{};
+  final calls = <String>[];
+  final createdRefs = <String>[];
+  AppException? createError;
+  var _seq = 0;
+
+  Listing add({
+    required String sellerId,
+    String title = 'Casque LS2',
+    ListingCategory category = ListingCategory.helmet,
+    double? price = 80,
+    Currency currency = Currency.usd,
+    ListingStatus status = ListingStatus.available,
+    String city = 'Kinshasa',
+    List<String> mediaPaths = const [],
+  }) {
+    final l = Listing(
+      id: 'listing-${++_seq}',
+      sellerId: sellerId,
+      sellerName: profiles[sellerId]?.displayName ?? '',
+      category: category,
+      title: title,
+      condition: ListingCondition.good,
+      city: city,
+      price: price,
+      currency: currency,
+      status: status,
+      mediaPaths: mediaPaths,
+      createdAt: DateTime.now().toUtc(),
+    );
+    listings.insert(0, l);
+    return l;
+  }
+
+  Listing _view(Listing l) => Listing(
+    id: l.id,
+    sellerId: l.sellerId,
+    sellerName: l.sellerName,
+    category: l.category,
+    title: l.title,
+    description: l.description,
+    condition: l.condition,
+    city: l.city,
+    area: l.area,
+    price: l.price,
+    currency: l.currency,
+    status: l.status,
+    mediaPaths: l.mediaPaths,
+    createdAt: l.createdAt,
+    isFavorite: favorites.contains(l.id),
+  );
+
+  @override
+  Future<List<Listing>> search(ListingFilter f, {required String me}) async {
+    String fold(String v) => v.toLowerCase().replaceAll('ph', 'f');
+    return [
+      for (final l in listings)
+        if ((f.scope != ListingScope.mine || l.sellerId == me) &&
+            (f.scope != ListingScope.favorites || favorites.contains(l.id)) &&
+            (f.scope == ListingScope.mine || l.status != ListingStatus.sold) &&
+            (f.category == null || l.category == f.category) &&
+            (f.query.trim().length < 2 ||
+                fold(l.title).contains(fold(f.query.trim()))) &&
+            (f.maxPrice == null ||
+                (l.price != null && l.price! <= f.maxPrice!)))
+          _view(l),
+    ];
+  }
+
+  @override
+  Future<Listing?> listing(String id) async {
+    for (final l in listings) {
+      if (l.id == id) return _view(l);
+    }
+    return null;
+  }
+
+  @override
+  Future<String> create(
+    ListingDraft draft, {
+    required String clientRef,
+    List<String> mediaPaths = const [],
+  }) async {
+    calls.add('create:${draft.category.name}:${mediaPaths.length}');
+    createdRefs.add(clientRef);
+    if (createError != null) throw createError!;
+    return add(
+      sellerId: currentUserId,
+      title: draft.title,
+      category: draft.category,
+      price: draft.price,
+      currency: draft.currency,
+      city: draft.city,
+      mediaPaths: mediaPaths,
+    ).id;
+  }
+
+  @override
+  Future<List<String>> update(
+    String id,
+    ListingDraft draft, {
+    List<String> mediaPaths = const [],
+  }) async {
+    calls.add('update:$id:${draft.title}');
+    final i = listings.indexWhere((l) => l.id == id);
+    final old = listings[i];
+    listings[i] = Listing(
+      id: id,
+      sellerId: old.sellerId,
+      sellerName: old.sellerName,
+      category: draft.category,
+      title: draft.title,
+      condition: draft.condition,
+      city: draft.city,
+      price: draft.price,
+      currency: draft.currency,
+      status: old.status,
+      mediaPaths: mediaPaths,
+      createdAt: old.createdAt,
+    );
+    return [
+      for (final p in old.mediaPaths)
+        if (!mediaPaths.contains(p)) p,
+    ];
+  }
+
+  @override
+  Future<void> setStatus(String id, ListingStatus status) async {
+    calls.add('status:$id:${status.name}');
+    final i = listings.indexWhere((l) => l.id == id);
+    final old = listings[i];
+    listings[i] = Listing(
+      id: id,
+      sellerId: old.sellerId,
+      sellerName: old.sellerName,
+      category: old.category,
+      title: old.title,
+      condition: old.condition,
+      city: old.city,
+      price: old.price,
+      currency: old.currency,
+      status: status,
+      mediaPaths: old.mediaPaths,
+      createdAt: old.createdAt,
+    );
+  }
+
+  @override
+  Future<List<String>> delete(String id) async {
+    calls.add('delete:$id');
+    final l = listings.firstWhere((l) => l.id == id);
+    listings.remove(l);
+    return l.mediaPaths;
+  }
+
+  @override
+  Future<void> setFavorite(String id, {required bool favorite}) async {
+    calls.add('favorite:$id:$favorite');
+    if (favorite) {
+      favorites.add(id);
+    } else {
+      favorites.remove(id);
+    }
   }
 }

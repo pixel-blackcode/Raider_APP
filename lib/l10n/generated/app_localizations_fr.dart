@@ -78,11 +78,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get marketplaceSubtitle => 'Motos, pièces et équipements';
 
   @override
-  String get marketplaceEmptyTitle => 'Aucune annonce pour le moment';
+  String get marketplaceEmptyTitle => 'Aucune annonce';
 
   @override
   String get marketplaceEmptyBody =>
-      'Les petites annonces entre motards arrivent bientôt. Aucun paiement n\'est effectué dans l\'application : les échanges se concluent directement entre utilisateurs.';
+      'Aucune annonce ne correspond. Touchez « Vendre » pour publier la vôtre.';
 
   @override
   String get ridesTitle => 'Balades';
@@ -1853,4 +1853,190 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get convoyRoleButton => 'Rôle';
+
+  @override
+  String get actionClose => 'Fermer';
+
+  @override
+  String get actionEdit => 'Modifier';
+
+  @override
+  String validationTooShort(int min) {
+    return 'Au moins $min caractères';
+  }
+
+  @override
+  String get marketSell => 'Vendre';
+
+  @override
+  String get marketSearchHint => 'Rechercher : casque, Honda, pneu…';
+
+  @override
+  String get marketFilters => 'Filtres';
+
+  @override
+  String get marketMaxPrice => 'Prix maximum';
+
+  @override
+  String get marketAnyCurrency => 'Toutes';
+
+  @override
+  String get marketApplyFilters => 'Appliquer';
+
+  @override
+  String get marketAll => 'Toutes';
+
+  @override
+  String get marketMine => 'Mes annonces';
+
+  @override
+  String get marketFavorites => 'Favoris';
+
+  @override
+  String get marketSafety =>
+      'Aucun paiement dans Rider Group : la vente se conclut directement entre vous. Voyez l\'article avant de payer et méfiez-vous des demandes d\'avance.';
+
+  @override
+  String get listingCatMotorcycle => 'Motos';
+
+  @override
+  String get listingCatParts => 'Pièces';
+
+  @override
+  String get listingCatHelmet => 'Casques';
+
+  @override
+  String get listingCatProtection => 'Protections';
+
+  @override
+  String get listingCatAccessories => 'Accessoires';
+
+  @override
+  String get listingCatOther => 'Autres';
+
+  @override
+  String get listingCondNew => 'Neuf';
+
+  @override
+  String get listingCondLikeNew => 'Comme neuf';
+
+  @override
+  String get listingCondGood => 'Bon état';
+
+  @override
+  String get listingCondFair => 'État correct';
+
+  @override
+  String get listingCondForParts => 'Pour pièces';
+
+  @override
+  String get listingStatusAvailable => 'Disponible';
+
+  @override
+  String get listingStatusReserved => 'Réservé';
+
+  @override
+  String get listingStatusSold => 'Vendu';
+
+  @override
+  String get listingStatusTitle => 'Statut de l\'annonce';
+
+  @override
+  String get listingPriceOnRequest => 'Prix à discuter';
+
+  @override
+  String get listingTitle => 'Annonce';
+
+  @override
+  String get listingNewTitle => 'Nouvelle annonce';
+
+  @override
+  String get listingEditTitle => 'Modifier l\'annonce';
+
+  @override
+  String get listingTitleField => 'Titre';
+
+  @override
+  String get listingCategory => 'Catégorie';
+
+  @override
+  String get listingCondition => 'État';
+
+  @override
+  String get listingPriceField => 'Prix indicatif';
+
+  @override
+  String get listingPriceHelper => 'Vide : prix à discuter';
+
+  @override
+  String get listingPriceInvalid => 'Prix invalide';
+
+  @override
+  String get listingCity => 'Ville';
+
+  @override
+  String get listingArea => 'Quartier ou commune (facultatif)';
+
+  @override
+  String get listingAreaHelper => 'Jamais d\'adresse exacte';
+
+  @override
+  String listingPhotos(int count) {
+    return 'Photos ($count/10)';
+  }
+
+  @override
+  String get listingPublish => 'Publier l\'annonce';
+
+  @override
+  String get listingPublishedDone => 'Annonce publiée.';
+
+  @override
+  String get listingSaved => 'Annonce enregistrée.';
+
+  @override
+  String get listingNotSent => 'Annonce NON envoyée.';
+
+  @override
+  String get listingNoPayment =>
+      'Le prix est indicatif : aucun paiement ne passe par l\'application.';
+
+  @override
+  String listingPublished(String time) {
+    return 'Publiée $time';
+  }
+
+  @override
+  String get listingSeller => 'Vendeur';
+
+  @override
+  String get listingContact => 'Contacter le vendeur';
+
+  @override
+  String listingContactDraft(String title) {
+    return 'Bonjour, votre annonce « $title » est-elle toujours disponible ?';
+  }
+
+  @override
+  String get listingHiddenNotice =>
+      'Masquée par la modération : visible seulement par vous.';
+
+  @override
+  String get listingNotFoundTitle => 'Annonce introuvable';
+
+  @override
+  String get listingNotFoundBody =>
+      'Elle a été supprimée, masquée, ou ne vous est pas accessible.';
+
+  @override
+  String get listingDeleteTitle => 'Supprimer cette annonce ?';
+
+  @override
+  String get listingDeleteBody => 'L\'annonce et ses photos seront supprimées.';
+
+  @override
+  String get listingDeleted => 'Annonce supprimée.';
+
+  @override
+  String get reportTargetListing => 'annonce';
 }

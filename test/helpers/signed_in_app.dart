@@ -12,6 +12,7 @@ import 'package:rider_group/features/community/data/community_repository.dart';
 import 'package:rider_group/features/convoy/data/convoy_repository.dart';
 import 'package:rider_group/features/convoy/data/location_service.dart';
 import 'package:rider_group/features/convoy/presentation/convoy_map.dart';
+import 'package:rider_group/features/marketplace/data/marketplace_repository.dart';
 import 'package:rider_group/features/messages/data/messaging_repository.dart';
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
@@ -45,6 +46,7 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeExternalActions? actions,
   FakeCommunityRepository? community,
   FakeMessagingRepository? messaging,
+  FakeMarketplaceRepository? marketplace,
 }) {
   return pumpRiderGroupApp(
     tester,
@@ -92,6 +94,13 @@ Future<ProviderContainer> pumpOnlineApp(
       messagingRepositoryProvider.overrideWithValue(
         messaging ??
             FakeMessagingRepository(
+              currentUserId: auth.currentSession?.userId ?? '',
+              profiles: testProfiles,
+            ),
+      ),
+      marketplaceRepositoryProvider.overrideWithValue(
+        marketplace ??
+            FakeMarketplaceRepository(
               currentUserId: auth.currentSession?.userId ?? '',
               profiles: testProfiles,
             ),

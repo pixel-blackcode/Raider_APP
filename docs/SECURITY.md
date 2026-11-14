@@ -129,6 +129,15 @@ Règles complémentaires :
 - **Messagerie** : conversations privées et de groupe réservées à leurs membres ; discussion de balade réservée aux participants confirmés et organisateurs (accès recalculé à chaque lecture) ; pas de message vers ou depuis un motard bloqué.
 - Suppression de compte : publications, commentaires et réactions supprimés ; photos effacées par l'application avant la suppression ; messages conservés sans auteur.
 
+## Marketplace (Mission 08)
+
+- **Aucun paiement** ni transaction dans l'application (aucune table de commande, panier ou paiement — vérifié par test).
+- **Annonces** visibles des seuls motards connectés ; masquées entre motards qui se sont bloqués ; seules les annonces « vendues » du vendeur restent visibles pour lui dans « Mes annonces ».
+- **Écritures** uniquement via fonctions serveur (`create_listing` idempotente, `update_listing`, `set_listing_status`, `delete_listing`, `set_listing_favorite`) ; seul le vendeur modifie ; 20 annonces par 24 h.
+- **Photos** (`listing-media`, privé, 5 Mo, images, 10 max) : dans son propre dossier, rattachées seulement si le fichier existe ; lecture si l'annonce est visible.
+- **Localisation approximative** (ville, quartier) : jamais d'adresse exacte.
+- Signalement et modération identiques aux publications ; les annonces masquées restent visibles par leur vendeur avec une mention.
+
 ## Journal d'audit
 
 `private.audit_logs` enregistre l'auteur, l'action, l'entité et les détails de chaque opération sensible :

@@ -100,9 +100,11 @@ void main() {
 
     await tester.tap(find.byKey(const Key('shortcut-marketplace')));
     await tester.pumpAndSettle();
-    expect(find.text('Aucune annonce pour le moment'), findsOneWidget);
+    // Hors connexion au serveur : état vide, et rappel « aucun paiement ».
+    expect(find.text('Aucune annonce'), findsOneWidget);
+    expect(find.byKey(const Key('market-safety')), findsOneWidget);
     expect(
-      find.textContaining('Aucun paiement n\'est effectué'),
+      find.textContaining('Aucun paiement dans Rider Group'),
       findsOneWidget,
     );
   });

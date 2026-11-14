@@ -112,6 +112,22 @@ Astuce : avec un seul téléphone, déconnectez-vous et reconnectez-vous avec le
 | 7.9 | Fiche d'une balade où A et B sont inscrits → « Discussion de la balade » | Les deux participants écrivent dans la même discussion |
 | 7.10 | B : profil de A → Bloquer | Les publications de A disparaissent chez B ; plus de message possible. Profil → Motards bloqués → Débloquer |
 
+## 8. Marketplace, photos et recherche
+
+| # | Action | Résultat attendu |
+| --- | --- | --- |
+| 8.1 | Accueil → Marketplace | Rappel « Aucun paiement dans Rider Group… » ; annonces en grille |
+| 8.2 | « Vendre » → 3 photos, titre, prix 80 USD, état, ville → Publier | Fiche de l'annonce ; « 80 $ » |
+| 8.3 | Mode avion → nouvelle annonce → Publier, puis sans mode avion → Publier | « Annonce NON envoyée », puis une seule annonce |
+| 8.4 | Compte B : rechercher avec une faute (ex. « fenix » pour « Phoenix ») | L'annonce est trouvée |
+| 8.5 | Compte B : filtres (catégorie, prix maximum, ville) | Liste filtrée |
+| 8.6 | Compte B : cœur (favori), puis onglet « Favoris » | L'annonce y apparaît |
+| 8.7 | Compte B : « Contacter le vendeur » | Conversation ouverte avec un brouillon, non envoyé tant que B n'appuie pas sur Envoyer |
+| 8.8 | Compte A : sur sa fiche, « Vendu » | L'annonce disparaît de la recherche de B |
+| 8.9 | Publication avec 7 photos → toucher une photo | Visionneuse plein écran ; glisser pour changer ; pincer ou double appui pour zoomer |
+| 8.10 | Messages → Nouveau message → taper le début d'un nom (ex. « pix ») | Liste de motards proposés |
+| 8.11 | Clubs → Découvrir → taper un nom avec une faute | Le club est trouvé |
+
 ## Signaler un problème
 
 Pour chaque anomalie, note :

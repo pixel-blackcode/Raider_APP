@@ -53,6 +53,9 @@ abstract interface class CommunityRepository {
 
   Future<bool> amIModerator();
 
+  /// Recherche tolérante (fautes, accents, « ph » = « f ») par nom ou pseudo.
+  Future<List<RiderHit>> searchRiders(String query);
+
   Future<List<ModerationItem>> moderationQueue();
 
   Future<void> moderate(
@@ -209,6 +212,16 @@ class SupabaseCommunityRepository implements CommunityRepository {
       },
     ),
   );
+
+  @override
+  Future<List<RiderHit>> searchRiders(String query) => _guard(() async {
+    if (query.trim().length < 2) return const [];
+    final data = await _client.rpc<Object?>(
+      'search_riders',
+      params: {'p_query': query.trim(), 'p_limit': 20},
+    );
+    return _rows(data).map(RiderHit.fromJson).toList();
+  });
 
   @override
   Future<bool> amIModerator() =>

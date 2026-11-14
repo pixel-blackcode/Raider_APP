@@ -22,8 +22,8 @@
   "garageEmptyBody": "Vous pourrez bientôt enregistrer vos motos et suivre leur entretien. Ces informations resteront privées par défaut.",
   "marketplaceTitle": "Marketplace",
   "marketplaceSubtitle": "Motos, pièces et équipements",
-  "marketplaceEmptyTitle": "Aucune annonce pour le moment",
-  "marketplaceEmptyBody": "Les petites annonces entre motards arrivent bientôt. Aucun paiement n'est effectué dans l'application : les échanges se concluent directement entre utilisateurs.",
+  "marketplaceEmptyTitle": "Aucune annonce",
+  "marketplaceEmptyBody": "Aucune annonce ne correspond. Touchez « Vendre » pour publier la vôtre.",
   "ridesTitle": "Balades",
   "ridesEmptyTitle": "Aucune balade pour le moment",
   "ridesEmptyBody": "Vous pourrez bientôt créer, rechercher et rejoindre des balades, seul ou avec votre club.",
@@ -841,5 +841,91 @@
       }
     }
   },
-  "convoyRoleButton": "Rôle"
+  "convoyRoleButton": "Rôle",
+  "actionClose": "Fermer",
+  "actionEdit": "Modifier",
+  "validationTooShort": "Au moins {min} caractères",
+  "@validationTooShort": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "marketSell": "Vendre",
+  "marketSearchHint": "Rechercher : casque, Honda, pneu…",
+  "marketFilters": "Filtres",
+  "marketMaxPrice": "Prix maximum",
+  "marketAnyCurrency": "Toutes",
+  "marketApplyFilters": "Appliquer",
+  "marketAll": "Toutes",
+  "marketMine": "Mes annonces",
+  "marketFavorites": "Favoris",
+  "marketSafety": "Aucun paiement dans Rider Group : la vente se conclut directement entre vous. Voyez l'article avant de payer et méfiez-vous des demandes d'avance.",
+  "listingCatMotorcycle": "Motos",
+  "listingCatParts": "Pièces",
+  "listingCatHelmet": "Casques",
+  "listingCatProtection": "Protections",
+  "listingCatAccessories": "Accessoires",
+  "listingCatOther": "Autres",
+  "listingCondNew": "Neuf",
+  "listingCondLikeNew": "Comme neuf",
+  "listingCondGood": "Bon état",
+  "listingCondFair": "État correct",
+  "listingCondForParts": "Pour pièces",
+  "listingStatusAvailable": "Disponible",
+  "listingStatusReserved": "Réservé",
+  "listingStatusSold": "Vendu",
+  "listingStatusTitle": "Statut de l'annonce",
+  "listingPriceOnRequest": "Prix à discuter",
+  "listingTitle": "Annonce",
+  "listingNewTitle": "Nouvelle annonce",
+  "listingEditTitle": "Modifier l'annonce",
+  "listingTitleField": "Titre",
+  "listingCategory": "Catégorie",
+  "listingCondition": "État",
+  "listingPriceField": "Prix indicatif",
+  "listingPriceHelper": "Vide : prix à discuter",
+  "listingPriceInvalid": "Prix invalide",
+  "listingCity": "Ville",
+  "listingArea": "Quartier ou commune (facultatif)",
+  "listingAreaHelper": "Jamais d'adresse exacte",
+  "listingPhotos": "Photos ({count}/10)",
+  "@listingPhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "listingPublish": "Publier l'annonce",
+  "listingPublishedDone": "Annonce publiée.",
+  "listingSaved": "Annonce enregistrée.",
+  "listingNotSent": "Annonce NON envoyée.",
+  "listingNoPayment": "Le prix est indicatif : aucun paiement ne passe par l'application.",
+  "listingPublished": "Publiée {time}",
+  "@listingPublished": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "listingSeller": "Vendeur",
+  "listingContact": "Contacter le vendeur",
+  "listingContactDraft": "Bonjour, votre annonce « {title} » est-elle toujours disponible ?",
+  "@listingContactDraft": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "listingHiddenNotice": "Masquée par la modération : visible seulement par vous.",
+  "listingNotFoundTitle": "Annonce introuvable",
+  "listingNotFoundBody": "Elle a été supprimée, masquée, ou ne vous est pas accessible.",
+  "listingDeleteTitle": "Supprimer cette annonce ?",
+  "listingDeleteBody": "L'annonce et ses photos seront supprimées.",
+  "listingDeleted": "Annonce supprimée.",
+  "reportTargetListing": "annonce"
 }

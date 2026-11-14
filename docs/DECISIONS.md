@@ -49,6 +49,12 @@
 | D-44 | **Blocage réciproque et silencieux** : la personne bloquée n'est pas prévenue. | Pratique standard de sécurité des réseaux sociaux. |
 | D-45 | **3 signalements distincts masquent automatiquement** un contenu en attendant la décision d'un modérateur. | Limite l'exposition aux contenus abusifs sans attendre ; réversible (« Rétablir »). |
 | D-46 | **Discussion de balade : accès dérivé de la participation** (pas de liste de membres séparée). | Un participant retiré perd l'accès immédiatement, comme pour le Convoi et le SOS. |
+| D-47 | **Marketplace sans paiement** : prix indicatif (USD ou CDF, ou « à discuter »), contact par la messagerie, rappel de prudence ; zone approximative seulement. | Critère 14 ; aucune responsabilité de paiement pour la plateforme. |
+| D-48 | **Recherche tolérante** : texte « plié » (minuscules, sans accents, « ph » = « f », lettres doublées réduites) + similarité par trigrammes (`pg_trgm`). | Demande du propriétaire (Phoenix / Fenix) ; reste performant avec des index. |
+| D-49 | **10 photos** par publication et par annonce. | Demande du propriétaire (14/11/2026). |
+| D-50 | **Certification payante** (Mission 09) : motard 9 $/mois, club 20 $/mois, regroupement 20 $/mois ; paiement Mobile Money hors application ; le payeur saisit la référence, l'administration saisit les paiements reçus ; correspondance = activation pour 1 mois ; le paiement seul suffit pour le badge. | Décision du propriétaire (14/11/2026). Risque signalé : les magasins d'applications peuvent exiger leur système de paiement pour un abonnement qui débloque des fonctions. |
+| D-51 | **Itinéraire pour les retardataires** : seul le trajet du chef de convoi est enregistré pendant la balade, visible des participants, supprimé 72 h après la fin. | Décision du propriétaire (14/11/2026) ; complète D-35. |
+| D-52 | **Notifications** : cloche et sons dans l'application d'abord, notifications push (Firebase) ensuite. | Décision du propriétaire (14/11/2026) ; fait évoluer D-38. |
 | D-31 | Suppression de compte : fichiers de club conservés sans propriétaire ; refus tant qu'on organise une balade active avec des inscrits ; historique des balades terminées conservé. | Documentation Supabase (« You cannot delete a user if they are the owner of any objects in Supabase Storage ») ; évite d'effacer l'historique ou d'abandonner une balade en cours. |
 
 ## Décisions ouvertes (validation du propriétaire requise)

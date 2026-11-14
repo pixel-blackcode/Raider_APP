@@ -22,7 +22,7 @@ class PostComposerScreen extends ConsumerStatefulWidget {
 
   final String? clubId;
 
-  static const maxPhotos = 4;
+  static const maxPhotos = 10;
 
   @override
   ConsumerState<PostComposerScreen> createState() => _PostComposerScreenState();

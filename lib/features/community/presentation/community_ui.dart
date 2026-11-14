@@ -40,6 +40,7 @@ extension ReportTargetUi on ReportTarget {
     ReportTarget.comment => l10n.reportTargetComment,
     ReportTarget.message => l10n.reportTargetMessage,
     ReportTarget.user => l10n.reportTargetUser,
+    ReportTarget.listing => l10n.reportTargetListing,
   };
 }
 

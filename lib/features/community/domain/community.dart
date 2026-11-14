@@ -30,7 +30,7 @@ enum ReactionKind {
   }
 }
 
-enum ReportTarget { post, comment, message, user }
+enum ReportTarget { post, comment, message, user, listing }
 
 enum ReportReason { spam, harassment, hate, violence, nudity, scam, other }
 
@@ -217,4 +217,29 @@ class ModerationItem {
   final String? authorId;
   final String? authorName;
   final bool hidden;
+}
+
+/// Résultat de la recherche tolérante de motards.
+class RiderHit {
+  const RiderHit({
+    required this.id,
+    required this.username,
+    required this.displayName,
+    this.city,
+    this.avatarPath,
+  });
+
+  factory RiderHit.fromJson(Map<String, dynamic> j) => RiderHit(
+    id: j['id'] as String,
+    username: j['username'] as String,
+    displayName: j['display_name'] as String,
+    city: j['city'] as String?,
+    avatarPath: j['avatar_path'] as String?,
+  );
+
+  final String id;
+  final String username;
+  final String displayName;
+  final String? city;
+  final String? avatarPath;
 }

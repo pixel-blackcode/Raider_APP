@@ -11,10 +11,13 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | 05 — GPS et mode Convoi | Carte, partage volontaire, temps réel, chef de convoi / serre-file, retardataires, confidentialité, rétention. | ✅ Livrée — en attente de validation (+ refonte visuelle : typographie Barlow Condensed, cartes de balade contrastées) |
 | 06 — SOS | Alertes, notifications, accusés de réception, gestion des échecs de transmission. | ✅ Livrée — en attente de validation (notifications dans l'application ; push à venir, D-38) |
 | 07 — Communauté | Publications, photos, commentaires, messagerie, modération. | ✅ Livrée — en attente de validation (style « Vibrant & Block » appliqué au fil et à la messagerie) |
-| 08 — Marketplace | Annonces sans paiement, recherche, favoris, contact vendeur. | À venir |
-| 09 — Garage | Motos, historique d'entretien, rappels. | À venir |
-| 10 — Gamification et administration | Badges, défis, tableau de bord web, modération. | À venir |
-| 11 — Stabilisation | Tests d'intégration, sécurité, performance, accessibilité, builds, déploiement. | À venir |
+| 08 — Marketplace | Annonces sans paiement (10 photos), recherche tolérante, filtres, favoris, contact vendeur, signalement. Améliorations : zoom des photos, 10 photos par publication, recherche de motards et de clubs malgré les fautes. | ✅ Livrée — en attente de validation |
+| 08 bis — Balades enrichies | Photo de couverture des balades ; départ et arrivée pointés sur une carte (facultatif) avec distance approximative ; itinéraire du chef de convoi pour les retardataires. | À venir |
+| 08 ter — Notifications | Cloche avec badge (demandes d'adhésion à approuver, messages, réactions, balades modifiées), sons dans l'application ; puis notifications push (Firebase). | À venir |
+| 09 — Certification et regroupements | Certification mensuelle : motard 9 $, club 20 $, regroupement 20 $ ; paiement Mobile Money hors application, référence saisie et rapprochée par l'administration ; badges ; regroupements de clubs ; événements moto (certifiés) ; boutiques (certifiés) ; mise en avant des contenus certifiés ; réactualisation des annonces. | À venir |
+| 10 — Garage | Motos, historique d'entretien, rappels. | À venir |
+| 11 — Gamification et administration | Badges, défis, tableau de bord web, modération. | À venir |
+| 12 — Stabilisation | Tests d'intégration, sécurité, performance, accessibilité, builds, déploiement. | À venir |
 
 ## Mission 01 — scénarios de recette
 
@@ -59,6 +62,20 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | R03-9 | Essai réel sur un projet Supabase + appareil. | **À faire par le propriétaire** (aucun projet Supabase ni appareil disponible dans l'environnement cloud) |
 
 | R03-10 | Logo et couverture : ajout par owner/admin uniquement ; images d'un club masqué invisibles aux non-membres. | SQL `04_media_privacy_account_test.sql` + widget |
+
+## Mission 08 — scénarios de recette
+
+| # | Scénario (numéro du critère d'acceptation) | Preuve |
+| --- | --- | --- |
+| R08-1 | Aucun paiement intégré : pas de panier, commande ni transaction ; prix indicatif ; rappel de prudence affiché (14). | SQL `10_marketplace_test.sql` (aucune table de paiement) + widget |
+| R08-2 | Publier une annonce (catégorie, état, prix USD/CDF ou « à discuter », ville, quartier facultatif, jusqu'à 10 photos) ; renvoi sans doublon. | SQL + widget `marketplace_flow_test.dart` |
+| R08-3 | Rechercher et filtrer (catégorie, ville, prix maximum, devise) ; recherche tolérante (« fenix » trouve « Phoenix », accents, fautes). | SQL + widget |
+| R08-4 | Favoris ; contacter le vendeur par la messagerie (brouillon proposé, jamais envoyé automatiquement). | SQL + widget |
+| R08-5 | Le vendeur seul modifie, marque réservé / vendu, supprime ; les annonces vendues quittent la recherche. | SQL + widget |
+| R08-6 | Blocage et signalement appliqués aux annonces ; 3 signalements masquent l'annonce ; modération. | SQL + widget |
+| R08-7 | Publications : jusqu'à 10 photos ; grille « +N » ; visionneuse plein écran avec zoom (pincer, double appui) et défilement. | SQL + widget `photo_and_search_test.dart` |
+| R08-8 | Recherche tolérante de motards (nouveau message) et de clubs (découverte). | SQL + widget |
+| R08-9 | Essai réel sur téléphone (TEST_GUIDE §8). | 📱 **À faire par le propriétaire** |
 
 ## Mission 07 — scénarios de recette
 

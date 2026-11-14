@@ -18,16 +18,20 @@ import '../domain/messaging.dart';
 /// Une conversation. Un message n'est affiché « envoyé » qu'après réponse
 /// du serveur ; un échec reste visible avec « Réessayer ».
 class ChatScreen extends ConsumerStatefulWidget {
-  const ChatScreen({super.key, required this.conversationId});
+  const ChatScreen({super.key, required this.conversationId, this.initialText});
 
   final String conversationId;
+
+  /// Brouillon proposé (ex. « À propos de votre annonce… »), jamais envoyé
+  /// sans action du motard.
+  final String? initialText;
 
   @override
   ConsumerState<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
-  final _text = TextEditingController();
+  late final _text = TextEditingController(text: widget.initialText);
   int _seen = -1;
 
   @override

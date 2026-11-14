@@ -79,7 +79,7 @@ void main() {
     picker.next = FakePhotoPicker.jpeg();
     await tester.tap(find.byKey(const Key('post-add-photo')));
     await tester.pumpAndSettle();
-    expect(find.text('1/4'), findsOneWidget);
+    expect(find.text('1/10'), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('post-publish')));
     await tester.pumpAndSettle();

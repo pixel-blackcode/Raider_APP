@@ -19,6 +19,8 @@ import '../../features/community/presentation/rider_profile_screen.dart';
 import '../../features/convoy/presentation/convoy_screen.dart';
 import '../../features/garage/presentation/garage_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/marketplace/presentation/listing_detail_screen.dart';
+import '../../features/marketplace/presentation/listing_form_screen.dart';
 import '../../features/marketplace/presentation/marketplace_screen.dart';
 import '../../features/messages/presentation/chat_screen.dart';
 import '../../features/messages/presentation/messages_screen.dart';
@@ -189,6 +191,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                     parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => ChatScreen(
                       conversationId: state.pathParameters['conversationId']!,
+                      initialText: state.uri.queryParameters['texte'],
                     ),
                   ),
                 ],
@@ -236,6 +239,29 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.marketplace,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const MarketplaceScreen(),
+        routes: [
+          GoRoute(
+            path: 'vendre',
+            parentNavigatorKey: _rootNavigatorKey,
+            builder: (context, state) => const ListingFormScreen(),
+          ),
+          GoRoute(
+            path: 'annonces/:listingId',
+            parentNavigatorKey: _rootNavigatorKey,
+            builder: (context, state) => ListingDetailScreen(
+              listingId: state.pathParameters['listingId']!,
+            ),
+            routes: [
+              GoRoute(
+                path: 'modifier',
+                parentNavigatorKey: _rootNavigatorKey,
+                builder: (context, state) => ListingFormScreen(
+                  listingId: state.pathParameters['listingId'],
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       GoRoute(
         path: AppRoutes.settings,

@@ -205,7 +205,11 @@ void main() {
     await tester.tap(find.byKey(const Key('delete-account-submit')));
     await tester.pumpAndSettle();
 
-    expect(media.removedFolders, ['avatars/alice', 'post-media/alice']);
+    expect(media.removedFolders, [
+      'avatars/alice',
+      'post-media/alice',
+      'listing-media/alice',
+    ]);
     expect(auth.calls, ['deleteAccount']);
     expect(auth.currentSession, isNull);
     expect(find.text('Connexion'), findsOneWidget);

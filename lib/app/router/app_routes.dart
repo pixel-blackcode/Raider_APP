@@ -10,6 +10,9 @@ abstract final class AppRoutes {
   // Écrans plein écran, au-dessus de la barre de navigation.
   static const garage = '/garage';
   static const marketplace = '/marketplace';
+  static const newListing = '/marketplace/vendre';
+  static String listing(String id) => '/marketplace/annonces/$id';
+  static String editListing(String id) => '/marketplace/annonces/$id/modifier';
   static const settings = '/parametres';
   static const editProfile = '/profil/modifier';
   static const privacySettings = '/profil/confidentialite';
@@ -45,7 +48,10 @@ abstract final class AppRoutes {
 
   // Messagerie.
   static const newConversation = '/messages/nouveau';
-  static String chat(String id) => '/messages/$id';
+  static String chat(String id, {String? text}) => Uri(
+    path: '/messages/$id',
+    queryParameters: text == null ? null : {'texte': text},
+  ).toString();
 
   // Clubs.
   static const newClub = '/clubs/nouveau';

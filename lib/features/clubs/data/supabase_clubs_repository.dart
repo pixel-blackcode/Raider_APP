@@ -29,6 +29,17 @@ class SupabaseClubsRepository implements ClubsRepository {
 
   @override
   Future<List<Club>> discoverClubs({String query = ''}) => _guard(() async {
+    // Recherche tolérante côté serveur (fautes, accents, « ph » = « f »).
+    if (query.trim().length >= 2) {
+      final data = await _client.rpc<Object?>(
+        'search_clubs',
+        params: {'p_query': query.trim(), 'p_limit': 50},
+      );
+      return [
+        for (final r in (data as List?) ?? const [])
+          Club.fromJson(r as Map<String, dynamic>),
+      ];
+    }
     var request = _client
         .from('clubs')
         .select(_clubColumns)

@@ -229,13 +229,13 @@ abstract class AppLocalizations {
   /// No description provided for @marketplaceEmptyTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Aucune annonce pour le moment'**
+  /// **'Aucune annonce'**
   String get marketplaceEmptyTitle;
 
   /// No description provided for @marketplaceEmptyBody.
   ///
   /// In fr, this message translates to:
-  /// **'Les petites annonces entre motards arrivent bientôt. Aucun paiement n\'est effectué dans l\'application : les échanges se concluent directement entre utilisateurs.'**
+  /// **'Aucune annonce ne correspond. Touchez « Vendre » pour publier la vôtre.'**
   String get marketplaceEmptyBody;
 
   /// No description provided for @ridesTitle.
@@ -3345,6 +3345,354 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Rôle'**
   String get convoyRoleButton;
+
+  /// No description provided for @actionClose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer'**
+  String get actionClose;
+
+  /// No description provided for @actionEdit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier'**
+  String get actionEdit;
+
+  /// No description provided for @validationTooShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au moins {min} caractères'**
+  String validationTooShort(int min);
+
+  /// No description provided for @marketSell.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vendre'**
+  String get marketSell;
+
+  /// No description provided for @marketSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher : casque, Honda, pneu…'**
+  String get marketSearchHint;
+
+  /// No description provided for @marketFilters.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtres'**
+  String get marketFilters;
+
+  /// No description provided for @marketMaxPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix maximum'**
+  String get marketMaxPrice;
+
+  /// No description provided for @marketAnyCurrency.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes'**
+  String get marketAnyCurrency;
+
+  /// No description provided for @marketApplyFilters.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appliquer'**
+  String get marketApplyFilters;
+
+  /// No description provided for @marketAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes'**
+  String get marketAll;
+
+  /// No description provided for @marketMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes annonces'**
+  String get marketMine;
+
+  /// No description provided for @marketFavorites.
+  ///
+  /// In fr, this message translates to:
+  /// **'Favoris'**
+  String get marketFavorites;
+
+  /// No description provided for @marketSafety.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun paiement dans Rider Group : la vente se conclut directement entre vous. Voyez l\'article avant de payer et méfiez-vous des demandes d\'avance.'**
+  String get marketSafety;
+
+  /// No description provided for @listingCatMotorcycle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motos'**
+  String get listingCatMotorcycle;
+
+  /// No description provided for @listingCatParts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pièces'**
+  String get listingCatParts;
+
+  /// No description provided for @listingCatHelmet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Casques'**
+  String get listingCatHelmet;
+
+  /// No description provided for @listingCatProtection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Protections'**
+  String get listingCatProtection;
+
+  /// No description provided for @listingCatAccessories.
+  ///
+  /// In fr, this message translates to:
+  /// **'Accessoires'**
+  String get listingCatAccessories;
+
+  /// No description provided for @listingCatOther.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autres'**
+  String get listingCatOther;
+
+  /// No description provided for @listingCondNew.
+  ///
+  /// In fr, this message translates to:
+  /// **'Neuf'**
+  String get listingCondNew;
+
+  /// No description provided for @listingCondLikeNew.
+  ///
+  /// In fr, this message translates to:
+  /// **'Comme neuf'**
+  String get listingCondLikeNew;
+
+  /// No description provided for @listingCondGood.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bon état'**
+  String get listingCondGood;
+
+  /// No description provided for @listingCondFair.
+  ///
+  /// In fr, this message translates to:
+  /// **'État correct'**
+  String get listingCondFair;
+
+  /// No description provided for @listingCondForParts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour pièces'**
+  String get listingCondForParts;
+
+  /// No description provided for @listingStatusAvailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Disponible'**
+  String get listingStatusAvailable;
+
+  /// No description provided for @listingStatusReserved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservé'**
+  String get listingStatusReserved;
+
+  /// No description provided for @listingStatusSold.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vendu'**
+  String get listingStatusSold;
+
+  /// No description provided for @listingStatusTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Statut de l\'annonce'**
+  String get listingStatusTitle;
+
+  /// No description provided for @listingPriceOnRequest.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix à discuter'**
+  String get listingPriceOnRequest;
+
+  /// No description provided for @listingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce'**
+  String get listingTitle;
+
+  /// No description provided for @listingNewTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvelle annonce'**
+  String get listingNewTitle;
+
+  /// No description provided for @listingEditTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier l\'annonce'**
+  String get listingEditTitle;
+
+  /// No description provided for @listingTitleField.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre'**
+  String get listingTitleField;
+
+  /// No description provided for @listingCategory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Catégorie'**
+  String get listingCategory;
+
+  /// No description provided for @listingCondition.
+  ///
+  /// In fr, this message translates to:
+  /// **'État'**
+  String get listingCondition;
+
+  /// No description provided for @listingPriceField.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix indicatif'**
+  String get listingPriceField;
+
+  /// No description provided for @listingPriceHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vide : prix à discuter'**
+  String get listingPriceHelper;
+
+  /// No description provided for @listingPriceInvalid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix invalide'**
+  String get listingPriceInvalid;
+
+  /// No description provided for @listingCity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ville'**
+  String get listingCity;
+
+  /// No description provided for @listingArea.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quartier ou commune (facultatif)'**
+  String get listingArea;
+
+  /// No description provided for @listingAreaHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jamais d\'adresse exacte'**
+  String get listingAreaHelper;
+
+  /// No description provided for @listingPhotos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Photos ({count}/10)'**
+  String listingPhotos(int count);
+
+  /// No description provided for @listingPublish.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publier l\'annonce'**
+  String get listingPublish;
+
+  /// No description provided for @listingPublishedDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce publiée.'**
+  String get listingPublishedDone;
+
+  /// No description provided for @listingSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce enregistrée.'**
+  String get listingSaved;
+
+  /// No description provided for @listingNotSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce NON envoyée.'**
+  String get listingNotSent;
+
+  /// No description provided for @listingNoPayment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le prix est indicatif : aucun paiement ne passe par l\'application.'**
+  String get listingNoPayment;
+
+  /// No description provided for @listingPublished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Publiée {time}'**
+  String listingPublished(String time);
+
+  /// No description provided for @listingSeller.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vendeur'**
+  String get listingSeller;
+
+  /// No description provided for @listingContact.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contacter le vendeur'**
+  String get listingContact;
+
+  /// No description provided for @listingContactDraft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonjour, votre annonce « {title} » est-elle toujours disponible ?'**
+  String listingContactDraft(String title);
+
+  /// No description provided for @listingHiddenNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Masquée par la modération : visible seulement par vous.'**
+  String get listingHiddenNotice;
+
+  /// No description provided for @listingNotFoundTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce introuvable'**
+  String get listingNotFoundTitle;
+
+  /// No description provided for @listingNotFoundBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Elle a été supprimée, masquée, ou ne vous est pas accessible.'**
+  String get listingNotFoundBody;
+
+  /// No description provided for @listingDeleteTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer cette annonce ?'**
+  String get listingDeleteTitle;
+
+  /// No description provided for @listingDeleteBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'annonce et ses photos seront supprimées.'**
+  String get listingDeleteBody;
+
+  /// No description provided for @listingDeleted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annonce supprimée.'**
+  String get listingDeleted;
+
+  /// No description provided for @reportTargetListing.
+  ///
+  /// In fr, this message translates to:
+  /// **'annonce'**
+  String get reportTargetListing;
 }
 
 class _AppLocalizationsDelegate
