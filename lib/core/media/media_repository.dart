@@ -14,6 +14,7 @@ enum MediaBucket {
   listingMedia('listing-media', 5 * 1024 * 1024),
   rideMedia('ride-media', 5 * 1024 * 1024),
   eventMedia('event-media', 5 * 1024 * 1024),
+  shopMedia('shop-media', 2 * 1024 * 1024),
   verificationDocs('verification-docs', 5 * 1024 * 1024);
 
   const MediaBucket(this.id, this.maxBytes);

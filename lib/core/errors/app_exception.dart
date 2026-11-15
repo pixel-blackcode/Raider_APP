@@ -95,6 +95,7 @@ class AppException implements Exception {
     'too_frequent',
     'verification_required',
     'already_invited',
+    'shop_name_taken',
     'invalid_state',
     'alert_closed',
     'own_alert',

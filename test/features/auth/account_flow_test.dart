@@ -209,6 +209,7 @@ void main() {
       'avatars/alice',
       'post-media/alice',
       'listing-media/alice',
+      'shop-media/alice',
     ]);
     expect(auth.calls, ['deleteAccount']);
     expect(auth.currentSession, isNull);

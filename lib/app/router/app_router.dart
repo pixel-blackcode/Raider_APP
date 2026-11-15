@@ -39,6 +39,9 @@ import '../../features/rides/presentation/ride_detail_screen.dart';
 import '../../features/rides/presentation/ride_form_screen.dart';
 import '../../features/rides/presentation/rides_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/shops/presentation/my_shop_screen.dart';
+import '../../features/shops/presentation/shop_detail_screen.dart';
+import '../../features/shops/presentation/shops_screen.dart';
 import '../../features/sos/presentation/sos_screen.dart';
 import 'app_routes.dart';
 import 'app_shell.dart';
@@ -303,6 +306,22 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.notifications,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.shops,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const ShopsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.myShop,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const MyShopScreen(),
+      ),
+      GoRoute(
+        path: '/boutiques/:shopId',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            ShopDetailScreen(shopId: state.pathParameters['shopId']!),
       ),
       GoRoute(
         path: AppRoutes.events,

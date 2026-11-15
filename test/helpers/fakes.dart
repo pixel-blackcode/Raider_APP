@@ -31,6 +31,8 @@ import 'package:rider_group/features/rides/data/rides_repository.dart';
 import 'package:rider_group/features/rides/domain/ride.dart';
 import 'package:rider_group/features/rides/domain/ride_draft.dart';
 import 'package:rider_group/features/rides/domain/ride_state_machine.dart';
+import 'package:rider_group/features/shops/data/shops_repository.dart';
+import 'package:rider_group/features/shops/domain/shop.dart';
 import 'package:rider_group/features/sos/data/emergency.dart';
 import 'package:rider_group/features/sos/data/sos_repository.dart';
 import 'package:rider_group/features/sos/domain/sos.dart';
@@ -1565,6 +1567,7 @@ class FakeMarketplaceRepository implements MarketplaceRepository {
     return [
       for (final l in listings)
         if ((f.scope != ListingScope.mine || l.sellerId == me) &&
+            (f.sellerId == null || l.sellerId == f.sellerId) &&
             (f.scope != ListingScope.favorites || favorites.contains(l.id)) &&
             (f.scope == ListingScope.mine || l.status != ListingStatus.sold) &&
             (f.category == null || l.category == f.category) &&
@@ -1904,5 +1907,55 @@ class FakeEventsRepository implements EventsRepository {
       iAmGoing: going,
       attendeeCount: e.attendeeCount + (going ? 1 : -1),
     );
+  }
+}
+
+class FakeShopsRepository implements ShopsRepository {
+  FakeShopsRepository({required this.currentUserId});
+
+  final String currentUserId;
+  final shops = <String, Shop>{};
+  final calls = <String>[];
+
+  @override
+  Future<List<Shop>> search({String query = ''}) async => [
+    for (final s in shops.values)
+      if (s.active &&
+          (query.trim().length < 2 ||
+              s.name.toLowerCase().contains(query.trim().toLowerCase())))
+        s,
+  ];
+
+  @override
+  Future<Shop?> shop(String id) async => shops[id];
+
+  @override
+  Future<Shop?> shopOf(String ownerId) async =>
+      shops.values.where((s) => s.ownerId == ownerId).firstOrNull;
+
+  @override
+  Future<String> saveMine(ShopDraft d) async {
+    calls.add('save:${d.name}:${d.phone}');
+    final existing = await shopOf(currentUserId);
+    final id = existing?.id ?? 'shop-${shops.length + 1}';
+    shops[id] = Shop(
+      id: id,
+      ownerId: currentUserId,
+      name: d.name.trim(),
+      city: d.city.trim(),
+      description: d.description,
+      area: d.area,
+      phone: d.phone,
+    );
+    return id;
+  }
+
+  @override
+  Future<String?> setMyLogo(String? path) async => null;
+
+  @override
+  Future<void> deleteMine() async {
+    calls.add('delete');
+    shops.removeWhere((_, s) => s.ownerId == currentUserId);
   }
 }

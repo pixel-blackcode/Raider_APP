@@ -260,6 +260,19 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
             onTap: () => context.push(AppRoutes.riderVerification),
           ),
         ListTile(
+          key: const Key('profile-my-shop'),
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(Icons.storefront_outlined),
+          title: Text(l10n.shopMine),
+          subtitle: Text(
+            profile.isVerified
+                ? l10n.shopMineSubtitle
+                : l10n.shopVerifiedOnlyTitle,
+          ),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push(AppRoutes.myShop),
+        ),
+        ListTile(
           key: const Key('profile-privacy'),
           contentPadding: EdgeInsets.zero,
           leading: const Icon(Icons.shield_outlined),

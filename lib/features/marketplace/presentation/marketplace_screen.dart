@@ -132,7 +132,17 @@ class _MarketplaceScreenState extends ConsumerState<MarketplaceScreen> {
         filter.currency != null;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.marketplaceTitle)),
+      appBar: AppBar(
+        title: Text(l10n.marketplaceTitle),
+        actions: [
+          IconButton(
+            key: const Key('marketplace-shops'),
+            tooltip: l10n.shopsTitle,
+            onPressed: () => context.push(AppRoutes.shops),
+            icon: const Icon(Icons.storefront_outlined),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         key: const Key('market-sell'),
         heroTag: null,
@@ -263,7 +273,7 @@ class _MarketplaceScreenState extends ConsumerState<MarketplaceScreen> {
                           ),
                       itemCount: items.length,
                       itemBuilder: (context, i) =>
-                          _ListingTile(listing: items[i]),
+                          ListingTile(listing: items[i]),
                     ),
             ),
           ),
@@ -273,8 +283,8 @@ class _MarketplaceScreenState extends ConsumerState<MarketplaceScreen> {
   }
 }
 
-class _ListingTile extends ConsumerWidget {
-  const _ListingTile({required this.listing});
+class ListingTile extends ConsumerWidget {
+  const ListingTile({super.key, required this.listing});
 
   final Listing listing;
 

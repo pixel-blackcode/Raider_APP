@@ -14,6 +14,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
 import '../../clubs/presentation/widgets/verified_badge.dart';
 import '../../messages/data/messaging_repository.dart';
+import '../../shops/data/shops_repository.dart';
 import '../data/community_providers.dart';
 import '../data/community_repository.dart';
 import '../domain/community.dart';
@@ -97,6 +98,16 @@ class RiderProfileScreen extends ConsumerWidget {
               if (p.bio != null && p.bio!.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.sm),
                 Text(p.bio!, style: theme.textTheme.bodyLarge),
+              ],
+              if (ref.watch(shopOfProvider(userId)).value case final shop?
+                  when shop.active || userId == me) ...[
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  key: const Key('rider-shop'),
+                  onPressed: () => context.push(AppRoutes.shop(shop.id)),
+                  icon: const Icon(Icons.storefront_outlined),
+                  label: Text('${l10n.shopSee} · ${shop.name}'),
+                ),
               ],
               if (userId != me) ...[
                 const SizedBox(height: AppSpacing.md),

@@ -64,6 +64,7 @@ class _DeleteAccountScreenState extends ConsumerState<DeleteAccountScreen> {
       await media?.removeFolder(MediaBucket.avatars, userId);
       await media?.removeFolder(MediaBucket.postMedia, userId);
       await media?.removeFolder(MediaBucket.listingMedia, userId);
+      await media?.removeFolder(MediaBucket.shopMedia, userId);
       await auth.deleteAccount();
       messenger
         ..hideCurrentSnackBar()

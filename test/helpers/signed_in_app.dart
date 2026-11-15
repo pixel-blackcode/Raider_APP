@@ -22,6 +22,7 @@ import 'package:rider_group/features/notifications/data/notifications_repository
 import 'package:rider_group/features/profile/data/profile_repository.dart';
 import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_providers.dart';
+import 'package:rider_group/features/shops/data/shops_repository.dart';
 import 'package:rider_group/features/sos/data/emergency.dart';
 import 'package:rider_group/features/sos/data/sos_repository.dart';
 
@@ -56,6 +57,7 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeAlertSound? sound,
   FakeVerificationAdminRepository? verificationAdmin,
   FakeEventsRepository? events,
+  FakeShopsRepository? shops,
   List<Override> extraOverrides = const [],
 }) {
   return pumpRiderGroupApp(
@@ -124,6 +126,12 @@ Future<ProviderContainer> pumpOnlineApp(
       ),
       eventsRepositoryProvider.overrideWithValue(
         events ?? FakeEventsRepository(),
+      ),
+      shopsRepositoryProvider.overrideWithValue(
+        shops ??
+            FakeShopsRepository(
+              currentUserId: auth.currentSession?.userId ?? '',
+            ),
       ),
       ...extraOverrides,
       // La carte native (MapLibre) n'existe pas en test : simple liste.

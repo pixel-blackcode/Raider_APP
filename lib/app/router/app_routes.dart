@@ -67,4 +67,9 @@ abstract final class AppRoutes {
   static String event(String id) => '/evenements/$id';
   static String editEvent(String id) => '/evenements/$id/modifier';
   static String newEvent(String clubId) => '/clubs/$clubId/evenement';
+
+  // Boutiques.
+  static const shops = '/boutiques';
+  static const myShop = '/boutiques/la-mienne';
+  static String shop(String id) => '/boutiques/$id';
 }

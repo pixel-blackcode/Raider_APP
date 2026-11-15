@@ -2616,4 +2616,106 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get listingBumped => 'Annonce remontée en tête';
+
+  @override
+  String get errorShopNameTaken => 'Ce nom de boutique est déjà utilisé.';
+
+  @override
+  String get shopsTitle => 'Boutiques';
+
+  @override
+  String get shopsSearch => 'Rechercher une boutique (nom, ville)';
+
+  @override
+  String get shopsEmptyTitle => 'Aucune boutique';
+
+  @override
+  String get shopsEmptyBody =>
+      'Les motards vérifiés peuvent ouvrir une boutique pour regrouper leurs annonces.';
+
+  @override
+  String shopListingCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count annonces',
+      one: '1 annonce',
+      zero: 'Aucune annonce',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get shopTitle => 'Boutique';
+
+  @override
+  String get shopNotFound => 'Boutique introuvable';
+
+  @override
+  String shopOwner(String name) {
+    return 'Tenue par $name';
+  }
+
+  @override
+  String get shopInactive =>
+      'Votre boutique n\'est pas visible des autres motards : votre vérification a pris fin ou l\'équipe l\'a suspendue.';
+
+  @override
+  String get shopEdit => 'Modifier ma boutique';
+
+  @override
+  String get shopWhatsApp => 'WhatsApp';
+
+  @override
+  String get shopMessage => 'Écrire';
+
+  @override
+  String get shopMine => 'Ma boutique';
+
+  @override
+  String get shopMineSubtitle => 'Regroupez vos annonces sous votre enseigne';
+
+  @override
+  String get shopVerifiedOnlyTitle => 'Réservé aux motards vérifiés';
+
+  @override
+  String get shopVerifiedOnlyBody =>
+      'Faites d\'abord vérifier votre profil : après examen par l\'équipe Rider Group, vous pourrez ouvrir votre boutique.';
+
+  @override
+  String get shopIntro =>
+      'Votre boutique présente toutes vos annonces du marketplace sous votre enseigne. Les acheteurs vous contactent directement : rien ne se paie dans l\'application.';
+
+  @override
+  String get shopLogo => 'Logo (toucher pour changer)';
+
+  @override
+  String get shopFieldName => 'Nom de la boutique';
+
+  @override
+  String get shopFieldArea => 'Quartier (facultatif)';
+
+  @override
+  String get shopFieldPhone => 'Numéro WhatsApp (facultatif)';
+
+  @override
+  String get shopFieldPhoneHelp => 'Affiché aux acheteurs pour vous contacter';
+
+  @override
+  String get shopOpen => 'Ouvrir ma boutique';
+
+  @override
+  String get shopSaved => 'Boutique enregistrée';
+
+  @override
+  String get shopDelete => 'Fermer ma boutique';
+
+  @override
+  String get shopDeleteTitle => 'Fermer la boutique ?';
+
+  @override
+  String get shopDeleteBody => 'Vos annonces restent sur le marketplace.';
+
+  @override
+  String get shopSee => 'Voir sa boutique';
 }

@@ -4599,6 +4599,180 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Annonce remontée en tête'**
   String get listingBumped;
+
+  /// No description provided for @errorShopNameTaken.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce nom de boutique est déjà utilisé.'**
+  String get errorShopNameTaken;
+
+  /// No description provided for @shopsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boutiques'**
+  String get shopsTitle;
+
+  /// No description provided for @shopsSearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher une boutique (nom, ville)'**
+  String get shopsSearch;
+
+  /// No description provided for @shopsEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune boutique'**
+  String get shopsEmptyTitle;
+
+  /// No description provided for @shopsEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les motards vérifiés peuvent ouvrir une boutique pour regrouper leurs annonces.'**
+  String get shopsEmptyBody;
+
+  /// No description provided for @shopListingCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{Aucune annonce} =1{1 annonce} other{{count} annonces}}'**
+  String shopListingCount(int count);
+
+  /// No description provided for @shopTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boutique'**
+  String get shopTitle;
+
+  /// No description provided for @shopNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boutique introuvable'**
+  String get shopNotFound;
+
+  /// No description provided for @shopOwner.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tenue par {name}'**
+  String shopOwner(String name);
+
+  /// No description provided for @shopInactive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre boutique n\'est pas visible des autres motards : votre vérification a pris fin ou l\'équipe l\'a suspendue.'**
+  String get shopInactive;
+
+  /// No description provided for @shopEdit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier ma boutique'**
+  String get shopEdit;
+
+  /// No description provided for @shopWhatsApp.
+  ///
+  /// In fr, this message translates to:
+  /// **'WhatsApp'**
+  String get shopWhatsApp;
+
+  /// No description provided for @shopMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire'**
+  String get shopMessage;
+
+  /// No description provided for @shopMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ma boutique'**
+  String get shopMine;
+
+  /// No description provided for @shopMineSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Regroupez vos annonces sous votre enseigne'**
+  String get shopMineSubtitle;
+
+  /// No description provided for @shopVerifiedOnlyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réservé aux motards vérifiés'**
+  String get shopVerifiedOnlyTitle;
+
+  /// No description provided for @shopVerifiedOnlyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Faites d\'abord vérifier votre profil : après examen par l\'équipe Rider Group, vous pourrez ouvrir votre boutique.'**
+  String get shopVerifiedOnlyBody;
+
+  /// No description provided for @shopIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre boutique présente toutes vos annonces du marketplace sous votre enseigne. Les acheteurs vous contactent directement : rien ne se paie dans l\'application.'**
+  String get shopIntro;
+
+  /// No description provided for @shopLogo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Logo (toucher pour changer)'**
+  String get shopLogo;
+
+  /// No description provided for @shopFieldName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom de la boutique'**
+  String get shopFieldName;
+
+  /// No description provided for @shopFieldArea.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quartier (facultatif)'**
+  String get shopFieldArea;
+
+  /// No description provided for @shopFieldPhone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro WhatsApp (facultatif)'**
+  String get shopFieldPhone;
+
+  /// No description provided for @shopFieldPhoneHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Affiché aux acheteurs pour vous contacter'**
+  String get shopFieldPhoneHelp;
+
+  /// No description provided for @shopOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ouvrir ma boutique'**
+  String get shopOpen;
+
+  /// No description provided for @shopSaved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boutique enregistrée'**
+  String get shopSaved;
+
+  /// No description provided for @shopDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer ma boutique'**
+  String get shopDelete;
+
+  /// No description provided for @shopDeleteTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer la boutique ?'**
+  String get shopDeleteTitle;
+
+  /// No description provided for @shopDeleteBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos annonces restent sur le marketplace.'**
+  String get shopDeleteBody;
+
+  /// No description provided for @shopSee.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir sa boutique'**
+  String get shopSee;
 }
 
 class _AppLocalizationsDelegate

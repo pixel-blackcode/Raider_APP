@@ -1378,5 +1378,48 @@
   "listingBump": "Réactualiser l'annonce",
   "listingBumpHelp": "Remonte votre annonce en tête du marketplace (une fois par 24 h).",
   "listingBumpWait": "Déjà réactualisée : de nouveau possible 24 h après.",
-  "listingBumped": "Annonce remontée en tête"
+  "listingBumped": "Annonce remontée en tête",
+  "errorShopNameTaken": "Ce nom de boutique est déjà utilisé.",
+  "shopsTitle": "Boutiques",
+  "shopsSearch": "Rechercher une boutique (nom, ville)",
+  "shopsEmptyTitle": "Aucune boutique",
+  "shopsEmptyBody": "Les motards vérifiés peuvent ouvrir une boutique pour regrouper leurs annonces.",
+  "shopListingCount": "{count, plural, =0{Aucune annonce} =1{1 annonce} other{{count} annonces}}",
+  "@shopListingCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "shopTitle": "Boutique",
+  "shopNotFound": "Boutique introuvable",
+  "shopOwner": "Tenue par {name}",
+  "@shopOwner": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "shopInactive": "Votre boutique n'est pas visible des autres motards : votre vérification a pris fin ou l'équipe l'a suspendue.",
+  "shopEdit": "Modifier ma boutique",
+  "shopWhatsApp": "WhatsApp",
+  "shopMessage": "Écrire",
+  "shopMine": "Ma boutique",
+  "shopMineSubtitle": "Regroupez vos annonces sous votre enseigne",
+  "shopVerifiedOnlyTitle": "Réservé aux motards vérifiés",
+  "shopVerifiedOnlyBody": "Faites d'abord vérifier votre profil : après examen par l'équipe Rider Group, vous pourrez ouvrir votre boutique.",
+  "shopIntro": "Votre boutique présente toutes vos annonces du marketplace sous votre enseigne. Les acheteurs vous contactent directement : rien ne se paie dans l'application.",
+  "shopLogo": "Logo (toucher pour changer)",
+  "shopFieldName": "Nom de la boutique",
+  "shopFieldArea": "Quartier (facultatif)",
+  "shopFieldPhone": "Numéro WhatsApp (facultatif)",
+  "shopFieldPhoneHelp": "Affiché aux acheteurs pour vous contacter",
+  "shopOpen": "Ouvrir ma boutique",
+  "shopSaved": "Boutique enregistrée",
+  "shopDelete": "Fermer ma boutique",
+  "shopDeleteTitle": "Fermer la boutique ?",
+  "shopDeleteBody": "Vos annonces restent sur le marketplace.",
+  "shopSee": "Voir sa boutique"
 }

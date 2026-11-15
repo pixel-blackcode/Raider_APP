@@ -173,7 +173,11 @@ class ListingFilter {
     this.maxPrice,
     this.currency,
     this.scope = ListingScope.all,
+    this.sellerId,
   });
+
+  /// Annonces d'un seul vendeur (page d'une boutique).
+  final String? sellerId;
 
   final String query;
   final ListingCategory? category;
@@ -196,6 +200,7 @@ class ListingFilter {
     maxPrice: maxPrice != null ? maxPrice() : this.maxPrice,
     currency: currency != null ? currency() : this.currency,
     scope: scope ?? this.scope,
+    sellerId: sellerId,
   );
 
   @override

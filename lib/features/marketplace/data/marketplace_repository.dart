@@ -81,7 +81,8 @@ class SupabaseMarketplaceRepository implements MarketplaceRepository {
             'p_currency': f.currency?.code,
             'p_include_sold': f.scope == ListingScope.mine,
             'p_favorites_only': f.scope == ListingScope.favorites,
-            'p_seller_id': f.scope == ListingScope.mine ? me : null,
+            'p_seller_id':
+                f.sellerId ?? (f.scope == ListingScope.mine ? me : null),
             'p_limit': 50,
           },
         );
