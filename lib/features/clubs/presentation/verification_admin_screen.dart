@@ -33,16 +33,22 @@ class VerificationAdminScreen extends ConsumerWidget {
       message: l10n.verificationAdminEmptyBody,
     );
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.verificationAdminTitle),
           bottom: TabBar(
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
             tabs: [
               Tab(text: l10n.verificationTabClubs),
               Tab(
                 key: const Key('verification-tab-riders'),
                 text: l10n.verificationTabRiders,
+              ),
+              Tab(
+                key: const Key('verification-tab-deletions'),
+                text: l10n.deletionTab,
               ),
               Tab(
                 key: const Key('verification-tab-feedback'),
@@ -75,6 +81,7 @@ class VerificationAdminScreen extends ConsumerWidget {
                       ],
                     ),
             ),
+            const _DeletionTab(),
             const _FeedbackTab(),
           ],
         ),
@@ -452,6 +459,134 @@ class _FeedbackTab extends ConsumerWidget {
                                   ref.invalidate(feedbackQueueProvider);
                                 },
                                 child: Text(l10n.feedbackHandled),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+    );
+  }
+}
+
+class _DeletionTab extends ConsumerWidget {
+  const _DeletionTab();
+
+  Future<void> _decide(
+    BuildContext context,
+    WidgetRef ref,
+    DeletionQueueItem d,
+    bool approve,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final note = await showTextPrompt(
+      context,
+      title: approve ? l10n.deletionApprove : l10n.deletionReject,
+      label: l10n.verificationNote,
+      confirmLabel: approve ? l10n.deletionApprove : l10n.deletionReject,
+      maxLength: 1000,
+    );
+    if (note == null || !context.mounted) return;
+    try {
+      await ref
+          .read(verificationAdminRepositoryProvider)!
+          .reviewDeletion(
+            d.requestId,
+            approve: approve,
+            note: note.isEmpty ? null : note,
+          );
+      ref.invalidate(clubDeletionQueueProvider);
+      if (context.mounted) showSnack(context, l10n.moderationDone);
+    } catch (error) {
+      if (context.mounted) showSnack(context, describeError(context, error));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final m = MaterialLocalizations.of(context);
+    return AsyncValueView(
+      value: ref.watch(clubDeletionQueueProvider),
+      onRetry: () => ref.invalidate(clubDeletionQueueProvider),
+      data: (items) => items.isEmpty
+          ? EmptyState(
+              icon: Icons.delete_outline,
+              title: l10n.deletionEmpty,
+              message: '',
+            )
+          : ListView(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              children: [
+                for (final d in items)
+                  Card(
+                    key: Key('deletion-${d.requestId}'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          InkWell(
+                            onTap: d.clubId == null
+                                ? null
+                                : () => context.push(AppRoutes.club(d.clubId!)),
+                            child: Text(
+                              '${d.clubName} · ${d.clubCity}',
+                              style: theme.textTheme.titleLarge,
+                            ),
+                          ),
+                          Text(
+                            [
+                              if (d.isRegroupement) l10n.groupKindRegroupement,
+                              l10n.clubMemberCount(d.memberCount),
+                              if (d.requesterName != null)
+                                l10n.verificationRequester(d.requesterName!),
+                            ].join(' · '),
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          Text(l10n.deletionReasonLabel),
+                          Text(
+                            '« ${d.reason} »',
+                            key: Key('deletion-reason-${d.requestId}'),
+                            style: theme.textTheme.bodyLarge,
+                          ),
+                          const SizedBox(height: AppSpacing.xs),
+                          Text(
+                            l10n.deletionAutoOn(
+                              m.formatMediumDate(d.dueAt.toLocal()),
+                            ),
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.error,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: OutlinedButton(
+                                  key: Key('deletion-reject-${d.requestId}'),
+                                  onPressed: () =>
+                                      _decide(context, ref, d, false),
+                                  child: Text(l10n.deletionReject),
+                                ),
+                              ),
+                              const SizedBox(width: AppSpacing.sm),
+                              Expanded(
+                                child: FilledButton(
+                                  key: Key('deletion-approve-${d.requestId}'),
+                                  style: FilledButton.styleFrom(
+                                    backgroundColor: theme.colorScheme.error,
+                                    foregroundColor: theme.colorScheme.onError,
+                                  ),
+                                  onPressed: () =>
+                                      _decide(context, ref, d, true),
+                                  child: Text(l10n.deletionApprove),
+                                ),
                               ),
                             ],
                           ),

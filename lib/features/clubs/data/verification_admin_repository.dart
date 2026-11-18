@@ -31,6 +31,14 @@ abstract interface class VerificationAdminRepository {
   });
 
   Future<void> revokeRider(String userId, {String? note});
+
+  Future<List<DeletionQueueItem>> deletionQueue();
+
+  Future<void> reviewDeletion(
+    String requestId, {
+    required bool approve,
+    String? note,
+  });
 }
 
 class SupabaseVerificationAdminRepository
@@ -115,6 +123,27 @@ class SupabaseVerificationAdminRepository
   );
 
   @override
+  Future<List<DeletionQueueItem>> deletionQueue() => _guard(() async {
+    final data = await _client.rpc<Object?>('club_deletion_queue');
+    return [
+      for (final r in (data as List?) ?? const [])
+        DeletionQueueItem.fromJson(r as Map<String, dynamic>),
+    ];
+  });
+
+  @override
+  Future<void> reviewDeletion(
+    String requestId, {
+    required bool approve,
+    String? note,
+  }) => _guard(
+    () => _client.rpc<void>(
+      'review_club_deletion',
+      params: {'p_request_id': requestId, 'p_approve': approve, 'p_note': note},
+    ),
+  );
+
+  @override
   Future<void> revokeRider(String userId, {String? note}) => _guard(
     () => _client.rpc<void>(
       'revoke_rider_verification',
@@ -149,4 +178,11 @@ final riderVerificationQueueProvider =
       final repo = ref.watch(verificationAdminRepositoryProvider);
       if (repo == null) return const [];
       return repo.riderQueue();
+    });
+
+final clubDeletionQueueProvider =
+    FutureProvider.autoDispose<List<DeletionQueueItem>>((ref) async {
+      final repo = ref.watch(verificationAdminRepositoryProvider);
+      if (repo == null) return const [];
+      return repo.deletionQueue();
     });

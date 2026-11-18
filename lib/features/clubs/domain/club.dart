@@ -406,3 +406,68 @@ class RiderVerificationQueueItem {
   final List<String> documentPaths;
   final DateTime createdAt;
 }
+
+/// Demande de suppression d'un club vérifié (D-63) : examinée par l'équipe,
+/// automatique après 15 jours sans décision.
+class ClubDeletionRequest {
+  const ClubDeletionRequest({
+    required this.id,
+    required this.reason,
+    required this.dueAt,
+    required this.createdAt,
+  });
+
+  factory ClubDeletionRequest.fromJson(Map<String, dynamic> j) =>
+      ClubDeletionRequest(
+        id: j['id'] as String,
+        reason: (j['reason'] as String?) ?? '',
+        dueAt: DateTime.parse(j['due_at'] as String).toUtc(),
+        createdAt: DateTime.parse(j['created_at'] as String).toUtc(),
+      );
+
+  final String id;
+  final String reason;
+  final DateTime dueAt;
+  final DateTime createdAt;
+}
+
+/// Demande de suppression vue par l'équipe.
+class DeletionQueueItem {
+  const DeletionQueueItem({
+    required this.requestId,
+    required this.clubName,
+    required this.reason,
+    required this.dueAt,
+    this.clubId,
+    this.clubCity = '',
+    this.memberCount = 0,
+    this.isRegroupement = false,
+    this.requesterId,
+    this.requesterName,
+  });
+
+  factory DeletionQueueItem.fromJson(Map<String, dynamic> j) =>
+      DeletionQueueItem(
+        requestId: j['request_id'] as String,
+        clubId: j['club_id'] as String?,
+        clubName: (j['club_name'] as String?) ?? '',
+        clubCity: (j['club_city'] as String?) ?? '',
+        memberCount: (j['member_count'] as num?)?.toInt() ?? 0,
+        isRegroupement: (j['is_regroupement'] as bool?) ?? false,
+        requesterId: j['requester_id'] as String?,
+        requesterName: j['requester_name'] as String?,
+        reason: (j['reason'] as String?) ?? '',
+        dueAt: DateTime.parse(j['due_at'] as String).toUtc(),
+      );
+
+  final String requestId;
+  final String? clubId;
+  final String clubName;
+  final String clubCity;
+  final int memberCount;
+  final bool isRegroupement;
+  final String? requesterId;
+  final String? requesterName;
+  final String reason;
+  final DateTime dueAt;
+}

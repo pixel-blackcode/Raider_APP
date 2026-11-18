@@ -1471,5 +1471,73 @@
   "riderVerificationSent": "Demande de vérification de votre profil envoyée",
   "riderVerificationForGroup": "Pour créer un club ou un regroupement, faites d'abord vérifier votre profil. Cela confirme votre identité et empêche quiconque d'usurper le nom d'un club ou d'un regroupement existant.",
   "groupCreateVerifiedOnlyTitle": "Profil vérifié requis",
-  "groupCreateVerifiedOnlyBody": "Seuls les motards vérifiés peuvent créer un club ou un regroupement : cela confirme l'identité du fondateur et protège les groupes existants contre l'usurpation."
+  "groupCreateVerifiedOnlyBody": "Seuls les motards vérifiés peuvent créer un club ou un regroupement : cela confirme l'identité du fondateur et protège les groupes existants contre l'usurpation.",
+  "errorDeletionReviewRequired": "Un club vérifié ne se supprime qu'après examen par l'équipe.",
+  "errorDeletionPending": "Une demande de suppression est déjà en cours.",
+  "clubDeletionRequestTitle": "Demander la suppression",
+  "clubDeletionReason": "Pourquoi voulez-vous supprimer ce groupe ?",
+  "clubDeletionSend": "Envoyer la demande",
+  "clubDeletionSent": "Demande envoyée : l'équipe Rider Group va l'examiner.",
+  "clubDeletionPendingTitle": "Suppression demandée",
+  "clubDeletionPendingBody": "L'équipe Rider Group examine la demande. Sans décision, le groupe sera supprimé automatiquement le {date}.",
+  "@clubDeletionPendingBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "clubDeletionCancel": "Annuler la demande",
+  "clubDeletionCancelled": "Demande de suppression annulée",
+  "deletionTab": "Suppressions",
+  "deletionEmpty": "Aucune demande de suppression",
+  "deletionReasonLabel": "Raison donnée :",
+  "deletionAutoOn": "Suppression automatique le {date} sans décision",
+  "@deletionAutoOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deletionApprove": "Supprimer",
+  "deletionReject": "Refuser",
+  "notifClubDeletionRequested": "{who} demande la suppression de {club} : « {reason} »",
+  "@notifClubDeletionRequested": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "club": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "notifClubDeletionApproved": "Le groupe {club} a été supprimé après examen",
+  "@notifClubDeletionApproved": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifClubDeletionRejected": "La suppression de {club} a été refusée par l'équipe",
+  "@notifClubDeletionRejected": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  },
+  "notifClubDeletionAuto": "Le groupe {club} a été supprimé (15 jours sans décision)",
+  "@notifClubDeletionAuto": {
+    "placeholders": {
+      "club": {
+        "type": "String"
+      }
+    }
+  }
 }

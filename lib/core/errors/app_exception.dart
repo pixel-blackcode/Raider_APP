@@ -96,6 +96,8 @@ class AppException implements Exception {
     'verification_required',
     'already_invited',
     'shop_name_taken',
+    'deletion_review_required',
+    'deletion_pending',
     'invalid_state',
     'alert_closed',
     'own_alert',

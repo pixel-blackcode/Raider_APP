@@ -58,6 +58,7 @@ class ClubDetail {
     this.myPendingRequest,
     this.pendingRequests = const [],
     this.verificationRequest,
+    this.pendingDeletion,
   });
 
   final Club club;
@@ -66,6 +67,9 @@ class ClubDetail {
   final ClubJoinRequest? myPendingRequest;
   final List<ClubJoinRequest> pendingRequests;
   final ClubVerificationRequest? verificationRequest;
+
+  /// Demande de suppression en attente (responsables seulement).
+  final ClubDeletionRequest? pendingDeletion;
 }
 
 /// `null` si le club n'existe pas ou n'est pas visible par l'utilisateur.
@@ -92,6 +96,9 @@ final clubDetailProvider = FutureProvider.autoDispose
         isAdmin
             ? repository.latestVerificationRequest(clubId)
             : Future<Object?>.value(),
+        isAdmin && club.isVerified
+            ? repository.pendingDeletion(clubId)
+            : Future<Object?>.value(),
       ]);
 
       return ClubDetail(
@@ -101,6 +108,7 @@ final clubDetailProvider = FutureProvider.autoDispose
         myPendingRequest: results[1] as ClubJoinRequest?,
         pendingRequests: results[2]! as List<ClubJoinRequest>,
         verificationRequest: results[3] as ClubVerificationRequest?,
+        pendingDeletion: results[4] as ClubDeletionRequest?,
       );
     });
 

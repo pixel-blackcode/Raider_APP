@@ -25,6 +25,14 @@ abstract interface class ClubsRepository {
 
   Future<void> deleteClub(String clubId);
 
+  /// Club vérifié : demande de suppression motivée (D-63).
+  Future<void> requestDeletion(String clubId, String reason);
+
+  Future<void> cancelDeletion(String clubId);
+
+  /// Demande en attente (responsables du club uniquement).
+  Future<ClubDeletionRequest?> pendingDeletion(String clubId);
+
   /// Enregistre (ou retire avec `null`) le logo ou la couverture.
   Future<void> setClubImage(String clubId, ClubImageKind kind, String? path);
 

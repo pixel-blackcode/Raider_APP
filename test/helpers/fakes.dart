@@ -341,9 +341,36 @@ class FakeClubsRepository implements ClubsRepository {
   @override
   Future<void> deleteClub(String clubId) async {
     calls.add('deleteClub');
+    if (clubs[clubId]?.isVerified ?? false) {
+      throw const AppException('deletion_review_required');
+    }
     clubs.remove(clubId);
     roles.remove(clubId);
   }
+
+  final deletions = <String, ClubDeletionRequest>{};
+
+  @override
+  Future<void> requestDeletion(String clubId, String reason) async {
+    calls.add('requestDeletion:$reason');
+    final now = DateTime.now().toUtc();
+    deletions[clubId] = ClubDeletionRequest(
+      id: 'del-$clubId',
+      reason: reason.trim(),
+      dueAt: now.add(const Duration(days: 15)),
+      createdAt: now,
+    );
+  }
+
+  @override
+  Future<void> cancelDeletion(String clubId) async {
+    calls.add('cancelDeletion');
+    deletions.remove(clubId);
+  }
+
+  @override
+  Future<ClubDeletionRequest?> pendingDeletion(String clubId) async =>
+      deletions[clubId];
 
   @override
   Future<JoinOutcome> joinClub(String clubId, {String? message}) async {
@@ -1808,6 +1835,22 @@ class FakeVerificationAdminRepository implements VerificationAdminRepository {
   }) async {
     calls.add('reviewRider:$requestId:$approve:${validUntil != null}');
     riderItems.removeWhere((i) => i.requestId == requestId);
+  }
+
+  final deletionItems = <DeletionQueueItem>[];
+
+  @override
+  Future<List<DeletionQueueItem>> deletionQueue() async =>
+      List.of(deletionItems);
+
+  @override
+  Future<void> reviewDeletion(
+    String requestId, {
+    required bool approve,
+    String? note,
+  }) async {
+    calls.add('reviewDeletion:$requestId:$approve');
+    deletionItems.removeWhere((d) => d.requestId == requestId);
   }
 
   @override

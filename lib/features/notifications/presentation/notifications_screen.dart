@@ -100,6 +100,20 @@ String notificationText(AppLocalizations l10n, AppNotification n) {
     'event_cancelled' => l10n.notifEventCancelled(
       (n.data['title'] as String?) ?? '',
     ),
+    'club_deletion_requested' => l10n.notifClubDeletionRequested(
+      who,
+      (n.data['name'] as String?) ?? club,
+      (n.data['reason'] as String?) ?? '',
+    ),
+    'club_deletion_approved' => l10n.notifClubDeletionApproved(
+      (n.data['name'] as String?) ?? '',
+    ),
+    'club_deletion_rejected' => l10n.notifClubDeletionRejected(
+      (n.data['name'] as String?) ?? club,
+    ),
+    'club_deletion_auto' => l10n.notifClubDeletionAuto(
+      (n.data['name'] as String?) ?? '',
+    ),
     'rider_verification_approved' => l10n.notifRiderVerificationApproved,
     'rider_verification_rejected' => l10n.notifRiderVerificationRejected,
     'rider_verification_expiring' => l10n.notifRiderVerificationExpiring,

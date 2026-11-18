@@ -4989,6 +4989,126 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Seuls les motards vérifiés peuvent créer un club ou un regroupement : cela confirme l\'identité du fondateur et protège les groupes existants contre l\'usurpation.'**
   String get groupCreateVerifiedOnlyBody;
+
+  /// No description provided for @errorDeletionReviewRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un club vérifié ne se supprime qu\'après examen par l\'équipe.'**
+  String get errorDeletionReviewRequired;
+
+  /// No description provided for @errorDeletionPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une demande de suppression est déjà en cours.'**
+  String get errorDeletionPending;
+
+  /// No description provided for @clubDeletionRequestTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demander la suppression'**
+  String get clubDeletionRequestTitle;
+
+  /// No description provided for @clubDeletionReason.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi voulez-vous supprimer ce groupe ?'**
+  String get clubDeletionReason;
+
+  /// No description provided for @clubDeletionSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer la demande'**
+  String get clubDeletionSend;
+
+  /// No description provided for @clubDeletionSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande envoyée : l\'équipe Rider Group va l\'examiner.'**
+  String get clubDeletionSent;
+
+  /// No description provided for @clubDeletionPendingTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suppression demandée'**
+  String get clubDeletionPendingTitle;
+
+  /// No description provided for @clubDeletionPendingBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équipe Rider Group examine la demande. Sans décision, le groupe sera supprimé automatiquement le {date}.'**
+  String clubDeletionPendingBody(String date);
+
+  /// No description provided for @clubDeletionCancel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler la demande'**
+  String get clubDeletionCancel;
+
+  /// No description provided for @clubDeletionCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de suppression annulée'**
+  String get clubDeletionCancelled;
+
+  /// No description provided for @deletionTab.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suppressions'**
+  String get deletionTab;
+
+  /// No description provided for @deletionEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune demande de suppression'**
+  String get deletionEmpty;
+
+  /// No description provided for @deletionReasonLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raison donnée :'**
+  String get deletionReasonLabel;
+
+  /// No description provided for @deletionAutoOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suppression automatique le {date} sans décision'**
+  String deletionAutoOn(String date);
+
+  /// No description provided for @deletionApprove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get deletionApprove;
+
+  /// No description provided for @deletionReject.
+  ///
+  /// In fr, this message translates to:
+  /// **'Refuser'**
+  String get deletionReject;
+
+  /// No description provided for @notifClubDeletionRequested.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} demande la suppression de {club} : « {reason} »'**
+  String notifClubDeletionRequested(String who, String club, String reason);
+
+  /// No description provided for @notifClubDeletionApproved.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le groupe {club} a été supprimé après examen'**
+  String notifClubDeletionApproved(String club);
+
+  /// No description provided for @notifClubDeletionRejected.
+  ///
+  /// In fr, this message translates to:
+  /// **'La suppression de {club} a été refusée par l\'équipe'**
+  String notifClubDeletionRejected(String club);
+
+  /// No description provided for @notifClubDeletionAuto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le groupe {club} a été supprimé (15 jours sans décision)'**
+  String notifClubDeletionAuto(String club);
 }
 
 class _AppLocalizationsDelegate

@@ -35,6 +35,8 @@ String describeError(BuildContext context, Object error) {
     'verification_required' => l10n.errorVerificationRequired,
     'already_invited' => l10n.errorAlreadyInvited,
     'shop_name_taken' => l10n.errorShopNameTaken,
+    'deletion_review_required' => l10n.errorDeletionReviewRequired,
+    'deletion_pending' => l10n.errorDeletionPending,
     'invalid_state' => l10n.errorInvalidState,
     'invitations_disabled' => l10n.errorInvitationsDisabled,
     'owns_clubs_with_members' => l10n.errorOwnsClubsWithMembers,

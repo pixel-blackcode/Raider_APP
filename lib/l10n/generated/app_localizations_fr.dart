@@ -2841,4 +2841,79 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get groupCreateVerifiedOnlyBody =>
       'Seuls les motards vérifiés peuvent créer un club ou un regroupement : cela confirme l\'identité du fondateur et protège les groupes existants contre l\'usurpation.';
+
+  @override
+  String get errorDeletionReviewRequired =>
+      'Un club vérifié ne se supprime qu\'après examen par l\'équipe.';
+
+  @override
+  String get errorDeletionPending =>
+      'Une demande de suppression est déjà en cours.';
+
+  @override
+  String get clubDeletionRequestTitle => 'Demander la suppression';
+
+  @override
+  String get clubDeletionReason => 'Pourquoi voulez-vous supprimer ce groupe ?';
+
+  @override
+  String get clubDeletionSend => 'Envoyer la demande';
+
+  @override
+  String get clubDeletionSent =>
+      'Demande envoyée : l\'équipe Rider Group va l\'examiner.';
+
+  @override
+  String get clubDeletionPendingTitle => 'Suppression demandée';
+
+  @override
+  String clubDeletionPendingBody(String date) {
+    return 'L\'équipe Rider Group examine la demande. Sans décision, le groupe sera supprimé automatiquement le $date.';
+  }
+
+  @override
+  String get clubDeletionCancel => 'Annuler la demande';
+
+  @override
+  String get clubDeletionCancelled => 'Demande de suppression annulée';
+
+  @override
+  String get deletionTab => 'Suppressions';
+
+  @override
+  String get deletionEmpty => 'Aucune demande de suppression';
+
+  @override
+  String get deletionReasonLabel => 'Raison donnée :';
+
+  @override
+  String deletionAutoOn(String date) {
+    return 'Suppression automatique le $date sans décision';
+  }
+
+  @override
+  String get deletionApprove => 'Supprimer';
+
+  @override
+  String get deletionReject => 'Refuser';
+
+  @override
+  String notifClubDeletionRequested(String who, String club, String reason) {
+    return '$who demande la suppression de $club : « $reason »';
+  }
+
+  @override
+  String notifClubDeletionApproved(String club) {
+    return 'Le groupe $club a été supprimé après examen';
+  }
+
+  @override
+  String notifClubDeletionRejected(String club) {
+    return 'La suppression de $club a été refusée par l\'équipe';
+  }
+
+  @override
+  String notifClubDeletionAuto(String club) {
+    return 'Le groupe $club a été supprimé (15 jours sans décision)';
+  }
 }

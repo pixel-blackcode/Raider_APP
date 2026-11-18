@@ -60,6 +60,10 @@ void main() {
       verificationAdmin: FakeVerificationAdminRepository(isAdmin: true),
     );
     await go(tester, container, AppRoutes.verificationAdmin);
+    await tester.ensureVisible(
+      find.byKey(const Key('verification-tab-feedback')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('verification-tab-feedback')));
     await tester.pumpAndSettle();
     expect(find.text('Mode nuit pour la carte'), findsOneWidget);

@@ -53,11 +53,18 @@ class ClubDetailScreen extends ConsumerWidget {
               icon: const Icon(Icons.edit_outlined),
               onPressed: () => context.push(AppRoutes.editClub(clubId)),
             ),
-          if (value != null && permissions.canDeleteClub)
+          if (value != null &&
+              permissions.canDeleteClub &&
+              value.pendingDeletion == null)
             PopupMenuButton<String>(
+              key: const Key('club-menu'),
               onSelected: (_) => _confirmDelete(context, ref, value.club),
               itemBuilder: (_) => [
-                PopupMenuItem(value: 'delete', child: Text(l10n.clubDelete)),
+                PopupMenuItem(
+                  key: const Key('club-menu-delete'),
+                  value: 'delete',
+                  child: Text(l10n.clubDelete),
+                ),
               ],
             ),
         ],
@@ -85,6 +92,30 @@ class ClubDetailScreen extends ConsumerWidget {
     Club club,
   ) async {
     final l10n = AppLocalizations.of(context);
+    if (club.isVerified) {
+      // D-63 : club vérifié → demande motivée, examen par l'équipe.
+      final reason = await showTextPrompt(
+        context,
+        title: l10n.clubDeletionRequestTitle,
+        label: l10n.clubDeletionReason,
+        confirmLabel: l10n.clubDeletionSend,
+        maxLength: 1000,
+      );
+      if (reason == null || !context.mounted) return;
+      if (reason.trim().length < 10) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(l10n.validationTooShort(10))));
+        return;
+      }
+      await runClubAction(
+        context,
+        ref,
+        (repo) => repo.requestDeletion(club.id, reason),
+        clubId: club.id,
+        successMessage: l10n.clubDeletionSent,
+      );
+      return;
+    }
     final confirmed = await showConfirmDialog(
       context,
       title: l10n.clubDelete,
@@ -246,6 +277,7 @@ class _ClubDetailBody extends ConsumerWidget {
         _ClubRidesSection(detail: detail),
         _ClubEventsSection(detail: detail),
         _ClubPostsSection(detail: detail),
+        if (detail.pendingDeletion != null) _DeletionBanner(detail: detail),
         if (permissions.canReviewRequests) _AdminSection(detail: detail),
         SectionHeader(title: l10n.clubMembersTitle),
         if (detail.members.isEmpty)
@@ -831,6 +863,69 @@ class _AdminVerificationTile extends ConsumerWidget {
             label: Text(l10n.verificationRevoke),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Suppression demandée (club vérifié) : raison, date de suppression
+/// automatique, annulation par le propriétaire.
+class _DeletionBanner extends ConsumerWidget {
+  const _DeletionBanner({required this.detail});
+
+  final ClubDetail detail;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final d = detail.pendingDeletion!;
+    final m = MaterialLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.md),
+      child: Card(
+        key: const Key('club-deletion-pending'),
+        color: theme.colorScheme.errorContainer,
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n.clubDeletionPendingTitle,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: theme.colorScheme.onErrorContainer,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                l10n.clubDeletionPendingBody(
+                  m.formatMediumDate(d.dueAt.toLocal()),
+                ),
+                style: TextStyle(color: theme.colorScheme.onErrorContainer),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                '« ${d.reason} »',
+                style: TextStyle(color: theme.colorScheme.onErrorContainer),
+              ),
+              if (detail.myRole == ClubRole.owner) ...[
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton(
+                  key: const Key('club-deletion-cancel'),
+                  onPressed: () => runClubAction(
+                    context,
+                    ref,
+                    (repo) => repo.cancelDeletion(detail.club.id),
+                    clubId: detail.club.id,
+                    successMessage: l10n.clubDeletionCancelled,
+                  ),
+                  child: Text(l10n.clubDeletionCancel),
+                ),
+              ],
+            ],
+          ),
+        ),
       ),
     );
   }

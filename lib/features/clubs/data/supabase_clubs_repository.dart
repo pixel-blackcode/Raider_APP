@@ -161,6 +161,34 @@ class SupabaseClubsRepository implements ClubsRepository {
   );
 
   @override
+  Future<void> requestDeletion(String clubId, String reason) => _guard(
+    () => _client.rpc<Object?>(
+      'request_club_deletion',
+      params: {'p_club_id': clubId, 'p_reason': reason.trim()},
+    ),
+  );
+
+  @override
+  Future<void> cancelDeletion(String clubId) => _guard(
+    () => _client.rpc<void>(
+      'cancel_club_deletion',
+      params: {'p_club_id': clubId},
+    ),
+  );
+
+  @override
+  Future<ClubDeletionRequest?> pendingDeletion(String clubId) =>
+      _guard(() async {
+        final row = await _client
+            .from('club_deletion_requests')
+            .select('id, reason, due_at, created_at')
+            .eq('club_id', clubId)
+            .eq('status', 'pending')
+            .maybeSingle();
+        return row == null ? null : ClubDeletionRequest.fromJson(row);
+      });
+
+  @override
   Future<JoinOutcome> joinClub(String clubId, {String? message}) =>
       _guard(() async {
         final result = await _client.rpc<String>(
