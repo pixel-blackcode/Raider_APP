@@ -4773,6 +4773,138 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Voir sa boutique'**
   String get shopSee;
+
+  /// No description provided for @chatWallpaper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fond d\'écran'**
+  String get chatWallpaper;
+
+  /// No description provided for @chatWallpaperHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seulement pour vous, sur ce téléphone.'**
+  String get chatWallpaperHelp;
+
+  /// No description provided for @chatWallpaperPhoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir une photo'**
+  String get chatWallpaperPhoto;
+
+  /// No description provided for @privacyAvatarTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Qui voit ma photo de profil'**
+  String get privacyAvatarTitle;
+
+  /// No description provided for @privacyAvatarEveryone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get privacyAvatarEveryone;
+
+  /// No description provided for @privacyAvatarClubs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes clubs'**
+  String get privacyAvatarClubs;
+
+  /// No description provided for @privacyAvatarNobody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personne'**
+  String get privacyAvatarNobody;
+
+  /// No description provided for @privacyAvatarHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les autres voient votre initiale à la place. L\'équipe Rider Group peut la voir pour la modération.'**
+  String get privacyAvatarHelp;
+
+  /// No description provided for @feedbackSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aide'**
+  String get feedbackSection;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Signaler un problème ou une suggestion'**
+  String get feedbackTitle;
+
+  /// No description provided for @feedbackSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre message va directement à l\'équipe Rider Group'**
+  String get feedbackSubtitle;
+
+  /// No description provided for @feedbackIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un bug, un écran qui plante, une idée pour améliorer Rider Group ? Écrivez-nous : l\'équipe lit chaque message.'**
+  String get feedbackIntro;
+
+  /// No description provided for @feedbackProblem.
+  ///
+  /// In fr, this message translates to:
+  /// **'Problème'**
+  String get feedbackProblem;
+
+  /// No description provided for @feedbackSuggestion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suggestion'**
+  String get feedbackSuggestion;
+
+  /// No description provided for @feedbackProblemHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Que s\'est-il passé ? Sur quel écran ?'**
+  String get feedbackProblemHint;
+
+  /// No description provided for @feedbackSuggestionHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre idée'**
+  String get feedbackSuggestionHint;
+
+  /// No description provided for @feedbackVersionNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'La version de l\'application ({version}) est jointe pour nous aider.'**
+  String feedbackVersionNote(String version);
+
+  /// No description provided for @feedbackSend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get feedbackSend;
+
+  /// No description provided for @feedbackSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci ! Message envoyé à l\'équipe.'**
+  String get feedbackSent;
+
+  /// No description provided for @feedbackTab.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retours'**
+  String get feedbackTab;
+
+  /// No description provided for @feedbackEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun message en attente'**
+  String get feedbackEmpty;
+
+  /// No description provided for @feedbackHandled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Traité'**
+  String get feedbackHandled;
 }
 
 class _AppLocalizationsDelegate

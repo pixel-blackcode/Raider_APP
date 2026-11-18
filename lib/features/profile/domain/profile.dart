@@ -101,6 +101,7 @@ class PrivacySettings {
     this.discoverable = true,
     this.allowClubInvitations = true,
     this.allowRideInvitations = true,
+    this.avatarVisibility = AvatarVisibility.everyone,
   });
 
   factory PrivacySettings.fromJson(Map<String, dynamic> json) =>
@@ -108,6 +109,9 @@ class PrivacySettings {
         discoverable: (json['discoverable'] as bool?) ?? true,
         allowClubInvitations: (json['allow_club_invitations'] as bool?) ?? true,
         allowRideInvitations: (json['allow_ride_invitations'] as bool?) ?? true,
+        avatarVisibility: AvatarVisibility.parse(
+          json['avatar_visibility'] as String?,
+        ),
       );
 
   /// Profil visible par tous les motards connectés (sinon : seulement par
@@ -120,7 +124,11 @@ class PrivacySettings {
   /// Les organisateurs de balade peuvent l'inviter.
   final bool allowRideInvitations;
 
+  /// Qui voit la photo de profil (contrôlé par le stockage, D-59).
+  final AvatarVisibility avatarVisibility;
+
   PrivacySettings copyWith({
+    AvatarVisibility? avatarVisibility,
     bool? discoverable,
     bool? allowClubInvitations,
     bool? allowRideInvitations,
@@ -128,6 +136,18 @@ class PrivacySettings {
     discoverable: discoverable ?? this.discoverable,
     allowClubInvitations: allowClubInvitations ?? this.allowClubInvitations,
     allowRideInvitations: allowRideInvitations ?? this.allowRideInvitations,
+    avatarVisibility: avatarVisibility ?? this.avatarVisibility,
+  );
+}
+
+enum AvatarVisibility {
+  everyone,
+  clubs,
+  nobody;
+
+  static AvatarVisibility parse(String? v) => values.firstWhere(
+    (x) => x.name == v,
+    orElse: () => AvatarVisibility.everyone,
   );
 }
 

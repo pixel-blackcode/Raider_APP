@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/router/app_routes.dart';
 import '../../../core/backend/backend_providers.dart';
 import '../../../core/config/app_config.dart';
 import '../../../core/sound/alert_sound.dart';
@@ -95,6 +97,16 @@ class SettingsScreen extends ConsumerWidget {
                   );
               }
             },
+          ),
+          SectionHeader(title: l10n.feedbackSection),
+          ListTile(
+            key: const Key('settings-feedback'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.feedback_outlined),
+            title: Text(l10n.feedbackTitle),
+            subtitle: Text(l10n.feedbackSubtitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(AppRoutes.feedback),
           ),
           SectionHeader(title: l10n.settingsServer),
           const BackendStatusCard(),

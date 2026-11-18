@@ -12,6 +12,7 @@ import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/photo_viewer.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../community/presentation/community_ui.dart';
+import '../../settings/data/feedback_repository.dart';
 import '../../sos/data/emergency.dart';
 import '../data/clubs_providers.dart';
 import '../data/verification_admin_repository.dart';
@@ -32,7 +33,7 @@ class VerificationAdminScreen extends ConsumerWidget {
       message: l10n.verificationAdminEmptyBody,
     );
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.verificationAdminTitle),
@@ -42,6 +43,10 @@ class VerificationAdminScreen extends ConsumerWidget {
               Tab(
                 key: const Key('verification-tab-riders'),
                 text: l10n.verificationTabRiders,
+              ),
+              Tab(
+                key: const Key('verification-tab-feedback'),
+                text: l10n.feedbackTab,
               ),
             ],
           ),
@@ -70,6 +75,7 @@ class VerificationAdminScreen extends ConsumerWidget {
                       ],
                     ),
             ),
+            const _FeedbackTab(),
           ],
         ),
       ),
@@ -366,6 +372,95 @@ class _RequestCardState extends ConsumerState<_RequestCard> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _FeedbackTab extends ConsumerWidget {
+  const _FeedbackTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return AsyncValueView(
+      value: ref.watch(feedbackQueueProvider),
+      onRetry: () => ref.invalidate(feedbackQueueProvider),
+      data: (items) => items.isEmpty
+          ? EmptyState(
+              icon: Icons.inbox_outlined,
+              title: l10n.feedbackEmpty,
+              message: '',
+            )
+          : ListView(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              children: [
+                for (final f in items)
+                  Card(
+                    key: Key('feedback-${f.id}'),
+                    child: Padding(
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                f.kind == FeedbackKind.problem
+                                    ? Icons.bug_report_outlined
+                                    : Icons.lightbulb_outline,
+                                color: theme.colorScheme.primary,
+                              ),
+                              const SizedBox(width: AppSpacing.xs),
+                              Expanded(
+                                child: Text(
+                                  f.kind == FeedbackKind.problem
+                                      ? l10n.feedbackProblem
+                                      : l10n.feedbackSuggestion,
+                                  style: theme.textTheme.titleMedium,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.xs),
+                          Text(f.message),
+                          const SizedBox(height: AppSpacing.xs),
+                          Text(
+                            [
+                              if (f.displayName.isNotEmpty)
+                                '${f.displayName} (@${f.username})',
+                              if (f.appVersion != null) f.appVersion!,
+                              if (f.platform != null) f.platform!,
+                            ].join(' · '),
+                            style: theme.textTheme.bodySmall,
+                          ),
+                          Row(
+                            children: [
+                              if (f.userId != null)
+                                TextButton(
+                                  onPressed: () =>
+                                      context.push(AppRoutes.rider(f.userId!)),
+                                  child: Text(l10n.chatSeeProfile),
+                                ),
+                              const Spacer(),
+                              FilledButton.tonal(
+                                key: Key('feedback-done-${f.id}'),
+                                onPressed: () async {
+                                  await ref
+                                      .read(feedbackRepositoryProvider)
+                                      ?.markHandled(f.id);
+                                  ref.invalidate(feedbackQueueProvider);
+                                },
+                                child: Text(l10n.feedbackHandled),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
     );
   }
 }

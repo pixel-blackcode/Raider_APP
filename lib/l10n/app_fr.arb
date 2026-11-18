@@ -1421,5 +1421,34 @@
   "shopDelete": "Fermer ma boutique",
   "shopDeleteTitle": "Fermer la boutique ?",
   "shopDeleteBody": "Vos annonces restent sur le marketplace.",
-  "shopSee": "Voir sa boutique"
+  "shopSee": "Voir sa boutique",
+  "chatWallpaper": "Fond d'écran",
+  "chatWallpaperHelp": "Seulement pour vous, sur ce téléphone.",
+  "chatWallpaperPhoto": "Choisir une photo",
+  "privacyAvatarTitle": "Qui voit ma photo de profil",
+  "privacyAvatarEveryone": "Tous",
+  "privacyAvatarClubs": "Mes clubs",
+  "privacyAvatarNobody": "Personne",
+  "privacyAvatarHelp": "Les autres voient votre initiale à la place. L'équipe Rider Group peut la voir pour la modération.",
+  "feedbackSection": "Aide",
+  "feedbackTitle": "Signaler un problème ou une suggestion",
+  "feedbackSubtitle": "Votre message va directement à l'équipe Rider Group",
+  "feedbackIntro": "Un bug, un écran qui plante, une idée pour améliorer Rider Group ? Écrivez-nous : l'équipe lit chaque message.",
+  "feedbackProblem": "Problème",
+  "feedbackSuggestion": "Suggestion",
+  "feedbackProblemHint": "Que s'est-il passé ? Sur quel écran ?",
+  "feedbackSuggestionHint": "Votre idée",
+  "feedbackVersionNote": "La version de l'application ({version}) est jointe pour nous aider.",
+  "@feedbackVersionNote": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "feedbackSend": "Envoyer",
+  "feedbackSent": "Merci ! Message envoyé à l'équipe.",
+  "feedbackTab": "Retours",
+  "feedbackEmpty": "Aucun message en attente",
+  "feedbackHandled": "Traité"
 }

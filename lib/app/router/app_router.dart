@@ -38,6 +38,7 @@ import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/rides/presentation/ride_detail_screen.dart';
 import '../../features/rides/presentation/ride_form_screen.dart';
 import '../../features/rides/presentation/rides_screen.dart';
+import '../../features/settings/presentation/feedback_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/shops/presentation/my_shop_screen.dart';
 import '../../features/shops/presentation/shop_detail_screen.dart';
@@ -306,6 +307,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.notifications,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.feedback,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const FeedbackScreen(),
       ),
       GoRoute(
         path: AppRoutes.shops,

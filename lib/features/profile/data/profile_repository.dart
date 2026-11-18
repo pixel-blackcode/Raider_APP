@@ -101,7 +101,8 @@ class SupabaseProfileRepository implements ProfileRepository {
       final row = await _client
           .from('profile_settings')
           .select(
-            'discoverable, allow_club_invitations, allow_ride_invitations',
+            'discoverable, allow_club_invitations, allow_ride_invitations, '
+            'avatar_visibility',
           )
           .eq('user_id', userId)
           .maybeSingle();
@@ -124,6 +125,7 @@ class SupabaseProfileRepository implements ProfileRepository {
         'discoverable': settings.discoverable,
         'allow_club_invitations': settings.allowClubInvitations,
         'allow_ride_invitations': settings.allowRideInvitations,
+        'avatar_visibility': settings.avatarVisibility.name,
       });
     } catch (error) {
       throw AppException.from(error);

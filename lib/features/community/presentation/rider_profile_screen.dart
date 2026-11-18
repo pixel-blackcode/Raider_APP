@@ -8,6 +8,7 @@ import '../../../core/media/media_repository.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/empty_state.dart';
+import '../../../core/widgets/photo_viewer.dart';
 import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -56,12 +57,24 @@ class RiderProfileScreen extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  RemoteAvatar(
-                    label: p.displayName,
-                    radius: 40,
-                    image: media?.imageProvider(
-                      MediaBucket.avatars,
-                      p.avatarPath,
+                  GestureDetector(
+                    key: const Key('rider-avatar'),
+                    onTap: () {
+                      final image = media?.imageProvider(
+                        MediaBucket.avatars,
+                        p.avatarPath,
+                      );
+                      if (image != null) {
+                        openPhotoViewer(context, images: [image]);
+                      }
+                    },
+                    child: RemoteAvatar(
+                      label: p.displayName,
+                      radius: 40,
+                      image: media?.imageProvider(
+                        MediaBucket.avatars,
+                        p.avatarPath,
+                      ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.md),

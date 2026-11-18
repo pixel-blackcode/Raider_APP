@@ -31,6 +31,7 @@ import 'package:rider_group/features/rides/data/rides_repository.dart';
 import 'package:rider_group/features/rides/domain/ride.dart';
 import 'package:rider_group/features/rides/domain/ride_draft.dart';
 import 'package:rider_group/features/rides/domain/ride_state_machine.dart';
+import 'package:rider_group/features/settings/data/feedback_repository.dart';
 import 'package:rider_group/features/shops/data/shops_repository.dart';
 import 'package:rider_group/features/shops/domain/shop.dart';
 import 'package:rider_group/features/sos/data/emergency.dart';
@@ -1958,4 +1959,24 @@ class FakeShopsRepository implements ShopsRepository {
     calls.add('delete');
     shops.removeWhere((_, s) => s.ownerId == currentUserId);
   }
+}
+
+class FakeFeedbackRepository implements FeedbackRepository {
+  final sent = <String>[];
+  final items = <FeedbackItem>[];
+
+  @override
+  Future<void> send(
+    FeedbackKind kind,
+    String message, {
+    String? appVersion,
+    String? platform,
+  }) async => sent.add('${kind.name}:${message.trim()}');
+
+  @override
+  Future<List<FeedbackItem>> queue() async => List.of(items);
+
+  @override
+  Future<void> markHandled(String id) async =>
+      items.removeWhere((i) => i.id == id);
 }

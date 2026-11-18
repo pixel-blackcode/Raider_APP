@@ -2718,4 +2718,75 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get shopSee => 'Voir sa boutique';
+
+  @override
+  String get chatWallpaper => 'Fond d\'écran';
+
+  @override
+  String get chatWallpaperHelp => 'Seulement pour vous, sur ce téléphone.';
+
+  @override
+  String get chatWallpaperPhoto => 'Choisir une photo';
+
+  @override
+  String get privacyAvatarTitle => 'Qui voit ma photo de profil';
+
+  @override
+  String get privacyAvatarEveryone => 'Tous';
+
+  @override
+  String get privacyAvatarClubs => 'Mes clubs';
+
+  @override
+  String get privacyAvatarNobody => 'Personne';
+
+  @override
+  String get privacyAvatarHelp =>
+      'Les autres voient votre initiale à la place. L\'équipe Rider Group peut la voir pour la modération.';
+
+  @override
+  String get feedbackSection => 'Aide';
+
+  @override
+  String get feedbackTitle => 'Signaler un problème ou une suggestion';
+
+  @override
+  String get feedbackSubtitle =>
+      'Votre message va directement à l\'équipe Rider Group';
+
+  @override
+  String get feedbackIntro =>
+      'Un bug, un écran qui plante, une idée pour améliorer Rider Group ? Écrivez-nous : l\'équipe lit chaque message.';
+
+  @override
+  String get feedbackProblem => 'Problème';
+
+  @override
+  String get feedbackSuggestion => 'Suggestion';
+
+  @override
+  String get feedbackProblemHint => 'Que s\'est-il passé ? Sur quel écran ?';
+
+  @override
+  String get feedbackSuggestionHint => 'Votre idée';
+
+  @override
+  String feedbackVersionNote(String version) {
+    return 'La version de l\'application ($version) est jointe pour nous aider.';
+  }
+
+  @override
+  String get feedbackSend => 'Envoyer';
+
+  @override
+  String get feedbackSent => 'Merci ! Message envoyé à l\'équipe.';
+
+  @override
+  String get feedbackTab => 'Retours';
+
+  @override
+  String get feedbackEmpty => 'Aucun message en attente';
+
+  @override
+  String get feedbackHandled => 'Traité';
 }

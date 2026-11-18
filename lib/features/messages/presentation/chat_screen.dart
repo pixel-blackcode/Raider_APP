@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
 import '../../../core/errors/error_messages.dart';
+import '../../../core/media/photo_picker.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/dialogs.dart';
@@ -11,6 +12,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
 import '../../community/domain/community.dart';
 import '../../community/presentation/community_ui.dart';
+import '../data/chat_wallpaper.dart';
 import '../data/messaging_providers.dart';
 import '../data/messaging_repository.dart';
 import '../domain/messaging.dart';
@@ -56,6 +58,81 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
     await ref
         .read(chatOutboxProvider.notifier)
         .send(widget.conversationId, body);
+  }
+
+  Future<void> _pickWallpaper() async {
+    final l10n = AppLocalizations.of(context);
+    final ctrl = ref.read(chatWallpaperProvider.notifier);
+    final choice = await showModalBottomSheet<Object>(
+      context: context,
+      showDragHandle: true,
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                l10n.chatWallpaper,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              Text(l10n.chatWallpaperHelp),
+              const SizedBox(height: AppSpacing.md),
+              Wrap(
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
+                children: [
+                  for (final p in ChatWallpaperPreset.values)
+                    InkWell(
+                      key: Key('wallpaper-${p.name}'),
+                      borderRadius: BorderRadius.circular(16),
+                      onTap: () => Navigator.pop(context, p),
+                      child: Container(
+                        width: 72,
+                        height: 96,
+                        decoration:
+                            (p.decoration() as BoxDecoration?)?.copyWith(
+                              borderRadius: BorderRadius.circular(16),
+                            ) ??
+                            BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
+                            ),
+                        child: p == ChatWallpaperPreset.none
+                            ? const Icon(Icons.block)
+                            : null,
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              OutlinedButton.icon(
+                key: const Key('wallpaper-photo'),
+                onPressed: () => Navigator.pop(context, 'photo'),
+                icon: const Icon(Icons.photo_library_outlined),
+                label: Text(l10n.chatWallpaperPhoto),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (choice is ChatWallpaperPreset) {
+      await ctrl.set(widget.conversationId, PresetWallpaper(choice));
+    } else if (choice == 'photo') {
+      try {
+        final image = await ref
+            .read(photoPickerProvider)
+            .pick(maxDimension: 1080);
+        if (image == null) return;
+        await ctrl.set(widget.conversationId, PhotoWallpaper(image.bytes));
+      } catch (error) {
+        if (mounted) showSnack(context, describeError(context, error));
+      }
+    }
   }
 
   @override
@@ -110,6 +187,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
               key: const Key('chat-menu'),
               onSelected: (a) async {
                 switch (a) {
+                  case 'wallpaper':
+                    await _pickWallpaper();
                   case 'profile':
                     await context.push(AppRoutes.rider(summary!.otherUserId!));
                   case 'ride':
@@ -136,6 +215,11 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
                 }
               },
               itemBuilder: (_) => [
+                PopupMenuItem(
+                  key: const Key('chat-wallpaper-menu'),
+                  value: 'wallpaper',
+                  child: Text(l10n.chatWallpaper),
+                ),
                 if (summary!.kind == ConversationKind.direct &&
                     summary.otherUserId != null)
                   PopupMenuItem(
@@ -157,21 +241,24 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
       body: Column(
         children: [
           Expanded(
-            child: items.isEmpty
-                ? Center(child: Text(l10n.chatNoMessages))
-                : ListView.builder(
-                    reverse: true,
-                    padding: const EdgeInsets.all(AppSpacing.sm),
-                    itemCount: items.length,
-                    itemBuilder: (context, i) {
-                      final item = items[items.length - 1 - i];
-                      return _Bubble(
-                        item: item,
-                        mine: item.isOutgoing || item.message?.senderId == me,
-                        showName: showNames,
-                      );
-                    },
-                  ),
+            child: ChatWallpaperBackground(
+              conversationId: widget.conversationId,
+              child: items.isEmpty
+                  ? Center(child: Text(l10n.chatNoMessages))
+                  : ListView.builder(
+                      reverse: true,
+                      padding: const EdgeInsets.all(AppSpacing.sm),
+                      itemCount: items.length,
+                      itemBuilder: (context, i) {
+                        final item = items[items.length - 1 - i];
+                        return _Bubble(
+                          item: item,
+                          mine: item.isOutgoing || item.message?.senderId == me,
+                          showName: showNames,
+                        );
+                      },
+                    ),
+            ),
           ),
           if (blocked)
             Container(

@@ -9,6 +9,7 @@ import '../../../core/media/photo_picker.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/empty_state.dart';
+import '../../../core/widgets/photo_viewer.dart';
 import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -142,14 +143,23 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
         Center(
           child: Stack(
             children: [
-              RemoteAvatar(
-                key: const Key('profile-avatar'),
-                label: profile.displayName,
-                image: media?.imageProvider(
-                  MediaBucket.avatars,
-                  profile.avatarPath,
+              GestureDetector(
+                onTap: () {
+                  final image = media?.imageProvider(
+                    MediaBucket.avatars,
+                    profile.avatarPath,
+                  );
+                  if (image != null) openPhotoViewer(context, images: [image]);
+                },
+                child: RemoteAvatar(
+                  key: const Key('profile-avatar'),
+                  label: profile.displayName,
+                  image: media?.imageProvider(
+                    MediaBucket.avatars,
+                    profile.avatarPath,
+                  ),
+                  radius: 48,
                 ),
-                radius: 48,
               ),
               Positioned(
                 right: 0,

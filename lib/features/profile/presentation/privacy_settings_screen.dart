@@ -46,6 +46,39 @@ class PrivacySettingsScreen extends ConsumerWidget {
         data: (settings) => ListView(
           padding: const EdgeInsets.all(AppSpacing.md),
           children: [
+            Text(
+              l10n.privacyAvatarTitle,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            SegmentedButton<AvatarVisibility>(
+              key: const Key('privacy-avatar'),
+              segments: [
+                ButtonSegment(
+                  value: AvatarVisibility.everyone,
+                  label: Text(l10n.privacyAvatarEveryone),
+                ),
+                ButtonSegment(
+                  value: AvatarVisibility.clubs,
+                  label: Text(l10n.privacyAvatarClubs),
+                ),
+                ButtonSegment(
+                  value: AvatarVisibility.nobody,
+                  label: Text(l10n.privacyAvatarNobody),
+                ),
+              ],
+              selected: {settings.avatarVisibility},
+              onSelectionChanged: (s) => _save(
+                context,
+                ref,
+                settings.copyWith(avatarVisibility: s.first),
+              ),
+            ),
+            Text(
+              l10n.privacyAvatarHelp,
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            const SizedBox(height: AppSpacing.md),
             SwitchListTile(
               key: const Key('privacy-discoverable'),
               contentPadding: EdgeInsets.zero,
