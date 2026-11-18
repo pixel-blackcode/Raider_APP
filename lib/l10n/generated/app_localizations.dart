@@ -4905,6 +4905,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Traité'**
   String get feedbackHandled;
+
+  /// No description provided for @homeHello.
+  ///
+  /// In fr, this message translates to:
+  /// **'Salut, {name} 👋'**
+  String homeHello(String name);
+
+  /// No description provided for @homeTagline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prêt pour la prochaine sortie ?'**
+  String get homeTagline;
+
+  /// No description provided for @homeHeroCta.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trouver une balade'**
+  String get homeHeroCta;
 }
 
 class _AppLocalizationsDelegate

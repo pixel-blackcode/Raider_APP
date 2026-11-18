@@ -7,6 +7,19 @@ abstract final class AppColors {
 
   /// Anthracite utilisé pour les surfaces sombres.
   static const Color asphalt = Color(0xFF1C1B1F);
+
+  // Palette « Marine & or vif » (catalogue P12), adaptée à l'orange de marque.
+  /// Marine : en-têtes, cartes vedettes, barre de navigation active.
+  static const Color marine = Color(0xFF14213D);
+
+  /// Marine profond : fond du mode sombre.
+  static const Color marineDeep = Color(0xFF0B1224);
+
+  /// Or vif : touches secondaires (badges, dégradés de l'orange).
+  static const Color gold = Color(0xFFFCA311);
+
+  /// Fond clair légèrement gris (60 % de l'écran).
+  static const Color mist = Color(0xFFF3F4F7);
 }
 
 /// Couleurs sémantiques propres au domaine (convoi, SOS, états GPS).

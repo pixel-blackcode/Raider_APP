@@ -11,7 +11,7 @@ void main() {
     await pumpOnlineApp(tester, auth: FakeAuthRepository());
 
     expect(find.text('Connexion'), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byKey(const Key('app-nav')), findsNothing);
   });
 
   testWidgets('connexion refusée : message clair, aucune navigation', (
@@ -41,7 +41,7 @@ void main() {
       find.text('Adresse e-mail ou mot de passe incorrect.'),
       findsOneWidget,
     );
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byKey(const Key('app-nav')), findsNothing);
   });
 
   testWidgets('connexion puis déconnexion (acceptation 1 : se reconnecter)', (
@@ -60,7 +60,7 @@ void main() {
     );
     await tester.tap(find.byKey(const Key('sign-in-submit')));
     await tester.pumpAndSettle();
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byKey(const Key('app-nav')), findsOneWidget);
     expect(find.text('Bienvenue sur Rider Group'), findsOneWidget);
 
     await auth.signOut();
@@ -77,7 +77,7 @@ void main() {
     );
     await tester.tap(find.byKey(const Key('sign-in-submit')));
     await tester.pumpAndSettle();
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byKey(const Key('app-nav')), findsOneWidget);
   });
 
   testWidgets('inscription avec confirmation d\'e-mail', (tester) async {
@@ -136,7 +136,7 @@ void main() {
 
     await tester.tap(
       find.descendant(
-        of: find.byType(NavigationBar),
+        of: find.byKey(const Key('app-nav')),
         matching: find.text('Profil'),
       ),
     );

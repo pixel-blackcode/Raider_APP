@@ -51,7 +51,7 @@ void main() {
   Future<void> openTab(WidgetTester tester, String label) async {
     await tester.tap(
       find.descendant(
-        of: find.byType(NavigationBar),
+        of: find.byKey(const Key('app-nav')),
         matching: find.text(label),
       ),
     );

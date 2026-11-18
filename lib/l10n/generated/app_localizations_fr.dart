@@ -2789,4 +2789,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get feedbackHandled => 'Traité';
+
+  @override
+  String homeHello(String name) {
+    return 'Salut, $name 👋';
+  }
+
+  @override
+  String get homeTagline => 'Prêt pour la prochaine sortie ?';
+
+  @override
+  String get homeHeroCta => 'Trouver une balade';
 }

@@ -10,7 +10,7 @@ import '../../helpers/signed_in_app.dart';
 Future<void> openProfile(WidgetTester tester) async {
   await tester.tap(
     find.descendant(
-      of: find.byType(NavigationBar),
+      of: find.byKey(const Key('app-nav')),
       matching: find.text('Profil'),
     ),
   );
@@ -48,7 +48,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Nouveau mot de passe'), findsWidgets);
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byKey(const Key('app-nav')), findsNothing);
     // Pas de bouton « Annuler » pendant une réinitialisation.
     expect(find.text('Annuler'), findsNothing);
 
@@ -69,7 +69,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(auth.accounts['alice@test.cd'], 'nouveau2026');
-    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.byKey(const Key('app-nav')), findsOneWidget);
   });
 
   testWidgets('préférences de confidentialité enregistrées', (tester) async {

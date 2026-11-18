@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 
 /// Tuile d'accès rapide (garage, marketplace...).
@@ -29,7 +30,26 @@ class ShortcutTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, size: 32, color: theme.colorScheme.primary),
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [AppColors.gold, AppColors.brand],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.brand.withValues(alpha: 0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Icon(icon, size: 26, color: Colors.white),
+              ),
               const SizedBox(height: AppSpacing.sm),
               Text(
                 title,

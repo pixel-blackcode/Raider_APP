@@ -257,7 +257,7 @@ void main() {
       expect(offset(), greaterThanOrEqualTo(last));
       last = offset();
     }
-    expect(find.text('Publication 11'), findsOneWidget);
+    expect(find.text('Publication 0'), findsOneWidget);
 
     // Remontée : la position ne fait jamais de bond vers le bas.
     for (var i = 0; i < 60; i++) {

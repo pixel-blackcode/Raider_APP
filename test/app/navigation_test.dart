@@ -13,7 +13,7 @@ void main() {
     await pumpRiderGroupApp(tester);
 
     expect(find.text('Bienvenue sur Rider Group'), findsOneWidget);
-    final navBar = find.byType(NavigationBar);
+    final navBar = find.byKey(const Key('app-nav'));
     for (final label in ['Accueil', 'Balades', 'Clubs', 'Messages', 'Profil']) {
       expect(
         find.descendant(of: navBar, matching: find.text(label)),
@@ -57,7 +57,7 @@ void main() {
 
   testWidgets('navigation entre les onglets', (tester) async {
     await pumpRiderGroupApp(tester);
-    final navBar = find.byType(NavigationBar);
+    final navBar = find.byKey(const Key('app-nav'));
 
     final expectations = {
       'Balades': 'Aucune balade pour le moment',
@@ -86,7 +86,7 @@ void main() {
     await tester.tap(find.byKey(const Key('shortcut-garage')));
     await tester.pumpAndSettle();
     expect(find.text('Votre garage est vide'), findsOneWidget);
-    expect(find.byType(NavigationBar), findsNothing);
+    expect(find.byKey(const Key('app-nav')), findsNothing);
 
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();

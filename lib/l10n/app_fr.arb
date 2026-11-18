@@ -1450,5 +1450,15 @@
   "feedbackSent": "Merci ! Message envoyé à l'équipe.",
   "feedbackTab": "Retours",
   "feedbackEmpty": "Aucun message en attente",
-  "feedbackHandled": "Traité"
+  "feedbackHandled": "Traité",
+  "homeHello": "Salut, {name} 👋",
+  "@homeHello": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeTagline": "Prêt pour la prochaine sortie ?",
+  "homeHeroCta": "Trouver une balade"
 }

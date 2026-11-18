@@ -13,7 +13,7 @@ import '../../helpers/signed_in_app.dart';
 Future<void> openClubsTab(WidgetTester tester) async {
   await tester.tap(
     find.descendant(
-      of: find.byType(NavigationBar),
+      of: find.byKey(const Key('app-nav')),
       matching: find.text('Clubs'),
     ),
   );

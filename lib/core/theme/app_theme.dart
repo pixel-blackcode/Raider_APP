@@ -33,60 +33,119 @@ abstract final class AppTheme {
       scheme,
     );
 
+    // Modèle 07 style E + palette P12 : fond clair gris, cartes blanches très
+    // arrondies à ombre douce, boutons pilules, marine pour les surfaces
+    // fortes ; en sombre : marine profond et cartes marine.
     final shape = RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(20),
     );
+    const pill = StadiumBorder();
+    final background = isDark ? AppColors.marineDeep : AppColors.mist;
+    final cardColor = isDark ? AppColors.marine : Colors.white;
 
     return ThemeData(
       useMaterial3: true,
-      colorScheme: scheme,
+      colorScheme: scheme.copyWith(
+        secondary: isDark ? AppColors.gold : AppColors.marine,
+        onSecondary: isDark ? AppColors.marineDeep : Colors.white,
+        surface: background,
+        surfaceContainerLowest: cardColor,
+        surfaceContainerLow: cardColor,
+        surfaceContainer: isDark ? const Color(0xFF1B2A4A) : Colors.white,
+        surfaceContainerHighest: isDark
+            ? const Color(0xFF22335A)
+            : const Color(0xFFE8EAF0),
+      ),
       textTheme: textTheme,
       brightness: brightness,
-      scaffoldBackgroundColor: isDark ? AppColors.asphalt : scheme.surface,
+      scaffoldBackgroundColor: background,
       extensions: [isDark ? RiderColors.dark : RiderColors.light],
       appBarTheme: AppBarTheme(
         centerTitle: false,
-        backgroundColor: isDark ? AppColors.asphalt : scheme.surface,
+        backgroundColor: background,
         foregroundColor: scheme.onSurface,
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
-        scrolledUnderElevation: 2,
+        scrolledUnderElevation: 0.5,
         titleTextStyle: textTheme.headlineSmall?.copyWith(
           color: scheme.onSurface,
         ),
       ),
       cardTheme: CardThemeData(
-        elevation: 0,
-        shape: shape.copyWith(side: BorderSide(color: scheme.outlineVariant)),
-        color: isDark ? const Color(0xFF26201E) : Colors.white,
+        elevation: isDark ? 0 : 2,
+        shadowColor: AppColors.marine.withValues(alpha: 0.10),
+        surfaceTintColor: Colors.transparent,
+        shape: isDark
+            ? shape.copyWith(side: const BorderSide(color: Color(0x14FFFFFF)))
+            : shape,
+        color: cardColor,
         margin: EdgeInsets.zero,
       ),
       chipTheme: ChipThemeData(
         labelStyle: textTheme.labelLarge,
+        shape: pill,
         side: BorderSide(color: scheme.outlineVariant),
       ),
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          minimumSize: const Size(64, 48),
-          shape: shape,
+          minimumSize: const Size(64, 50),
+          shape: pill,
+          textStyle: textTheme.labelLarge?.copyWith(fontSize: 16),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          minimumSize: const Size(64, 48),
-          shape: shape,
+          minimumSize: const Size(64, 50),
+          shape: pill,
+          side: BorderSide(color: scheme.outlineVariant, width: 1.5),
         ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(shape: pill),
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
+        shape: pill,
+        elevation: 3,
+      ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: SegmentedButton.styleFrom(shape: pill),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        fillColor: cardColor,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: scheme.outlineVariant),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: scheme.outlineVariant),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: scheme.primary, width: 2),
+        ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.md,
           vertical: AppSpacing.md,
         ),
       ),
-      navigationBarTheme: NavigationBarThemeData(
-        indicatorColor: scheme.primaryContainer,
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: cardColor,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: cardColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      ),
+      listTileTheme: const ListTileThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
       ),
     );
   }
