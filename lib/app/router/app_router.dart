@@ -355,7 +355,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.riderVerification,
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const VerificationRequestScreen(),
+        builder: (context, state) => VerificationRequestScreen(
+          forGroupCreation: state.uri.queryParameters['raison'] == 'groupe',
+        ),
       ),
       GoRoute(
         path: AppRoutes.verificationAdmin,

@@ -5,6 +5,7 @@
 begin;
 
 select tests.create_user(u) from unnest(array['ana', 'ben', 'cleo', 'dan', 'eve', 'fred']) u;
+select tests.verify_rider(u) from unnest(array['ana', 'ben', 'cleo', 'dan', 'eve', 'fred']) u;
 insert into private.platform_admins (user_id) values (tests.uid('eve'));
 
 -- Club ouvert : ana (propriétaire), ben (membre) ; cleo n'est pas membre.

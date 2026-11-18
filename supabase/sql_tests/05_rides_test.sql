@@ -7,6 +7,7 @@ begin;
 
 select tests.create_user(u)
   from unnest(array['alice', 'bob', 'carol', 'dave', 'eve', 'mallory', 'zoe']) u;
+select tests.verify_rider(u) from unnest(array['alice', 'bob', 'carol', 'dave', 'eve', 'mallory', 'zoe']) u;
 
 select tests.authenticate_as('alice');
 select public.create_club('Kin Riders', 'Kinshasa', 'public', 'approval');

@@ -4,6 +4,7 @@
 begin;
 
 select tests.create_user(u) from unnest(array['motard', 'autre', 'equipe']) u;
+select tests.verify_rider(u) from unnest(array['motard']) u;
 insert into private.platform_admins (user_id) values (tests.uid('equipe'));
 
 -- Regroupement : un club de type 'regroupement', type non modifiable.
@@ -20,7 +21,10 @@ select tests.throws(
 select tests.ok(public.request_club_verification(tests.club_id('Motards de Gombe'), 'Motards de Gombe',
   'Jean', '+243810000000') is not null, 'un regroupement peut demander la vérification');
 
--- Vérification d'un motard.
+-- Vérification d'un motard (repart d'un profil non vérifié).
+reset role;
+update public.profiles set verified_at = null, verified_until = null where id = tests.uid('motard');
+select tests.authenticate_as('motard');
 select tests.throws(
   $$update public.profiles set verified_at = now() where id = auth.uid()$$,
   'permission denied', 'on ne se vérifie pas soi-même');

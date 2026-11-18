@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rider_group/app/router/app_router.dart';
 import 'package:rider_group/app/router/app_routes.dart';
 import 'package:rider_group/features/clubs/domain/club.dart';
+import 'package:rider_group/features/profile/domain/profile.dart';
 
 import '../../helpers/fakes.dart';
 import '../../helpers/signed_in_app.dart';
@@ -35,7 +36,12 @@ void main() {
       currentUserId: alice.id,
       profiles: testProfiles,
     );
-    await pumpOnlineApp(tester, auth: signedInAs(alice), clubs: clubs);
+    await pumpOnlineApp(
+      tester,
+      auth: signedInAs(alice),
+      clubs: clubs,
+      profiles: verifiedProfiles(),
+    );
     await openClubsTab(tester);
     expect(find.text('Vous n\'avez rejoint aucun club'), findsOneWidget);
 
@@ -83,10 +89,33 @@ void main() {
     expect(find.byKey(const Key('club-leave')), findsNothing);
   });
 
+  testWidgets('non vérifié : envoyé vers la vérification de son profil', (
+    tester,
+  ) async {
+    await pumpOnlineApp(tester, auth: signedInAs(alice));
+    await openClubsTab(tester);
+    await tester.tap(find.byKey(const Key('clubs-create')));
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const Key('club-create-needs-verification')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const Key('club-create-get-verified')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('verification-group-reason')), findsOneWidget);
+    expect(find.text('Vérification de mon profil'), findsOneWidget);
+    expect(find.byKey(const Key('verification-official-name')), findsNothing);
+  });
+
   testWidgets('nom déjà pris : l\'erreur serveur est affichée', (tester) async {
     final clubs = FakeClubsRepository(currentUserId: alice.id)
       ..addClub(name: 'Kin Riders', ownerId: bob.id);
-    await pumpOnlineApp(tester, auth: signedInAs(alice), clubs: clubs);
+    await pumpOnlineApp(
+      tester,
+      auth: signedInAs(alice),
+      clubs: clubs,
+      profiles: verifiedProfiles(),
+    );
     await openClubsTab(tester);
     await tester.tap(find.byKey(const Key('clubs-create')));
     await tester.pumpAndSettle();
@@ -447,3 +476,16 @@ void main() {
     expect(clubs.images[kin.id]![ClubImageKind.cover], '${kin.id}/cover-2.jpg');
   });
 }
+
+/// Créer un club exige un profil vérifié (D-62).
+FakeProfileRepository verifiedProfiles() => FakeProfileRepository([
+  Profile(
+    id: alice.id,
+    username: alice.username,
+    displayName: alice.displayName,
+    verifiedAt: DateTime(2026),
+    verifiedUntil: DateTime.now().add(const Duration(days: 200)),
+  ),
+  bob,
+  carol,
+]);

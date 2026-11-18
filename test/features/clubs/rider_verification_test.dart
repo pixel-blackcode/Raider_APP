@@ -110,6 +110,17 @@ void main() {
       tester,
       auth: signedInAs(alice),
       clubs: clubs,
+      profiles: FakeProfileRepository([
+        Profile(
+          id: 'alice',
+          username: 'alice',
+          displayName: 'Alice',
+          verifiedAt: DateTime(2026),
+          verifiedUntil: DateTime.now().add(const Duration(days: 200)),
+        ),
+        bob,
+        carol,
+      ]),
     );
     await go(tester, container, AppRoutes.newClub);
     await tester.tap(find.text('Regroupement'));

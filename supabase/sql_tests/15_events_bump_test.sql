@@ -5,6 +5,7 @@
 begin;
 
 select tests.create_user(u) from unnest(array['chef', 'chef2', 'chef3', 'motard']) u;
+select tests.verify_rider(u) from unnest(array['chef', 'chef2', 'chef3']) u;
 
 select tests.authenticate_as('chef');
 select public.create_club('Phoenix Riders', 'Kinshasa', 'public', 'open');

@@ -1460,5 +1460,16 @@
     }
   },
   "homeTagline": "Prêt pour la prochaine sortie ?",
-  "homeHeroCta": "Trouver une balade"
+  "homeHeroCta": "Trouver une balade",
+  "riderVerificationTitle": "Vérification de mon profil",
+  "regroupementVerificationTitle": "Vérification du regroupement",
+  "riderVerificationAdvantagesTitle": "Pourquoi faire vérifier votre profil ?",
+  "regroupementVerificationAdvantagesTitle": "Pourquoi faire vérifier votre regroupement ?",
+  "riderVerificationAdvantageGroups": "Vous pouvez créer un club ou un regroupement",
+  "riderVerificationAdvantageShop": "Vous pouvez ouvrir une boutique et réactualiser vos annonces",
+  "riderVerificationProcess": "Cette vérification concerne VOTRE personne, pas un club. L'équipe Rider Group confirme votre identité et peut vous contacter sur WhatsApp. Vous êtes prévenu dans l'application dès qu'une décision est prise.",
+  "riderVerificationSent": "Demande de vérification de votre profil envoyée",
+  "riderVerificationForGroup": "Pour créer un club ou un regroupement, faites d'abord vérifier votre profil. Cela confirme votre identité et empêche quiconque d'usurper le nom d'un club ou d'un regroupement existant.",
+  "groupCreateVerifiedOnlyTitle": "Profil vérifié requis",
+  "groupCreateVerifiedOnlyBody": "Seuls les motards vérifiés peuvent créer un club ou un regroupement : cela confirme l'identité du fondateur et protège les groupes existants contre l'usurpation."
 }

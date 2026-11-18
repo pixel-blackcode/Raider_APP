@@ -4923,6 +4923,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Trouver une balade'**
   String get homeHeroCta;
+
+  /// No description provided for @riderVerificationTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification de mon profil'**
+  String get riderVerificationTitle;
+
+  /// No description provided for @regroupementVerificationTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification du regroupement'**
+  String get regroupementVerificationTitle;
+
+  /// No description provided for @riderVerificationAdvantagesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi faire vérifier votre profil ?'**
+  String get riderVerificationAdvantagesTitle;
+
+  /// No description provided for @regroupementVerificationAdvantagesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pourquoi faire vérifier votre regroupement ?'**
+  String get regroupementVerificationAdvantagesTitle;
+
+  /// No description provided for @riderVerificationAdvantageGroups.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous pouvez créer un club ou un regroupement'**
+  String get riderVerificationAdvantageGroups;
+
+  /// No description provided for @riderVerificationAdvantageShop.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous pouvez ouvrir une boutique et réactualiser vos annonces'**
+  String get riderVerificationAdvantageShop;
+
+  /// No description provided for @riderVerificationProcess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette vérification concerne VOTRE personne, pas un club. L\'équipe Rider Group confirme votre identité et peut vous contacter sur WhatsApp. Vous êtes prévenu dans l\'application dès qu\'une décision est prise.'**
+  String get riderVerificationProcess;
+
+  /// No description provided for @riderVerificationSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de vérification de votre profil envoyée'**
+  String get riderVerificationSent;
+
+  /// No description provided for @riderVerificationForGroup.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour créer un club ou un regroupement, faites d\'abord vérifier votre profil. Cela confirme votre identité et empêche quiconque d\'usurper le nom d\'un club ou d\'un regroupement existant.'**
+  String get riderVerificationForGroup;
+
+  /// No description provided for @groupCreateVerifiedOnlyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil vérifié requis'**
+  String get groupCreateVerifiedOnlyTitle;
+
+  /// No description provided for @groupCreateVerifiedOnlyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seuls les motards vérifiés peuvent créer un club ou un regroupement : cela confirme l\'identité du fondateur et protège les groupes existants contre l\'usurpation.'**
+  String get groupCreateVerifiedOnlyBody;
 }
 
 class _AppLocalizationsDelegate

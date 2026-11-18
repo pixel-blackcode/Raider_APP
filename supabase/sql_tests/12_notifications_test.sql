@@ -4,6 +4,7 @@
 begin;
 
 select tests.create_user(u) from unnest(array['orga', 'moto', 'invite', 'bloque']) u;
+select tests.verify_rider(u) from unnest(array['orga', 'moto', 'invite', 'bloque']) u;
 
 -- Demande de participation → organisatrice ; décision → demandeur.
 select tests.authenticate_as('orga');

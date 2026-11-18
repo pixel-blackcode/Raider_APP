@@ -11,6 +11,7 @@ import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../profile/data/profile_repository.dart';
 import '../data/clubs_providers.dart';
 import '../domain/club.dart';
 import '../domain/club_draft.dart';
@@ -28,9 +29,30 @@ class ClubFormScreen extends ConsumerWidget {
     final l10n = AppLocalizations.of(context);
     final id = clubId;
     if (id == null) {
+      // D-62 : créer un club ou un regroupement exige un profil vérifié.
+      final profile = ref.watch(myProfileProvider);
       return Scaffold(
         appBar: AppBar(title: Text(l10n.clubCreate)),
-        body: const _ClubForm(),
+        body: AsyncValueView(
+          value: profile,
+          onRetry: () => ref.invalidate(myProfileProvider),
+          data: (p) => p != null && p.isVerified
+              ? const _ClubForm()
+              : EmptyState(
+                  key: const Key('club-create-needs-verification'),
+                  icon: Icons.verified_user_outlined,
+                  title: l10n.groupCreateVerifiedOnlyTitle,
+                  message: l10n.groupCreateVerifiedOnlyBody,
+                  action: FilledButton.icon(
+                    key: const Key('club-create-get-verified'),
+                    onPressed: () => context.pushReplacement(
+                      AppRoutes.riderVerificationForGroup,
+                    ),
+                    icon: const Icon(Icons.verified_outlined),
+                    label: Text(l10n.riderVerificationCta),
+                  ),
+                ),
+        ),
       );
     }
     return Scaffold(

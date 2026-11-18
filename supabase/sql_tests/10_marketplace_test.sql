@@ -6,6 +6,7 @@ begin;
 select tests.create_user('vendeur', '{"username": "vendeur", "display_name": "Jean Phoenix"}');
 select tests.create_user('acheteur', '{"username": "acheteur", "display_name": "Acheteur"}');
 select tests.create_user('curieux', '{"username": "curieux", "display_name": "Curieux"}');
+select tests.verify_rider(u) from unnest(array['vendeur', 'acheteur', 'curieux']) u;
 
 -- Critère 14 : aucune table ni fonction de paiement.
 select tests.ok(not exists (

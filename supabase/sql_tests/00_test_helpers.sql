@@ -178,3 +178,14 @@ as $$
    where p.ride_id = tests.ride_id(p_title) and p.user_id = tests.uid(p_user);
 $$;
 grant execute on function tests.participant_status(text, text) to anon, authenticated;
+
+-- Motard vérifié (nécessaire pour créer un club ou un regroupement, D-62).
+create or replace function tests.verify_rider(p_name text)
+returns void
+language sql
+security definer
+set search_path = ''
+as $$
+  update public.profiles set verified_at = now(), verified_until = now() + interval '1 year'
+   where id = tests.uid(p_name);
+$$;

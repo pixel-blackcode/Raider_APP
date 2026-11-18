@@ -4,6 +4,7 @@
 begin;
 
 select tests.create_user(u) from unnest(array['alice', 'bob', 'carol', 'dave', 'mallory']) u;
+select tests.verify_rider(u) from unnest(array['alice', 'bob', 'carol', 'dave', 'mallory']) u;
 
 -- alice : club public « Kin Riders » (bob, carol membres)
 -- alice : club privé masqué « Secret MC »

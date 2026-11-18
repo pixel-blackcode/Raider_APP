@@ -4,6 +4,7 @@
 begin;
 
 select tests.create_user(u) from unnest(array['patron', 'adjoint', 'membre', 'equipe']) u;
+select tests.verify_rider(u) from unnest(array['patron', 'adjoint', 'membre', 'equipe']) u;
 insert into private.platform_admins (user_id) values (tests.uid('equipe'));
 
 select tests.authenticate_as('patron');

@@ -20,7 +20,14 @@ import '../domain/club.dart';
 /// L'équipe Rider Group examine la demande et contacte le club en dehors de
 /// l'application.
 class VerificationRequestScreen extends ConsumerStatefulWidget {
-  const VerificationRequestScreen({super.key, this.clubId});
+  const VerificationRequestScreen({
+    super.key,
+    this.clubId,
+    this.forGroupCreation = false,
+  });
+
+  /// Arrivé ici en voulant créer un club ou un regroupement (D-62).
+  final bool forGroupCreation;
 
   /// `null` : vérification du motard (nom réel, WhatsApp, pièce facultative).
   final String? clubId;
@@ -102,7 +109,12 @@ class _VerificationRequestScreenState
             );
         ref.invalidate(myRiderVerificationRequestProvider);
         if (!mounted) return;
-        showSnack(context, l10n.clubVerificationSent);
+        showSnack(
+          context,
+          widget.isRider
+              ? l10n.riderVerificationSent
+              : l10n.clubVerificationSent,
+        );
         context.pop();
         return;
       }
@@ -122,7 +134,10 @@ class _VerificationRequestScreenState
           );
       ref.invalidate(clubDetailProvider(widget.clubId!));
       if (!mounted) return;
-      showSnack(context, l10n.clubVerificationSent);
+      showSnack(
+        context,
+        widget.isRider ? l10n.riderVerificationSent : l10n.clubVerificationSent,
+      );
       context.pop();
     } catch (error) {
       if (mounted) showSnack(context, describeError(context, error));
@@ -135,6 +150,14 @@ class _VerificationRequestScreenState
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final isRegroupement =
+        widget.clubId != null &&
+        (ref
+                .watch(clubDetailProvider(widget.clubId!))
+                .value
+                ?.club
+                .isRegroupement ??
+            false);
     String? need(String? v) =>
         (v == null || v.trim().length < 2) ? l10n.validationTooShort(2) : null;
 
@@ -151,14 +174,54 @@ class _VerificationRequestScreenState
     );
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.verificationTitle)),
+      appBar: AppBar(
+        title: Text(
+          widget.isRider
+              ? l10n.riderVerificationTitle
+              : isRegroupement
+              ? l10n.regroupementVerificationTitle
+              : l10n.verificationTitle,
+        ),
+      ),
       body: Form(
         key: _form,
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.md),
           children: [
+            if (widget.forGroupCreation) ...[
+              Card(
+                key: const Key('verification-group-reason'),
+                color: theme.colorScheme.primaryContainer,
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.shield_outlined,
+                        color: theme.colorScheme.onPrimaryContainer,
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      Expanded(
+                        child: Text(
+                          l10n.riderVerificationForGroup,
+                          style: TextStyle(
+                            color: theme.colorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+            ],
             Text(
-              l10n.verificationAdvantagesTitle,
+              widget.isRider
+                  ? l10n.riderVerificationAdvantagesTitle
+                  : isRegroupement
+                  ? l10n.regroupementVerificationAdvantagesTitle
+                  : l10n.verificationAdvantagesTitle,
               style: theme.textTheme.titleLarge,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -167,6 +230,14 @@ class _VerificationRequestScreenState
               advantage(
                 Icons.handshake_outlined,
                 l10n.riderVerificationAdvantageTrust,
+              ),
+              advantage(
+                Icons.groups_outlined,
+                l10n.riderVerificationAdvantageGroups,
+              ),
+              advantage(
+                Icons.storefront_outlined,
+                l10n.riderVerificationAdvantageShop,
               ),
             ] else ...[
               advantage(Icons.verified, l10n.verificationAdvantageBadge),
@@ -178,7 +249,12 @@ class _VerificationRequestScreenState
             ],
             advantage(Icons.event_repeat, l10n.verificationAdvantageRenewal),
             const SizedBox(height: AppSpacing.md),
-            Text(l10n.verificationProcess, style: theme.textTheme.bodyMedium),
+            Text(
+              widget.isRider
+                  ? l10n.riderVerificationProcess
+                  : l10n.verificationProcess,
+              style: theme.textTheme.bodyMedium,
+            ),
             const SizedBox(height: AppSpacing.md),
             if (!widget.isRider)
               TextFormField(

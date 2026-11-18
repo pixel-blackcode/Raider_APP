@@ -5,6 +5,14 @@
 begin;
 
 select tests.create_user(u) from unnest(array['alice', 'bob', 'carol', 'dave', 'eve', 'mallory']) u;
+select tests.create_user('novice');
+select tests.authenticate_as('novice');
+select tests.throws($$select public.create_club('Club Novice', 'Kinshasa', 'public', 'open')$$,
+  'verification_required', 'un motard non vérifié ne crée pas de club');
+select tests.throws($$select public.create_regroupement('Groupe Novice', 'Kinshasa', 'public', 'open')$$,
+  'verification_required', 'ni de regroupement');
+reset role;
+select tests.verify_rider(u) from unnest(array['alice', 'bob', 'carol', 'dave', 'eve', 'mallory']) u;
 -- eve est administratrice de la plateforme Rider Group.
 insert into private.platform_admins (user_id) values (tests.uid('eve'));
 

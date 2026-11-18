@@ -2800,4 +2800,45 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get homeHeroCta => 'Trouver une balade';
+
+  @override
+  String get riderVerificationTitle => 'Vérification de mon profil';
+
+  @override
+  String get regroupementVerificationTitle => 'Vérification du regroupement';
+
+  @override
+  String get riderVerificationAdvantagesTitle =>
+      'Pourquoi faire vérifier votre profil ?';
+
+  @override
+  String get regroupementVerificationAdvantagesTitle =>
+      'Pourquoi faire vérifier votre regroupement ?';
+
+  @override
+  String get riderVerificationAdvantageGroups =>
+      'Vous pouvez créer un club ou un regroupement';
+
+  @override
+  String get riderVerificationAdvantageShop =>
+      'Vous pouvez ouvrir une boutique et réactualiser vos annonces';
+
+  @override
+  String get riderVerificationProcess =>
+      'Cette vérification concerne VOTRE personne, pas un club. L\'équipe Rider Group confirme votre identité et peut vous contacter sur WhatsApp. Vous êtes prévenu dans l\'application dès qu\'une décision est prise.';
+
+  @override
+  String get riderVerificationSent =>
+      'Demande de vérification de votre profil envoyée';
+
+  @override
+  String get riderVerificationForGroup =>
+      'Pour créer un club ou un regroupement, faites d\'abord vérifier votre profil. Cela confirme votre identité et empêche quiconque d\'usurper le nom d\'un club ou d\'un regroupement existant.';
+
+  @override
+  String get groupCreateVerifiedOnlyTitle => 'Profil vérifié requis';
+
+  @override
+  String get groupCreateVerifiedOnlyBody =>
+      'Seuls les motards vérifiés peuvent créer un club ou un regroupement : cela confirme l\'identité du fondateur et protège les groupes existants contre l\'usurpation.';
 }
