@@ -42,25 +42,32 @@ class AuthFormScaffold extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    // Logo Rider Group (épingle + motard) sur une pastille sombre.
                     Center(
                       child: Container(
-                        width: 84,
-                        height: 84,
+                        key: const Key('auth-logo'),
+                        width: 104,
+                        height: 104,
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
+                          color: const Color(0xFF161616),
+                          borderRadius: BorderRadius.circular(28),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.15),
+                              color: Colors.black.withValues(alpha: 0.25),
                               blurRadius: 20,
                               offset: const Offset(0, 8),
                             ),
                           ],
                         ),
-                        child: const Icon(
-                          Icons.two_wheeler,
-                          size: 48,
-                          color: AppColors.brand,
+                        child: Image.asset(
+                          'assets/brand/logo_mark.png',
+                          semanticLabel: 'Rider Group',
+                          errorBuilder: (_, _, _) => const Icon(
+                            Icons.two_wheeler,
+                            size: 48,
+                            color: AppColors.brand,
+                          ),
                         ),
                       ),
                     ),

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rider_group/app/router/app_router.dart';
 import 'package:rider_group/app/router/app_routes.dart';
+import 'package:rider_group/core/geo/point_picker.dart';
 import 'package:rider_group/features/clubs/domain/club.dart';
 import 'package:rider_group/features/events/domain/moto_event.dart';
 
@@ -36,6 +37,11 @@ void main() {
       auth: signedInAs(alice),
       clubs: clubs,
       events: events,
+      extraOverrides: [
+        placePickerProvider.overrideWithValue(
+          (context, {initial}) async => const GeoPoint(-4.31, 15.29),
+        ),
+      ],
     );
     await go(tester, container, AppRoutes.club(club.id));
     final create = find.byKey(const Key('club-create-event'));
@@ -50,11 +56,17 @@ void main() {
       find.byKey(const Key('event-place')),
       'Boulevard du 30 Juin',
     );
+    final point = find.byKey(const Key('event-map-point'));
+    await tester.ensureVisible(point);
+    await tester.tap(point);
+    await tester.pumpAndSettle();
+    expect(find.text('Lieu pointé sur la carte ✓'), findsOneWidget);
     final submit = find.byKey(const Key('event-submit'));
     await tester.ensureVisible(submit);
     await tester.tap(submit);
     await tester.pumpAndSettle();
     expect(events.calls, ['create:${club.id}']);
+    expect(events.lastDraft?.lat, -4.31);
     expect(find.text('Grand rassemblement'), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('event-going')));

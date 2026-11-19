@@ -2916,4 +2916,52 @@ class AppLocalizationsFr extends AppLocalizations {
   String notifClubDeletionAuto(String club) {
     return 'Le groupe $club a été supprimé (15 jours sans décision)';
   }
+
+  @override
+  String get mapStepPlace => 'Lieu de l\'événement';
+
+  @override
+  String get mapConfirmPlace => 'Valider ce lieu';
+
+  @override
+  String get eventPointOnMap => 'Pointer le lieu sur la carte';
+
+  @override
+  String get eventPointPicked => 'Lieu pointé sur la carte ✓';
+
+  @override
+  String get eventPointHelp =>
+      'Facultatif : les motards pourront ouvrir l\'itinéraire';
+
+  @override
+  String get eventSeeOnMap => 'Carte';
+
+  @override
+  String get shopSuspend => 'Suspendre la boutique';
+
+  @override
+  String get shopRestore => 'Rétablir la boutique';
+
+  @override
+  String get shopSuspendReason => 'Raison (envoyée au propriétaire)';
+
+  @override
+  String get shopSuspendedDone => 'Boutique suspendue';
+
+  @override
+  String get shopRestored => 'Boutique rétablie';
+
+  @override
+  String get shopSuspendedNotice =>
+      'Cette boutique est suspendue par l\'équipe Rider Group : seuls son propriétaire et l\'équipe la voient.';
+
+  @override
+  String notifShopSuspended(String name, String note) {
+    return 'Votre boutique $name a été suspendue par l\'équipe. $note';
+  }
+
+  @override
+  String notifShopRestored(String name) {
+    return 'Votre boutique $name est de nouveau visible';
+  }
 }

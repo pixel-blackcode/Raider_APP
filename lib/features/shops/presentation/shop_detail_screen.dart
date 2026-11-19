@@ -7,11 +7,13 @@ import '../../../core/errors/error_messages.dart';
 import '../../../core/media/media_repository.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_value_view.dart';
+import '../../../core/widgets/dialogs.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/info_card.dart';
 import '../../../core/widgets/remote_avatar.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../clubs/data/verification_admin_repository.dart';
 import '../../clubs/presentation/widgets/verified_badge.dart';
 import '../../community/presentation/community_ui.dart';
 import '../../marketplace/data/marketplace_repository.dart';
@@ -111,11 +113,20 @@ class ShopDetailScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
+                    if (ref.watch(amIPlatformAdminProvider).value ?? false) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      _SuspendButton(
+                        shopId: shop.id,
+                        suspended: shop.suspended,
+                      ),
+                    ],
                     if (!shop.active) ...[
                       const SizedBox(height: AppSpacing.sm),
                       InfoCard(
                         icon: Icons.visibility_off_outlined,
-                        message: l10n.shopInactive,
+                        message: shop.suspended
+                            ? l10n.shopSuspendedNotice
+                            : l10n.shopInactive,
                       ),
                     ],
                     if (shop.description.isNotEmpty) ...[
@@ -196,6 +207,63 @@ class ShopDetailScreen extends ConsumerWidget {
           );
         },
       ),
+    );
+  }
+}
+
+/// Outil de l'équipe : suspendre (avec raison) ou rétablir une boutique.
+class _SuspendButton extends ConsumerWidget {
+  const _SuspendButton({required this.shopId, required this.suspended});
+
+  final String shopId;
+  final bool suspended;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return OutlinedButton.icon(
+      key: const Key('shop-suspend'),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: suspended
+            ? theme.colorScheme.primary
+            : theme.colorScheme.error,
+      ),
+      onPressed: () async {
+        String? note;
+        if (!suspended) {
+          note = await showTextPrompt(
+            context,
+            title: l10n.shopSuspend,
+            label: l10n.shopSuspendReason,
+            confirmLabel: l10n.shopSuspend,
+            maxLength: 1000,
+          );
+          if (note == null) return;
+        }
+        try {
+          await ref
+              .read(shopsRepositoryProvider)!
+              .setSuspended(
+                shopId,
+                suspended: !suspended,
+                note: (note ?? '').isEmpty ? null : note,
+              );
+          ref.refreshShops();
+          if (context.mounted) {
+            showSnack(
+              context,
+              suspended ? l10n.shopRestored : l10n.shopSuspendedDone,
+            );
+          }
+        } catch (error) {
+          if (context.mounted) {
+            showSnack(context, describeError(context, error));
+          }
+        }
+      },
+      icon: Icon(suspended ? Icons.play_circle_outline : Icons.block),
+      label: Text(suspended ? l10n.shopRestore : l10n.shopSuspend),
     );
   }
 }

@@ -75,6 +75,9 @@ flutter:
 
   # Titres dynamiques (licence OFL, assets/fonts/OFL.txt), intégrés à
   # l'application : aucun téléchargement de police à l'exécution.
+  assets:
+    - assets/brand/logo_mark.png
+
   fonts:
     - family: BarlowCondensed
       fonts:

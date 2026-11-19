@@ -1879,8 +1879,11 @@ class FakeEventsRepository implements EventsRepository {
   @override
   Future<MotoEvent?> event(String id) async => events[id];
 
+  EventDraft? lastDraft;
+
   @override
   Future<String> create(String clubId, String clientRef, EventDraft d) async {
+    lastDraft = d;
     calls.add('create:$clubId');
     final id = 'event-${++_seq}';
     events[id] = MotoEvent(
@@ -1996,6 +1999,26 @@ class FakeShopsRepository implements ShopsRepository {
 
   @override
   Future<String?> setMyLogo(String? path) async => null;
+
+  @override
+  Future<void> setSuspended(
+    String shopId, {
+    required bool suspended,
+    String? note,
+  }) async {
+    calls.add('suspend:$shopId:$suspended:$note');
+    final s = shops[shopId]!;
+    shops[shopId] = Shop(
+      id: s.id,
+      ownerId: s.ownerId,
+      ownerName: s.ownerName,
+      name: s.name,
+      city: s.city,
+      phone: s.phone,
+      suspended: suspended,
+      active: !suspended,
+    );
+  }
 
   @override
   Future<void> deleteMine() async {

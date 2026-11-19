@@ -1539,5 +1539,36 @@
         "type": "String"
       }
     }
+  },
+  "mapStepPlace": "Lieu de l'événement",
+  "mapConfirmPlace": "Valider ce lieu",
+  "eventPointOnMap": "Pointer le lieu sur la carte",
+  "eventPointPicked": "Lieu pointé sur la carte ✓",
+  "eventPointHelp": "Facultatif : les motards pourront ouvrir l'itinéraire",
+  "eventSeeOnMap": "Carte",
+  "shopSuspend": "Suspendre la boutique",
+  "shopRestore": "Rétablir la boutique",
+  "shopSuspendReason": "Raison (envoyée au propriétaire)",
+  "shopSuspendedDone": "Boutique suspendue",
+  "shopRestored": "Boutique rétablie",
+  "shopSuspendedNotice": "Cette boutique est suspendue par l'équipe Rider Group : seuls son propriétaire et l'équipe la voient.",
+  "notifShopSuspended": "Votre boutique {name} a été suspendue par l'équipe. {note}",
+  "@notifShopSuspended": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "note": {
+        "type": "String"
+      }
+    }
+  },
+  "notifShopRestored": "Votre boutique {name} est de nouveau visible",
+  "@notifShopRestored": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

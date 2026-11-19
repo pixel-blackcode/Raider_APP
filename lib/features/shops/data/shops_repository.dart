@@ -20,6 +20,13 @@ abstract interface class ShopsRepository {
   Future<String?> setMyLogo(String? path);
 
   Future<void> deleteMine();
+
+  /// Équipe Rider Group uniquement (refusé par le serveur sinon).
+  Future<void> setSuspended(
+    String shopId, {
+    required bool suspended,
+    String? note,
+  });
 }
 
 class SupabaseShopsRepository implements ShopsRepository {
@@ -77,6 +84,18 @@ class SupabaseShopsRepository implements ShopsRepository {
   @override
   Future<String?> setMyLogo(String? path) => _guard(
     () => _client.rpc<String?>('set_my_shop_logo', params: {'p_path': path}),
+  );
+
+  @override
+  Future<void> setSuspended(
+    String shopId, {
+    required bool suspended,
+    String? note,
+  }) => _guard(
+    () => _client.rpc<void>(
+      'set_shop_suspended',
+      params: {'p_shop_id': shopId, 'p_suspended': suspended, 'p_note': note},
+    ),
   );
 
   @override

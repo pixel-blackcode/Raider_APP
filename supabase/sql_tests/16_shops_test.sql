@@ -58,9 +58,20 @@ select tests.authenticate_as('client');
 select tests.throws(format($$select public.set_shop_suspended(%L, true)$$, (select id from public.shops)),
   'not_allowed', 'seule l''équipe suspend');
 select tests.authenticate_as('equipe');
-select public.set_shop_suspended((select id from public.shops), true);
+select public.set_shop_suspended((select id from public.shops), true, 'Annonces trompeuses');
+select tests.ok((select suspended and not active from public.list_shops()),
+  'l''équipe voit la boutique suspendue');
 select tests.authenticate_as('client');
 select tests.ok(tests.count_of('select 1 from public.list_shops()') = 0, 'boutique suspendue masquée');
+select tests.authenticate_as('vendeur');
+select tests.ok((select data->>'note' = 'Annonces trompeuses' from public.notifications
+                  where kind = 'shop_suspended'), 'le propriétaire est prévenu avec la raison');
+select tests.ok((select suspended from public.list_shops(p_owner_id => tests.uid('vendeur'))),
+  'le propriétaire voit sa boutique suspendue');
+select tests.authenticate_as('equipe');
+select public.set_shop_suspended((select id from public.shops), false);
+select tests.authenticate_as('client');
+select tests.ok(tests.count_of('select 1 from public.list_shops()') = 1, 'boutique rétablie visible');
 
 select tests.authenticate_as('vendeur');
 select public.delete_my_shop();

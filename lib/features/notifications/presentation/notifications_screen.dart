@@ -114,6 +114,13 @@ String notificationText(AppLocalizations l10n, AppNotification n) {
     'club_deletion_auto' => l10n.notifClubDeletionAuto(
       (n.data['name'] as String?) ?? '',
     ),
+    'shop_suspended' => l10n.notifShopSuspended(
+      (n.data['name'] as String?) ?? '',
+      (n.data['note'] as String?) ?? '',
+    ),
+    'shop_restored' => l10n.notifShopRestored(
+      (n.data['name'] as String?) ?? '',
+    ),
     'rider_verification_approved' => l10n.notifRiderVerificationApproved,
     'rider_verification_rejected' => l10n.notifRiderVerificationRejected,
     'rider_verification_expiring' => l10n.notifRiderVerificationExpiring,
@@ -194,6 +201,10 @@ class _NotificationTileState extends ConsumerState<_NotificationTile> {
     final n = widget.n;
     ref.read(notificationsRepositoryProvider)?.markRead([n.id]);
     ref.invalidate(notificationsProvider);
+    if (n.kind.startsWith('shop_') && n.refId != null) {
+      context.push(AppRoutes.shop(n.refId!));
+      return;
+    }
     final eventId =
         (n.data['event_id'] as String?) ??
         (n.kind == 'event_cancelled' ? n.refId : null);

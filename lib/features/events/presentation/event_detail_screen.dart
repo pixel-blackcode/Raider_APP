@@ -16,6 +16,7 @@ import '../../../l10n/generated/app_localizations.dart';
 import '../../clubs/data/clubs_providers.dart';
 import '../../clubs/presentation/widgets/verified_badge.dart';
 import '../../community/presentation/community_ui.dart';
+import '../../sos/data/emergency.dart';
 import '../data/events_repository.dart';
 import '../domain/moto_event.dart';
 import 'events_ui.dart';
@@ -227,6 +228,16 @@ class _EventDetailScreenState extends ConsumerState<EventDetailScreen> {
                 leading: const Icon(Icons.place_outlined),
                 title: Text(e.placeName),
                 subtitle: Text(e.city),
+                trailing: e.lat == null
+                    ? null
+                    : TextButton.icon(
+                        key: const Key('event-open-map'),
+                        onPressed: () => ref
+                            .read(externalActionsProvider)
+                            .openMap(e.lat!, e.lng!),
+                        icon: const Icon(Icons.map_outlined),
+                        label: Text(l10n.eventSeeOnMap),
+                      ),
               ),
               ListTile(
                 key: const Key('event-organizer'),

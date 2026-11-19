@@ -5109,6 +5109,90 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Le groupe {club} a été supprimé (15 jours sans décision)'**
   String notifClubDeletionAuto(String club);
+
+  /// No description provided for @mapStepPlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lieu de l\'événement'**
+  String get mapStepPlace;
+
+  /// No description provided for @mapConfirmPlace.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider ce lieu'**
+  String get mapConfirmPlace;
+
+  /// No description provided for @eventPointOnMap.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pointer le lieu sur la carte'**
+  String get eventPointOnMap;
+
+  /// No description provided for @eventPointPicked.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lieu pointé sur la carte ✓'**
+  String get eventPointPicked;
+
+  /// No description provided for @eventPointHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facultatif : les motards pourront ouvrir l\'itinéraire'**
+  String get eventPointHelp;
+
+  /// No description provided for @eventSeeOnMap.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte'**
+  String get eventSeeOnMap;
+
+  /// No description provided for @shopSuspend.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suspendre la boutique'**
+  String get shopSuspend;
+
+  /// No description provided for @shopRestore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rétablir la boutique'**
+  String get shopRestore;
+
+  /// No description provided for @shopSuspendReason.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raison (envoyée au propriétaire)'**
+  String get shopSuspendReason;
+
+  /// No description provided for @shopSuspendedDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boutique suspendue'**
+  String get shopSuspendedDone;
+
+  /// No description provided for @shopRestored.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boutique rétablie'**
+  String get shopRestored;
+
+  /// No description provided for @shopSuspendedNotice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette boutique est suspendue par l\'équipe Rider Group : seuls son propriétaire et l\'équipe la voient.'**
+  String get shopSuspendedNotice;
+
+  /// No description provided for @notifShopSuspended.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre boutique {name} a été suspendue par l\'équipe. {note}'**
+  String notifShopSuspended(String name, String note);
+
+  /// No description provided for @notifShopRestored.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre boutique {name} est de nouveau visible'**
+  String notifShopRestored(String name);
 }
 
 class _AppLocalizationsDelegate

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
 import '../../../core/errors/error_messages.dart';
+import '../../../core/geo/point_picker.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/utils/client_ref.dart';
 import '../../../core/widgets/async_value_view.dart';
@@ -70,6 +71,9 @@ class _EventFormState extends ConsumerState<_EventForm> {
             microsecond: 0,
           );
   late DateTime? _end = widget.event?.endsAt?.toLocal();
+  late GeoPoint? _point = widget.event?.lat == null
+      ? null
+      : GeoPoint(widget.event!.lat!, widget.event!.lng!);
   final _clientRef = newClientRef();
   bool _busy = false;
 
@@ -112,6 +116,8 @@ class _EventFormState extends ConsumerState<_EventForm> {
       placeName: _place.text,
       city: _city.text,
       description: _description.text,
+      lat: _point?.lat,
+      lng: _point?.lng,
     );
     final repo = ref.read(eventsRepositoryProvider)!;
     setState(() => _busy = true);
@@ -170,6 +176,35 @@ class _EventFormState extends ConsumerState<_EventForm> {
             maxLength: 80,
             decoration: InputDecoration(labelText: l10n.eventFieldCity),
             validator: (v) => len(v, 2, 80),
+          ),
+          ListTile(
+            key: const Key('event-map-point'),
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(
+              _point == null ? Icons.add_location_alt_outlined : Icons.place,
+              color: _point == null
+                  ? null
+                  : Theme.of(context).colorScheme.primary,
+            ),
+            title: Text(
+              _point == null ? l10n.eventPointOnMap : l10n.eventPointPicked,
+            ),
+            subtitle: Text(l10n.eventPointHelp),
+            trailing: _point == null
+                ? const Icon(Icons.chevron_right)
+                : IconButton(
+                    key: const Key('event-map-clear'),
+                    tooltip: l10n.actionDelete,
+                    onPressed: () => setState(() => _point = null),
+                    icon: const Icon(Icons.clear),
+                  ),
+            onTap: () async {
+              final p = await ref.read(placePickerProvider)(
+                context,
+                initial: _point,
+              );
+              if (p != null && mounted) setState(() => _point = p);
+            },
           ),
           ListTile(
             key: const Key('event-start'),

@@ -102,7 +102,13 @@ class EventDraft {
     required this.city,
     this.description = '',
     this.endsAt,
+    this.lat,
+    this.lng,
   });
+
+  /// Point du lieu sur la carte (facultatif).
+  final double? lat;
+  final double? lng;
 
   final String title;
   final DateTime startsAt;
@@ -118,6 +124,8 @@ class EventDraft {
     'p_city': city.trim(),
     'p_description': description.trim(),
     'p_ends_at': endsAt?.toUtc().toIso8601String(),
+    'p_lat': lat,
+    'p_lng': lng,
   };
 }
 

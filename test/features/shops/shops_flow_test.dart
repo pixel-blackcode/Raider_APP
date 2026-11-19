@@ -100,4 +100,49 @@ void main() {
     await tester.pumpAndSettle();
     expect(actions.whatsapp, ['+243810000000']);
   });
+
+  testWidgets('équipe : suspendre puis rétablir une boutique', (tester) async {
+    final shops = FakeShopsRepository(currentUserId: 'alice')
+      ..shops['s1'] = const Shop(
+        id: 's1',
+        ownerId: 'bob',
+        ownerName: 'Bob',
+        name: 'Bob Motos',
+        city: 'Kinshasa',
+      );
+    final container = await pumpOnlineApp(
+      tester,
+      auth: signedInAs(alice),
+      shops: shops,
+      verificationAdmin: FakeVerificationAdminRepository(isAdmin: true),
+    );
+    await go(tester, container, AppRoutes.shop('s1'));
+    await tester.tap(find.byKey(const Key('shop-suspend')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField).last, 'Annonces trompeuses');
+    await tester.tap(find.byKey(const Key('text-dialog-ok')));
+    await tester.pumpAndSettle();
+    expect(shops.calls, ['suspend:s1:true:Annonces trompeuses']);
+    expect(find.text('Rétablir la boutique'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('shop-suspend')));
+    await tester.pumpAndSettle();
+    expect(shops.calls.last, 'suspend:s1:false:null');
+  });
+
+  testWidgets('motard ordinaire : pas de bouton de suspension', (tester) async {
+    final shops = FakeShopsRepository(currentUserId: 'alice')
+      ..shops['s1'] = const Shop(
+        id: 's1',
+        ownerId: 'bob',
+        name: 'Bob Motos',
+        city: 'Kinshasa',
+      );
+    final container = await pumpOnlineApp(
+      tester,
+      auth: signedInAs(alice),
+      shops: shops,
+    );
+    await go(tester, container, AppRoutes.shop('s1'));
+    expect(find.byKey(const Key('shop-suspend')), findsNothing);
+  });
 }

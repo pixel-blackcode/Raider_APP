@@ -13,6 +13,7 @@ class Shop {
     this.logoPath,
     this.active = true,
     this.listingCount = 0,
+    this.suspended = false,
   });
 
   factory Shop.fromJson(Map<String, dynamic> j) => Shop(
@@ -27,6 +28,7 @@ class Shop {
     logoPath: j['logo_path'] as String?,
     active: (j['active'] as bool?) ?? true,
     listingCount: (j['listing_count'] as num?)?.toInt() ?? 0,
+    suspended: (j['suspended'] as bool?) ?? false,
   );
 
   final String id;
@@ -44,6 +46,9 @@ class Shop {
   /// Visible des autres : propriétaire vérifié et boutique non suspendue.
   final bool active;
   final int listingCount;
+
+  /// Suspendue par l'équipe (D-64).
+  final bool suspended;
 }
 
 class ShopDraft {

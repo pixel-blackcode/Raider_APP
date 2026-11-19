@@ -37,10 +37,36 @@ final routePickerProvider = Provider<RoutePicker>(
           ),
 );
 
+/// Un seul point (lieu d'un événement) ; null si annulé.
+typedef PlacePicker = Future<GeoPoint?> Function(
+  BuildContext context, {
+  GeoPoint? initial,
+});
+
+final placePickerProvider = Provider<PlacePicker>(
+  (ref) =>
+      (context, {initial}) async =>
+          (await Navigator.of(context, rootNavigator: true).push<RoutePoints>(
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (_) =>
+                  MapRoutePickerScreen(start: initial, singlePoint: true),
+            ),
+          ))?.start,
+);
+
 /// Carte plein écran en deux étapes : on place le départ sous l'épingle,
 /// on valide, puis de même pour l'arrivée (ou « Sans arrivée »).
 class MapRoutePickerScreen extends ConsumerStatefulWidget {
-  const MapRoutePickerScreen({super.key, this.start, this.destination});
+  const MapRoutePickerScreen({
+    super.key,
+    this.start,
+    this.destination,
+    this.singlePoint = false,
+  });
+
+  /// Un seul point à placer (lieu d'un événement), sans arrivée.
+  final bool singlePoint;
 
   final GeoPoint? start;
   final GeoPoint? destination;
@@ -78,6 +104,10 @@ class _MapRoutePickerScreenState extends ConsumerState<MapRoutePickerScreen> {
 
   Future<void> _confirm() async {
     final point = GeoPoint(_center.latitude, _center.longitude);
+    if (widget.singlePoint) {
+      Navigator.of(context).pop<RoutePoints>((start: point, destination: null));
+      return;
+    }
     if (!_choosingDestination) {
       setState(() => _start = point);
       final c = _controller;
@@ -116,7 +146,11 @@ class _MapRoutePickerScreenState extends ConsumerState<MapRoutePickerScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _choosingDestination ? l10n.mapStepDestination : l10n.mapStepStart,
+          widget.singlePoint
+              ? l10n.mapStepPlace
+              : _choosingDestination
+              ? l10n.mapStepDestination
+              : l10n.mapStepStart,
         ),
       ),
       body: Stack(
@@ -173,7 +207,9 @@ class _MapRoutePickerScreenState extends ConsumerState<MapRoutePickerScreen> {
                     onPressed: _confirm,
                     icon: const Icon(Icons.check),
                     label: Text(
-                      _choosingDestination
+                      widget.singlePoint
+                          ? l10n.mapConfirmPlace
+                          : _choosingDestination
                           ? l10n.mapConfirmDestination
                           : l10n.mapConfirmStart,
                     ),
