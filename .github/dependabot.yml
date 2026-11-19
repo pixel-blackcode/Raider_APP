@@ -1,0 +1,9 @@
+# Mise à jour automatique des actions GitHub épinglées par empreinte (SEC-05).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: "CI"
