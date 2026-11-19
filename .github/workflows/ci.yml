@@ -131,16 +131,35 @@ jobs:
           flutter-version: 3.47.9
           cache: true
 
+      - name: Dépôts Gradle de secours (Maven Central pour tous les builds)
+        # plugins.gradle.org renvoie parfois « Could not find kotlin-stdlib »
+        # pour le build interne de Flutter : on ajoute Maven Central et Google.
+        run: |
+          mkdir -p ~/.gradle/init.d
+          cat > ~/.gradle/init.d/repos.gradle <<'GRADLE'
+          beforeSettings { settings ->
+            settings.pluginManagement.repositories {
+              gradlePluginPortal()
+              mavenCentral()
+              google()
+            }
+          }
+          GRADLE
+
       - name: Build APK release (projet dev)
         env:
           SUPABASE_URL: ${{ vars.DEV_SUPABASE_URL }}
           SUPABASE_PUBLISHABLE_KEY: ${{ vars.DEV_SUPABASE_PUBLISHABLE_KEY }}
         run: |
-          flutter build apk --release \
-            --dart-define=APP_ENV=dev \
-            --dart-define=SUPABASE_URL="$SUPABASE_URL" \
-            --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
-            --dart-define=APP_BUILD="${GITHUB_SHA::7}"
+          build() {
+            flutter build apk --release \
+              --dart-define=APP_ENV=dev \
+              --dart-define=SUPABASE_URL="$SUPABASE_URL" \
+              --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
+              --dart-define=APP_BUILD="${GITHUB_SHA::7}"
+          }
+          # Une nouvelle tentative si un téléchargement échoue.
+          build || { sleep 30; build; }
           mv build/app/outputs/flutter-apk/app-release.apk \
              build/app/outputs/flutter-apk/rider-group-dev.apk
 
