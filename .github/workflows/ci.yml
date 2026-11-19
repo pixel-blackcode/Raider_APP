@@ -110,7 +110,8 @@ jobs:
   # Actions → Variables) : DEV_SUPABASE_URL et DEV_SUPABASE_PUBLISHABLE_KEY.
   # La clé « publishable » est publique par conception (protégée par RLS) ;
   # elle reste hors du dépôt par principe (voir docs/DECISIONS.md, D-05).
-  # Signé avec la clé de debug : installable pour les tests, pas pour le Play Store.
+  # Signé avec la clé de production si les secrets ANDROID_* existent (SEC-01) :
+  # les nouvelles versions s'installent alors par-dessus les anciennes.
   build-android-dev:
     name: APK de test connecté (dev)
     needs: flutter
@@ -146,6 +147,25 @@ jobs:
           }
           GRADLE
 
+      - name: Clé de signature de production (secrets GitHub)
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_B64" ]; then
+            echo "::warning::Secrets ANDROID_* absents : APK signé avec une clé de débogage."
+            exit 0
+          fi
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/rider-release.jks"
+          {
+            echo "RIDER_KEYSTORE_PATH=$RUNNER_TEMP/rider-release.jks"
+            echo "RIDER_KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD"
+            echo "RIDER_KEY_ALIAS=$KEY_ALIAS"
+            echo "RIDER_KEY_PASSWORD=$KEY_PASSWORD"
+          } >> "$GITHUB_ENV"
+
       - name: Build APK release (projet dev)
         env:
           SUPABASE_URL: ${{ vars.DEV_SUPABASE_URL }}
@@ -154,6 +174,7 @@ jobs:
           build() {
             flutter build apk --release \
               --dart-define=APP_ENV=dev \
+              --build-number="${{ github.run_number }}" \
               --dart-define=SUPABASE_URL="$SUPABASE_URL" \
               --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
               --dart-define=APP_BUILD="${GITHUB_SHA::7}"
