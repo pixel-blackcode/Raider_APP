@@ -184,6 +184,11 @@ jobs:
           mv build/app/outputs/flutter-apk/app-release.apk \
              build/app/outputs/flutter-apk/rider-group-dev.apk
 
+      - name: Empreinte de la signature de l'APK
+        run: |
+          keytool -printcert -jarfile build/app/outputs/flutter-apk/rider-group-dev.apk \
+            | grep -E "Owner|SHA256:" | tee -a "$GITHUB_STEP_SUMMARY"
+
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
           name: rider-group-dev-apk
