@@ -6,6 +6,7 @@ import '../../../app/router/app_routes.dart';
 import '../../../core/errors/error_messages.dart';
 import '../../../core/media/media_repository.dart';
 import '../../../core/media/photo_picker.dart';
+import '../../../core/push/push_service.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/async_value_view.dart';
 import '../../../core/widgets/empty_state.dart';
@@ -124,6 +125,8 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
 
   Future<void> _signOut() async {
     try {
+      // Ce téléphone ne doit plus recevoir les notifications du compte.
+      await ref.read(pushRegistrarProvider).unregister();
       await ref.read(authRepositoryProvider)?.signOut();
     } catch (error) {
       _showError(error);

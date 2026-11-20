@@ -6,6 +6,13 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+// Firebase (notifications push, D-68) : le fichier google-services.json n'est
+// pas dans le dépôt ; la CI l'écrit depuis le secret GOOGLE_SERVICES_JSON.
+// Sans lui, l'application fonctionne sans notifications push.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 android {
     namespace = "com.ridergroup.rider_group"
     compileSdk = flutter.compileSdkVersion

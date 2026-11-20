@@ -8,6 +8,7 @@ import 'package:rider_group/core/backend/backend_providers.dart';
 import 'package:rider_group/core/backend/backend_status.dart';
 import 'package:rider_group/core/config/app_config.dart';
 import 'package:rider_group/core/preferences/preferences_providers.dart';
+import 'package:rider_group/core/push/push_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Configuration sans backend (aucun identifiant Supabase).
@@ -35,6 +36,8 @@ Future<ProviderContainer> pumpRiderGroupApp(
   final container = ProviderContainer(
     retry: (_, _) => null,
     overrides: [
+      // Pas de Firebase en test de widget.
+      pushMessagingProvider.overrideWithValue(FakePushMessaging()),
       ...overrides,
       appConfigProvider.overrideWithValue(effectiveConfig),
       backendStatusProvider.overrideWithValue(
@@ -53,4 +56,37 @@ Future<ProviderContainer> pumpRiderGroupApp(
   );
   await tester.pumpAndSettle();
   return container;
+}
+
+/// Notifications push factices : Firebase absent, jeton fixe si demandé.
+class FakePushMessaging implements PushMessaging {
+  FakePushMessaging({this.available = false});
+
+  final bool available;
+  int permissionRequests = 0;
+
+  @override
+  Future<bool> init() async => available;
+
+  @override
+  Future<bool> requestPermission() async {
+    permissionRequests++;
+    return available;
+  }
+
+  @override
+  Future<String?> token() async =>
+      available ? 'jeton-de-test-0123456789' : null;
+
+  @override
+  Stream<String> get onTokenRefresh => const Stream.empty();
+
+  @override
+  Stream<String> get onOpenRoute => const Stream.empty();
+
+  @override
+  Future<String?> initialRoute() async => null;
+
+  @override
+  String get platform => 'android';
 }

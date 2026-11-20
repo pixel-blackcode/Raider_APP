@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Requis en release pour joindre Supabase (absent par défaut hors debug). -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Notifications push (Android 13+). -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Mode Convoi : partage volontaire de la position, application ouverte. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -10,6 +12,10 @@
         android:allowBackup="false"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- Canal par défaut des notifications push (créé dans MainActivity). -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="rider_general" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
