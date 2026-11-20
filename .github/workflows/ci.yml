@@ -186,8 +186,11 @@ jobs:
 
       - name: Empreinte de la signature de l'APK
         run: |
-          keytool -printcert -jarfile build/app/outputs/flutter-apk/rider-group-dev.apk \
-            | grep -E "Owner|SHA256:" | tee -a "$GITHUB_STEP_SUMMARY"
+          # Signature v2/v3 (pas de signature JAR v1) : apksigner, pas keytool.
+          APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          "$APKSIGNER" verify --print-certs \
+            build/app/outputs/flutter-apk/rider-group-dev.apk \
+            | grep -E "certificate DN|SHA-256" | tee -a "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         with:
