@@ -69,6 +69,13 @@ class AppConfig {
   /// Adresse de retour des liens envoyés par e-mail (confirmation,
   /// réinitialisation du mot de passe). À déclarer dans Supabase :
   /// Authentication → URL Configuration → Redirect URLs.
+  /// Pages publiques (GitHub Pages) : politique de confidentialité,
+  /// conditions d'utilisation, suppression de compte.
+  static const legalBaseUrl = 'https://pixel-blackcode.github.io/Raider_APP';
+  static const privacyPolicyUrl = '$legalBaseUrl/confidentialite.html';
+  static const termsUrl = '$legalBaseUrl/conditions.html';
+  static const contactEmail = 'mabikajoel2@gmail.com';
+
   static const authRedirectScheme = 'com.ridergroup.ridergroup';
   static const authRedirectUri = '$authRedirectScheme://auth-callback';
 

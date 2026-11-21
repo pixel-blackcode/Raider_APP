@@ -211,6 +211,7 @@ void main() {
       'listing-media/alice',
       'shop-media/alice',
       'garage-media/alice',
+      'verification-docs/riders/alice',
     ]);
     expect(auth.calls, ['deleteAccount']);
     expect(auth.currentSession, isNull);

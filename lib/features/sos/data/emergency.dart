@@ -44,6 +44,9 @@ abstract interface class ExternalActions {
 
   /// Ouvre une conversation WhatsApp (outil de l'équipe Rider Group).
   Future<bool> openWhatsApp(String phone);
+
+  /// Ouvre une page web (politique de confidentialité, conditions).
+  Future<bool> openUrl(String url);
 }
 
 class UrlLauncherActions implements ExternalActions {
@@ -59,6 +62,10 @@ class UrlLauncherActions implements ExternalActions {
     }).replace(fragment: 'map=17/$lat/$lng'),
     mode: LaunchMode.externalApplication,
   );
+
+  @override
+  Future<bool> openUrl(String url) =>
+      launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 
   @override
   Future<bool> openWhatsApp(String phone) => launchUrl(

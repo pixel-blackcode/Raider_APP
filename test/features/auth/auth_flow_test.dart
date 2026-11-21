@@ -119,6 +119,17 @@ void main() {
       find.byKey(const Key('sign-up-confirm')),
       'moto2026',
     );
+    // Sans accepter les conditions : refusé.
+    await tester.ensureVisible(find.byKey(const Key('sign-up-submit')));
+    await tester.tap(find.byKey(const Key('sign-up-submit')));
+    await tester.pumpAndSettle();
+    expect(auth.accounts['joel@rider.cd'], isNull);
+    expect(find.byKey(const Key('sign-up-error')), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(const Key('sign-up-accept')));
+    await tester.tap(find.byKey(const Key('sign-up-accept')));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byKey(const Key('sign-up-submit')));
     await tester.tap(find.byKey(const Key('sign-up-submit')));
     await tester.pumpAndSettle();
 

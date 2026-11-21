@@ -122,6 +122,31 @@ class SettingsScreen extends ConsumerWidget {
           ),
           SectionHeader(title: l10n.settingsAbout),
           Text(l10n.settingsAboutBody),
+          ListTile(
+            key: const Key('settings-privacy'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.privacy_tip_outlined),
+            title: Text(l10n.legalPrivacy),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () => ref
+                .read(externalActionsProvider)
+                .openUrl(AppConfig.privacyPolicyUrl),
+          ),
+          ListTile(
+            key: const Key('settings-terms'),
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.gavel_outlined),
+            title: Text(l10n.legalTerms),
+            trailing: const Icon(Icons.open_in_new),
+            onTap: () =>
+                ref.read(externalActionsProvider).openUrl(AppConfig.termsUrl),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.mail_outline),
+            title: Text(l10n.legalContact),
+            subtitle: const Text(AppConfig.contactEmail),
+          ),
         ],
       ),
     );

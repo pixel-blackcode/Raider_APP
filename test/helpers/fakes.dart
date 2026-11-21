@@ -1117,6 +1117,13 @@ class FakeExternalActions implements ExternalActions {
   }
 
   final whatsapp = <String>[];
+  final urls = <String>[];
+
+  @override
+  Future<bool> openUrl(String url) async {
+    urls.add(url);
+    return true;
+  }
 
   @override
   Future<bool> openWhatsApp(String phone) async {

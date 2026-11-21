@@ -2069,5 +2069,10 @@
       }
     }
   },
-  "notifAccountRestored": "Votre compte est rétabli."
+  "notifAccountRestored": "Votre compte est rétabli.",
+  "legalPrivacy": "Politique de confidentialité",
+  "legalTerms": "Conditions d'utilisation",
+  "legalContact": "Contact",
+  "signUpAccept": "J'ai 16 ans ou plus et j'accepte les conditions d'utilisation (tolérance zéro pour les contenus abusifs) et la politique de confidentialité.",
+  "signUpMustAccept": "Cochez la case pour accepter les conditions d'utilisation et la politique de confidentialité."
 }

@@ -3648,4 +3648,21 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get notifAccountRestored => 'Votre compte est rétabli.';
+
+  @override
+  String get legalPrivacy => 'Politique de confidentialité';
+
+  @override
+  String get legalTerms => 'Conditions d\'utilisation';
+
+  @override
+  String get legalContact => 'Contact';
+
+  @override
+  String get signUpAccept =>
+      'J\'ai 16 ans ou plus et j\'accepte les conditions d\'utilisation (tolérance zéro pour les contenus abusifs) et la politique de confidentialité.';
+
+  @override
+  String get signUpMustAccept =>
+      'Cochez la case pour accepter les conditions d\'utilisation et la politique de confidentialité.';
 }

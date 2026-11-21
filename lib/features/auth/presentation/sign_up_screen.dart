@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
+import '../../../core/config/app_config.dart';
 import '../../../core/errors/error_messages.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/backend_status_card.dart';
 import '../../../l10n/generated/app_localizations.dart';
+import '../../sos/data/emergency.dart';
 import '../data/auth_providers.dart';
 import '../domain/auth_session.dart';
 import '../domain/auth_validators.dart';
@@ -27,6 +29,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _password = TextEditingController();
   final _confirm = TextEditingController();
   bool _busy = false;
+  bool _accepted = false;
   String? _error;
 
   @override
@@ -47,6 +50,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     final repository = ref.read(authRepositoryProvider);
     if (repository == null || !_formKey.currentState!.validate()) return;
     final l10n = AppLocalizations.of(context);
+    if (!_accepted) {
+      setState(() => _error = l10n.signUpMustAccept);
+      return;
+    }
     setState(() {
       _busy = true;
       _error = null;
@@ -164,6 +171,37 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               ],
             ),
           ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        // Material propre : la carte du formulaire masquerait l'effet d'appui.
+        Material(
+          type: MaterialType.transparency,
+          child: CheckboxListTile(
+            key: const Key('sign-up-accept'),
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            value: _accepted,
+            onChanged: (v) => setState(() => _accepted = v ?? false),
+            title: Text(l10n.signUpAccept),
+          ),
+        ),
+        Wrap(
+          spacing: AppSpacing.sm,
+          children: [
+            TextButton(
+              key: const Key('sign-up-terms'),
+              onPressed: () =>
+                  ref.read(externalActionsProvider).openUrl(AppConfig.termsUrl),
+              child: Text(l10n.legalTerms),
+            ),
+            TextButton(
+              key: const Key('sign-up-privacy'),
+              onPressed: () => ref
+                  .read(externalActionsProvider)
+                  .openUrl(AppConfig.privacyPolicyUrl),
+              child: Text(l10n.legalPrivacy),
+            ),
+          ],
         ),
         if (_error != null) ...[
           const SizedBox(height: AppSpacing.md),

@@ -6249,6 +6249,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Votre compte est rétabli.'**
   String get notifAccountRestored;
+
+  /// No description provided for @legalPrivacy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Politique de confidentialité'**
+  String get legalPrivacy;
+
+  /// No description provided for @legalTerms.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conditions d\'utilisation'**
+  String get legalTerms;
+
+  /// No description provided for @legalContact.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contact'**
+  String get legalContact;
+
+  /// No description provided for @signUpAccept.
+  ///
+  /// In fr, this message translates to:
+  /// **'J\'ai 16 ans ou plus et j\'accepte les conditions d\'utilisation (tolérance zéro pour les contenus abusifs) et la politique de confidentialité.'**
+  String get signUpAccept;
+
+  /// No description provided for @signUpMustAccept.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cochez la case pour accepter les conditions d\'utilisation et la politique de confidentialité.'**
+  String get signUpMustAccept;
 }
 
 class _AppLocalizationsDelegate
