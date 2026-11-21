@@ -16,6 +16,15 @@
 --     service_role) : le secret n'existe qu'à un seul endroit.
 -- =============================================================================
 
+-- pg_net (appels HTTP sortants) : disponible sur Supabase, absent en local.
+do $$
+begin
+  if exists (select 1 from pg_available_extensions where name = 'pg_net') then
+    create extension if not exists pg_net;
+  end if;
+end;
+$$;
+
 create table public.push_tokens (
   token       text primary key check (char_length(token) between 20 and 4096),
   user_id     uuid not null references public.profiles (id) on delete cascade,
