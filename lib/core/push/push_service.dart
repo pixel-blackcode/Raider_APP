@@ -38,11 +38,31 @@ abstract interface class PushMessaging {
 class FirebasePushMessaging implements PushMessaging {
   bool _ready = false;
 
+  static const _iosAppId = String.fromEnvironment('FIREBASE_IOS_APP_ID');
+
+  static FirebaseOptions? _iosOptions() {
+    if (defaultTargetPlatform != TargetPlatform.iOS || _iosAppId.isEmpty) {
+      return null;
+    }
+    return const FirebaseOptions(
+      apiKey: String.fromEnvironment('FIREBASE_IOS_API_KEY'),
+      appId: _iosAppId,
+      messagingSenderId: String.fromEnvironment('FIREBASE_SENDER_ID'),
+      projectId: String.fromEnvironment('FIREBASE_PROJECT_ID'),
+      iosBundleId: 'com.ridergroup.riderGroup',
+    );
+  }
+
   @override
   Future<bool> init() async {
     if (kIsWeb) return false;
     try {
-      if (Firebase.apps.isEmpty) await Firebase.initializeApp();
+      if (Firebase.apps.isEmpty) {
+        // Android : android/app/google-services.json (secret GitHub).
+        // iOS : identifiants publics de l'app iOS Firebase fournis à la
+        // compilation (--dart-define), sans fichier GoogleService-Info.plist.
+        await Firebase.initializeApp(options: _iosOptions());
+      }
       _ready = true;
     } catch (error) {
       debugPrint('[Push] Firebase non configuré : $error');

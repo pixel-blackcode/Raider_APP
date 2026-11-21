@@ -1,0 +1,190 @@
+name: Publication (stores)
+
+# Lancement manuel : Actions → « Publication (stores) » → Run workflow.
+# - Android : fichier .aab signé avec la clé de production, à envoyer sur
+#   Google Play Console (le premier envoi se fait à la main, voir
+#   docs/PUBLICATION.md).
+# - iOS : archive signée automatiquement (clé API App Store Connect) et envoyée
+#   sur TestFlight. Étape ignorée tant que les secrets Apple n'existent pas.
+on:
+  workflow_dispatch:
+    inputs:
+      android:
+        description: 'Construire le .aab Google Play'
+        type: boolean
+        default: true
+      ios:
+        description: 'Construire et envoyer sur TestFlight'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    name: Google Play (.aab)
+    if: ${{ inputs.android }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+
+      - name: Dépôts Gradle de secours
+        run: |
+          mkdir -p ~/.gradle/init.d
+          cat > ~/.gradle/init.d/repos.gradle <<'GRADLE'
+          beforeSettings { settings ->
+            settings.pluginManagement.repositories {
+              gradlePluginPortal()
+              mavenCentral()
+              google()
+            }
+          }
+          GRADLE
+
+      - name: Configuration Firebase (obligatoire pour la publication)
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          test -n "$GOOGLE_SERVICES_JSON" || { echo "::error::Secret GOOGLE_SERVICES_JSON absent."; exit 1; }
+          printf '%s' "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+
+      - name: Clé de signature de production (obligatoire)
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          test -n "$KEYSTORE_B64" || { echo "::error::Secrets ANDROID_* absents."; exit 1; }
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/rider-release.jks"
+          {
+            echo "RIDER_KEYSTORE_PATH=$RUNNER_TEMP/rider-release.jks"
+            echo "RIDER_KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD"
+            echo "RIDER_KEY_ALIAS=$KEY_ALIAS"
+            echo "RIDER_KEY_PASSWORD=$KEY_PASSWORD"
+          } >> "$GITHUB_ENV"
+
+      - name: Build .aab
+        env:
+          SUPABASE_URL: ${{ vars.DEV_SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.DEV_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          # Numéro de version toujours supérieur à celui des APK de test.
+          BUILD_NUMBER=$((10000 + GITHUB_RUN_NUMBER))
+          build() {
+            flutter build appbundle --release \
+              --build-number="$BUILD_NUMBER" \
+              --dart-define=APP_ENV=prod \
+              --dart-define=SUPABASE_URL="$SUPABASE_URL" \
+              --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
+              --dart-define=APP_BUILD="${GITHUB_SHA::7}"
+          }
+          build || { sleep 30; build; }
+          mv build/app/outputs/bundle/release/app-release.aab \
+             "build/app/outputs/bundle/release/rider-group-$BUILD_NUMBER.aab"
+          echo "Version : $(grep '^version:' pubspec.yaml) · code $BUILD_NUMBER" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: rider-group-play-aab
+          path: build/app/outputs/bundle/release/*.aab
+          retention-days: 30
+
+  ios:
+    name: App Store (TestFlight)
+    if: ${{ inputs.ios }}
+    runs-on: macos-latest
+    timeout-minutes: 60
+    env:
+      TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8_BASE64: ${{ secrets.ASC_KEY_P8_BASE64 }}
+    steps:
+      - name: Secrets Apple présents ?
+        id: apple
+        run: |
+          if [ -z "$TEAM_ID" ] || [ -z "$ASC_KEY_ID" ] || [ -z "$ASC_ISSUER_ID" ] || [ -z "$ASC_KEY_P8_BASE64" ]; then
+            echo "::warning::Secrets Apple absents (APPLE_TEAM_ID, ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8_BASE64) : iOS ignoré."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.apple.outputs.ready == 'true'
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - if: steps.apple.outputs.ready == 'true'
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+
+      - name: Compilation Flutter (iOS)
+        if: steps.apple.outputs.ready == 'true'
+        env:
+          SUPABASE_URL: ${{ vars.DEV_SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.DEV_SUPABASE_PUBLISHABLE_KEY }}
+          FIREBASE_IOS_APP_ID: ${{ vars.FIREBASE_IOS_APP_ID }}
+          FIREBASE_IOS_API_KEY: ${{ vars.FIREBASE_IOS_API_KEY }}
+          FIREBASE_SENDER_ID: ${{ vars.FIREBASE_SENDER_ID }}
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+        run: |
+          BUILD_NUMBER=$((10000 + GITHUB_RUN_NUMBER))
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> "$GITHUB_ENV"
+          [ -n "$FIREBASE_IOS_APP_ID" ] || echo "::warning::Variables FIREBASE_IOS_* absentes : version iOS sans notifications push."
+          flutter build ios --release --no-codesign \
+            --build-number="$BUILD_NUMBER" \
+            --dart-define=APP_ENV=prod \
+            --dart-define=SUPABASE_URL="$SUPABASE_URL" \
+            --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY" \
+            --dart-define=APP_BUILD="${GITHUB_SHA::7}" \
+            --dart-define=FIREBASE_IOS_APP_ID="$FIREBASE_IOS_APP_ID" \
+            --dart-define=FIREBASE_IOS_API_KEY="$FIREBASE_IOS_API_KEY" \
+            --dart-define=FIREBASE_SENDER_ID="$FIREBASE_SENDER_ID" \
+            --dart-define=FIREBASE_PROJECT_ID="$FIREBASE_PROJECT_ID"
+
+      - name: Archive signée et envoi sur TestFlight
+        if: steps.apple.outputs.ready == 'true'
+        run: |
+          KEY_PATH="$RUNNER_TEMP/AuthKey_$ASC_KEY_ID.p8"
+          echo "$ASC_KEY_P8_BASE64" | base64 -d > "$KEY_PATH"
+          AUTH=(-allowProvisioningUpdates
+                -authenticationKeyPath "$KEY_PATH"
+                -authenticationKeyID "$ASC_KEY_ID"
+                -authenticationKeyIssuerID "$ASC_ISSUER_ID")
+          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner \
+            -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/Runner.xcarchive" \
+            DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_STYLE=Automatic \
+            "${AUTH[@]}" archive
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>$TEAM_ID</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>uploadSymbols</key><true/>
+          </dict></plist>
+          PLIST
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/Runner.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" "${AUTH[@]}"
+          rm -f "$KEY_PATH"
+          echo "Envoyé sur App Store Connect (TestFlight) · build $BUILD_NUMBER" >> "$GITHUB_STEP_SUMMARY"
