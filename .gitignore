@@ -63,3 +63,4 @@ app.*.map.json
 # Supabase CLI (état local).
 /supabase/.branches/
 /supabase/.temp/
+admin_web/config.js

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Rider Group · Équipe</title>
+  <link rel="icon" href="logo_mark.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <!-- supabase-js 2.45.4 (MIT), copie locale : pas de dépendance à un CDN -->
+  <script src="vendor/supabase.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Connexion -->
+  <section id="login" class="login" hidden>
+    <form id="login-form" class="card login-card">
+      <img src="logo_mark.png" alt="" width="72" height="72">
+      <h1>Rider Group · Équipe</h1>
+      <p class="muted">Réservé aux administrateurs Rider Group.</p>
+      <label>Adresse e-mail<input id="login-email" type="email" autocomplete="username" required></label>
+      <label>Mot de passe<input id="login-password" type="password" autocomplete="current-password" required></label>
+      <button class="btn primary" type="submit">Se connecter</button>
+      <p id="login-error" class="error" role="alert"></p>
+    </form>
+  </section>
+
+  <!-- Application -->
+  <div id="app" class="layout" hidden>
+    <nav class="sidebar" aria-label="Menu de l'équipe">
+      <strong class="brand">Rider Group · Équipe</strong>
+      <a href="#vue" data-view="vue">Vue d'ensemble</a>
+      <a href="#verifications" data-view="verifications">Vérifications <span class="pill" data-count="verifications"></span></a>
+      <a href="#signalements" data-view="signalements">Signalements <span class="pill" data-count="signalements"></span></a>
+      <a href="#comptes" data-view="comptes">Comptes</a>
+      <a href="#suppressions" data-view="suppressions">Suppressions de clubs <span class="pill" data-count="suppressions"></span></a>
+      <a href="#boutiques" data-view="boutiques">Boutiques</a>
+      <a href="#defis" data-view="defis">Défis</a>
+      <a href="#balade-du-mois" data-view="balade-du-mois">Balade du mois</a>
+      <a href="#annonce" data-view="annonce">Annonce</a>
+      <a href="#retours" data-view="retours">Retours des motards <span class="pill" data-count="retours"></span></a>
+      <div class="sidebar-foot">
+        <span id="who" class="muted-light"></span>
+        <button id="logout" class="btn ghost-light" type="button">Se déconnecter</button>
+      </div>
+    </nav>
+    <main id="main" class="main" tabindex="-1"></main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

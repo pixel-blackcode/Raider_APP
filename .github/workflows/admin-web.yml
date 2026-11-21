@@ -1,0 +1,49 @@
+name: Tableau de bord web
+
+# Publie le tableau de bord de l'équipe (admin_web/) sur GitHub Pages.
+# Prérequis (une fois) : Settings → Pages → Source : « GitHub Actions ».
+# La page ne contient que la clé publique Supabase ; les données sont
+# protégées côté serveur (fonctions réservées aux administrateurs).
+on:
+  push:
+    branches: [main, 'ccr-**']
+    paths: ['admin_web/**', '.github/workflows/admin-web.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Publication GitHub Pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Configuration (clé publique uniquement)
+        env:
+          SUPABASE_URL: ${{ vars.DEV_SUPABASE_URL }}
+          SUPABASE_KEY: ${{ vars.DEV_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          test -n "$SUPABASE_URL" && test -n "$SUPABASE_KEY"
+          node -e 'const fs=require("fs");fs.writeFileSync("admin_web/config.js","window.RIDER_CONFIG = "+JSON.stringify({url:process.env.SUPABASE_URL,key:process.env.SUPABASE_KEY})+";\n")'
+          rm -f admin_web/config.example.js
+
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: admin_web
+
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
