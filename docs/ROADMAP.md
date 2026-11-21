@@ -19,7 +19,7 @@ Chaque mission est validée par le propriétaire avant le démarrage de la suiva
 | 10 — Garage | Motos, historique d'entretien, rappels, moto jointe au SOS (D-69). | ✅ Livrée — en attente de validation |
 | 10 bis — Mode solo (idée du propriétaire, 21/11) | Trajet seul : le motard choisit 1 ou 2 motards de confiance, indique une heure d'arrivée prévue, partage sa position s'il le veut, puis touche « Je suis arrivé » (les proches sont prévenus). En cas de retard : les proches peuvent demander des nouvelles ou sa position ; sans réponse au bout de 45 minutes, alerte renforcée aux proches. | ✅ Livrée — en attente de validation (D-70) |
 | 11 — Gamification et administration | Badges (dont distance d'une balade), défis de l'équipe, meilleure balade du mois, annonces officielles, suspension de comptes, tableau de bord web de l'équipe (GitHub Pages). | ✅ Livrée — en attente de validation (D-71, D-72) |
-| 12 — Stabilisation | Tests d'intégration, sécurité, performance, accessibilité, builds, déploiement. | À venir |
+| 12 — Stabilisation et publication | Pages légales, acceptation des conditions, builds de publication (Google Play `.aab`, TestFlight), notifications iOS, fiches des stores, nettoyage des données de test. Guide : docs/PUBLICATION.md. | 🟡 Préparée — en attente des comptes Google Play / Apple du propriétaire (D-73) |
 
 ## Mission 01 — scénarios de recette
 
