@@ -145,3 +145,19 @@ La CI exécute ce même script à chaque push.
 
 - `android:allowBackup="false"` : empêche la sauvegarde automatique (Google Drive) des données locales, dont les futurs jetons de session.
 - La permission `INTERNET` est déclarée dans le manifeste principal (elle n'existe par défaut qu'en debug).
+
+## Tableau de bord web de l'équipe (Mission 11)
+
+Site statique dans `admin_web/`, publié par le workflow « Tableau de bord web »
+(`.github/workflows/admin-web.yml`) sur GitHub Pages.
+
+1. GitHub → *Settings → Pages* → *Build and deployment* → Source : **GitHub Actions**.
+2. GitHub → *Settings → Environments → github-pages* → *Deployment branches* :
+   ajouter la branche de travail (ou `main` une fois fusionnée).
+3. Le workflow écrit `config.js` à partir des variables `DEV_SUPABASE_URL` et
+   `DEV_SUPABASE_PUBLISHABLE_KEY` (déjà utilisées par l'APK) : aucune clé secrète.
+4. Se connecter avec l'e-mail et le mot de passe d'un compte listé dans
+   `private.platform_admins` (voir plus haut). Un autre compte est refusé.
+
+Essai local : copier `admin_web/config.example.js` en `admin_web/config.js`
+(ignoré par git), puis servir le dossier (`python3 -m http.server`).

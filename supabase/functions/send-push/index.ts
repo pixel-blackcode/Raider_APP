@@ -95,6 +95,10 @@ const TEXTS: Record<string, (d: Record<string, string>) => [string, string]> = {
   solo_position_request: (d) => ["Mode solo", `${d.who} demande votre position`],
   solo_position_shared: (d) => ["Mode solo", `${d.who} a envoyé sa position`],
   solo_ok: (d) => ["Mode solo", `${d.who} va bien, encore en route`],
+  badge_awarded: (d) => ["Nouveau badge 🏅", d.title],
+  challenge_started: (d) => ["Nouveau défi", d.title],
+  account_suspended: (d) => ["Compte suspendu", `Raison : ${d.reason}`],
+  account_restored: () => ["Compte rétabli", "Vous pouvez de nouveau publier et rejoindre des balades."],
 };
 
 // Notifications du mode solo reçues par le motard qui roule (et non par ses proches).
@@ -131,9 +135,13 @@ async function forNotification(id: string): Promise<[string[], Message] | null> 
     moto: n.data?.moto ?? "moto",
     time: kinshasaTime(n.data?.expected_at),
     dest: n.data?.destination ? ` (${n.data.destination})` : "",
+    reason: n.data?.reason ?? "",
   };
   const [title, body] = TEXTS[n.kind]?.(d) ?? ["Rider Group", "Vous avez une nouvelle notification"];
   const route = n.kind === "maintenance_reminder" ? "/garage/rappels"
+    : n.kind === "badge_awarded" ? "/badges"
+    : n.kind === "challenge_started" ? "/defis"
+    : n.kind.startsWith("account_") ? "/profil"
     : n.kind === "solo_contact_request" ? "/solo/proches"
     : n.kind.startsWith("solo_") ? (SOLO_TRAVELER.has(n.kind) || !n.ref_id ? "/solo" : `/solo/suivi/${n.ref_id}`)
     : n.post_id ? `/publications/${n.post_id}`
