@@ -3213,4 +3213,315 @@ class AppLocalizationsFr extends AppLocalizations {
   String notifMaintenanceReminder(String what, String moto) {
     return 'Rappel : $what pour votre $moto';
   }
+
+  @override
+  String get soloTitle => 'Mode solo';
+
+  @override
+  String get soloSubtitle => 'Rentrer seul, suivi par un proche';
+
+  @override
+  String get soloContactsTitle => 'Mes proches';
+
+  @override
+  String get soloWatching => 'Trajets que je suis';
+
+  @override
+  String soloTravelerTitle(String name) {
+    return '$name rentre seul';
+  }
+
+  @override
+  String soloTravelerTo(String name, String destination) {
+    return '$name rentre seul · $destination';
+  }
+
+  @override
+  String get soloMaxWatchers => 'Deux proches au plus.';
+
+  @override
+  String get soloPickWatcher => 'Choisissez au moins un proche.';
+
+  @override
+  String get soloLocationDenied =>
+      'Position non autorisée : vos proches ne verront pas votre position.';
+
+  @override
+  String get soloStarted => 'Bonne route ! Vos proches sont prévenus.';
+
+  @override
+  String get soloIntro =>
+      'Vous rentrez seul ? Vos proches sont prévenus de votre départ. Touchez « Je suis arrivé » une fois chez vous. Sans nouvelles à l\'heure prévue, ils pourront vous en demander.';
+
+  @override
+  String get soloWhoWatches => 'Qui suit mon trajet ? (1 ou 2)';
+
+  @override
+  String get soloNoContacts =>
+      'Aucun proche pour l\'instant. Ajoutez un motard : il devra accepter de suivre vos trajets.';
+
+  @override
+  String get soloAddContact => 'Ajouter un proche';
+
+  @override
+  String get soloDestination => 'Où allez-vous ? (facultatif, ex. Maison)';
+
+  @override
+  String get soloArrivalIn => 'Arrivée prévue dans';
+
+  @override
+  String soloExpectedAt(String time) {
+    return 'Arrivée prévue à $time';
+  }
+
+  @override
+  String get soloShareLocation => 'Partager ma position pendant le trajet';
+
+  @override
+  String get soloShareLocationHelp =>
+      'Seuls vos proches la voient, pendant le trajet ; elle est effacée à l\'arrivée.';
+
+  @override
+  String get soloStart => 'Partir en mode solo';
+
+  @override
+  String get soloNoFix =>
+      'Position introuvable pour l\'instant. Réessayez dans un endroit dégagé.';
+
+  @override
+  String get soloPositionSent => 'Position envoyée à vos proches.';
+
+  @override
+  String get soloCancelTitle => 'Annuler le trajet ?';
+
+  @override
+  String get soloCancelBody =>
+      'Vos proches seront prévenus que le trajet est annulé.';
+
+  @override
+  String get soloCancel => 'Annuler le trajet';
+
+  @override
+  String get soloCancelled => 'Trajet annulé.';
+
+  @override
+  String get soloActiveTitle => 'Trajet solo en cours';
+
+  @override
+  String soloActiveTo(String destination) {
+    return 'Trajet solo vers : $destination';
+  }
+
+  @override
+  String soloWatchedBy(String names) {
+    return 'Suivi par $names';
+  }
+
+  @override
+  String get soloLateMine =>
+      'Heure dépassée : confirmez votre arrivée ou rassurez vos proches.';
+
+  @override
+  String get soloArrived => 'Je suis arrivé';
+
+  @override
+  String get soloArrivedDone => 'Bien arrivé ! Vos proches sont prévenus.';
+
+  @override
+  String get soloImOk => 'Je vais bien, encore en route (+15 min)';
+
+  @override
+  String get soloOkDone => 'Vos proches sont rassurés.';
+
+  @override
+  String get soloSendPosition => 'Envoyer ma position à mes proches';
+
+  @override
+  String get soloSharingOn => 'Position partagée avec vos proches.';
+
+  @override
+  String get soloSharingOff => 'Position plus partagée.';
+
+  @override
+  String get soloKeepOpen =>
+      'Gardez Rider Group ouvert : le téléphone peut couper l\'envoi écran éteint.';
+
+  @override
+  String soloStatusArrived(String time) {
+    return 'Bien arrivé à $time';
+  }
+
+  @override
+  String get soloStatusCancelled => 'Trajet annulé';
+
+  @override
+  String get soloStatusExpired => 'Trajet terminé';
+
+  @override
+  String soloStatusLate(String time) {
+    return 'Pas encore arrivé (prévu à $time)';
+  }
+
+  @override
+  String soloStatusOnTheWay(String time) {
+    return 'En route · arrivée prévue à $time';
+  }
+
+  @override
+  String get soloAskSent => 'Demande envoyée.';
+
+  @override
+  String get soloTripNotFound => 'Trajet introuvable';
+
+  @override
+  String get soloTripNotFoundBody =>
+      'Ce trajet est terminé depuis longtemps, ou vous ne le suivez plus.';
+
+  @override
+  String soloStartedAt(String time) {
+    return 'Parti à $time';
+  }
+
+  @override
+  String soloLastNews(String ago) {
+    return 'Dernières nouvelles : $ago';
+  }
+
+  @override
+  String soloLastPosition(String ago) {
+    return 'Dernière position : $ago';
+  }
+
+  @override
+  String get soloNoPosition => 'Position non partagée';
+
+  @override
+  String get soloSharingLive => 'Partage en cours pendant le trajet';
+
+  @override
+  String get soloOpenMap => 'Carte';
+
+  @override
+  String get soloAskNews => 'Demander de ses nouvelles';
+
+  @override
+  String get soloAskPosition => 'Demander sa position';
+
+  @override
+  String get soloLateHelp =>
+      'Sans réponse, essayez de l\'appeler. En cas de doute sérieux, prévenez les secours.';
+
+  @override
+  String soloCallEmergency(String number) {
+    return 'Appeler le $number';
+  }
+
+  @override
+  String soloContactRequested(String name) {
+    return 'Demande envoyée à $name.';
+  }
+
+  @override
+  String get soloContactsIntro =>
+      'Vos proches sont prévenus quand vous partez et arrivez en mode solo. Chacun doit accepter.';
+
+  @override
+  String get soloContactSearch => 'Chercher un motard';
+
+  @override
+  String get soloMyContacts => 'Suivent mes trajets';
+
+  @override
+  String get soloMyContactsEmpty => 'Personne pour l\'instant.';
+
+  @override
+  String get soloContactAccepted => 'A accepté';
+
+  @override
+  String get soloContactPending => 'En attente de réponse';
+
+  @override
+  String get soloIWatch => 'Je suis le proche de';
+
+  @override
+  String get soloIWatchAccepted => 'Vous suivez ses trajets solo';
+
+  @override
+  String soloContactAsk(String name) {
+    return '$name vous demande de suivre ses trajets en mode solo.';
+  }
+
+  @override
+  String get soloRemoveContact => 'Retirer';
+
+  @override
+  String get soloHomeMineLate => 'Heure dépassée : êtes-vous bien arrivé ?';
+
+  @override
+  String soloHomeMine(String time) {
+    return 'Trajet solo · arrivée prévue à $time';
+  }
+
+  @override
+  String get errorSoloAlreadyActive =>
+      'Vous avez déjà un trajet solo en cours.';
+
+  @override
+  String notifSoloContactRequest(String who) {
+    return '$who vous demande de suivre ses trajets en mode solo';
+  }
+
+  @override
+  String notifSoloContactAccepted(String who) {
+    return '$who suivra vos trajets en mode solo';
+  }
+
+  @override
+  String notifSoloTripStarted(String who, String time) {
+    return '$who rentre seul, arrivée prévue à $time';
+  }
+
+  @override
+  String notifSoloTripArrived(String who) {
+    return '$who est bien arrivé ✅';
+  }
+
+  @override
+  String notifSoloTripCancelled(String who) {
+    return '$who a annulé son trajet solo';
+  }
+
+  @override
+  String notifSoloTripOverdue(String who) {
+    return '$who n\'a pas encore confirmé son arrivée';
+  }
+
+  @override
+  String notifSoloTripNoNews(String who) {
+    return 'Toujours sans nouvelles de $who';
+  }
+
+  @override
+  String get notifSoloCheckIn =>
+      'Êtes-vous bien arrivé ? Rassurez vos proches.';
+
+  @override
+  String notifSoloNewsRequest(String who) {
+    return '$who demande de vos nouvelles';
+  }
+
+  @override
+  String notifSoloPositionRequest(String who) {
+    return '$who demande votre position';
+  }
+
+  @override
+  String notifSoloPositionShared(String who) {
+    return '$who a envoyé sa position';
+  }
+
+  @override
+  String notifSoloOk(String who) {
+    return '$who va bien, encore en route';
+  }
 }

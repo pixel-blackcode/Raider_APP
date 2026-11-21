@@ -104,6 +104,7 @@ class AppException implements Exception {
     'blocked',
     'content_hidden',
     'conversation_not_found',
+    'already_active',
   };
 
   static String _authCode(AuthException error) {

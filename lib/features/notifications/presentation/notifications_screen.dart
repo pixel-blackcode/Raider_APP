@@ -16,6 +16,8 @@ import '../../events/data/events_repository.dart';
 import '../../garage/domain/garage.dart';
 import '../../garage/presentation/garage_labels.dart';
 import '../../rides/data/rides_providers.dart';
+import '../../solo/data/solo_repository.dart';
+import '../../solo/presentation/solo_labels.dart';
 import '../data/notifications_repository.dart';
 import '../domain/app_notification.dart';
 
@@ -134,11 +136,43 @@ String notificationText(AppLocalizations l10n, AppNotification n) {
     'rider_verification_expired' => l10n.notifRiderVerificationExpired,
     'post_comment' => l10n.notifPostComment(who),
     'post_reaction' => l10n.notifPostReaction(who),
+    'solo_contact_request' => l10n.notifSoloContactRequest(who),
+    'solo_contact_accepted' => l10n.notifSoloContactAccepted(who),
+    'solo_trip_started' => l10n.notifSoloTripStarted(
+      who,
+      _soloExpected(n.data),
+    ),
+    'solo_trip_arrived' => l10n.notifSoloTripArrived(who),
+    'solo_trip_cancelled' => l10n.notifSoloTripCancelled(who),
+    'solo_trip_overdue' => l10n.notifSoloTripOverdue(who),
+    'solo_trip_no_news' => l10n.notifSoloTripNoNews(who),
+    'solo_check_in' => l10n.notifSoloCheckIn,
+    'solo_news_request' => l10n.notifSoloNewsRequest(who),
+    'solo_position_request' => l10n.notifSoloPositionRequest(who),
+    'solo_position_shared' => l10n.notifSoloPositionShared(who),
+    'solo_ok' => l10n.notifSoloOk(who),
     _ => l10n.notificationsTitle,
   };
 }
 
+String _soloExpected(Map<String, dynamic> data) {
+  final raw = data['expected_at'] as String?;
+  final t = raw == null ? null : DateTime.tryParse(raw);
+  return t == null ? '' : soloTime(t);
+}
+
+/// Notifications du mode solo reçues par le motard qui roule (et non ses proches).
+const _soloTravelerKinds = {
+  'solo_check_in',
+  'solo_news_request',
+  'solo_position_request',
+  'solo_contact_accepted',
+};
+
 IconData _icon(String kind) => switch (kind) {
+  'solo_trip_overdue' || 'solo_trip_no_news' => Icons.warning_amber_rounded,
+  'solo_trip_arrived' || 'solo_ok' => Icons.check_circle_outline,
+  _ when kind.startsWith('solo') => Icons.shield_moon_outlined,
   'post_comment' => Icons.mode_comment_outlined,
   'post_reaction' => Icons.local_fire_department_outlined,
   'ride_cancelled' ||
@@ -188,6 +222,11 @@ class _NotificationTileState extends ConsumerState<_NotificationTile> {
               .read(clubsRepositoryProvider)!
               .respondToInvitation(n.refId!, accept: yes);
           ref.invalidate(clubDetailProvider(n.clubId!));
+        case 'solo_contact_request':
+          await ref
+              .read(soloRepositoryProvider)!
+              .respondContact(n.refId!, accept: yes);
+          ref.refreshSolo();
         case 'event_coorganizer_invitation':
           await ref
               .read(eventsRepositoryProvider)!
@@ -210,6 +249,16 @@ class _NotificationTileState extends ConsumerState<_NotificationTile> {
     ref.invalidate(notificationsProvider);
     if (n.kind == 'maintenance_reminder') {
       context.push(AppRoutes.garageReminders);
+      return;
+    }
+    if (n.kind.startsWith('solo_')) {
+      context.push(
+        n.kind == 'solo_contact_request'
+            ? AppRoutes.soloContacts
+            : _soloTravelerKinds.contains(n.kind) || n.refId == null
+            ? AppRoutes.solo
+            : AppRoutes.soloWatch(n.refId!),
+      );
       return;
     }
     if (n.kind.startsWith('shop_') && n.refId != null) {

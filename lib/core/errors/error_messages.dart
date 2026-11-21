@@ -38,6 +38,7 @@ String describeError(BuildContext context, Object error) {
     'deletion_review_required' => l10n.errorDeletionReviewRequired,
     'deletion_pending' => l10n.errorDeletionPending,
     'invalid_state' => l10n.errorInvalidState,
+    'already_active' => l10n.errorSoloAlreadyActive,
     'invitations_disabled' => l10n.errorInvitationsDisabled,
     'owns_clubs_with_members' => l10n.errorOwnsClubsWithMembers,
     'same_password' => l10n.errorSamePassword,

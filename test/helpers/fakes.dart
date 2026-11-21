@@ -36,6 +36,8 @@ import 'package:rider_group/features/rides/domain/ride_state_machine.dart';
 import 'package:rider_group/features/settings/data/feedback_repository.dart';
 import 'package:rider_group/features/shops/data/shops_repository.dart';
 import 'package:rider_group/features/shops/domain/shop.dart';
+import 'package:rider_group/features/solo/data/solo_repository.dart';
+import 'package:rider_group/features/solo/domain/solo.dart';
 import 'package:rider_group/features/sos/data/emergency.dart';
 import 'package:rider_group/features/sos/data/sos_repository.dart';
 import 'package:rider_group/features/sos/domain/sos.dart';
@@ -2183,4 +2185,191 @@ class FakeGarageRepository implements GarageRepository {
 
   @override
   Future<SosMotorcycle?> sosMotorcycle(String alertId) async => sos[alertId];
+}
+
+/// Mode solo en mémoire (le motard connecté est [me]).
+class FakeSoloRepository implements SoloRepository {
+  FakeSoloRepository({this.me = 'alice', this.names = const {}});
+
+  final String me;
+  final Map<String, String> names;
+  final contactList = <SoloContact>[];
+  final tripList = <SoloTrip>[];
+  final calls = <String>[];
+  var _seq = 0;
+
+  String _name(String id) => names[id] ?? id;
+
+  /// Ajoute un proche déjà accepté (il suit mes trajets).
+  void addAccepted(String userId) => contactList.add(
+    SoloContact(
+      id: 'c-${++_seq}',
+      userId: userId,
+      displayName: _name(userId),
+      accepted: true,
+      incoming: false,
+    ),
+  );
+
+  @override
+  Future<List<SoloContact>> contacts() async => List.of(contactList);
+
+  @override
+  Future<void> requestContact(String userId) async {
+    calls.add('request:$userId');
+    contactList.add(
+      SoloContact(
+        id: 'c-${++_seq}',
+        userId: userId,
+        displayName: _name(userId),
+        accepted: false,
+        incoming: false,
+      ),
+    );
+  }
+
+  @override
+  Future<void> respondContact(String contactId, {required bool accept}) async {
+    calls.add('respond:$contactId:$accept');
+    final i = contactList.indexWhere((c) => c.id == contactId);
+    final c = contactList[i];
+    if (accept) {
+      contactList[i] = SoloContact(
+        id: c.id,
+        userId: c.userId,
+        displayName: c.displayName,
+        accepted: true,
+        incoming: c.incoming,
+      );
+    } else {
+      contactList.removeAt(i);
+    }
+  }
+
+  @override
+  Future<void> removeContact(String contactId) async {
+    calls.add('remove:$contactId');
+    contactList.removeWhere((c) => c.id == contactId);
+  }
+
+  @override
+  Future<List<SoloTrip>> trips() async => List.of(tripList);
+
+  SoloTrip _copy(
+    SoloTrip t, {
+    SoloTripStatus? status,
+    DateTime? expectedAt,
+    bool? shareLocation,
+    double? lat,
+    double? lng,
+    DateTime? lastOkAt,
+  }) => SoloTrip(
+    id: t.id,
+    userId: t.userId,
+    displayName: t.displayName,
+    mine: t.mine,
+    status: status ?? t.status,
+    startedAt: t.startedAt,
+    expectedAt: expectedAt ?? t.expectedAt,
+    shareLocation: shareLocation ?? t.shareLocation,
+    destination: t.destination,
+    lastLat: lat ?? t.lastLat,
+    lastLng: lng ?? t.lastLng,
+    lastPositionAt: lat == null ? t.lastPositionAt : DateTime.now().toUtc(),
+    lastOkAt: lastOkAt ?? t.lastOkAt,
+    endedAt: status == null ? t.endedAt : DateTime.now().toUtc(),
+    watchers: t.watchers,
+  );
+
+  void _update(String id, SoloTrip Function(SoloTrip) f) {
+    final i = tripList.indexWhere((t) => t.id == id);
+    tripList[i] = f(tripList[i]);
+  }
+
+  @override
+  Future<String> startTrip({
+    required List<String> watcherIds,
+    required int minutes,
+    required bool shareLocation,
+    String? destination,
+  }) async {
+    calls.add(
+      'start:${watcherIds.join(',')}:$minutes:$shareLocation:$destination',
+    );
+    final id = 'trip-${++_seq}';
+    final now = DateTime.now().toUtc();
+    tripList.add(
+      SoloTrip(
+        id: id,
+        userId: me,
+        displayName: _name(me),
+        mine: true,
+        status: SoloTripStatus.active,
+        startedAt: now,
+        expectedAt: now.add(Duration(minutes: minutes)),
+        shareLocation: shareLocation,
+        destination: destination,
+        watchers: [for (final w in watcherIds) SoloWatcher(w, _name(w))],
+      ),
+    );
+    return id;
+  }
+
+  @override
+  Future<void> updateLocation(
+    String tripId,
+    double lat,
+    double lng,
+    double? accuracyM,
+  ) async {
+    calls.add('location:$lat,$lng');
+    _update(tripId, (t) => _copy(t, lat: lat, lng: lng));
+  }
+
+  @override
+  Future<void> setSharing(String tripId, {required bool share}) async {
+    calls.add('sharing:$share');
+    _update(tripId, (t) => _copy(t, shareLocation: share));
+  }
+
+  @override
+  Future<void> sendPosition(
+    String tripId,
+    double lat,
+    double lng,
+    double? accuracyM,
+  ) async {
+    calls.add('send:$lat,$lng');
+    _update(tripId, (t) => _copy(t, lat: lat, lng: lng));
+  }
+
+  @override
+  Future<void> imOk(String tripId, {int extraMinutes = 0}) async {
+    calls.add('ok:$extraMinutes');
+    _update(
+      tripId,
+      (t) => _copy(
+        t,
+        lastOkAt: DateTime.now().toUtc(),
+        expectedAt: DateTime.now().toUtc().add(Duration(minutes: extraMinutes)),
+      ),
+    );
+  }
+
+  @override
+  Future<void> arrive(String tripId) async {
+    calls.add('arrive');
+    _update(tripId, (t) => _copy(t, status: SoloTripStatus.arrived));
+  }
+
+  @override
+  Future<void> cancel(String tripId) async {
+    calls.add('cancel');
+    _update(tripId, (t) => _copy(t, status: SoloTripStatus.cancelled));
+  }
+
+  @override
+  Future<void> askNews(String tripId, {bool position = false}) async {
+    calls.add(position ? 'ask:position' : 'ask:news');
+  }
 }

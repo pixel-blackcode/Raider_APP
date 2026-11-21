@@ -47,6 +47,9 @@ import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/shops/presentation/my_shop_screen.dart';
 import '../../features/shops/presentation/shop_detail_screen.dart';
 import '../../features/shops/presentation/shops_screen.dart';
+import '../../features/solo/presentation/solo_contacts_screen.dart';
+import '../../features/solo/presentation/solo_screen.dart';
+import '../../features/solo/presentation/solo_watch_screen.dart';
 import '../../features/sos/presentation/sos_screen.dart';
 import 'app_routes.dart';
 import 'app_shell.dart';
@@ -250,6 +253,22 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRoutes.solo,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const SoloScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.soloContacts,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const SoloContactsScreen(),
+      ),
+      GoRoute(
+        path: '/solo/suivi/:tripId',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            SoloWatchScreen(tripId: state.pathParameters['tripId']!),
       ),
       GoRoute(
         path: AppRoutes.garage,

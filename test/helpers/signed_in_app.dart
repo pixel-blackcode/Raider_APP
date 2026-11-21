@@ -25,6 +25,7 @@ import 'package:rider_group/features/profile/domain/profile.dart';
 import 'package:rider_group/features/rides/data/rides_providers.dart';
 import 'package:rider_group/features/settings/data/feedback_repository.dart';
 import 'package:rider_group/features/shops/data/shops_repository.dart';
+import 'package:rider_group/features/solo/data/solo_repository.dart';
 import 'package:rider_group/features/sos/data/emergency.dart';
 import 'package:rider_group/features/sos/data/sos_repository.dart';
 
@@ -62,6 +63,7 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeShopsRepository? shops,
   FakeFeedbackRepository? feedback,
   FakeGarageRepository? garage,
+  FakeSoloRepository? solo,
   List<Override> extraOverrides = const [],
 }) {
   return pumpRiderGroupApp(
@@ -143,6 +145,7 @@ Future<ProviderContainer> pumpOnlineApp(
       garageRepositoryProvider.overrideWithValue(
         garage ?? FakeGarageRepository(),
       ),
+      soloRepositoryProvider.overrideWithValue(solo ?? FakeSoloRepository()),
       ...extraOverrides,
       // La carte native (MapLibre) n'existe pas en test : simple liste.
       convoyMapBuilderProvider.overrideWithValue(

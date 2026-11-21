@@ -15,6 +15,7 @@ import '../../community/data/community_providers.dart';
 import '../../community/presentation/post_feed.dart';
 import '../../notifications/presentation/notification_bell.dart';
 import '../../profile/data/profile_repository.dart';
+import '../../solo/presentation/solo_home_banner.dart';
 import 'home_clubs_section.dart';
 import 'home_events_section.dart';
 import 'home_rides_section.dart';
@@ -111,7 +112,16 @@ class HomeScreen extends ConsumerWidget {
                   const _HeroCard(),
                   const SizedBox(height: AppSpacing.md),
                   const BackendStatusCard(hideWhenReady: true),
+                  const SoloHomeBanner(),
                   SectionHeader(title: l10n.homeShortcuts),
+                  ShortcutTile(
+                    key: const Key('shortcut-solo'),
+                    icon: Icons.shield_moon_outlined,
+                    title: l10n.soloTitle,
+                    subtitle: l10n.soloSubtitle,
+                    onTap: () => context.push(AppRoutes.solo),
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
                   Row(
                     children: [
                       Expanded(

@@ -5595,6 +5595,498 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Rappel : {what} pour votre {moto}'**
   String notifMaintenanceReminder(String what, String moto);
+
+  /// No description provided for @soloTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mode solo'**
+  String get soloTitle;
+
+  /// No description provided for @soloSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rentrer seul, suivi par un proche'**
+  String get soloSubtitle;
+
+  /// No description provided for @soloContactsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes proches'**
+  String get soloContactsTitle;
+
+  /// No description provided for @soloWatching.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trajets que je suis'**
+  String get soloWatching;
+
+  /// No description provided for @soloTravelerTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} rentre seul'**
+  String soloTravelerTitle(String name);
+
+  /// No description provided for @soloTravelerTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} rentre seul · {destination}'**
+  String soloTravelerTo(String name, String destination);
+
+  /// No description provided for @soloMaxWatchers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Deux proches au plus.'**
+  String get soloMaxWatchers;
+
+  /// No description provided for @soloPickWatcher.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisissez au moins un proche.'**
+  String get soloPickWatcher;
+
+  /// No description provided for @soloLocationDenied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position non autorisée : vos proches ne verront pas votre position.'**
+  String get soloLocationDenied;
+
+  /// No description provided for @soloStarted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonne route ! Vos proches sont prévenus.'**
+  String get soloStarted;
+
+  /// No description provided for @soloIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous rentrez seul ? Vos proches sont prévenus de votre départ. Touchez « Je suis arrivé » une fois chez vous. Sans nouvelles à l\'heure prévue, ils pourront vous en demander.'**
+  String get soloIntro;
+
+  /// No description provided for @soloWhoWatches.
+  ///
+  /// In fr, this message translates to:
+  /// **'Qui suit mon trajet ? (1 ou 2)'**
+  String get soloWhoWatches;
+
+  /// No description provided for @soloNoContacts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun proche pour l\'instant. Ajoutez un motard : il devra accepter de suivre vos trajets.'**
+  String get soloNoContacts;
+
+  /// No description provided for @soloAddContact.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un proche'**
+  String get soloAddContact;
+
+  /// No description provided for @soloDestination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Où allez-vous ? (facultatif, ex. Maison)'**
+  String get soloDestination;
+
+  /// No description provided for @soloArrivalIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrivée prévue dans'**
+  String get soloArrivalIn;
+
+  /// No description provided for @soloExpectedAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrivée prévue à {time}'**
+  String soloExpectedAt(String time);
+
+  /// No description provided for @soloShareLocation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager ma position pendant le trajet'**
+  String get soloShareLocation;
+
+  /// No description provided for @soloShareLocationHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Seuls vos proches la voient, pendant le trajet ; elle est effacée à l\'arrivée.'**
+  String get soloShareLocationHelp;
+
+  /// No description provided for @soloStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partir en mode solo'**
+  String get soloStart;
+
+  /// No description provided for @soloNoFix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position introuvable pour l\'instant. Réessayez dans un endroit dégagé.'**
+  String get soloNoFix;
+
+  /// No description provided for @soloPositionSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position envoyée à vos proches.'**
+  String get soloPositionSent;
+
+  /// No description provided for @soloCancelTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler le trajet ?'**
+  String get soloCancelTitle;
+
+  /// No description provided for @soloCancelBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos proches seront prévenus que le trajet est annulé.'**
+  String get soloCancelBody;
+
+  /// No description provided for @soloCancel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler le trajet'**
+  String get soloCancel;
+
+  /// No description provided for @soloCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trajet annulé.'**
+  String get soloCancelled;
+
+  /// No description provided for @soloActiveTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trajet solo en cours'**
+  String get soloActiveTitle;
+
+  /// No description provided for @soloActiveTo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trajet solo vers : {destination}'**
+  String soloActiveTo(String destination);
+
+  /// No description provided for @soloWatchedBy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivi par {names}'**
+  String soloWatchedBy(String names);
+
+  /// No description provided for @soloLateMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Heure dépassée : confirmez votre arrivée ou rassurez vos proches.'**
+  String get soloLateMine;
+
+  /// No description provided for @soloArrived.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je suis arrivé'**
+  String get soloArrived;
+
+  /// No description provided for @soloArrivedDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bien arrivé ! Vos proches sont prévenus.'**
+  String get soloArrivedDone;
+
+  /// No description provided for @soloImOk.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je vais bien, encore en route (+15 min)'**
+  String get soloImOk;
+
+  /// No description provided for @soloOkDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos proches sont rassurés.'**
+  String get soloOkDone;
+
+  /// No description provided for @soloSendPosition.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer ma position à mes proches'**
+  String get soloSendPosition;
+
+  /// No description provided for @soloSharingOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position partagée avec vos proches.'**
+  String get soloSharingOn;
+
+  /// No description provided for @soloSharingOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position plus partagée.'**
+  String get soloSharingOff;
+
+  /// No description provided for @soloKeepOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gardez Rider Group ouvert : le téléphone peut couper l\'envoi écran éteint.'**
+  String get soloKeepOpen;
+
+  /// No description provided for @soloStatusArrived.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bien arrivé à {time}'**
+  String soloStatusArrived(String time);
+
+  /// No description provided for @soloStatusCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trajet annulé'**
+  String get soloStatusCancelled;
+
+  /// No description provided for @soloStatusExpired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trajet terminé'**
+  String get soloStatusExpired;
+
+  /// No description provided for @soloStatusLate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore arrivé (prévu à {time})'**
+  String soloStatusLate(String time);
+
+  /// No description provided for @soloStatusOnTheWay.
+  ///
+  /// In fr, this message translates to:
+  /// **'En route · arrivée prévue à {time}'**
+  String soloStatusOnTheWay(String time);
+
+  /// No description provided for @soloAskSent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande envoyée.'**
+  String get soloAskSent;
+
+  /// No description provided for @soloTripNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trajet introuvable'**
+  String get soloTripNotFound;
+
+  /// No description provided for @soloTripNotFoundBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce trajet est terminé depuis longtemps, ou vous ne le suivez plus.'**
+  String get soloTripNotFoundBody;
+
+  /// No description provided for @soloStartedAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parti à {time}'**
+  String soloStartedAt(String time);
+
+  /// No description provided for @soloLastNews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernières nouvelles : {ago}'**
+  String soloLastNews(String ago);
+
+  /// No description provided for @soloLastPosition.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dernière position : {ago}'**
+  String soloLastPosition(String ago);
+
+  /// No description provided for @soloNoPosition.
+  ///
+  /// In fr, this message translates to:
+  /// **'Position non partagée'**
+  String get soloNoPosition;
+
+  /// No description provided for @soloSharingLive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partage en cours pendant le trajet'**
+  String get soloSharingLive;
+
+  /// No description provided for @soloOpenMap.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte'**
+  String get soloOpenMap;
+
+  /// No description provided for @soloAskNews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demander de ses nouvelles'**
+  String get soloAskNews;
+
+  /// No description provided for @soloAskPosition.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demander sa position'**
+  String get soloAskPosition;
+
+  /// No description provided for @soloLateHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sans réponse, essayez de l\'appeler. En cas de doute sérieux, prévenez les secours.'**
+  String get soloLateHelp;
+
+  /// No description provided for @soloCallEmergency.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appeler le {number}'**
+  String soloCallEmergency(String number);
+
+  /// No description provided for @soloContactRequested.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande envoyée à {name}.'**
+  String soloContactRequested(String name);
+
+  /// No description provided for @soloContactsIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vos proches sont prévenus quand vous partez et arrivez en mode solo. Chacun doit accepter.'**
+  String get soloContactsIntro;
+
+  /// No description provided for @soloContactSearch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chercher un motard'**
+  String get soloContactSearch;
+
+  /// No description provided for @soloMyContacts.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivent mes trajets'**
+  String get soloMyContacts;
+
+  /// No description provided for @soloMyContactsEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Personne pour l\'instant.'**
+  String get soloMyContactsEmpty;
+
+  /// No description provided for @soloContactAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'A accepté'**
+  String get soloContactAccepted;
+
+  /// No description provided for @soloContactPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'En attente de réponse'**
+  String get soloContactPending;
+
+  /// No description provided for @soloIWatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Je suis le proche de'**
+  String get soloIWatch;
+
+  /// No description provided for @soloIWatchAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous suivez ses trajets solo'**
+  String get soloIWatchAccepted;
+
+  /// No description provided for @soloContactAsk.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} vous demande de suivre ses trajets en mode solo.'**
+  String soloContactAsk(String name);
+
+  /// No description provided for @soloRemoveContact.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer'**
+  String get soloRemoveContact;
+
+  /// No description provided for @soloHomeMineLate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Heure dépassée : êtes-vous bien arrivé ?'**
+  String get soloHomeMineLate;
+
+  /// No description provided for @soloHomeMine.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trajet solo · arrivée prévue à {time}'**
+  String soloHomeMine(String time);
+
+  /// No description provided for @errorSoloAlreadyActive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez déjà un trajet solo en cours.'**
+  String get errorSoloAlreadyActive;
+
+  /// No description provided for @notifSoloContactRequest.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} vous demande de suivre ses trajets en mode solo'**
+  String notifSoloContactRequest(String who);
+
+  /// No description provided for @notifSoloContactAccepted.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} suivra vos trajets en mode solo'**
+  String notifSoloContactAccepted(String who);
+
+  /// No description provided for @notifSoloTripStarted.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} rentre seul, arrivée prévue à {time}'**
+  String notifSoloTripStarted(String who, String time);
+
+  /// No description provided for @notifSoloTripArrived.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} est bien arrivé ✅'**
+  String notifSoloTripArrived(String who);
+
+  /// No description provided for @notifSoloTripCancelled.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} a annulé son trajet solo'**
+  String notifSoloTripCancelled(String who);
+
+  /// No description provided for @notifSoloTripOverdue.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} n\'a pas encore confirmé son arrivée'**
+  String notifSoloTripOverdue(String who);
+
+  /// No description provided for @notifSoloTripNoNews.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toujours sans nouvelles de {who}'**
+  String notifSoloTripNoNews(String who);
+
+  /// No description provided for @notifSoloCheckIn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Êtes-vous bien arrivé ? Rassurez vos proches.'**
+  String get notifSoloCheckIn;
+
+  /// No description provided for @notifSoloNewsRequest.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} demande de vos nouvelles'**
+  String notifSoloNewsRequest(String who);
+
+  /// No description provided for @notifSoloPositionRequest.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} demande votre position'**
+  String notifSoloPositionRequest(String who);
+
+  /// No description provided for @notifSoloPositionShared.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} a envoyé sa position'**
+  String notifSoloPositionShared(String who);
+
+  /// No description provided for @notifSoloOk.
+  ///
+  /// In fr, this message translates to:
+  /// **'{who} va bien, encore en route'**
+  String notifSoloOk(String who);
 }
 
 class _AppLocalizationsDelegate

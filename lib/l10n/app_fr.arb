@@ -1706,5 +1706,275 @@
         "type": "String"
       }
     }
+  },
+  "soloTitle": "Mode solo",
+  "soloSubtitle": "Rentrer seul, suivi par un proche",
+  "soloContactsTitle": "Mes proches",
+  "soloWatching": "Trajets que je suis",
+  "soloTravelerTitle": "{name} rentre seul",
+  "@soloTravelerTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "soloTravelerTo": "{name} rentre seul · {destination}",
+  "@soloTravelerTo": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "destination": {
+        "type": "String"
+      }
+    }
+  },
+  "soloMaxWatchers": "Deux proches au plus.",
+  "soloPickWatcher": "Choisissez au moins un proche.",
+  "soloLocationDenied": "Position non autorisée : vos proches ne verront pas votre position.",
+  "soloStarted": "Bonne route ! Vos proches sont prévenus.",
+  "soloIntro": "Vous rentrez seul ? Vos proches sont prévenus de votre départ. Touchez « Je suis arrivé » une fois chez vous. Sans nouvelles à l'heure prévue, ils pourront vous en demander.",
+  "soloWhoWatches": "Qui suit mon trajet ? (1 ou 2)",
+  "soloNoContacts": "Aucun proche pour l'instant. Ajoutez un motard : il devra accepter de suivre vos trajets.",
+  "soloAddContact": "Ajouter un proche",
+  "soloDestination": "Où allez-vous ? (facultatif, ex. Maison)",
+  "soloArrivalIn": "Arrivée prévue dans",
+  "soloExpectedAt": "Arrivée prévue à {time}",
+  "@soloExpectedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "soloShareLocation": "Partager ma position pendant le trajet",
+  "soloShareLocationHelp": "Seuls vos proches la voient, pendant le trajet ; elle est effacée à l'arrivée.",
+  "soloStart": "Partir en mode solo",
+  "soloNoFix": "Position introuvable pour l'instant. Réessayez dans un endroit dégagé.",
+  "soloPositionSent": "Position envoyée à vos proches.",
+  "soloCancelTitle": "Annuler le trajet ?",
+  "soloCancelBody": "Vos proches seront prévenus que le trajet est annulé.",
+  "soloCancel": "Annuler le trajet",
+  "soloCancelled": "Trajet annulé.",
+  "soloActiveTitle": "Trajet solo en cours",
+  "soloActiveTo": "Trajet solo vers : {destination}",
+  "@soloActiveTo": {
+    "placeholders": {
+      "destination": {
+        "type": "String"
+      }
+    }
+  },
+  "soloWatchedBy": "Suivi par {names}",
+  "@soloWatchedBy": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "soloLateMine": "Heure dépassée : confirmez votre arrivée ou rassurez vos proches.",
+  "soloArrived": "Je suis arrivé",
+  "soloArrivedDone": "Bien arrivé ! Vos proches sont prévenus.",
+  "soloImOk": "Je vais bien, encore en route (+15 min)",
+  "soloOkDone": "Vos proches sont rassurés.",
+  "soloSendPosition": "Envoyer ma position à mes proches",
+  "soloSharingOn": "Position partagée avec vos proches.",
+  "soloSharingOff": "Position plus partagée.",
+  "soloKeepOpen": "Gardez Rider Group ouvert : le téléphone peut couper l'envoi écran éteint.",
+  "soloStatusArrived": "Bien arrivé à {time}",
+  "@soloStatusArrived": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "soloStatusCancelled": "Trajet annulé",
+  "soloStatusExpired": "Trajet terminé",
+  "soloStatusLate": "Pas encore arrivé (prévu à {time})",
+  "@soloStatusLate": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "soloStatusOnTheWay": "En route · arrivée prévue à {time}",
+  "@soloStatusOnTheWay": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "soloAskSent": "Demande envoyée.",
+  "soloTripNotFound": "Trajet introuvable",
+  "soloTripNotFoundBody": "Ce trajet est terminé depuis longtemps, ou vous ne le suivez plus.",
+  "soloStartedAt": "Parti à {time}",
+  "@soloStartedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "soloLastNews": "Dernières nouvelles : {ago}",
+  "@soloLastNews": {
+    "placeholders": {
+      "ago": {
+        "type": "String"
+      }
+    }
+  },
+  "soloLastPosition": "Dernière position : {ago}",
+  "@soloLastPosition": {
+    "placeholders": {
+      "ago": {
+        "type": "String"
+      }
+    }
+  },
+  "soloNoPosition": "Position non partagée",
+  "soloSharingLive": "Partage en cours pendant le trajet",
+  "soloOpenMap": "Carte",
+  "soloAskNews": "Demander de ses nouvelles",
+  "soloAskPosition": "Demander sa position",
+  "soloLateHelp": "Sans réponse, essayez de l'appeler. En cas de doute sérieux, prévenez les secours.",
+  "soloCallEmergency": "Appeler le {number}",
+  "@soloCallEmergency": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "soloContactRequested": "Demande envoyée à {name}.",
+  "@soloContactRequested": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "soloContactsIntro": "Vos proches sont prévenus quand vous partez et arrivez en mode solo. Chacun doit accepter.",
+  "soloContactSearch": "Chercher un motard",
+  "soloMyContacts": "Suivent mes trajets",
+  "soloMyContactsEmpty": "Personne pour l'instant.",
+  "soloContactAccepted": "A accepté",
+  "soloContactPending": "En attente de réponse",
+  "soloIWatch": "Je suis le proche de",
+  "soloIWatchAccepted": "Vous suivez ses trajets solo",
+  "soloContactAsk": "{name} vous demande de suivre ses trajets en mode solo.",
+  "@soloContactAsk": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "soloRemoveContact": "Retirer",
+  "soloHomeMineLate": "Heure dépassée : êtes-vous bien arrivé ?",
+  "soloHomeMine": "Trajet solo · arrivée prévue à {time}",
+  "@soloHomeMine": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "errorSoloAlreadyActive": "Vous avez déjà un trajet solo en cours.",
+  "notifSoloContactRequest": "{who} vous demande de suivre ses trajets en mode solo",
+  "@notifSoloContactRequest": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloContactAccepted": "{who} suivra vos trajets en mode solo",
+  "@notifSoloContactAccepted": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloTripStarted": "{who} rentre seul, arrivée prévue à {time}",
+  "@notifSoloTripStarted": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloTripArrived": "{who} est bien arrivé ✅",
+  "@notifSoloTripArrived": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloTripCancelled": "{who} a annulé son trajet solo",
+  "@notifSoloTripCancelled": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloTripOverdue": "{who} n'a pas encore confirmé son arrivée",
+  "@notifSoloTripOverdue": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloTripNoNews": "Toujours sans nouvelles de {who}",
+  "@notifSoloTripNoNews": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloCheckIn": "Êtes-vous bien arrivé ? Rassurez vos proches.",
+  "notifSoloNewsRequest": "{who} demande de vos nouvelles",
+  "@notifSoloNewsRequest": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloPositionRequest": "{who} demande votre position",
+  "@notifSoloPositionRequest": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloPositionShared": "{who} a envoyé sa position",
+  "@notifSoloPositionShared": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
+  },
+  "notifSoloOk": "{who} va bien, encore en route",
+  "@notifSoloOk": {
+    "placeholders": {
+      "who": {
+        "type": "String"
+      }
+    }
   }
 }

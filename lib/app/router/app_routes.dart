@@ -8,6 +8,9 @@ abstract final class AppRoutes {
   static const profile = '/profil';
 
   // Écrans plein écran, au-dessus de la barre de navigation.
+  static const solo = '/solo';
+  static const soloContacts = '/solo/proches';
+  static String soloWatch(String id) => '/solo/suivi/$id';
   static const garage = '/garage';
   static const garageReminders = '/garage/rappels';
   static const newMotorcycle = '/garage/nouvelle';

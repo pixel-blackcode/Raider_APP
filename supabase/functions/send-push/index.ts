@@ -83,7 +83,29 @@ const TEXTS: Record<string, (d: Record<string, string>) => [string, string]> = {
   event_cancelled: (d) => ["Événement annulé", `« ${d.title} » est annulé`],
   club_deletion_requested: (d) => ["Suppression demandée", `${d.who} demande la suppression de ${d.club}`],
   maintenance_reminder: (d) => ["Rappel d'entretien", `${d.what} pour votre ${d.moto}`],
+  solo_contact_request: (d) => ["Mode solo", `${d.who} vous demande de suivre ses trajets en mode solo`],
+  solo_contact_accepted: (d) => ["Mode solo", `${d.who} suivra vos trajets en mode solo`],
+  solo_trip_started: (d) => ["Mode solo", `${d.who} rentre seul${d.dest}, arrivée prévue à ${d.time}`],
+  solo_trip_arrived: (d) => ["Bien arrivé ✅", `${d.who} est bien arrivé`],
+  solo_trip_cancelled: (d) => ["Mode solo", `${d.who} a annulé son trajet solo`],
+  solo_trip_overdue: (d) => ["Pas encore arrivé", `${d.who} n'a pas encore confirmé son arrivée (prévue à ${d.time})`],
+  solo_trip_no_news: (d) => ["Toujours sans nouvelles", `Toujours sans nouvelles de ${d.who}. Demandez-lui de ses nouvelles.`],
+  solo_check_in: () => ["Êtes-vous bien arrivé ?", "Touchez « Je suis arrivé » ou rassurez vos proches."],
+  solo_news_request: (d) => ["Mode solo", `${d.who} demande de vos nouvelles`],
+  solo_position_request: (d) => ["Mode solo", `${d.who} demande votre position`],
+  solo_position_shared: (d) => ["Mode solo", `${d.who} a envoyé sa position`],
+  solo_ok: (d) => ["Mode solo", `${d.who} va bien, encore en route`],
 };
+
+// Notifications du mode solo reçues par le motard qui roule (et non par ses proches).
+const SOLO_TRAVELER = new Set(["solo_check_in", "solo_news_request", "solo_position_request", "solo_contact_accepted"]);
+
+function kinshasaTime(iso?: string): string {
+  if (!iso) return "";
+  return new Date(iso).toLocaleTimeString("fr-FR", {
+    hour: "2-digit", minute: "2-digit", timeZone: "Africa/Kinshasa",
+  });
+}
 
 const KIND_LABELS: Record<string, string> = {
   oil: "Vidange", tires: "Pneus", brakes: "Freins", chain: "Chaîne", service: "Révision",
@@ -107,9 +129,13 @@ async function forNotification(id: string): Promise<[string[], Message] | null> 
     title: n.data?.title ?? "",
     what: n.data?.label ?? KIND_LABELS[n.data?.kind ?? "other"] ?? "Entretien",
     moto: n.data?.moto ?? "moto",
+    time: kinshasaTime(n.data?.expected_at),
+    dest: n.data?.destination ? ` (${n.data.destination})` : "",
   };
   const [title, body] = TEXTS[n.kind]?.(d) ?? ["Rider Group", "Vous avez une nouvelle notification"];
   const route = n.kind === "maintenance_reminder" ? "/garage/rappels"
+    : n.kind === "solo_contact_request" ? "/solo/proches"
+    : n.kind.startsWith("solo_") ? (SOLO_TRAVELER.has(n.kind) || !n.ref_id ? "/solo" : `/solo/suivi/${n.ref_id}`)
     : n.post_id ? `/publications/${n.post_id}`
     : n.ride_id ? `/balades/${n.ride_id}`
     : n.data?.event_id ? `/evenements/${n.data.event_id}`
