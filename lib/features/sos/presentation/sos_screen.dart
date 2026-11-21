@@ -10,6 +10,7 @@ import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../garage/presentation/sos_moto_card.dart';
 import '../../rides/data/rides_providers.dart';
 import '../../rides/domain/ride.dart';
 import '../data/emergency.dart';
@@ -512,6 +513,7 @@ class _IncomingAlertCardState extends ConsumerState<_IncomingAlertCard> {
             ),
             Text(l10n.sosSince(sosTime(a.createdAt))),
             if (a.message != null) Text('« ${a.message} »'),
+            SosMotoCard(alertId: a.id),
             if (widget.acks.isNotEmpty)
               Text(l10n.sosAckedBy('${widget.acks.length}')),
             const SizedBox(height: AppSpacing.sm),

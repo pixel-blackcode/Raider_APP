@@ -23,6 +23,10 @@ import '../../features/events/presentation/event_detail_screen.dart';
 import '../../features/events/presentation/event_form_screen.dart';
 import '../../features/events/presentation/events_screen.dart';
 import '../../features/garage/presentation/garage_screen.dart';
+import '../../features/garage/presentation/maintenance_form_screen.dart';
+import '../../features/garage/presentation/moto_detail_screen.dart';
+import '../../features/garage/presentation/moto_form_screen.dart';
+import '../../features/garage/presentation/reminders_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/marketplace/presentation/listing_detail_screen.dart';
 import '../../features/marketplace/presentation/listing_form_screen.dart';
@@ -251,6 +255,34 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.garage,
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const GarageScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.garageReminders,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const RemindersScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.newMotorcycle,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const MotoFormScreen(),
+      ),
+      GoRoute(
+        path: '/garage/moto/:motoId',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            MotoDetailScreen(motoId: state.pathParameters['motoId']!),
+      ),
+      GoRoute(
+        path: '/garage/moto/:motoId/modifier',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            MotoFormScreen(motoId: state.pathParameters['motoId']),
+      ),
+      GoRoute(
+        path: '/garage/moto/:motoId/entretien',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) =>
+            MaintenanceFormScreen(motoId: state.pathParameters['motoId']!),
       ),
       GoRoute(
         path: AppRoutes.marketplace,

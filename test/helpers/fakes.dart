@@ -19,6 +19,8 @@ import 'package:rider_group/features/convoy/data/location_service.dart';
 import 'package:rider_group/features/convoy/domain/convoy.dart';
 import 'package:rider_group/features/events/data/events_repository.dart';
 import 'package:rider_group/features/events/domain/moto_event.dart';
+import 'package:rider_group/features/garage/data/garage_repository.dart';
+import 'package:rider_group/features/garage/domain/garage.dart';
 import 'package:rider_group/features/marketplace/data/marketplace_repository.dart';
 import 'package:rider_group/features/marketplace/domain/marketplace.dart';
 import 'package:rider_group/features/messages/data/messaging_repository.dart';
@@ -2045,4 +2047,140 @@ class FakeFeedbackRepository implements FeedbackRepository {
   @override
   Future<void> markHandled(String id) async =>
       items.removeWhere((i) => i.id == id);
+}
+
+class FakeGarageRepository implements GarageRepository {
+  final motos = <String, Motorcycle>{};
+  final recordList = <MaintenanceRecord>[];
+  final reminderList = <MaintenanceReminder>[];
+  final sos = <String, SosMotorcycle>{};
+  final calls = <String>[];
+  var _seq = 0;
+
+  @override
+  Future<List<Motorcycle>> motorcycles() async => [
+    ...motos.values.where((m) => m.isPrimary),
+    ...motos.values.where((m) => !m.isPrimary),
+  ];
+
+  @override
+  Future<String> saveMotorcycle(String? id, MotorcycleDraft d) async {
+    calls.add('save:${d.brand} ${d.model}:${d.plate}:${d.odometerKm}');
+    final newId = id ?? 'moto-${++_seq}';
+    final primary = d.isPrimary || motos.isEmpty;
+    if (primary) {
+      for (final e in motos.entries.toList()) {
+        motos[e.key] = _copy(e.value, isPrimary: false);
+      }
+    }
+    motos[newId] = Motorcycle(
+      id: newId,
+      brand: d.brand.trim(),
+      model: d.model.trim(),
+      year: d.year,
+      cc: d.cc,
+      color: d.color,
+      plate: d.plate?.toUpperCase(),
+      odometerKm: d.odometerKm,
+      isPrimary: primary || (motos[newId]?.isPrimary ?? false),
+      showInSos: d.showInSos,
+    );
+    return newId;
+  }
+
+  Motorcycle _copy(Motorcycle m, {bool? isPrimary, int? odometerKm}) =>
+      Motorcycle(
+        id: m.id,
+        brand: m.brand,
+        model: m.model,
+        year: m.year,
+        cc: m.cc,
+        color: m.color,
+        plate: m.plate,
+        odometerKm: odometerKm ?? m.odometerKm,
+        isPrimary: isPrimary ?? m.isPrimary,
+        showInSos: m.showInSos,
+        photoPath: m.photoPath,
+      );
+
+  @override
+  Future<String?> setPhoto(String motoId, String? path) async => null;
+
+  @override
+  Future<List<String>> deleteMotorcycle(String motoId) async {
+    calls.add('delete:$motoId');
+    motos.remove(motoId);
+    return const [];
+  }
+
+  @override
+  Future<List<MaintenanceRecord>> records(String motoId) async =>
+      recordList.where((r) => r.motoId == motoId).toList();
+
+  @override
+  Future<void> addMaintenance(String motoId, MaintenanceDraft d) async {
+    calls.add(
+      'maintenance:${d.kind.name}:${d.odometerKm}:${d.cost}:${d.remindNext}',
+    );
+    recordList.add(
+      MaintenanceRecord(
+        id: 'rec-${++_seq}',
+        motoId: motoId,
+        kind: d.kind,
+        doneOn: d.doneOn,
+        odometerKm: d.odometerKm,
+        cost: d.cost,
+        currency: d.currency,
+        garage: d.garage,
+      ),
+    );
+    if (d.odometerKm != null) {
+      motos[motoId] = _copy(motos[motoId]!, odometerKm: d.odometerKm);
+    }
+  }
+
+  @override
+  Future<String?> deleteMaintenance(String recordId) async {
+    recordList.removeWhere((r) => r.id == recordId);
+    return null;
+  }
+
+  @override
+  Future<List<MaintenanceReminder>> reminders() async => List.of(reminderList);
+
+  @override
+  Future<void> addReminder(
+    String motoId,
+    MaintenanceKind kind, {
+    String? label,
+    DateTime? dueDate,
+    int? dueKm,
+  }) async {
+    calls.add('reminder:${kind.name}:$dueKm');
+    reminderList.add(
+      MaintenanceReminder(
+        id: 'rem-${++_seq}',
+        motoId: motoId,
+        kind: kind,
+        dueDate: dueDate,
+        dueKm: dueKm,
+      ),
+    );
+  }
+
+  @override
+  Future<void> completeReminder(String id) async {
+    calls.add('complete:$id');
+    reminderList.removeWhere((r) => r.id == id);
+  }
+
+  @override
+  Future<void> snoozeReminder(String id) async => calls.add('snooze:$id');
+
+  @override
+  Future<void> deleteReminder(String id) async =>
+      reminderList.removeWhere((r) => r.id == id);
+
+  @override
+  Future<SosMotorcycle?> sosMotorcycle(String alertId) async => sos[alertId];
 }

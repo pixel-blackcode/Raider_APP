@@ -273,6 +273,15 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
             onTap: () => context.push(AppRoutes.riderVerification),
           ),
         ListTile(
+          key: const Key('profile-garage'),
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(Icons.two_wheeler),
+          title: Text(l10n.garageTitle),
+          subtitle: Text(l10n.garageSubtitle),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push(AppRoutes.garage),
+        ),
+        ListTile(
           key: const Key('profile-my-shop'),
           contentPadding: EdgeInsets.zero,
           leading: const Icon(Icons.storefront_outlined),

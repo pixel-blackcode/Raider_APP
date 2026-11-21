@@ -9,6 +9,11 @@ abstract final class AppRoutes {
 
   // Écrans plein écran, au-dessus de la barre de navigation.
   static const garage = '/garage';
+  static const garageReminders = '/garage/rappels';
+  static const newMotorcycle = '/garage/nouvelle';
+  static String motorcycle(String id) => '/garage/moto/$id';
+  static String editMotorcycle(String id) => '/garage/moto/$id/modifier';
+  static String addMaintenance(String id) => '/garage/moto/$id/entretien';
   static const marketplace = '/marketplace';
   static const newListing = '/marketplace/vendre';
   static String listing(String id) => '/marketplace/annonces/$id';

@@ -82,6 +82,12 @@ const TEXTS: Record<string, (d: Record<string, string>) => [string, string]> = {
   event_coorganizer_invitation: (d) => ["Co-organisation", `${d.who} invite ${d.club} à co-organiser « ${d.title} »`],
   event_cancelled: (d) => ["Événement annulé", `« ${d.title} » est annulé`],
   club_deletion_requested: (d) => ["Suppression demandée", `${d.who} demande la suppression de ${d.club}`],
+  maintenance_reminder: (d) => ["Rappel d'entretien", `${d.what} pour votre ${d.moto}`],
+};
+
+const KIND_LABELS: Record<string, string> = {
+  oil: "Vidange", tires: "Pneus", brakes: "Freins", chain: "Chaîne", service: "Révision",
+  battery: "Batterie", insurance: "Assurance", inspection: "Contrôle technique", other: "Entretien",
 };
 
 async function forNotification(id: string): Promise<[string[], Message] | null> {
@@ -99,9 +105,12 @@ async function forNotification(id: string): Promise<[string[], Message] | null> 
     ride: ride?.data?.title ?? "",
     club: club?.data?.name ?? (n.data?.name ?? ""),
     title: n.data?.title ?? "",
+    what: n.data?.label ?? KIND_LABELS[n.data?.kind ?? "other"] ?? "Entretien",
+    moto: n.data?.moto ?? "moto",
   };
   const [title, body] = TEXTS[n.kind]?.(d) ?? ["Rider Group", "Vous avez une nouvelle notification"];
-  const route = n.post_id ? `/publications/${n.post_id}`
+  const route = n.kind === "maintenance_reminder" ? "/garage/rappels"
+    : n.post_id ? `/publications/${n.post_id}`
     : n.ride_id ? `/balades/${n.ride_id}`
     : n.data?.event_id ? `/evenements/${n.data.event_id}`
     : n.club_id ? `/clubs/${n.club_id}`

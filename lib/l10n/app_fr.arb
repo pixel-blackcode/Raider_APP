@@ -19,7 +19,7 @@
   "garageTitle": "Mon garage",
   "garageSubtitle": "Vos motos et leur entretien",
   "garageEmptyTitle": "Votre garage est vide",
-  "garageEmptyBody": "Vous pourrez bientôt enregistrer vos motos et suivre leur entretien. Ces informations resteront privées par défaut.",
+  "garageEmptyBody": "Ajoutez votre moto pour suivre son kilométrage, son entretien et recevoir des rappels. Ces informations restent privées.",
   "marketplaceTitle": "Marketplace",
   "marketplaceSubtitle": "Motos, pièces et équipements",
   "marketplaceEmptyTitle": "Aucune annonce",
@@ -1567,6 +1567,142 @@
   "@notifShopRestored": {
     "placeholders": {
       "name": {
+        "type": "String"
+      }
+    }
+  },
+  "garageKindOil": "Vidange",
+  "garageKindTires": "Pneus",
+  "garageKindBrakes": "Freins",
+  "garageKindChain": "Chaîne",
+  "garageKindService": "Révision",
+  "garageKindBattery": "Batterie",
+  "garageKindInsurance": "Assurance",
+  "garageKindInspection": "Contrôle technique",
+  "garageKindOther": "Autre",
+  "garageKmLeft": "dans {km}",
+  "@garageKmLeft": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "garageKmOverdue": "kilométrage dépassé",
+  "garageDaysLeft": "{count, plural, =0{aujourd'hui} =1{demain} other{dans {count} jours}}",
+  "@garageDaysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "garageDaysOverdue": "date dépassée",
+  "garageReminders": "Rappels",
+  "garageAddMoto": "Ajouter une moto",
+  "garageEditMoto": "Modifier la moto",
+  "garageSummary": "{motos, plural, =1{1 moto} other{{motos} motos}} · {due, plural, =0{aucun rappel à traiter} =1{1 rappel à traiter} other{{due} rappels à traiter}}",
+  "@garageSummary": {
+    "placeholders": {
+      "motos": {
+        "type": "int"
+      },
+      "due": {
+        "type": "int"
+      }
+    }
+  },
+  "garagePrimary": "Moto principale",
+  "garagePrimaryHelp": "Celle que vous utilisez le plus",
+  "garagePlateValue": "Plaque {plate}",
+  "@garagePlateValue": {
+    "placeholders": {
+      "plate": {
+        "type": "String"
+      }
+    }
+  },
+  "garageReminderCount": "{count, plural, =1{1 rappel} other{{count} rappels}}",
+  "@garageReminderCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "garageAddPhoto": "Ajouter une photo",
+  "garageBrand": "Marque",
+  "garageModel": "Modèle",
+  "garageYear": "Année",
+  "garageYearShort": "année",
+  "garageCc": "Cylindrée (cm³)",
+  "garageColor": "Couleur",
+  "garagePlate": "Plaque",
+  "garageOdometer": "Kilométrage",
+  "garageShowInSos": "Montrer dans mes alertes SOS",
+  "garageShowInSosHelp": "Modèle, couleur, plaque et photo, pour vous retrouver",
+  "garagePrivacyNote": "Votre garage est privé. Seule votre moto principale, si vous l'acceptez, est montrée aux motards de votre balade, et seulement pendant une alerte SOS.",
+  "garageSaveMoto": "Enregistrer la moto",
+  "garageMotoNotFound": "Moto introuvable",
+  "garageDeleteMotoTitle": "Supprimer la moto ?",
+  "garageDeleteMotoBody": "{name}, son historique d'entretien et ses rappels seront supprimés.",
+  "@garageDeleteMotoBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "garageNextReminders": "Prochains rappels",
+  "garageNoReminders": "Aucun rappel",
+  "garageHistory": "Historique d'entretien",
+  "garageNoHistory": "Aucun entretien enregistré",
+  "garageDeleteRecord": "Supprimer cet entretien ?",
+  "garageAddMaintenance": "Ajouter un entretien",
+  "garageNewMaintenance": "Nouvel entretien",
+  "garageMaintenanceType": "Type d'entretien",
+  "garageDate": "Date",
+  "garageCurrentKm": "Compteur actuel : {km}",
+  "@garageCurrentKm": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "garageCost": "Coût (facultatif)",
+  "garageGarage": "Garage ou mécanicien (facultatif)",
+  "garageNote": "Note (facultatif)",
+  "garageRemindNext": "Me rappeler : {kind}",
+  "@garageRemindNext": {
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "garageRemindNextHelp": "Le prochain rappel est créé avec l'intervalle habituel",
+  "garageAddInvoice": "Ajouter la photo de la facture",
+  "garageInvoiceAdded": "Facture ajoutée",
+  "garageSaveMaintenance": "Enregistrer l'entretien",
+  "garageAddReminder": "Ajouter un rappel",
+  "garageRemindersHelp": "Vous recevez une notification 7 jours avant une date, ou quand le kilométrage approche du seuil.",
+  "garageDueSoon": "À traiter bientôt",
+  "garageUpcoming": "À venir",
+  "garageDone": "C'est fait",
+  "garageSnooze": "Reporter",
+  "garageReminderNeedsDue": "Indiquez une date ou un kilométrage.",
+  "garageMoto": "Moto",
+  "garageDueDate": "Date d'échéance (facultatif)",
+  "garageDueKm": "À quel kilométrage ? (facultatif)",
+  "garageSosHisMoto": "SA MOTO",
+  "notifMaintenanceReminder": "Rappel : {what} pour votre {moto}",
+  "@notifMaintenanceReminder": {
+    "placeholders": {
+      "what": {
+        "type": "String"
+      },
+      "moto": {
         "type": "String"
       }
     }

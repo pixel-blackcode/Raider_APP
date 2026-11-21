@@ -16,6 +16,7 @@ import 'package:rider_group/features/convoy/data/convoy_repository.dart';
 import 'package:rider_group/features/convoy/data/location_service.dart';
 import 'package:rider_group/features/convoy/presentation/convoy_map.dart';
 import 'package:rider_group/features/events/data/events_repository.dart';
+import 'package:rider_group/features/garage/data/garage_repository.dart';
 import 'package:rider_group/features/marketplace/data/marketplace_repository.dart';
 import 'package:rider_group/features/messages/data/messaging_repository.dart';
 import 'package:rider_group/features/notifications/data/notifications_repository.dart';
@@ -60,6 +61,7 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeEventsRepository? events,
   FakeShopsRepository? shops,
   FakeFeedbackRepository? feedback,
+  FakeGarageRepository? garage,
   List<Override> extraOverrides = const [],
 }) {
   return pumpRiderGroupApp(
@@ -137,6 +139,9 @@ Future<ProviderContainer> pumpOnlineApp(
       ),
       feedbackRepositoryProvider.overrideWithValue(
         feedback ?? FakeFeedbackRepository(),
+      ),
+      garageRepositoryProvider.overrideWithValue(
+        garage ?? FakeGarageRepository(),
       ),
       ...extraOverrides,
       // La carte native (MapLibre) n'existe pas en test : simple liste.

@@ -69,7 +69,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get garageEmptyBody =>
-      'Vous pourrez bientôt enregistrer vos motos et suivre leur entretien. Ces informations resteront privées par défaut.';
+      'Ajoutez votre moto pour suivre son kilométrage, son entretien et recevoir des rappels. Ces informations restent privées.';
 
   @override
   String get marketplaceTitle => 'Marketplace';
@@ -2963,5 +2963,254 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String notifShopRestored(String name) {
     return 'Votre boutique $name est de nouveau visible';
+  }
+
+  @override
+  String get garageKindOil => 'Vidange';
+
+  @override
+  String get garageKindTires => 'Pneus';
+
+  @override
+  String get garageKindBrakes => 'Freins';
+
+  @override
+  String get garageKindChain => 'Chaîne';
+
+  @override
+  String get garageKindService => 'Révision';
+
+  @override
+  String get garageKindBattery => 'Batterie';
+
+  @override
+  String get garageKindInsurance => 'Assurance';
+
+  @override
+  String get garageKindInspection => 'Contrôle technique';
+
+  @override
+  String get garageKindOther => 'Autre';
+
+  @override
+  String garageKmLeft(String km) {
+    return 'dans $km';
+  }
+
+  @override
+  String get garageKmOverdue => 'kilométrage dépassé';
+
+  @override
+  String garageDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'dans $count jours',
+      one: 'demain',
+      zero: 'aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get garageDaysOverdue => 'date dépassée';
+
+  @override
+  String get garageReminders => 'Rappels';
+
+  @override
+  String get garageAddMoto => 'Ajouter une moto';
+
+  @override
+  String get garageEditMoto => 'Modifier la moto';
+
+  @override
+  String garageSummary(int motos, int due) {
+    String _temp0 = intl.Intl.pluralLogic(
+      motos,
+      locale: localeName,
+      other: '$motos motos',
+      one: '1 moto',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      due,
+      locale: localeName,
+      other: '$due rappels à traiter',
+      one: '1 rappel à traiter',
+      zero: 'aucun rappel à traiter',
+    );
+    return '$_temp0 · $_temp1';
+  }
+
+  @override
+  String get garagePrimary => 'Moto principale';
+
+  @override
+  String get garagePrimaryHelp => 'Celle que vous utilisez le plus';
+
+  @override
+  String garagePlateValue(String plate) {
+    return 'Plaque $plate';
+  }
+
+  @override
+  String garageReminderCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rappels',
+      one: '1 rappel',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get garageAddPhoto => 'Ajouter une photo';
+
+  @override
+  String get garageBrand => 'Marque';
+
+  @override
+  String get garageModel => 'Modèle';
+
+  @override
+  String get garageYear => 'Année';
+
+  @override
+  String get garageYearShort => 'année';
+
+  @override
+  String get garageCc => 'Cylindrée (cm³)';
+
+  @override
+  String get garageColor => 'Couleur';
+
+  @override
+  String get garagePlate => 'Plaque';
+
+  @override
+  String get garageOdometer => 'Kilométrage';
+
+  @override
+  String get garageShowInSos => 'Montrer dans mes alertes SOS';
+
+  @override
+  String get garageShowInSosHelp =>
+      'Modèle, couleur, plaque et photo, pour vous retrouver';
+
+  @override
+  String get garagePrivacyNote =>
+      'Votre garage est privé. Seule votre moto principale, si vous l\'acceptez, est montrée aux motards de votre balade, et seulement pendant une alerte SOS.';
+
+  @override
+  String get garageSaveMoto => 'Enregistrer la moto';
+
+  @override
+  String get garageMotoNotFound => 'Moto introuvable';
+
+  @override
+  String get garageDeleteMotoTitle => 'Supprimer la moto ?';
+
+  @override
+  String garageDeleteMotoBody(String name) {
+    return '$name, son historique d\'entretien et ses rappels seront supprimés.';
+  }
+
+  @override
+  String get garageNextReminders => 'Prochains rappels';
+
+  @override
+  String get garageNoReminders => 'Aucun rappel';
+
+  @override
+  String get garageHistory => 'Historique d\'entretien';
+
+  @override
+  String get garageNoHistory => 'Aucun entretien enregistré';
+
+  @override
+  String get garageDeleteRecord => 'Supprimer cet entretien ?';
+
+  @override
+  String get garageAddMaintenance => 'Ajouter un entretien';
+
+  @override
+  String get garageNewMaintenance => 'Nouvel entretien';
+
+  @override
+  String get garageMaintenanceType => 'Type d\'entretien';
+
+  @override
+  String get garageDate => 'Date';
+
+  @override
+  String garageCurrentKm(String km) {
+    return 'Compteur actuel : $km';
+  }
+
+  @override
+  String get garageCost => 'Coût (facultatif)';
+
+  @override
+  String get garageGarage => 'Garage ou mécanicien (facultatif)';
+
+  @override
+  String get garageNote => 'Note (facultatif)';
+
+  @override
+  String garageRemindNext(String kind) {
+    return 'Me rappeler : $kind';
+  }
+
+  @override
+  String get garageRemindNextHelp =>
+      'Le prochain rappel est créé avec l\'intervalle habituel';
+
+  @override
+  String get garageAddInvoice => 'Ajouter la photo de la facture';
+
+  @override
+  String get garageInvoiceAdded => 'Facture ajoutée';
+
+  @override
+  String get garageSaveMaintenance => 'Enregistrer l\'entretien';
+
+  @override
+  String get garageAddReminder => 'Ajouter un rappel';
+
+  @override
+  String get garageRemindersHelp =>
+      'Vous recevez une notification 7 jours avant une date, ou quand le kilométrage approche du seuil.';
+
+  @override
+  String get garageDueSoon => 'À traiter bientôt';
+
+  @override
+  String get garageUpcoming => 'À venir';
+
+  @override
+  String get garageDone => 'C\'est fait';
+
+  @override
+  String get garageSnooze => 'Reporter';
+
+  @override
+  String get garageReminderNeedsDue => 'Indiquez une date ou un kilométrage.';
+
+  @override
+  String get garageMoto => 'Moto';
+
+  @override
+  String get garageDueDate => 'Date d\'échéance (facultatif)';
+
+  @override
+  String get garageDueKm => 'À quel kilométrage ? (facultatif)';
+
+  @override
+  String get garageSosHisMoto => 'SA MOTO';
+
+  @override
+  String notifMaintenanceReminder(String what, String moto) {
+    return 'Rappel : $what pour votre $moto';
   }
 }

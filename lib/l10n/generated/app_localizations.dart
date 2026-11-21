@@ -211,7 +211,7 @@ abstract class AppLocalizations {
   /// No description provided for @garageEmptyBody.
   ///
   /// In fr, this message translates to:
-  /// **'Vous pourrez bientôt enregistrer vos motos et suivre leur entretien. Ces informations resteront privées par défaut.'**
+  /// **'Ajoutez votre moto pour suivre son kilométrage, son entretien et recevoir des rappels. Ces informations restent privées.'**
   String get garageEmptyBody;
 
   /// No description provided for @marketplaceTitle.
@@ -5193,6 +5193,408 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Votre boutique {name} est de nouveau visible'**
   String notifShopRestored(String name);
+
+  /// No description provided for @garageKindOil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vidange'**
+  String get garageKindOil;
+
+  /// No description provided for @garageKindTires.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pneus'**
+  String get garageKindTires;
+
+  /// No description provided for @garageKindBrakes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Freins'**
+  String get garageKindBrakes;
+
+  /// No description provided for @garageKindChain.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaîne'**
+  String get garageKindChain;
+
+  /// No description provided for @garageKindService.
+  ///
+  /// In fr, this message translates to:
+  /// **'Révision'**
+  String get garageKindService;
+
+  /// No description provided for @garageKindBattery.
+  ///
+  /// In fr, this message translates to:
+  /// **'Batterie'**
+  String get garageKindBattery;
+
+  /// No description provided for @garageKindInsurance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Assurance'**
+  String get garageKindInsurance;
+
+  /// No description provided for @garageKindInspection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contrôle technique'**
+  String get garageKindInspection;
+
+  /// No description provided for @garageKindOther.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre'**
+  String get garageKindOther;
+
+  /// No description provided for @garageKmLeft.
+  ///
+  /// In fr, this message translates to:
+  /// **'dans {km}'**
+  String garageKmLeft(String km);
+
+  /// No description provided for @garageKmOverdue.
+  ///
+  /// In fr, this message translates to:
+  /// **'kilométrage dépassé'**
+  String get garageKmOverdue;
+
+  /// No description provided for @garageDaysLeft.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =0{aujourd\'hui} =1{demain} other{dans {count} jours}}'**
+  String garageDaysLeft(int count);
+
+  /// No description provided for @garageDaysOverdue.
+  ///
+  /// In fr, this message translates to:
+  /// **'date dépassée'**
+  String get garageDaysOverdue;
+
+  /// No description provided for @garageReminders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappels'**
+  String get garageReminders;
+
+  /// No description provided for @garageAddMoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une moto'**
+  String get garageAddMoto;
+
+  /// No description provided for @garageEditMoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modifier la moto'**
+  String get garageEditMoto;
+
+  /// No description provided for @garageSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'{motos, plural, =1{1 moto} other{{motos} motos}} · {due, plural, =0{aucun rappel à traiter} =1{1 rappel à traiter} other{{due} rappels à traiter}}'**
+  String garageSummary(int motos, int due);
+
+  /// No description provided for @garagePrimary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moto principale'**
+  String get garagePrimary;
+
+  /// No description provided for @garagePrimaryHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Celle que vous utilisez le plus'**
+  String get garagePrimaryHelp;
+
+  /// No description provided for @garagePlateValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plaque {plate}'**
+  String garagePlateValue(String plate);
+
+  /// No description provided for @garageReminderCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 rappel} other{{count} rappels}}'**
+  String garageReminderCount(int count);
+
+  /// No description provided for @garageAddPhoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter une photo'**
+  String get garageAddPhoto;
+
+  /// No description provided for @garageBrand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marque'**
+  String get garageBrand;
+
+  /// No description provided for @garageModel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modèle'**
+  String get garageModel;
+
+  /// No description provided for @garageYear.
+  ///
+  /// In fr, this message translates to:
+  /// **'Année'**
+  String get garageYear;
+
+  /// No description provided for @garageYearShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'année'**
+  String get garageYearShort;
+
+  /// No description provided for @garageCc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cylindrée (cm³)'**
+  String get garageCc;
+
+  /// No description provided for @garageColor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couleur'**
+  String get garageColor;
+
+  /// No description provided for @garagePlate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plaque'**
+  String get garagePlate;
+
+  /// No description provided for @garageOdometer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Kilométrage'**
+  String get garageOdometer;
+
+  /// No description provided for @garageShowInSos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Montrer dans mes alertes SOS'**
+  String get garageShowInSos;
+
+  /// No description provided for @garageShowInSosHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Modèle, couleur, plaque et photo, pour vous retrouver'**
+  String get garageShowInSosHelp;
+
+  /// No description provided for @garagePrivacyNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre garage est privé. Seule votre moto principale, si vous l\'acceptez, est montrée aux motards de votre balade, et seulement pendant une alerte SOS.'**
+  String get garagePrivacyNote;
+
+  /// No description provided for @garageSaveMoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer la moto'**
+  String get garageSaveMoto;
+
+  /// No description provided for @garageMotoNotFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moto introuvable'**
+  String get garageMotoNotFound;
+
+  /// No description provided for @garageDeleteMotoTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer la moto ?'**
+  String get garageDeleteMotoTitle;
+
+  /// No description provided for @garageDeleteMotoBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name}, son historique d\'entretien et ses rappels seront supprimés.'**
+  String garageDeleteMotoBody(String name);
+
+  /// No description provided for @garageNextReminders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochains rappels'**
+  String get garageNextReminders;
+
+  /// No description provided for @garageNoReminders.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun rappel'**
+  String get garageNoReminders;
+
+  /// No description provided for @garageHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique d\'entretien'**
+  String get garageHistory;
+
+  /// No description provided for @garageNoHistory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun entretien enregistré'**
+  String get garageNoHistory;
+
+  /// No description provided for @garageDeleteRecord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer cet entretien ?'**
+  String get garageDeleteRecord;
+
+  /// No description provided for @garageAddMaintenance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un entretien'**
+  String get garageAddMaintenance;
+
+  /// No description provided for @garageNewMaintenance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvel entretien'**
+  String get garageNewMaintenance;
+
+  /// No description provided for @garageMaintenanceType.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type d\'entretien'**
+  String get garageMaintenanceType;
+
+  /// No description provided for @garageDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date'**
+  String get garageDate;
+
+  /// No description provided for @garageCurrentKm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compteur actuel : {km}'**
+  String garageCurrentKm(String km);
+
+  /// No description provided for @garageCost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coût (facultatif)'**
+  String get garageCost;
+
+  /// No description provided for @garageGarage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Garage ou mécanicien (facultatif)'**
+  String get garageGarage;
+
+  /// No description provided for @garageNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note (facultatif)'**
+  String get garageNote;
+
+  /// No description provided for @garageRemindNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Me rappeler : {kind}'**
+  String garageRemindNext(String kind);
+
+  /// No description provided for @garageRemindNextHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le prochain rappel est créé avec l\'intervalle habituel'**
+  String get garageRemindNextHelp;
+
+  /// No description provided for @garageAddInvoice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter la photo de la facture'**
+  String get garageAddInvoice;
+
+  /// No description provided for @garageInvoiceAdded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Facture ajoutée'**
+  String get garageInvoiceAdded;
+
+  /// No description provided for @garageSaveMaintenance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Enregistrer l\'entretien'**
+  String get garageSaveMaintenance;
+
+  /// No description provided for @garageAddReminder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un rappel'**
+  String get garageAddReminder;
+
+  /// No description provided for @garageRemindersHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous recevez une notification 7 jours avant une date, ou quand le kilométrage approche du seuil.'**
+  String get garageRemindersHelp;
+
+  /// No description provided for @garageDueSoon.
+  ///
+  /// In fr, this message translates to:
+  /// **'À traiter bientôt'**
+  String get garageDueSoon;
+
+  /// No description provided for @garageUpcoming.
+  ///
+  /// In fr, this message translates to:
+  /// **'À venir'**
+  String get garageUpcoming;
+
+  /// No description provided for @garageDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'C\'est fait'**
+  String get garageDone;
+
+  /// No description provided for @garageSnooze.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reporter'**
+  String get garageSnooze;
+
+  /// No description provided for @garageReminderNeedsDue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indiquez une date ou un kilométrage.'**
+  String get garageReminderNeedsDue;
+
+  /// No description provided for @garageMoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Moto'**
+  String get garageMoto;
+
+  /// No description provided for @garageDueDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date d\'échéance (facultatif)'**
+  String get garageDueDate;
+
+  /// No description provided for @garageDueKm.
+  ///
+  /// In fr, this message translates to:
+  /// **'À quel kilométrage ? (facultatif)'**
+  String get garageDueKm;
+
+  /// No description provided for @garageSosHisMoto.
+  ///
+  /// In fr, this message translates to:
+  /// **'SA MOTO'**
+  String get garageSosHisMoto;
+
+  /// No description provided for @notifMaintenanceReminder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappel : {what} pour votre {moto}'**
+  String notifMaintenanceReminder(String what, String moto);
 }
 
 class _AppLocalizationsDelegate
