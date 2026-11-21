@@ -8,6 +8,8 @@ import 'package:rider_group/core/media/photo_picker.dart';
 import 'package:rider_group/core/sound/alert_sound.dart';
 import 'package:rider_group/features/auth/data/auth_repository.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
+import 'package:rider_group/features/badges/data/badges_repository.dart';
+import 'package:rider_group/features/badges/domain/badges.dart';
 import 'package:rider_group/features/clubs/data/clubs_repository.dart';
 import 'package:rider_group/features/clubs/data/verification_admin_repository.dart';
 import 'package:rider_group/features/clubs/domain/club.dart';
@@ -1165,6 +1167,7 @@ class FakeCommunityRepository implements CommunityRepository {
     PostAudience audience = PostAudience.public,
     List<String> mediaPaths = const [],
     bool hidden = false,
+    bool isOfficial = false,
   }) {
     final p = Post(
       id: 'post-${++_seq}',
@@ -1176,6 +1179,7 @@ class FakeCommunityRepository implements CommunityRepository {
       body: body,
       hidden: hidden,
       mediaPaths: mediaPaths,
+      isOfficial: isOfficial,
       createdAt: DateTime.now().toUtc().subtract(Duration(minutes: _seq)),
     );
     posts.insert(0, p);
@@ -1196,6 +1200,7 @@ class FakeCommunityRepository implements CommunityRepository {
     commentCount: commentList.where((c) => c.postId == p.id).length,
     reactions: p.reactions,
     myReaction: p.myReaction,
+    isOfficial: p.isOfficial,
   );
 
   @override
@@ -2372,4 +2377,22 @@ class FakeSoloRepository implements SoloRepository {
   Future<void> askNews(String tripId, {bool position = false}) async {
     calls.add(position ? 'ask:position' : 'ask:news');
   }
+}
+
+/// Badges, défis et suspension en mémoire.
+class FakeBadgesRepository implements BadgesRepository {
+  final mine = <RiderBadge>[];
+  final others = <String, List<RiderBadge>>{};
+  final challengeList = <Challenge>[];
+  AccountSuspension? suspension;
+
+  @override
+  Future<List<RiderBadge>> badges([String? userId]) async =>
+      userId == null ? List.of(mine) : List.of(others[userId] ?? const []);
+
+  @override
+  Future<List<Challenge>> challenges() async => List.of(challengeList);
+
+  @override
+  Future<AccountSuspension?> mySuspension() async => suspension;
 }

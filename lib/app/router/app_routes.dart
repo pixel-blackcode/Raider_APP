@@ -8,6 +8,8 @@ abstract final class AppRoutes {
   static const profile = '/profil';
 
   // Écrans plein écran, au-dessus de la barre de navigation.
+  static const badges = '/badges';
+  static const challenges = '/defis';
   static const solo = '/solo';
   static const soloContacts = '/solo/proches';
   static String soloWatch(String id) => '/solo/suivi/$id';

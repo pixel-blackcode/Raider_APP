@@ -6087,6 +6087,168 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{who} va bien, encore en route'**
   String notifSoloOk(String who);
+
+  /// No description provided for @badgesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mes badges'**
+  String get badgesTitle;
+
+  /// No description provided for @badgesCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 badge} other{{count} badges}}'**
+  String badgesCount(int count);
+
+  /// No description provided for @badgesNoneYet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore de badge : participez à une balade pour obtenir le premier.'**
+  String get badgesNoneYet;
+
+  /// No description provided for @badgesSummary.
+  ///
+  /// In fr, this message translates to:
+  /// **'{earned} obtenus sur {total}'**
+  String badgesSummary(int earned, int total);
+
+  /// No description provided for @badgesEarned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Obtenus'**
+  String get badgesEarned;
+
+  /// No description provided for @badgesNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les prochains'**
+  String get badgesNext;
+
+  /// No description provided for @badgesNoRanking.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de classement entre motards : les badges récompensent la participation, la sécurité et les longues balades, jamais la vitesse.'**
+  String get badgesNoRanking;
+
+  /// No description provided for @challengesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Défis'**
+  String get challengesTitle;
+
+  /// No description provided for @challengesRunning.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count, plural, =1{1 défi en cours} other{{count} défis en cours}}'**
+  String challengesRunning(int count);
+
+  /// No description provided for @challengesNoneRunning.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun défi en cours'**
+  String get challengesNoneRunning;
+
+  /// No description provided for @challengesEmptyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas de défi pour l\'instant'**
+  String get challengesEmptyTitle;
+
+  /// No description provided for @challengesEmptyBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'équipe Rider Group propose régulièrement des défis. Vous serez prévenu.'**
+  String get challengesEmptyBody;
+
+  /// No description provided for @challengesHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les défis comptent ce que vous faites dans l\'application : balades terminées, distance des balades, entretiens, trajets solo, événements, publications. Jamais la vitesse.'**
+  String get challengesHelp;
+
+  /// No description provided for @challengeDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réussi'**
+  String get challengeDone;
+
+  /// No description provided for @challengeEnded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Terminé'**
+  String get challengeEnded;
+
+  /// No description provided for @challengeRunning.
+  ///
+  /// In fr, this message translates to:
+  /// **'En cours'**
+  String get challengeRunning;
+
+  /// No description provided for @challengeDaysLeft.
+  ///
+  /// In fr, this message translates to:
+  /// **'{days, plural, =0{dernier jour} =1{encore 1 jour} other{encore {days} jours}}'**
+  String challengeDaysLeft(int days);
+
+  /// No description provided for @suspensionForever.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte suspendu'**
+  String get suspensionForever;
+
+  /// No description provided for @suspensionUntil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Compte suspendu jusqu\'au {date}'**
+  String suspensionUntil(String date);
+
+  /// No description provided for @suspensionReason.
+  ///
+  /// In fr, this message translates to:
+  /// **'Raison : {reason}'**
+  String suspensionReason(String reason);
+
+  /// No description provided for @suspensionHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous pouvez lire et utiliser le SOS, mais pas publier, écrire ni rejoindre de balade.'**
+  String get suspensionHelp;
+
+  /// No description provided for @errorAccountSuspended.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre compte est suspendu : cette action n\'est pas possible pour l\'instant.'**
+  String get errorAccountSuspended;
+
+  /// No description provided for @postOfficialAuthor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Équipe Rider Group'**
+  String get postOfficialAuthor;
+
+  /// No description provided for @notifBadgeAwarded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau badge : {title} 🏅'**
+  String notifBadgeAwarded(String title);
+
+  /// No description provided for @notifChallengeStarted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau défi : {title}'**
+  String notifChallengeStarted(String title);
+
+  /// No description provided for @notifAccountSuspended.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre compte est suspendu. Raison : {reason}'**
+  String notifAccountSuspended(String reason);
+
+  /// No description provided for @notifAccountRestored.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre compte est rétabli.'**
+  String get notifAccountRestored;
 }
 
 class _AppLocalizationsDelegate

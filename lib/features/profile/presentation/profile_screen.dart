@@ -15,6 +15,7 @@ import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../badges/presentation/badge_widgets.dart';
 import '../../clubs/data/verification_admin_repository.dart';
 import '../../clubs/presentation/widgets/verified_badge.dart';
 import '../../community/data/community_providers.dart';
@@ -143,6 +144,7 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
+        const SuspensionBanner(),
         Center(
           child: Stack(
             children: [
@@ -245,6 +247,7 @@ class _ProfileBodyState extends ConsumerState<_ProfileBody> {
           icon: const Icon(Icons.edit_outlined),
           label: Text(l10n.profileEdit),
         ),
+        const MyBadgesCard(),
         SectionHeader(title: l10n.profileAccountSection),
         if (!profile.isVerified || profile.canRenewVerification)
           ListTile(

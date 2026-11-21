@@ -13,6 +13,7 @@ import '../../../core/widgets/remote_avatar.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../l10n/generated/app_localizations.dart';
 import '../../auth/data/auth_providers.dart';
+import '../../badges/presentation/badge_widgets.dart';
 import '../../clubs/presentation/widgets/verified_badge.dart';
 import '../../messages/data/messaging_repository.dart';
 import '../../shops/data/shops_repository.dart';
@@ -193,6 +194,7 @@ class RiderProfileScreen extends ConsumerWidget {
                   padding: const EdgeInsets.only(top: AppSpacing.sm),
                   child: Text(l10n.riderBlockedNotice),
                 ),
+              RiderBadgesSection(userId: userId),
               SectionHeader(title: l10n.riderPostsTitle),
               PostFeed(
                 query: (clubId: null, authorId: userId),

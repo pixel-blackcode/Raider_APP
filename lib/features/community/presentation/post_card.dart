@@ -119,32 +119,60 @@ class _PostCardState extends ConsumerState<PostCard> {
             ),
             child: Row(
               children: [
-                InkWell(
-                  key: Key('post-author-${p.id}'),
-                  onTap: () => context.push(AppRoutes.rider(p.authorId)),
-                  customBorder: const CircleBorder(),
-                  child: RemoteAvatar(
-                    label: p.authorName,
+                if (p.isOfficial)
+                  const CircleAvatar(
                     radius: 22,
-                    image: media?.imageProvider(
-                      MediaBucket.avatars,
-                      p.authorAvatar,
+                    backgroundColor: AppColors.marine,
+                    backgroundImage: AssetImage('assets/brand/logo_mark.png'),
+                  )
+                else
+                  InkWell(
+                    key: Key('post-author-${p.id}'),
+                    onTap: () => context.push(AppRoutes.rider(p.authorId)),
+                    customBorder: const CircleBorder(),
+                    child: RemoteAvatar(
+                      label: p.authorName,
+                      radius: 22,
+                      image: media?.imageProvider(
+                        MediaBucket.avatars,
+                        p.authorAvatar,
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        p.authorName.isEmpty
-                            ? l10n.profileHidden
-                            : p.authorName,
-                        style: theme.textTheme.titleMedium,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      if (p.isOfficial)
+                        Row(
+                          key: Key('post-official-${p.id}'),
+                          children: [
+                            Flexible(
+                              child: Text(
+                                l10n.postOfficialAuthor,
+                                style: theme.textTheme.titleMedium,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Icon(
+                              Icons.verified,
+                              size: 18,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ],
+                        )
+                      else
+                        Text(
+                          p.authorName.isEmpty
+                              ? l10n.profileHidden
+                              : p.authorName,
+                          style: theme.textTheme.titleMedium,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       Text.rich(
                         TextSpan(
                           children: [

@@ -54,6 +54,7 @@ class Post {
     this.commentCount = 0,
     this.reactions = const {},
     this.myReaction,
+    this.isOfficial = false,
   });
 
   factory Post.fromJson(Map<String, dynamic> j) => Post(
@@ -77,6 +78,7 @@ class Post {
           ReactionKind.tryParse(e.key as String)!: (e.value as num).toInt(),
     },
     myReaction: ReactionKind.tryParse(j['my_reaction'] as String?),
+    isOfficial: (j['is_official'] as bool?) ?? false,
   );
 
   final String id;
@@ -96,6 +98,9 @@ class Post {
   final int commentCount;
   final Map<ReactionKind, int> reactions;
   final ReactionKind? myReaction;
+
+  /// Annonce officielle de l'équipe Rider Group (Mission 11).
+  final bool isOfficial;
 
   int get reactionTotal => reactions.values.fold(0, (a, b) => a + b);
 
@@ -122,6 +127,7 @@ class Post {
       commentCount: commentCount,
       reactions: counts,
       myReaction: kind,
+      isOfficial: isOfficial,
     );
   }
 }

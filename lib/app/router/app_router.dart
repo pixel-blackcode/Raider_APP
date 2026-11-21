@@ -8,6 +8,8 @@ import '../../features/auth/presentation/forgot_password_screen.dart';
 import '../../features/auth/presentation/new_password_screen.dart';
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/auth/presentation/sign_up_screen.dart';
+import '../../features/badges/presentation/badges_screen.dart';
+import '../../features/badges/presentation/challenges_screen.dart';
 import '../../features/clubs/presentation/club_detail_screen.dart';
 import '../../features/clubs/presentation/club_form_screen.dart';
 import '../../features/clubs/presentation/clubs_screen.dart';
@@ -253,6 +255,16 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRoutes.badges,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const BadgesScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.challenges,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const ChallengesScreen(),
       ),
       GoRoute(
         path: AppRoutes.solo,

@@ -105,6 +105,7 @@ class AppException implements Exception {
     'content_hidden',
     'conversation_not_found',
     'already_active',
+    'account_suspended',
   };
 
   static String _authCode(AuthException error) {

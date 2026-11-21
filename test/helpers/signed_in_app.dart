@@ -9,6 +9,7 @@ import 'package:rider_group/core/media/photo_picker.dart';
 import 'package:rider_group/core/sound/alert_sound.dart';
 import 'package:rider_group/features/auth/data/auth_providers.dart';
 import 'package:rider_group/features/auth/domain/auth_session.dart';
+import 'package:rider_group/features/badges/data/badges_repository.dart';
 import 'package:rider_group/features/clubs/data/clubs_providers.dart';
 import 'package:rider_group/features/clubs/data/verification_admin_repository.dart';
 import 'package:rider_group/features/community/data/community_repository.dart';
@@ -64,6 +65,7 @@ Future<ProviderContainer> pumpOnlineApp(
   FakeFeedbackRepository? feedback,
   FakeGarageRepository? garage,
   FakeSoloRepository? solo,
+  FakeBadgesRepository? badges,
   List<Override> extraOverrides = const [],
 }) {
   return pumpRiderGroupApp(
@@ -146,6 +148,9 @@ Future<ProviderContainer> pumpOnlineApp(
         garage ?? FakeGarageRepository(),
       ),
       soloRepositoryProvider.overrideWithValue(solo ?? FakeSoloRepository()),
+      badgesRepositoryProvider.overrideWithValue(
+        badges ?? FakeBadgesRepository(),
+      ),
       ...extraOverrides,
       // La carte native (MapLibre) n'existe pas en test : simple liste.
       convoyMapBuilderProvider.overrideWithValue(

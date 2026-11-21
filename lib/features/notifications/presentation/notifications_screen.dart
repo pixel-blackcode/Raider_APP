@@ -151,6 +151,16 @@ String notificationText(AppLocalizations l10n, AppNotification n) {
     'solo_position_request' => l10n.notifSoloPositionRequest(who),
     'solo_position_shared' => l10n.notifSoloPositionShared(who),
     'solo_ok' => l10n.notifSoloOk(who),
+    'badge_awarded' => l10n.notifBadgeAwarded(
+      (n.data['title'] as String?) ?? '',
+    ),
+    'challenge_started' => l10n.notifChallengeStarted(
+      (n.data['title'] as String?) ?? '',
+    ),
+    'account_suspended' => l10n.notifAccountSuspended(
+      (n.data['reason'] as String?) ?? '',
+    ),
+    'account_restored' => l10n.notifAccountRestored,
     _ => l10n.notificationsTitle,
   };
 }
@@ -170,6 +180,9 @@ const _soloTravelerKinds = {
 };
 
 IconData _icon(String kind) => switch (kind) {
+  'badge_awarded' => Icons.emoji_events_outlined,
+  'challenge_started' => Icons.track_changes,
+  'account_suspended' || 'account_restored' => Icons.gpp_maybe_outlined,
   'solo_trip_overdue' || 'solo_trip_no_news' => Icons.warning_amber_rounded,
   'solo_trip_arrived' || 'solo_ok' => Icons.check_circle_outline,
   _ when kind.startsWith('solo') => Icons.shield_moon_outlined,
@@ -249,6 +262,18 @@ class _NotificationTileState extends ConsumerState<_NotificationTile> {
     ref.invalidate(notificationsProvider);
     if (n.kind == 'maintenance_reminder') {
       context.push(AppRoutes.garageReminders);
+      return;
+    }
+    if (n.kind == 'badge_awarded') {
+      context.push(AppRoutes.badges);
+      return;
+    }
+    if (n.kind == 'challenge_started') {
+      context.push(AppRoutes.challenges);
+      return;
+    }
+    if (n.kind.startsWith('account_')) {
+      context.go(AppRoutes.profile);
       return;
     }
     if (n.kind.startsWith('solo_')) {

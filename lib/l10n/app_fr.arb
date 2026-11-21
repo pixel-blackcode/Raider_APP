@@ -1976,5 +1976,98 @@
         "type": "String"
       }
     }
-  }
+  },
+  "badgesTitle": "Mes badges",
+  "badgesCount": "{count, plural, =1{1 badge} other{{count} badges}}",
+  "@badgesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "badgesNoneYet": "Pas encore de badge : participez à une balade pour obtenir le premier.",
+  "badgesSummary": "{earned} obtenus sur {total}",
+  "@badgesSummary": {
+    "placeholders": {
+      "earned": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "badgesEarned": "Obtenus",
+  "badgesNext": "Les prochains",
+  "badgesNoRanking": "Pas de classement entre motards : les badges récompensent la participation, la sécurité et les longues balades, jamais la vitesse.",
+  "challengesTitle": "Défis",
+  "challengesRunning": "{count, plural, =1{1 défi en cours} other{{count} défis en cours}}",
+  "@challengesRunning": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "challengesNoneRunning": "Aucun défi en cours",
+  "challengesEmptyTitle": "Pas de défi pour l'instant",
+  "challengesEmptyBody": "L'équipe Rider Group propose régulièrement des défis. Vous serez prévenu.",
+  "challengesHelp": "Les défis comptent ce que vous faites dans l'application : balades terminées, distance des balades, entretiens, trajets solo, événements, publications. Jamais la vitesse.",
+  "challengeDone": "Réussi",
+  "challengeEnded": "Terminé",
+  "challengeRunning": "En cours",
+  "challengeDaysLeft": "{days, plural, =0{dernier jour} =1{encore 1 jour} other{encore {days} jours}}",
+  "@challengeDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "suspensionForever": "Compte suspendu",
+  "suspensionUntil": "Compte suspendu jusqu'au {date}",
+  "@suspensionUntil": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "suspensionReason": "Raison : {reason}",
+  "@suspensionReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "suspensionHelp": "Vous pouvez lire et utiliser le SOS, mais pas publier, écrire ni rejoindre de balade.",
+  "errorAccountSuspended": "Votre compte est suspendu : cette action n'est pas possible pour l'instant.",
+  "postOfficialAuthor": "Équipe Rider Group",
+  "notifBadgeAwarded": "Nouveau badge : {title} 🏅",
+  "@notifBadgeAwarded": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notifChallengeStarted": "Nouveau défi : {title}",
+  "@notifChallengeStarted": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notifAccountSuspended": "Votre compte est suspendu. Raison : {reason}",
+  "@notifAccountSuspended": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "notifAccountRestored": "Votre compte est rétabli."
 }

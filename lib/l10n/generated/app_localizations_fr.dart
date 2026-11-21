@@ -3524,4 +3524,128 @@ class AppLocalizationsFr extends AppLocalizations {
   String notifSoloOk(String who) {
     return '$who va bien, encore en route';
   }
+
+  @override
+  String get badgesTitle => 'Mes badges';
+
+  @override
+  String badgesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count badges',
+      one: '1 badge',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get badgesNoneYet =>
+      'Pas encore de badge : participez à une balade pour obtenir le premier.';
+
+  @override
+  String badgesSummary(int earned, int total) {
+    return '$earned obtenus sur $total';
+  }
+
+  @override
+  String get badgesEarned => 'Obtenus';
+
+  @override
+  String get badgesNext => 'Les prochains';
+
+  @override
+  String get badgesNoRanking =>
+      'Pas de classement entre motards : les badges récompensent la participation, la sécurité et les longues balades, jamais la vitesse.';
+
+  @override
+  String get challengesTitle => 'Défis';
+
+  @override
+  String challengesRunning(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count défis en cours',
+      one: '1 défi en cours',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get challengesNoneRunning => 'Aucun défi en cours';
+
+  @override
+  String get challengesEmptyTitle => 'Pas de défi pour l\'instant';
+
+  @override
+  String get challengesEmptyBody =>
+      'L\'équipe Rider Group propose régulièrement des défis. Vous serez prévenu.';
+
+  @override
+  String get challengesHelp =>
+      'Les défis comptent ce que vous faites dans l\'application : balades terminées, distance des balades, entretiens, trajets solo, événements, publications. Jamais la vitesse.';
+
+  @override
+  String get challengeDone => 'Réussi';
+
+  @override
+  String get challengeEnded => 'Terminé';
+
+  @override
+  String get challengeRunning => 'En cours';
+
+  @override
+  String challengeDaysLeft(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'encore $days jours',
+      one: 'encore 1 jour',
+      zero: 'dernier jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get suspensionForever => 'Compte suspendu';
+
+  @override
+  String suspensionUntil(String date) {
+    return 'Compte suspendu jusqu\'au $date';
+  }
+
+  @override
+  String suspensionReason(String reason) {
+    return 'Raison : $reason';
+  }
+
+  @override
+  String get suspensionHelp =>
+      'Vous pouvez lire et utiliser le SOS, mais pas publier, écrire ni rejoindre de balade.';
+
+  @override
+  String get errorAccountSuspended =>
+      'Votre compte est suspendu : cette action n\'est pas possible pour l\'instant.';
+
+  @override
+  String get postOfficialAuthor => 'Équipe Rider Group';
+
+  @override
+  String notifBadgeAwarded(String title) {
+    return 'Nouveau badge : $title 🏅';
+  }
+
+  @override
+  String notifChallengeStarted(String title) {
+    return 'Nouveau défi : $title';
+  }
+
+  @override
+  String notifAccountSuspended(String reason) {
+    return 'Votre compte est suspendu. Raison : $reason';
+  }
+
+  @override
+  String get notifAccountRestored => 'Votre compte est rétabli.';
 }
